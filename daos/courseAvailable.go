@@ -33,18 +33,12 @@ func (ac *AdminstrationCloud) GetCourseByName(name string) (models.CoursesAvaila
 func (ac *AdminstrationCloud) GetCourseById(id uuid.UUID) (models.CoursesAvailable, error) {
 
 	var ca models.CoursesAvailable
-<<<<<<< HEAD
-	val := ac.dbConn.Select("*").Table("courses_availables").Where("id = ?", id).First(&ca)
-	if val.Error != nil {
-		log.Println("Not able to insert to courses_availables table ", val.Error)
-=======
 	if id == uuid.Nil {
 		return ca, fmt.Errorf("UUID is NULL for course ID! Add new Course to ")
 	}
 	val := ac.dbConn.Select("*").Table("courses_availables").Where("id = ?", id).First(&ca)
 	if val.Error != nil {
 		log.Println("Not able to select from courses_availables table ", val.Error)
->>>>>>> feature_branch
 		return ca, val.Error
 	}
 	return ca, nil

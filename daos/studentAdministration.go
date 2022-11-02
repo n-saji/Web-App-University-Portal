@@ -4,11 +4,8 @@ import (
 	"CollegeAdministration/models"
 	"fmt"
 	"log"
-<<<<<<< HEAD
-=======
 
 	"github.com/google/uuid"
->>>>>>> feature_branch
 )
 
 func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.CollegeAdminstration) error {
@@ -26,16 +23,6 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAd
 
 	var rca []*models.CollegeAdminstration
 	err := ac.dbConn.Find(&rca).Error
-<<<<<<< HEAD
-
-	for _, eachRCA := range rca {
-		eachRCA.ClassesEnrolled, err = ac.GetCourseById(eachRCA.CourseId)
-		if err != nil {
-			return rca, err
-		}
-	}
-	return rca, err
-=======
 	if err != nil {
 		return rca, err
 	}
@@ -51,23 +38,11 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAd
 		}
 	}
 	return rca, nil
->>>>>>> feature_branch
 
 }
 
 func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.CollegeAdminstration) error {
 
-<<<<<<< HEAD
-	// rcaExisting, _ := ac.GetStudentDetailsByRollNumber(rca.RollNumber)
-	// rcaExisting.Name = rca.Name
-	// rcaExisting.Age = rca.Age
-	// rcaExisting.ClassesEnrolled.Id = rca.ClassesEnrolled.Id
-	// rcaExisting.ClassesEnrolled.CourseName = rca.ClassesEnrolled.CourseName
-	// log.Println(rcaExisting)
-	// err := ac.dbConn.Save(&rcaExisting).Error
-	//err := ac.dbConn.Model(&models.CollegeAdminstration{}).Where("Id = ?", rca.Id).Updates(map[string]interface{}{"Name": rca.Name, "Age": rca.Age}) //Save(&rca).Error
-=======
->>>>>>> feature_branch
 	err := ac.dbConn.Save(&rca).Error
 
 	if err != nil {
@@ -93,10 +68,6 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-<<<<<<< HEAD
-	//log.Println(len)
-=======
->>>>>>> feature_branch
 
 	if len > 0 {
 		return true, nil

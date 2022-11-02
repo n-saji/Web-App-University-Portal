@@ -29,10 +29,6 @@ func (ac *Service) RetrieveCA() ([]*models.CoursesAvailable, error) {
 	return rca, err
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> feature_branch
 func (ac *Service) UpdateCA(name string, rc *models.CoursesAvailable) error {
 
 	err := ac.daos.UpdateCourseByName(name, rc)
