@@ -77,11 +77,7 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
 	response, err := h.service.RetrieveCAd()
 	if err != nil {
-<<<<<<< HEAD
-		ctx.JSON(http.StatusInternalServerError, err)
-=======
 		ctx.JSON(http.StatusInternalServerError, err.Error())
->>>>>>> feature_branch
 	} else {
 		ctx.JSON(http.StatusOK, response)
 	}
@@ -111,8 +107,6 @@ func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 	}
 
 }
-<<<<<<< HEAD
-=======
 
 func (h *Handler) DeleteCA(ctx *gin.Context) {
 
@@ -126,4 +120,3 @@ func (h *Handler) DeleteCA(ctx *gin.Context) {
 	}
 
 }
->>>>>>> feature_branch
