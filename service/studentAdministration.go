@@ -36,7 +36,14 @@ func (ac *Service) InsertValuesToCAd(cv *models.CollegeAdminstration) error {
 func (ac *Service) RetrieveCAd() ([]*models.CollegeAdminstration, error) {
 
 	rca, err := ac.daos.RetieveCollegeAdminstration()
+<<<<<<< HEAD
 	return rca, err
+=======
+	if err != nil{
+		return rca,err
+	}
+	return rca, nil
+>>>>>>> feature_branch
 }
 
 func (ac *Service) UpdateCAd(rca *models.CollegeAdminstration) error {
@@ -59,7 +66,6 @@ func (ac *Service) UpdateCAd(rca *models.CollegeAdminstration) error {
 		rca.ClassesEnrolled.Id = rc.Id
 		rca.CourseId = rc.Id
 	}
-	//log.Println(rca)
 	err := ac.daos.UpdateClgStudent(rca)
 	if err != nil {
 		return err

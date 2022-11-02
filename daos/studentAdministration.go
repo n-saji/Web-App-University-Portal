@@ -4,6 +4,11 @@ import (
 	"CollegeAdministration/models"
 	"fmt"
 	"log"
+<<<<<<< HEAD
+=======
+
+	"github.com/google/uuid"
+>>>>>>> feature_branch
 )
 
 func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.CollegeAdminstration) error {
@@ -21,6 +26,7 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAd
 
 	var rca []*models.CollegeAdminstration
 	err := ac.dbConn.Find(&rca).Error
+<<<<<<< HEAD
 
 	for _, eachRCA := range rca {
 		eachRCA.ClassesEnrolled, err = ac.GetCourseById(eachRCA.CourseId)
@@ -29,11 +35,29 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAd
 		}
 	}
 	return rca, err
+=======
+	if err != nil {
+		return rca, err
+	}
+
+	for _, eachRCA := range rca {
+		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
+			return rca, err
+		} else {
+			eachRCA.ClassesEnrolled = existingRC
+		}
+	}
+	return rca, nil
+>>>>>>> feature_branch
 
 }
 
 func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.CollegeAdminstration) error {
 
+<<<<<<< HEAD
 	// rcaExisting, _ := ac.GetStudentDetailsByRollNumber(rca.RollNumber)
 	// rcaExisting.Name = rca.Name
 	// rcaExisting.Age = rca.Age
@@ -42,6 +66,8 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.CollegeAdminstration)
 	// log.Println(rcaExisting)
 	// err := ac.dbConn.Save(&rcaExisting).Error
 	//err := ac.dbConn.Model(&models.CollegeAdminstration{}).Where("Id = ?", rca.Id).Updates(map[string]interface{}{"Name": rca.Name, "Age": rca.Age}) //Save(&rca).Error
+=======
+>>>>>>> feature_branch
 	err := ac.dbConn.Save(&rca).Error
 
 	if err != nil {
@@ -67,7 +93,10 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+<<<<<<< HEAD
 	//log.Println(len)
+=======
+>>>>>>> feature_branch
 
 	if len > 0 {
 		return true, nil
@@ -75,4 +104,17 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 		return false, nil
 	}
 
+}
+
+func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.CollegeAdminstration, error) {
+
+	var rca []*models.CollegeAdminstration
+
+	err := ac.dbConn.Select("*").Table("college_adminstrations").Where("course_id = ?", courseId).Find(&rca).Error
+	if err != nil {
+		return rca, nil
+	}
+
+	log.Println(rca)
+	return rca, nil
 }

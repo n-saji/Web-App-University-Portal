@@ -29,7 +29,10 @@ func (ac *Service) RetrieveCA() ([]*models.CoursesAvailable, error) {
 	return rca, err
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature_branch
 func (ac *Service) UpdateCA(name string, rc *models.CoursesAvailable) error {
 
 	err := ac.daos.UpdateCourseByName(name, rc)
@@ -39,3 +42,22 @@ func (ac *Service) UpdateCA(name string, rc *models.CoursesAvailable) error {
 	return nil
 }
 
+func (ac *Service) DeleteCA(name string) error {
+
+	status := ac.daos.CheckCourse(name)
+	if !status {
+		return fmt.Errorf("No course Found!")
+	}
+	rc, _ := ac.daos.GetCourseByName(name)
+
+	ok, err := ac.daos.DeleteCourse(rc.Id)
+	if err != nil {
+		return fmt.Errorf("Not able to Delete", err)
+	}
+	if ok {
+		return nil
+	} else {
+		return fmt.Errorf("Some Error happend")
+	}
+
+}
