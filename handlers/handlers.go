@@ -20,12 +20,13 @@ func New(db *service.Service) *Handler {
 }
 
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
-	rc.POST("/InsertToCoursesAvailableTable", h.InsertCA)
+	rc.POST("/InsertToCoursesAvailable", h.InsertCA)
 	rc.POST("/InsertToCollegeAdministration", h.InsertCAd)
-	rc.GET("/RetrieveCoursesAvailableTable", h.RetrieveValuesCA)
-	rc.GET("/RetrieveCollegeAdministrationTable", h.RetrieveValuesCAd)
-	rc.PATCH("/UpdateCoursesAvailableTable/:name", h.UpdateValuesCA)
-	rc.PATCH("/UpdateCollegeAdministrationTable", h.UpdateValuesCAd)
+	rc.GET("/RetrieveCoursesAvailable", h.RetrieveValuesCA)
+	rc.GET("/RetrieveCollegeAdministration", h.RetrieveValuesCAd)
+	rc.PATCH("/UpdateCoursesAvailable/:name", h.UpdateValuesCA)
+	rc.PATCH("/UpdateCollegeAdministration", h.UpdateValuesCAd)
+	rc.DELETE("/DeleteCooursesAvailable/:courseName", h.DeleteCA)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -76,7 +77,11 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
 	response, err := h.service.RetrieveCAd()
 	if err != nil {
+<<<<<<< HEAD
 		ctx.JSON(http.StatusInternalServerError, err)
+=======
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+>>>>>>> feature_branch
 	} else {
 		ctx.JSON(http.StatusOK, response)
 	}
@@ -106,3 +111,19 @@ func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 	}
 
 }
+<<<<<<< HEAD
+=======
+
+func (h *Handler) DeleteCA(ctx *gin.Context) {
+
+	var CourseName string
+	CourseName = ctx.Param("courseName")
+	err := h.service.DeleteCA(CourseName)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+	} else {
+		ctx.JSON(http.StatusOK, "Success")
+	}
+
+}
+>>>>>>> feature_branch
