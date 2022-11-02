@@ -4,6 +4,8 @@ import (
 	"CollegeAdministration/models"
 	"fmt"
 	"log"
+
+	"github.com/google/uuid"
 )
 
 func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.CollegeAdminstration) error {
@@ -21,27 +23,26 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAd
 
 	var rca []*models.CollegeAdminstration
 	err := ac.dbConn.Find(&rca).Error
+	if err != nil {
+		return rca, err
+	}
 
 	for _, eachRCA := range rca {
-		eachRCA.ClassesEnrolled, err = ac.GetCourseById(eachRCA.CourseId)
-		if err != nil {
+		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
 			return rca, err
+		} else {
+			eachRCA.ClassesEnrolled = existingRC
 		}
 	}
-	return rca, err
+	return rca, nil
 
 }
 
 func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.CollegeAdminstration) error {
 
-	// rcaExisting, _ := ac.GetStudentDetailsByRollNumber(rca.RollNumber)
-	// rcaExisting.Name = rca.Name
-	// rcaExisting.Age = rca.Age
-	// rcaExisting.ClassesEnrolled.Id = rca.ClassesEnrolled.Id
-	// rcaExisting.ClassesEnrolled.CourseName = rca.ClassesEnrolled.CourseName
-	// log.Println(rcaExisting)
-	// err := ac.dbConn.Save(&rcaExisting).Error
-	//err := ac.dbConn.Model(&models.CollegeAdminstration{}).Where("Id = ?", rca.Id).Updates(map[string]interface{}{"Name": rca.Name, "Age": rca.Age}) //Save(&rca).Error
 	err := ac.dbConn.Save(&rca).Error
 
 	if err != nil {
@@ -67,7 +68,6 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	//log.Println(len)
 
 	if len > 0 {
 		return true, nil
@@ -75,4 +75,17 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 		return false, nil
 	}
 
+}
+
+func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.CollegeAdminstration, error) {
+
+	var rca []*models.CollegeAdminstration
+
+	err := ac.dbConn.Select("*").Table("college_adminstrations").Where("course_id = ?", courseId).Find(&rca).Error
+	if err != nil {
+		return rca, nil
+	}
+
+	log.Println(rca)
+	return rca, nil
 }

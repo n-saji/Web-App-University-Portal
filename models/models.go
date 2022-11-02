@@ -10,7 +10,7 @@ type CollegeAdminstration struct {
 	RollNumber      string `gorm:"unique"`
 	Age             int64
 	CourseId        uuid.UUID
-	ClassesEnrolled CoursesAvailable `gorm:"foreignKey:CourseId"`
+	ClassesEnrolled CoursesAvailable `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 type CoursesAvailable struct {

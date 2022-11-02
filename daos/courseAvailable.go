@@ -33,9 +33,12 @@ func (ac *AdminstrationCloud) GetCourseByName(name string) (models.CoursesAvaila
 func (ac *AdminstrationCloud) GetCourseById(id uuid.UUID) (models.CoursesAvailable, error) {
 
 	var ca models.CoursesAvailable
+	if id == uuid.Nil {
+		return ca, fmt.Errorf("UUID is NULL for course ID! Add new Course to ")
+	}
 	val := ac.dbConn.Select("*").Table("courses_availables").Where("id = ?", id).First(&ca)
 	if val.Error != nil {
-		log.Println("Not able to insert to courses_availables table ", val.Error)
+		log.Println("Not able to select from courses_availables table ", val.Error)
 		return ca, val.Error
 	}
 	return ca, nil
@@ -70,3 +73,14 @@ func (ac *AdminstrationCloud) CheckCourse(coursename string) bool {
 		return false
 	}
 }
+
+func (ac *AdminstrationCloud) DeleteCourse(id uuid.UUID) (bool, error) {
+
+	err := ac.dbConn.Where("id = ?", id).Delete(&models.CoursesAvailable{}).Error
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+
