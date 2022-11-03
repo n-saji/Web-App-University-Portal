@@ -9,7 +9,7 @@ import (
 )
 
 func (h *Handler) InsertCA(ctx *gin.Context) {
-	var ca models.CoursesAvailable
+	var ca models.CourseInfo
 	err := ctx.BindJSON(&ca)
 
 	if err != nil {
@@ -34,7 +34,7 @@ func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 	}
 }
 func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
-	var rc models.CoursesAvailable
+	var rc models.CourseInfo
 	var name = ctx.Param("name")
 	ctx.BindJSON(&rc)
 	err := h.service.UpdateCA(name, &rc)
