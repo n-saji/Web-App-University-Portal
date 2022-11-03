@@ -2,22 +2,11 @@ package handlers
 
 import (
 	"CollegeAdministration/models"
-	"CollegeAdministration/service"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
-
-type Handler struct {
-	service *service.Service
-}
-
-func New(db *service.Service) *Handler {
-	return &Handler{
-		service: db,
-	}
-}
 
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.POST("/InsertToCoursesAvailable", h.InsertCA)
@@ -44,7 +33,7 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
 	} else {
-		ctx.JSON(http.StatusOK, "Successfully inserted to table")
+		ctx.JSON(http.StatusCreated, "Successfully inserted to table")
 	}
 
 }
@@ -59,7 +48,7 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
 	} else {
-		ctx.JSON(http.StatusOK, "Successfully inserted to table")
+		ctx.JSON(http.StatusCreated, "Successfully inserted to table")
 	}
 }
 
