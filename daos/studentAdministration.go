@@ -10,9 +10,9 @@ import (
 
 func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.StudentInfo) error {
 
-	err := ac.dbConn.Table("student_info").Create(ca).Error
+	err := ac.dbConn.Table("student_infos").Create(ca).Error
 	if err != nil {
-		log.Println("Not able to insert to student_info table ", err)
+		log.Println("Not able to insert to student_infos table ", err)
 		return fmt.Errorf("Failed! ", err)
 	}
 	log.Println("Stored to database")
@@ -54,9 +54,9 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) (models.StudentInfo, error) {
 
 	var cad models.StudentInfo
-	val := ac.dbConn.Select("*").Table("student_info").Where("roll_number = ?", roll_number).First(&cad)
+	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
 	if val.Error != nil {
-		log.Println("Not able to insert to student_info table ", val.Error)
+		log.Println("Not able to insert to student_infos table ", val.Error)
 		return cad, val.Error
 	}
 	return cad, nil
@@ -81,11 +81,22 @@ func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID)
 
 	var rca []*models.StudentInfo
 
-	err := ac.dbConn.Select("*").Table("student_info").Where("course_id = ?", courseId).Find(&rca).Error
+	err := ac.dbConn.Select("*").Table("student_infos").Where("course_id = ?", courseId).Find(&rca).Error
 	if err != nil {
 		return rca, nil
 	}
 
 	log.Println(rca)
 	return rca, nil
+}
+
+func (ac *AdminstrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
+
+	err := ac.dbConn.Where("id = ?", studentId).Delete(&models.StudentInfo{}).Error
+
+	if err != nil {
+		return nil
+	}
+
+	return nil
 }

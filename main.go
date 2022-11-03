@@ -22,7 +22,7 @@ func main() {
 		log.Println("Found err while connecting to database", err)
 	}
 
-	err1 := db.Migrator().AutoMigrate(&models.CollegeAdminstration{}, &models.CoursesAvailable{})
+	err1 := db.Migrator().AutoMigrate(&models.CourseInfo{}, &models.StudentInfo{})
 	if err != nil {
 		log.Println("error found while migrating", err1)
 	}

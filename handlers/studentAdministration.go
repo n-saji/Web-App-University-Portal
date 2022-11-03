@@ -9,7 +9,7 @@ import (
 )
 
 func (h *Handler) InsertCAd(ctx *gin.Context) {
-	var cad models.CollegeAdminstration
+	var cad models.StudentInfo
 	err := ctx.BindJSON(&cad)
 	if err != nil {
 		log.Println("not able to store values")
@@ -22,8 +22,6 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 	}
 }
 
-
-
 func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
 	response, err := h.service.RetrieveCAd()
@@ -34,10 +32,8 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 	}
 }
 
-
-
 func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
-	var rcd models.CollegeAdminstration
+	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
 	err := h.service.UpdateCAd(&rcd)
 	if err != nil {
@@ -48,3 +44,15 @@ func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 
 }
 
+func (h *Handler) DeleteSA(ctx *gin.Context) {
+
+	rollNumber := ctx.Param("rollnumber")
+
+	err := h.service.DeleteStudent(rollNumber)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+	} else {
+		ctx.JSON(http.StatusOK, "Success")
+	}
+
+}
