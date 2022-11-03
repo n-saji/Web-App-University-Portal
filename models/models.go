@@ -14,6 +14,6 @@ type StudentInfo struct {
 }
 
 type CourseInfo struct {
-	Id         uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
+	CourseCode         uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
 	CourseName string    `gorm:"unique"`
 }
