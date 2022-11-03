@@ -8,20 +8,20 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.CollegeAdminstration) error {
+func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.StudentInfo) error {
 
-	err := ac.dbConn.Table("college_adminstrations").Create(ca).Error
+	err := ac.dbConn.Table("student_info").Create(ca).Error
 	if err != nil {
-		log.Println("Not able to insert to CollegeAdminstration table ", err)
+		log.Println("Not able to insert to student_info table ", err)
 		return fmt.Errorf("Failed! ", err)
 	}
 	log.Println("Stored to database")
 	return nil
 
 }
-func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAdminstration, error) {
+func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentInfo, error) {
 
-	var rca []*models.CollegeAdminstration
+	var rca []*models.StudentInfo
 	err := ac.dbConn.Find(&rca).Error
 	if err != nil {
 		return rca, err
@@ -41,7 +41,7 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.CollegeAd
 
 }
 
-func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.CollegeAdminstration) error {
+func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 
 	err := ac.dbConn.Save(&rca).Error
 
@@ -51,12 +51,12 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.CollegeAdminstration)
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) (models.CollegeAdminstration, error) {
+func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) (models.StudentInfo, error) {
 
-	var cad models.CollegeAdminstration
-	val := ac.dbConn.Select("*").Table("college_adminstrations").Where("roll_number = ?", roll_number).First(&cad)
+	var cad models.StudentInfo
+	val := ac.dbConn.Select("*").Table("student_info").Where("roll_number = ?", roll_number).First(&cad)
 	if val.Error != nil {
-		log.Println("Not able to insert to CollegeAdminstration table ", val.Error)
+		log.Println("Not able to insert to student_info table ", val.Error)
 		return cad, val.Error
 	}
 	return cad, nil
@@ -64,7 +64,7 @@ func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) 
 func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 
 	var len int64
-	err := ac.dbConn.Model(models.CollegeAdminstration{}).Where("roll_number = ?", roll_number).Count(&len).Error
+	err := ac.dbConn.Model(models.StudentInfo{}).Where("roll_number = ?", roll_number).Count(&len).Error
 	if err != nil {
 		return false, err
 	}
@@ -77,11 +77,11 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 
 }
 
-func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.CollegeAdminstration, error) {
+func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.StudentInfo, error) {
 
-	var rca []*models.CollegeAdminstration
+	var rca []*models.StudentInfo
 
-	err := ac.dbConn.Select("*").Table("college_adminstrations").Where("course_id = ?", courseId).Find(&rca).Error
+	err := ac.dbConn.Select("*").Table("student_info").Where("course_id = ?", courseId).Find(&rca).Error
 	if err != nil {
 		return rca, nil
 	}
