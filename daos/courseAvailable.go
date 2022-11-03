@@ -10,9 +10,9 @@ import (
 
 func (ac *AdminstrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseInfo) error {
 
-	err := ac.dbConn.Table("course_info").Create(ca).Error
+	err := ac.dbConn.Table("course_infos").Create(ca).Error
 	if err != nil {
-		log.Println("Not able to insert to course_info table ", err)
+		log.Println("Not able to insert to course_infos table ", err)
 		return fmt.Errorf("Failed! ", err)
 	}
 	log.Println("Stored to database")
@@ -22,7 +22,7 @@ func (ac *AdminstrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseIn
 func (ac *AdminstrationCloud) GetCourseByName(name string) (models.CourseInfo, error) {
 
 	var ca models.CourseInfo
-	val := ac.dbConn.Select("*").Table("course_info").Where("course_name = ?", name).First(&ca)
+	val := ac.dbConn.Select("*").Table("course_infos").Where("course_name = ?", name).First(&ca)
 	if val.Error != nil {
 		log.Println("Not able to Fetch value from  table ", val.Error)
 		return ca, val.Error
@@ -36,9 +36,9 @@ func (ac *AdminstrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, er
 	if id == uuid.Nil {
 		return ca, fmt.Errorf("UUID is NULL for course ID! Add new Course to ")
 	}
-	val := ac.dbConn.Select("*").Table("course_info").Where("id = ?", id).First(&ca)
+	val := ac.dbConn.Select("*").Table("course_infos").Where("id = ?", id).First(&ca)
 	if val.Error != nil {
-		log.Println("Not able to select from course_info table ", val.Error)
+		log.Println("Not able to select from course_infos table ", val.Error)
 		return ca, val.Error
 	}
 	return ca, nil

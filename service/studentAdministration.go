@@ -69,3 +69,16 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo) error {
 	return nil
 
 }
+
+func (ac *Service)DeleteStudent (rollNumber string)error{
+
+	student,err := ac.daos.GetStudentDetailsByRollNumber(rollNumber)
+	if err != nil {
+		return err
+	}
+	err1 := ac.daos.DeleteStudentDaos(student.Id)
+	if err1 != nil {
+		return err1
+	}
+	return nil
+}
