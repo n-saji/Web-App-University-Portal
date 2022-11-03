@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertValuesToCA(cv *models.CoursesAvailable) error {
+func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
 
 	cv.Id = uuid.New()
 
@@ -23,13 +23,13 @@ func (ac *Service) InsertValuesToCA(cv *models.CoursesAvailable) error {
 
 }
 
-func (ac *Service) RetrieveCA() ([]*models.CoursesAvailable, error) {
+func (ac *Service) RetrieveCA() ([]*models.CourseInfo, error) {
 
 	rca, err := ac.daos.RetieveCoursesAvailable()
 	return rca, err
 }
 
-func (ac *Service) UpdateCA(name string, rc *models.CoursesAvailable) error {
+func (ac *Service) UpdateCA(name string, rc *models.CourseInfo) error {
 
 	err := ac.daos.UpdateCourseByName(name, rc)
 	if err != nil {

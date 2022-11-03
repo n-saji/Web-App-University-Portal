@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertValuesToCAd(cv *models.CollegeAdminstration) error {
+func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 
 	cv_id, err := ac.daos.GetCourseByName(cv.ClassesEnrolled.CourseName)
 	if err != nil {
@@ -33,16 +33,16 @@ func (ac *Service) InsertValuesToCAd(cv *models.CollegeAdminstration) error {
 
 }
 
-func (ac *Service) RetrieveCAd() ([]*models.CollegeAdminstration, error) {
+func (ac *Service) RetrieveCAd() ([]*models.StudentInfo, error) {
 
 	rca, err := ac.daos.RetieveCollegeAdminstration()
-	if err != nil{
-		return rca,err
+	if err != nil {
+		return rca, err
 	}
 	return rca, nil
 }
 
-func (ac *Service) UpdateCAd(rca *models.CollegeAdminstration) error {
+func (ac *Service) UpdateCAd(rca *models.StudentInfo) error {
 	rc, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
 	if err1 != nil {
 		return fmt.Errorf("Course not Found")
