@@ -9,6 +9,10 @@ import (
 
 func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
 
+	if cv.CourseName == "" {
+		return fmt.Errorf("Course name should not be empty!")
+	}
+
 	cv.Id = uuid.New()
 
 	ok := ac.daos.CheckCourse(cv.CourseName)
@@ -24,7 +28,6 @@ func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
 }
 
 func (ac *Service) RetrieveCA() ([]*models.CourseInfo, error) {
-
 	rca, err := ac.daos.RetieveCoursesAvailable()
 	return rca, err
 }
