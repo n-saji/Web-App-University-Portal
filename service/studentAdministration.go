@@ -82,3 +82,21 @@ func (ac *Service) DeleteStudent(rollNumber string) error {
 	}
 	return nil
 }
+
+func (ac *Service) UpdateStudentNameAge(existing_name, student_name string, age int64) error {
+	si, err := ac.daos.GetStudentDetailsByName(existing_name)
+	if err != nil {
+		return err
+	}
+	for _, each_si := range *si {
+		each_si.Name = student_name
+		if age != 0 {
+			each_si.Age = age
+		}
+		err := ac.daos.UpdateClgStudent(&each_si)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
