@@ -56,3 +56,27 @@ func (h *Handler) DeleteSA(ctx *gin.Context) {
 	}
 
 }
+func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
+	var rcd *models.StudentInfo
+	existing_name := ctx.Param("name")
+	ctx.BindJSON(&rcd)
+	err := h.service.UpdateStudentNameAge(existing_name, rcd.Name, rcd.Age)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+	} else {
+		ctx.JSON(http.StatusOK, "Success")
+	}
+
+}
+
+func (h * Handler) FetchAllCourseForAStudent(ctx *gin.Context){
+
+	student_name := ctx.Param("name")
+	res,err := h.service.FetchStudentCourse(student_name)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError,error.Error(err))
+	}else{
+		ctx.JSON(http.StatusOK,res)
+	}
+
+}
