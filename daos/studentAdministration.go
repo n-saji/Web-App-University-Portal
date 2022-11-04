@@ -24,7 +24,7 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentIn
 	var rca []*models.StudentInfo
 	err := ac.dbConn.Find(&rca).Error
 	if err != nil {
-		return rca, err
+		return nil, err
 	}
 
 	for _, eachRCA := range rca {
@@ -32,7 +32,7 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentIn
 		if existingRC.Id == uuid.Nil {
 			continue
 		} else if err != nil {
-			return rca, err
+			return nil, err
 		} else {
 			eachRCA.ClassesEnrolled = existingRC
 		}
@@ -51,13 +51,13 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) (models.StudentInfo, error) {
+func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) (*models.StudentInfo, error) {
 
-	var cad models.StudentInfo
+	var cad *models.StudentInfo
 	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
 	if val.Error != nil {
 		log.Println("Not able to insert to student_infos table ", val.Error)
-		return cad, val.Error
+		return nil, val.Error
 	}
 	return cad, nil
 }
@@ -83,10 +83,9 @@ func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID)
 
 	err := ac.dbConn.Select("*").Table("student_infos").Where("course_id = ?", courseId).Find(&rca).Error
 	if err != nil {
-		return rca, nil
+		return nil, nil
 	}
 
-	log.Println(rca)
 	return rca, nil
 }
 
@@ -99,4 +98,19 @@ func (ac *AdminstrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
 	}
 
 	return nil
+}
+
+func (ac *AdminstrationCloud) GetStudentDetailsByName(student_name string) (*[]models.StudentInfo, error) {
+
+	var si *[]models.StudentInfo
+
+	err := ac.dbConn.Select("*").Table("student_infos").Where("name = ?", student_name).Find(&si).Error
+
+	if err != nil {
+		return nil, err
+	}
+	if len(*si) == 0 {
+		return nil, fmt.Errorf("no student exists")
+	}
+	return si, nil
 }

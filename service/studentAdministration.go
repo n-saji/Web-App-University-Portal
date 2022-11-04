@@ -14,14 +14,14 @@ func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 		return fmt.Errorf("Course Not Found")
 	}
 	cv.ClassesEnrolled.Id = cv_id.Id
-	ok, err := ac.daos.CheckForRollNo(cv.RollNumber)
+	/* ok, err := ac.daos.CheckForRollNo(cv.RollNumber)
 	if err != nil {
 		return err
 	} else {
 		if ok {
 			return fmt.Errorf("Roll Number already exist!")
 		}
-	}
+	} */
 
 	cv.Id = uuid.New()
 	err1 := ac.daos.InsertValuesToCollegeAdminstration(cv)
@@ -70,9 +70,9 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo) error {
 
 }
 
-func (ac *Service)DeleteStudent (rollNumber string)error{
+func (ac *Service) DeleteStudent(rollNumber string) error {
 
-	student,err := ac.daos.GetStudentDetailsByRollNumber(rollNumber)
+	student, err := ac.daos.GetStudentDetailsByRollNumber(rollNumber)
 	if err != nil {
 		return err
 	}
@@ -81,4 +81,40 @@ func (ac *Service)DeleteStudent (rollNumber string)error{
 		return err1
 	}
 	return nil
+}
+
+func (ac *Service) UpdateStudentNameAge(existing_name, student_name string, age int64) error {
+	si, err := ac.daos.GetStudentDetailsByName(existing_name)
+	if err != nil {
+		return err
+	}
+	for _, each_si := range *si {
+		each_si.Name = student_name
+		if age != 0 {
+			each_si.Age = age
+		}
+		err := ac.daos.UpdateClgStudent(&each_si)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (ac *Service) FetchStudentCourse(student_name string) (map[string]string, error) {
+	course_list := make(map[string]string)
+
+	course_list["student_name"] = student_name
+	si, err := ac.daos.GetStudentDetailsByName(student_name)
+	if err != nil {
+		return nil, err
+	}
+	for index, each_si := range *si {
+		each_si.ClassesEnrolled, err = ac.daos.GetCourseById(each_si.CourseId)
+		if err != nil {
+			return nil, err
+		}
+		course_list[fmt.Sprintf("course_%d", index+1)] = each_si.ClassesEnrolled.CourseName
+	}
+	return course_list, nil
 }
