@@ -86,7 +86,6 @@ func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID)
 		return nil, nil
 	}
 
-	log.Println(rca)
 	return rca, nil
 }
 
@@ -110,7 +109,6 @@ func (ac *AdminstrationCloud) GetStudentDetailsByName(student_name string) (*[]m
 	if err != nil {
 		return nil, err
 	}
-	log.Println(si)
 	if len(*si) == 0 {
 		return nil, fmt.Errorf("no student exists")
 	}
