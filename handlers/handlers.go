@@ -26,4 +26,5 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /* API TO CREATE - 
 	Delete a course for a student
+	create table marks_course
 	*/
