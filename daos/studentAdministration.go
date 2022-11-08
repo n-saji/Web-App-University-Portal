@@ -37,6 +37,17 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentIn
 			eachRCA.ClassesEnrolled = existingRC
 		}
 	}
+
+	for _, eachRCA := range rca {
+		existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
+			return nil, err
+		} else {
+			eachRCA.StudentMarks = *existingRC
+		}
+	}
 	return rca, nil
 
 }
