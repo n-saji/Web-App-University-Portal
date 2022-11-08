@@ -22,7 +22,9 @@ func main() {
 		log.Println("Found err while connecting to database", err)
 	}
 
-	err1 := db.Migrator().AutoMigrate(&models.CourseInfo{}, &models.StudentInfo{})
+	err1 := db.Migrator().AutoMigrate(
+		&models.CourseInfo{},
+		 &models.StudentInfo{})
 	if err != nil {
 		log.Println("error found while migrating", err1)
 	}
@@ -32,7 +34,10 @@ func main() {
 	handler_connection := handlers.New(ServiceConnection)
 
 	r := handler_connection.GetRouter()
-	r.Run(":5050")
+	err2 := r.Run(":5050")
+	if err2 != nil{
+		log.Println("MAIN - ERROR ",err2)
+	}
 	fmt.Println("No Errors Yeepee!!")
 
 }
