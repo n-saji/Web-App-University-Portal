@@ -69,14 +69,14 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 
 }
 
-func (h * Handler) FetchAllCourseForAStudent(ctx *gin.Context){
+func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 
 	student_name := ctx.Param("name")
-	res,err := h.service.FetchStudentCourse(student_name)
+	res, err := h.service.FetchStudentCourse(student_name)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError,error.Error(err))
-	}else{
-		ctx.JSON(http.StatusOK,res)
+		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+	} else {
+		ctx.JSON(http.StatusOK, res)
 	}
 
 }
