@@ -14,16 +14,12 @@ func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 		return fmt.Errorf("Course Not Found")
 	}
 	cv.ClassesEnrolled.Id = cv_id.Id
-	/* ok, err := ac.daos.CheckForRollNo(cv.RollNumber)
-	if err != nil {
-		return err
-	} else {
-		if ok {
-			return fmt.Errorf("Roll Number already exist!")
-		}
-	} */
-
 	cv.Id = uuid.New()
+	sm, err2 := ac.InsertStudentIdInToMarksTable(cv)
+	if err2 != nil {
+		return err2
+	}
+	cv.MarksId = sm.Id
 	err1 := ac.daos.InsertValuesToCollegeAdminstration(cv)
 	if err1 != nil {
 		return err1
