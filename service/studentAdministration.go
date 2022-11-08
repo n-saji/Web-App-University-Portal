@@ -109,7 +109,6 @@ func (ac *Service) UpdateStudentNameAge(existing_name, student_name string, age 
 
 func (ac *Service) FetchStudentCourse(student_name string) (map[string]string, error) {
 	course_list := make(map[string]string)
-
 	course_list["student_name"] = student_name
 	si, err := ac.daos.GetStudentDetailsByName(student_name)
 	if err != nil {
@@ -120,7 +119,13 @@ func (ac *Service) FetchStudentCourse(student_name string) (map[string]string, e
 		if err != nil {
 			return nil, err
 		}
-		course_list[fmt.Sprintf("course_%d", index+1)] = each_si.ClassesEnrolled.CourseName
+
+		studentmarks, err := ac.daos.GetMarksByStudentId(each_si.Id)
+		each_si.StudentMarks = *studentmarks
+		if err != nil {
+			return nil, err
+		}
+		course_list[fmt.Sprintf("course_%d", index+1)] = fmt.Sprintf("%s -->Marks: %d Grade: %s", each_si.ClassesEnrolled.CourseName, each_si.StudentMarks.Marks, each_si.StudentMarks.Grade)
 	}
 	return course_list, nil
 }
