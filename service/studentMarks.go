@@ -2,7 +2,6 @@ package service
 
 import (
 	"CollegeAdministration/models"
-	"log"
 
 	"github.com/google/uuid"
 )
@@ -15,7 +14,6 @@ func (ac *Service) InsertStudentIdInToMarksTable(cv *models.StudentInfo) (*model
 	sm.CourseId = cv.ClassesEnrolled.Id
 	sm.CourseName = cv.ClassesEnrolled.CourseName
 	sm.StudentId = cv.Id
-	log.Println(sm)
 	err := ac.daos.CreateStudentMarks(&sm)
 	if err != nil {
 		return nil, err
