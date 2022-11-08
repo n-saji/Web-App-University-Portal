@@ -42,10 +42,7 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo) error {
 	rc, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
 	if err1 != nil {
 		return fmt.Errorf("Course not Found")
-		//rc.CourseName = rca.ClassesEnrolled.CourseName
-		//ac.InsertValuesToCA(&rc)
 	}
-
 	if rca.Id == uuid.Nil {
 		rcaOld, err := ac.daos.GetStudentDetailsByRollNumber(rca.RollNumber)
 		if err != nil {
@@ -53,10 +50,23 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo) error {
 		}
 		rca.Id = rcaOld.Id
 	}
+	sm, err2 := ac.daos.GetMarksByStudentId(rca.Id)
+	if err2 != nil {
+		return err2
+	}
 	if rca.ClassesEnrolled.Id == uuid.Nil {
 		rc, _ = ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
 		rca.ClassesEnrolled.Id = rc.Id
 		rca.CourseId = rc.Id
+	}
+	rca.MarksId = sm.Id
+	sm.Grade = rca.StudentMarks.Grade
+	sm.Marks = rca.StudentMarks.Marks
+	rca.StudentMarks = *sm
+
+	err3 := ac.daos.UpdateStudentMarks(sm)
+	if err3 != nil {
+		return err3
 	}
 	err := ac.daos.UpdateClgStudent(rca)
 	if err != nil {

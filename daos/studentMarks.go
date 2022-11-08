@@ -16,7 +16,7 @@ func (ac *AdminstrationCloud) CreateStudentMarks(sm *models.StudentMarks) error 
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetMarksById(id uuid.UUID) (*models.StudentMarks, error) {
+func (ac *AdminstrationCloud) GetMarksByMarksId(id uuid.UUID) (*models.StudentMarks, error) {
 
 	var sm *models.StudentMarks
 	err := ac.dbConn.Model(sm).Where("id = ?", id).Find(&sm).Error
@@ -25,4 +25,23 @@ func (ac *AdminstrationCloud) GetMarksById(id uuid.UUID) (*models.StudentMarks, 
 		return nil, err
 	}
 	return sm, nil
+}
+func (ac *AdminstrationCloud) GetMarksByStudentId(id uuid.UUID) (*models.StudentMarks, error) {
+	var sm models.StudentMarks
+	err := ac.dbConn.Model(sm).Where("student_id = ?", id).Find(&sm).Error
+	if err != nil {
+		return nil, err
+	}
+	return &sm, nil
+}
+
+func (ac *AdminstrationCloud) UpdateStudentMarks(sm *models.StudentMarks) error {
+
+	err := ac.dbConn.Save(&sm).Error
+
+	if err != nil {
+		return err
+	}
+	return nil
+
 }
