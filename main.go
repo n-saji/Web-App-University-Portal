@@ -24,7 +24,8 @@ func main() {
 
 	err1 := db.Migrator().AutoMigrate(
 		&models.CourseInfo{},
-		 &models.StudentInfo{})
+		&models.StudentInfo{},
+		&models.InstructorDetails{})
 	if err != nil {
 		log.Println("error found while migrating", err1)
 	}
@@ -35,8 +36,8 @@ func main() {
 
 	r := handler_connection.GetRouter()
 	err2 := r.Run(":5050")
-	if err2 != nil{
-		log.Println("MAIN - ERROR ",err2)
+	if err2 != nil {
+		log.Println("MAIN - ERROR ", err2)
 	}
 	fmt.Println("No Errors Yeepee!!")
 
