@@ -17,6 +17,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.DELETE("DeleteStudentInfo/:rollnumber", h.DeleteSA)
 	rc.PATCH("UpdateStudentNameAndAge/:name", h.UpdateStudentNameAndAge)
 	rc.GET("FindAllCourseForAStudent/:name", h.FetchAllCourseForAStudent)
+	rc.POST("/InsertInstructorDetails",h.InstructorInfoHandlers)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",

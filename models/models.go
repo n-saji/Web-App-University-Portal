@@ -7,12 +7,12 @@ import (
 type StudentInfo struct {
 	Id              uuid.UUID `gorm:"primary_key;type:uuid;unique"`
 	Name            string
-	RollNumber      string 
+	RollNumber      string
 	Age             int64
 	CourseId        uuid.UUID
-	MarksId	uuid.UUID
-	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	StudentMarks StudentMarks `gorm:"foreignKey:MarksId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	MarksId         uuid.UUID
+	ClassesEnrolled CourseInfo   `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	StudentMarks    StudentMarks `gorm:"foreignKey:MarksId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 type CourseInfo struct {
@@ -27,4 +27,13 @@ type StudentMarks struct {
 	CourseName string
 	Marks      int64
 	Grade      string
+}
+
+type InstructorDetails struct {
+	Id              uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
+	InstructorCode  string
+	InstructorName  string
+	Department      string
+	CourseId        uuid.UUID
+	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
