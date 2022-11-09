@@ -33,9 +33,11 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 }
 
 func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
+
+	oldCourse :=ctx.Param("coursename")
 	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
-	err := h.service.UpdateCAd(&rcd)
+	err := h.service.UpdateCAd(&rcd,oldCourse)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {
