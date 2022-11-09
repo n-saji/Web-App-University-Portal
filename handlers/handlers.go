@@ -12,7 +12,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/RetrieveCoursesAvailable", h.RetrieveValuesCA)
 	rc.GET("/RetrieveCollegeAdministration", h.RetrieveValuesCAd)
 	rc.PATCH("/UpdateCoursesAvailable/:name", h.UpdateValuesCA)
-	rc.PATCH("/UpdateCollegeAdministration", h.UpdateValuesCAd)
+	rc.PATCH("/UpdateCollegeAdministration/:coursename", h.UpdateValuesCAd)
 	rc.DELETE("/DeleteCoursesAvailable/:courseName", h.DeleteCA)
 	rc.DELETE("DeleteStudentInfo/:rollnumber", h.DeleteSA)
 	rc.PATCH("UpdateStudentNameAndAge/:name", h.UpdateStudentNameAndAge)
@@ -25,8 +25,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	})
 }
 
-/* API TO CREATE -
-Delete a course for a student
-delete student-marks
-retrieve all marks for a student
+/* 
+API TO CREATE -
+ Delete a course for a student
+ delete student-marks
+ 
 */
