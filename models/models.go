@@ -35,5 +35,6 @@ type InstructorDetails struct {
 	InstructorName  string
 	Department      string
 	CourseId        uuid.UUID
+	CourseName      string
 	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
