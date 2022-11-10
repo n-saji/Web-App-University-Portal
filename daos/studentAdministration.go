@@ -125,3 +125,17 @@ func (ac *AdminstrationCloud) GetStudentDetailsByName(student_name string) (*[]m
 	}
 	return si, nil
 }
+
+func (ac *AdminstrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_number string, courseId uuid.UUID) (*models.StudentInfo, error) {
+
+	var cad *models.StudentInfo
+	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ? AND course_id = ?", roll_number, courseId).Find(&cad)
+	if val == nil {
+		return nil, nil
+	}
+	if val.Error != nil {
+		log.Println("Not able to Fetch values student_infos table ", val.Error)
+		return nil, val.Error
+	}
+	return cad, nil
+}
