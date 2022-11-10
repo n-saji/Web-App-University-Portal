@@ -15,3 +15,12 @@ func (ac *AdminstrationCloud) InsertInstructorDetails(id *models.InstructorDetai
 	log.Println("Stored to database")
 	return nil
 }
+
+func (ac *AdminstrationCloud) GetAllInstructor() ([]*models.InstructorDetails, error) {
+	var id []*models.InstructorDetails
+	err := ac.dbConn.Find(&id).Error
+	if err != nil {
+		return nil, fmt.Errorf("not able to retrieve instructor details")
+	}
+	return id, nil
+}
