@@ -3,6 +3,7 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
+	"log"
 
 	"github.com/google/uuid"
 )
@@ -13,19 +14,21 @@ func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 	if err != nil {
 		return fmt.Errorf("course Not Found")
 	}
+
 	cv.ClassesEnrolled.Id = cv_id.Id
+	cv.CourseId = cv_id.Id
+	sd, _ := ac.daos.GetStudentdetail(cv)
+	log.Println(sd)
+	if sd != nil {
+		return fmt.Errorf("student with course exist")
+	}
+
 	cv.Id = uuid.New()
 	sm, err2 := ac.InsertStudentIdInToMarksTable(cv)
 	if err2 != nil {
 		return err2
 	}
 	cv.MarksId = sm.Id
-	cv.CourseId = cv_id.Id
-	//validate if a student with a course already exists
-	_, err3 := ac.daos.GetStudentDetailsByRollNumberAndCourseId(cv.RollNumber, cv.ClassesEnrolled.Id)
-	if err3 != nil {
-		return fmt.Errorf("student with course name already exits")
-	}
 
 	err1 := ac.daos.InsertValuesToCollegeAdminstration(cv)
 	if err1 != nil {
@@ -160,4 +163,25 @@ func (ac *Service) FetchStudentCourse(student_name string) (map[string]string, e
 		course_list[fmt.Sprintf("course_%d", index+1)] = fmt.Sprintf("%s -->Marks: %d Grade: %s", each_si.ClassesEnrolled.CourseName, each_si.StudentMarks.Marks, each_si.StudentMarks.Grade)
 	}
 	return course_list, nil
+}
+
+func (ac *Service) DeleteStudentCourseService(sn, cn string) (err error) {
+
+	course_details, err1 := ac.daos.GetCourseByName(cn)
+	if err1 != nil {
+		return fmt.Errorf("Course not found")
+	}
+	var student_detail models.StudentInfo
+	student_detail.Name = sn
+	student_detail.CourseId = course_details.Id
+	_, err2 := ac.daos.GetStudentdetail(&student_detail)
+	if err2 != nil {
+		return err2
+	}
+	err = ac.daos.DeleteCourseForAStudent(sn, course_details.Id)
+	if err != nil {
+		return fmt.Errorf("Failed to delete")
+	}
+	return nil
+
 }

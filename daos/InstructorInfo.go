@@ -24,3 +24,11 @@ func (ac *AdminstrationCloud) GetAllInstructor() ([]*models.InstructorDetails, e
 	}
 	return id, nil
 }
+func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDetails) (*models.InstructorDetails, error) {
+	var id models.InstructorDetails
+	err := ac.dbConn.Where(&id_exits).Find(&id).Error
+	if err != nil {
+		fmt.Errorf("record not found")
+	}
+	return &id, nil
+}
