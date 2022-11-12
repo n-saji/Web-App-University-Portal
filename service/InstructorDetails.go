@@ -9,12 +9,16 @@ import (
 )
 
 func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) error {
-	iid.Id = uuid.New()
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
 		return fmt.Errorf("course not available")
 	}
 	iid.CourseId = cn.Id
+	cd_exist, _ := ac.daos.GetInstructorDetail(iid)
+	if cd_exist.Id != uuid.Nil {
+		return fmt.Errorf("instructor exits")
+	}
+	iid.Id = uuid.New()
 	err := ac.daos.InsertInstructorDetails(iid)
 	if err != nil {
 		log.Println("Error while inserting details")

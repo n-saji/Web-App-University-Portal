@@ -34,10 +34,10 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
 func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 
-	oldCourse :=ctx.Param("coursename")
+	oldCourse := ctx.Param("coursename")
 	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
-	err := h.service.UpdateCAd(&rcd,oldCourse)
+	err := h.service.UpdateCAd(&rcd, oldCourse)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {
@@ -81,4 +81,17 @@ func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 
+}
+
+func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
+
+	parameter := ctx.Params
+	student_name := parameter.ByName("name")
+	course_name := parameter.ByName("course")
+	err := h.service.DeleteStudentCourseService(student_name, course_name)
+	if err != nil {
+		ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
+	} else {
+		ctx.IndentedJSON(http.StatusOK, "Deleted")
+	}
 }
