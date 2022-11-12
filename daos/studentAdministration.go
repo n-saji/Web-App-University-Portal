@@ -130,12 +130,30 @@ func (ac *AdminstrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_numb
 
 	var cad *models.StudentInfo
 	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ? AND course_id = ?", roll_number, courseId).Find(&cad)
-	if val == nil {
-		return nil, nil
-	}
 	if val.Error != nil {
 		log.Println("Not able to Fetch values student_infos table ", val.Error)
 		return nil, val.Error
 	}
 	return cad, nil
+}
+
+func (ac *AdminstrationCloud) DeleteCourseForAStudent(st_name string, c_id uuid.UUID) error {
+
+	err := ac.dbConn.Where("name = ? AND course_id = ?", st_name, c_id).Delete(models.StudentInfo{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.StudentInfo, error) {
+
+	var sd1 models.StudentInfo
+	err := ac.dbConn.Where(&sd).Find(&sd1).Error
+	if err != nil {
+		return nil, err
+	}
+	if sd1.Id == uuid.Nil {
+		return nil, fmt.Errorf("No record found")
+	}
+	return &sd1, nil
 }

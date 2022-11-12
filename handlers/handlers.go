@@ -17,8 +17,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.DELETE("DeleteStudentInfo/:rollnumber", h.DeleteSA)
 	rc.PATCH("UpdateStudentNameAndAge/:name", h.UpdateStudentNameAndAge)
 	rc.GET("FindAllCourseForAStudent/:name", h.FetchAllCourseForAStudent)
-	rc.POST("/InsertInstructorDetails",h.InstructorInfoHandlers)
-	rc.GET("/RetrieveInstructors",h.RetrieveInstructorDetails)
+	rc.POST("/InsertInstructorDetails", h.InstructorInfoHandlers)
+	rc.GET("/RetrieveInstructors", h.RetrieveInstructorDetails)
+	rc.DELETE("/DeleteStudentCourse/:name/:course", h.DeleteStudentCourse)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -26,9 +27,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	})
 }
 
-/* 
+/*
 API TO CREATE -
  Delete a course for a student
  delete student-marks
- 
+
 */
