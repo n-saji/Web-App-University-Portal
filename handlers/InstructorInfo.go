@@ -52,13 +52,18 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 func (h *Handler) InstructorLogin(ctx *gin.Context) {
 
 	parameter := ctx.Params
-	uuid, _ := uuid.Parse(parameter.ByName("instructorId"))
+	uuid, err2 := uuid.Parse(parameter.ByName("instructorId"))
+	if err2 != nil {
+		ctx.Abort()
+		ctx.JSON(406, "invalid uuid format")
+	}
+
 	emailId := parameter.ByName("emailId")
 	password := parameter.ByName("password")
 	err := h.service.ValidateLogin(emailId, password)
 	if err != nil {
 		ctx.JSON(http.StatusNotAcceptable, err.Error())
-	} else {
+	} else if err2 == nil {
 		err1 := h.service.StoreInstructoLogindetails(uuid, emailId, password)
 		if err1 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err1.Error())
