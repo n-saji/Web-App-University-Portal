@@ -39,3 +39,8 @@ type InstructorDetails struct {
 	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
+type InstructorLogin struct{
+	Id uuid.UUID
+	EmailId string
+	Password string
+}

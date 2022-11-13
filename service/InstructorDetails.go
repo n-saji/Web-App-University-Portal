@@ -8,23 +8,23 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) error {
+func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (error, uuid.UUID) {
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
-		return fmt.Errorf("course not available")
+		return fmt.Errorf("course not available"), uuid.Nil
 	}
 	iid.CourseId = cn.Id
 	cd_exist, _ := ac.daos.GetInstructorDetail(iid)
 	if cd_exist.Id != uuid.Nil {
-		return fmt.Errorf("instructor exits")
+		return fmt.Errorf("instructor exits"), uuid.Nil
 	}
 	iid.Id = uuid.New()
 	err := ac.daos.InsertInstructorDetails(iid)
 	if err != nil {
 		log.Println("Error while inserting details")
-		return err
+		return err, uuid.Nil
 	}
-	return err
+	return nil, iid.Id
 }
 
 func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
@@ -37,4 +37,21 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 		return nil, err
 	}
 	return id, nil
+}
+
+func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, passowrd string) error {
+
+	var credentials models.InstructorLogin
+	credentials.Id = id
+	credentials.EmailId = emailid
+	credentials.Password = passowrd
+	err := ac.daos.CheckIDPresent(credentials.Id)
+	if err != nil {
+		return err
+	}
+	err = ac.daos.StoreCredentialsForInstructor(credentials)
+	if err != nil {
+		return err
+	}
+	return nil
 }
