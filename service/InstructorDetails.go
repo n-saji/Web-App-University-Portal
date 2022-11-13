@@ -45,6 +45,9 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, passowrd st
 	credentials.Id = id
 	credentials.EmailId = emailid
 	credentials.Password = passowrd
+	if id == uuid.Nil {
+		return fmt.Errorf("uuid cant be null")
+	}
 	err := ac.daos.CheckIDPresent(credentials.Id)
 	if err != nil {
 		return err
