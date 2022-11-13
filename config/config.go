@@ -18,7 +18,7 @@ func Init(){
 	os.Setenv("POSTGRES_DB_NAME","postgres")
 	os.Setenv("POSTGRES_PASSWORD","password")
 	os.Setenv("POSTGRES_PORT","5432")
-	os.Setenv("POSTGRES_HOST","db")
+	os.Setenv("POSTGRES_HOST","localhost")
 	Postgres_User = os.Getenv("POSTGRES_USER")
 	Postgres_Db_Name = os.Getenv("POSTGRES_DB_NAME")
 	Postgres_Password = os.Getenv("POSTGRES_PASSWORD")
