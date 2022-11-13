@@ -13,7 +13,7 @@ func (ac *AdminstrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseIn
 	err := ac.dbConn.Table("course_infos").Create(ca).Error
 	if err != nil {
 		log.Println("Not able to insert to course_infos table ", err)
-		return fmt.Errorf("Failed! ", err)
+		return fmt.Errorf("failed! %s", err.Error())
 	}
 	log.Println("Stored to database")
 	return nil
@@ -58,7 +58,7 @@ func (ac *AdminstrationCloud) UpdateCourseByName(name string, rc *models.CourseI
 	rc.Id = rcOld.Id
 	err := ac.dbConn.Save(&rc).Error
 	if err != nil {
-		return fmt.Errorf("Failed UpdateCourseByName ", err)
+		return fmt.Errorf("failed UpdateCourseByName %s", err.Error())
 	}
 	return nil
 }

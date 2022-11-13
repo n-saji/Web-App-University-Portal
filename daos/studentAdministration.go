@@ -13,7 +13,7 @@ func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.Stud
 	err := ac.dbConn.Table("student_infos").Create(ca).Error
 	if err != nil {
 		log.Println("Not able to insert to student_infos table ", err)
-		return fmt.Errorf("Failed! ", err)
+		return fmt.Errorf("failed! %s", err.Error())
 	}
 	log.Println("Stored to database")
 	return nil
@@ -57,7 +57,7 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 	err := ac.dbConn.Save(&rca).Error
 
 	if err != nil {
-		return fmt.Errorf("Failed to UpdateClgStudent", err)
+		return fmt.Errorf("failed to UpdateClgStudent %s", err.Error())
 	}
 	return nil
 }
@@ -153,7 +153,7 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 		return nil, err
 	}
 	if sd1.Id == uuid.Nil {
-		return nil, fmt.Errorf("No record found")
+		return nil, fmt.Errorf("no record found")
 	}
 	return &sd1, nil
 }
