@@ -20,6 +20,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.POST("/InsertInstructorDetails", h.InstructorInfoHandlers)
 	rc.GET("/RetrieveInstructors", h.RetrieveInstructorDetails)
 	rc.DELETE("/DeleteStudentCourse/:name/:course", h.DeleteStudentCourse)
+	rc.GET("/instructorlogin/:instructorId/:emailId/:password", h.InstructorLogin)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -29,7 +30,8 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
- Delete a course for a student
- delete student-marks
 
+ delete student-marks
+create login for teachers
+make student data only visible for teachers once loged in
 */
