@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
@@ -47,30 +46,4 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	} else {
 		ctx.IndentedJSON(http.StatusCreated, rid)
 	}
-}
-
-func (h *Handler) InstructorLogin(ctx *gin.Context) {
-
-	parameter := ctx.Params
-	uuid, err2 := uuid.Parse(parameter.ByName("instructorId"))
-	if err2 != nil {
-		ctx.Abort()
-		ctx.JSON(406, "invalid uuid format")
-	}
-
-	emailId := parameter.ByName("emailId")
-	password := parameter.ByName("password")
-	err := h.service.ValidateLogin(emailId, password)
-	if err != nil {
-		ctx.JSON(http.StatusNotAcceptable, err.Error())
-	} else if err2 == nil {
-		err1 := h.service.StoreInstructoLogindetails(uuid, emailId, password)
-		if err1 != nil {
-			ctx.JSON(http.StatusNotAcceptable, err1.Error())
-		} else {
-			ctx.JSON(http.StatusAccepted, "Successfully Created Use token for accessing Db ")
-		}
-
-	}
-
 }
