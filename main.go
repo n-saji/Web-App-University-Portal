@@ -16,7 +16,7 @@ import (
 func main() {
 
 	config.Init()
-	url := fmt.Sprintf("host=localhost user=%s dbname=%s port=5432 sslmode=disable", config.Postgres_User, config.Postgres_Db_Name)
+	url := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", config.Postgres_Host, config.Postgres_User, config.Postgres_Password, config.Postgres_Db_Name, config.Postgres_Port)
 	db, err := gorm.Open(postgres.Open(url), &gorm.Config{})
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
@@ -39,6 +39,5 @@ func main() {
 	if err2 != nil {
 		log.Println("MAIN - ERROR ", err2)
 	}
-	fmt.Println("No Errors Yeepee!!")
 
 }
