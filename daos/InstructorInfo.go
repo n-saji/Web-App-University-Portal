@@ -10,7 +10,7 @@ func (ac *AdminstrationCloud) InsertInstructorDetails(id *models.InstructorDetai
 	err := ac.dbConn.Table("instructor_details").Create(id).Error
 	if err != nil {
 		log.Println("Not able to insert instructor details", err)
-		return fmt.Errorf("error while inserting instructor details", err)
+		return fmt.Errorf("error while inserting instructor details %s", err.Error())
 	}
 	log.Println("Stored to database")
 	return nil
@@ -28,7 +28,7 @@ func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDeta
 	var id models.InstructorDetails
 	err := ac.dbConn.Where(&id_exits).Find(&id).Error
 	if err != nil {
-		fmt.Errorf("record not found")
+		return nil,fmt.Errorf("record not found")
 	}
 	return &id, nil
 }
