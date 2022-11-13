@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertCA(ctx *gin.Context) {
@@ -26,12 +27,22 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 
-	response, err := h.service.RetrieveCA()
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
+	token := ctx.Param("token")
+	token_id := uuid.MustParse(token)
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+	} else if status  {
+		response, err := h.service.RetrieveCA()
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+		} else {
+			ctx.JSON(http.StatusOK, response)
+		}
 	} else {
-		ctx.JSON(http.StatusOK, response)
+		ctx.JSON(http.StatusBadRequest, "Token Expired")
 	}
+
 }
 func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 	var rc models.CourseInfo
