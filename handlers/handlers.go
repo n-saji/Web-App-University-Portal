@@ -29,7 +29,8 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
- Delete a course for a student
- delete student-marks
 
+ delete student-marks
+create login for teachers
+make student data only visible for teachers once loged in
 */
