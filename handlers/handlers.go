@@ -32,8 +32,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
-delete instructor
-if intructor deleted remove all acounts related to it
+
 same for student
  delete student-marks
 
