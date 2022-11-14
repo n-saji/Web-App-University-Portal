@@ -77,7 +77,7 @@ func (ac *Service) CheckTokenExpiry(token uuid.UUID) error {
 		if err2 != nil {
 			return err2
 		}
-		return fmt.Errorf("token expired")
+		return fmt.Errorf("token expired! Generate new token")
 	}
 	return nil
 }

@@ -22,7 +22,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 		err = fmt.Errorf("unable to store values")
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
-	response, id := h.service.InsertInstructorDet(insd)
+	id,response := h.service.InsertInstructorDet(insd)
 	if response == nil {
 		reply.Msg = "Successfully created. Create login for accessing db"
 		reply.URl = fmt.Sprintf("/instructorlogin/%s/:emailid/:password", id)

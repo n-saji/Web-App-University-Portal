@@ -42,13 +42,13 @@ type InstructorDetails struct {
 }
 
 type InstructorLogin struct {
-	Id       uuid.UUID
+	Id       uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
 	EmailId  string
 	Password string
 }
 
 type Token_generator struct {
-	Token     uuid.UUID
+	Token     uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
 	ValidFrom time.Time
 	ValidTill time.Time
 	IsValid   bool
