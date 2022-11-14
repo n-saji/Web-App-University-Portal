@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertCAd(ctx *gin.Context) {
@@ -24,11 +25,20 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
-	response, err := h.service.RetrieveCAd()
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
+	token := ctx.Param("token")
+	token_id := uuid.MustParse(token)
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+	} else if status {
+		response, err := h.service.RetrieveCAd()
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+		} else {
+			ctx.JSON(http.StatusOK, response)
+		}
 	} else {
-		ctx.JSON(http.StatusOK, response)
+		ctx.JSON(http.StatusBadRequest, "Token Expired")
 	}
 }
 
@@ -73,12 +83,21 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 
 func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 
-	student_name := ctx.Param("name")
-	res, err := h.service.FetchStudentCourse(student_name)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+	token := ctx.Param("token")
+	token_id := uuid.MustParse(token)
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+	} else if status {
+		student_name := ctx.Param("name")
+		res, err := h.service.FetchStudentCourse(student_name)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, error.Error(err))
+		} else {
+			ctx.JSON(http.StatusOK, res)
+		}
 	} else {
-		ctx.JSON(http.StatusOK, res)
+		ctx.JSON(http.StatusBadRequest, "Token Expired")
 	}
 
 }

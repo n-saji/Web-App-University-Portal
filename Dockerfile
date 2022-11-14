@@ -6,8 +6,8 @@ COPY . /root
 
 
 
-RUN go mod tidy
-RUN go mod vendor
+#RUN go mod tidy
+#RUN go mod vendor
 RUN go build -o collegeadminstration /root/main.go
 
 EXPOSE 5050

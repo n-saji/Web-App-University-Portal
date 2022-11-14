@@ -32,3 +32,23 @@ func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDeta
 	}
 	return &id, nil
 }
+
+func (ac *AdminstrationCloud)DeleteInstructor(name string)(error){
+
+	err := ac.dbConn.Where("instructor_name = ?",name).Delete(models.InstructorDetails{}).Error
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (ac *AdminstrationCloud) GetInstructorWithName(name string)(*models.InstructorDetails,error){
+
+	var is models.InstructorDetails
+	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where("instructor_name = ?",name).Find(&is).Error
+	if err != nil {
+		return nil,err
+	}
+	return &is,nil
+}

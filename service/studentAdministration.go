@@ -60,7 +60,7 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo, oldCourse string) error {
 	}
 	rcaExist, err := ac.daos.GetStudentDetailsByRollNumberAndCourseId(rca.RollNumber, rcOld.Id)
 	if err != nil {
-		return fmt.Errorf("student roll number not found", err)
+		return fmt.Errorf("student roll number not found %s", err.Error())
 	}
 
 	if rcaExist.Id == uuid.Nil {
@@ -78,7 +78,7 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo, oldCourse string) error {
 
 		rcaOld, err := ac.daos.GetStudentDetailsByRollNumberAndCourseId(rca.RollNumber, rcOld.Id)
 		if err != nil {
-			return fmt.Errorf("student roll number not found", err)
+			return fmt.Errorf("student roll number not found %s", err.Error())
 		}
 		rca.Id = rcaOld.Id
 	}
@@ -169,7 +169,7 @@ func (ac *Service) DeleteStudentCourseService(sn, cn string) (err error) {
 
 	course_details, err1 := ac.daos.GetCourseByName(cn)
 	if err1 != nil {
-		return fmt.Errorf("Course not found")
+		return fmt.Errorf("course not found")
 	}
 	var student_detail models.StudentInfo
 	student_detail.Name = sn
@@ -180,7 +180,7 @@ func (ac *Service) DeleteStudentCourseService(sn, cn string) (err error) {
 	}
 	err = ac.daos.DeleteCourseForAStudent(sn, course_details.Id)
 	if err != nil {
-		return fmt.Errorf("Failed to delete")
+		return fmt.Errorf("failed to delete")
 	}
 	return nil
 
