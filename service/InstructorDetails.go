@@ -8,23 +8,23 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (error, uuid.UUID) {
+func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (uuid.UUID,error) {
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
-		return fmt.Errorf("course not available"), uuid.Nil
+		return  uuid.Nil,fmt.Errorf("course not available")
 	}
 	iid.CourseId = cn.Id
 	cd_exist, _ := ac.daos.GetInstructorDetail(iid)
 	if cd_exist.Id != uuid.Nil {
-		return fmt.Errorf("instructor exits"), uuid.Nil
+		return uuid.Nil,fmt.Errorf("instructor exits")
 	}
 	iid.Id = uuid.New()
 	err := ac.daos.InsertInstructorDetails(iid)
 	if err != nil {
 		log.Println("Error while inserting details")
-		return err, uuid.Nil
+		return  uuid.Nil,err
 	}
-	return nil, iid.Id
+	return iid.Id,nil
 }
 
 func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {

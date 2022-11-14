@@ -33,6 +33,5 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 API TO CREATE -
 
  delete student-marks
-create login for teachers
-make student data only visible for teachers once loged in
+
 */
