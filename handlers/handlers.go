@@ -22,6 +22,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.DELETE("/DeleteStudentCourse/:name/:course", h.DeleteStudentCourse)
 	rc.GET("/instructorlogin/:instructorId/:emailId/:password", h.InstructorLoginCreation)
 	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
+	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -31,7 +32,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
-
+delete instructor
+if intructor deleted remove all acounts related to it
+same for student
  delete student-marks
 
 */

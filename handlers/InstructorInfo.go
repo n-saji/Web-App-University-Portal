@@ -22,7 +22,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 		err = fmt.Errorf("unable to store values")
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
-	id,response := h.service.InsertInstructorDet(insd)
+	id, response := h.service.InsertInstructorDet(insd)
 	if response == nil {
 		reply.Msg = "Successfully created. Create login for accessing db"
 		reply.URl = fmt.Sprintf("/instructorlogin/%s/:emailid/:password", id)
@@ -45,5 +45,16 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 	} else {
 		ctx.IndentedJSON(http.StatusCreated, rid)
+	}
+}
+
+func (h *Handler) DeleteInstructor(ctx *gin.Context) {
+
+	name := ctx.Param("name")
+	err := h.service.DeleteInstructor(name)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+	} else {
+		ctx.IndentedJSON(http.StatusOK, "Deleted Instructor")
 	}
 }

@@ -59,8 +59,7 @@ func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 
 func (h *Handler) DeleteCA(ctx *gin.Context) {
 
-	var CourseName string
-	CourseName = ctx.Param("courseName")
+	var CourseName string = ctx.Param("courseName")
 	err := h.service.DeleteCA(CourseName)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())

@@ -48,7 +48,7 @@ type InstructorLogin struct {
 }
 
 type Token_generator struct {
-	Token     uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
+	Token     uuid.UUID	`gorm:"primary_key;unique;type:uuid;"`
 	ValidFrom time.Time
 	ValidTill time.Time
 	IsValid   bool
