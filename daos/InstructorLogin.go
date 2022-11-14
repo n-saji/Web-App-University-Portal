@@ -80,3 +80,13 @@ func (ac *AdminstrationCloud) SetTokenFalse(token uuid.UUID) error {
 	return nil
 
 }
+
+func (ac *AdminstrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) error {
+
+	err := ac.dbConn.Where("id = ?", instructor_id).Delete(models.InstructorLogin{}).Error
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
