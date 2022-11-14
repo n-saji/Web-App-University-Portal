@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 )
 
@@ -37,4 +39,17 @@ type InstructorDetails struct {
 	CourseId        uuid.UUID
 	CourseName      string
 	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+}
+
+type InstructorLogin struct {
+	Id       uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
+	EmailId  string
+	Password string
+}
+
+type Token_generator struct {
+	Token     uuid.UUID	`gorm:"primary_key;unique;type:uuid;"`
+	ValidFrom time.Time
+	ValidTill time.Time
+	IsValid   bool
 }

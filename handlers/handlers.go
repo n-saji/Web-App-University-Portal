@@ -9,17 +9,20 @@ import (
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.POST("/InsertToCoursesAvailable", h.InsertCA)
 	rc.POST("/InsertToCollegeAdministration", h.InsertCAd)
-	rc.GET("/RetrieveCoursesAvailable", h.RetrieveValuesCA)
-	rc.GET("/RetrieveCollegeAdministration", h.RetrieveValuesCAd)
+	rc.GET("/RetrieveCoursesAvailable/:token", h.RetrieveValuesCA)
+	rc.GET("/RetrieveCollegeAdministration/:token", h.RetrieveValuesCAd)
 	rc.PATCH("/UpdateCoursesAvailable/:name", h.UpdateValuesCA)
 	rc.PATCH("/UpdateCollegeAdministration/:coursename", h.UpdateValuesCAd)
 	rc.DELETE("/DeleteCoursesAvailable/:courseName", h.DeleteCA)
 	rc.DELETE("DeleteStudentInfo/:rollnumber", h.DeleteSA)
 	rc.PATCH("UpdateStudentNameAndAge/:name", h.UpdateStudentNameAndAge)
-	rc.GET("FindAllCourseForAStudent/:name", h.FetchAllCourseForAStudent)
+	rc.GET("FindAllCourseForAStudent/:token/:name", h.FetchAllCourseForAStudent)
 	rc.POST("/InsertInstructorDetails", h.InstructorInfoHandlers)
 	rc.GET("/RetrieveInstructors", h.RetrieveInstructorDetails)
 	rc.DELETE("/DeleteStudentCourse/:name/:course", h.DeleteStudentCourse)
+	rc.GET("/instructorlogin/:instructorId/:emailId/:password", h.InstructorLoginCreation)
+	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
+	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -29,7 +32,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
- Delete a course for a student
+delete instructor
+if intructor deleted remove all acounts related to it
+same for student
  delete student-marks
 
 */
