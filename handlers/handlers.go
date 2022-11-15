@@ -30,4 +30,10 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	})
 }
 
+/*
+API TO CREATE -
 
+same for student
+ delete student-marks
+re-organize the structure
+*/
