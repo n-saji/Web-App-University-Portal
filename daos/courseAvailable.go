@@ -82,3 +82,4 @@ func (ac *AdminstrationCloud) DeleteCourse(id uuid.UUID) (bool, error) {
 	}
 	return true, nil
 }
+
