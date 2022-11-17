@@ -53,3 +53,9 @@ type Token_generator struct {
 	ValidTill time.Time
 	IsValid   bool
 }
+type StudentsMarksForCourse struct {
+	Course_name     string
+	StudentId       []string
+	StudentNameMark map[string]int64
+	Ranking         map[int64]string
+}

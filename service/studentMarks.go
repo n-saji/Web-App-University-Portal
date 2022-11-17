@@ -20,3 +20,42 @@ func (ac *Service) InsertStudentIdInToMarksTable(cv *models.StudentInfo) (*model
 	}
 	return &sm, nil
 }
+
+func (s *Service) GetAllStudentsMarksForGivenCourse(course_name string) (*models.StudentsMarksForCourse, error) {
+
+	smfc := &models.StudentsMarksForCourse{}
+	smfc.StudentNameMark = map[string]int64{}
+	smfc.Ranking = map[int64]string{}
+	var err error
+	course_model, err1 := s.daos.GetCourseByName(course_name)
+	if err1 != nil {
+		return nil, err1
+	}
+	smfc.StudentId, err = s.daos.GetAllStudentsIDForACourse(course_model.Id)
+	if err != nil {
+		return nil, err
+	}
+	smfc.Course_name = course_model.CourseName
+
+	for index, each_student := range smfc.StudentId {
+		student_id, err := uuid.Parse(each_student)
+		if err != nil {
+			return nil, err
+		}
+		student_model, err1 := s.daos.GetStudentdetail(&models.StudentInfo{Id: student_id, CourseId: course_model.Id})
+		if err1 != nil {
+			return nil, err1
+		}
+		marks_model, err2 := s.daos.GetMarksByStudentId(student_id)
+		if err2 != nil {
+			return nil, err2
+		}
+		student_model.StudentMarks = *marks_model
+		smfc.StudentNameMark[student_model.Name] = student_model.StudentMarks.Marks
+		smfc.Ranking[int64(index+1)] = student_model.Name
+
+	}
+
+	return smfc, nil
+
+}
