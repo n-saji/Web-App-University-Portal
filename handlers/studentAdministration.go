@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"CollegeAdministration/models"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -26,11 +27,17 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
 	token := ctx.Param("token")
-	token_id := uuid.MustParse(token)
+	token_id, err := uuid.Parse(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
 	status, err1 := h.service.CheckTokenValidity(token_id)
 	if err1 != nil {
 		ctx.JSON(http.StatusInternalServerError, err1.Error())
-	} else if status {
+		return
+	}
+	if status {
 		response, err := h.service.RetrieveCAd()
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err.Error())
@@ -84,11 +91,17 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 
 	token := ctx.Param("token")
-	token_id := uuid.MustParse(token)
+	token_id, err := uuid.Parse(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
 	status, err1 := h.service.CheckTokenValidity(token_id)
 	if err1 != nil {
 		ctx.JSON(http.StatusInternalServerError, err1.Error())
-	} else if status {
+		return
+	}
+	if status {
 		student_name := ctx.Param("name")
 		res, err := h.service.FetchStudentCourse(student_name)
 		if err != nil {
@@ -113,4 +126,31 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 	} else {
 		ctx.IndentedJSON(http.StatusOK, "Deleted")
 	}
+}
+
+func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
+
+	token := ctx.Param("token")
+	course_name := ctx.Param("coursename")
+	token_id, err := uuid.Parse(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if status {
+		model, err := h.service.GetAllStudentsMarksForGivenCourse(course_name)
+		if err != nil {
+			ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
+		} else {
+			ctx.IndentedJSON(http.StatusOK, model)
+		}
+	} else {
+		ctx.JSON(http.StatusBadRequest, "Token Expired")
+	}
+
 }

@@ -1,2 +1,2 @@
 # Go-Practise
-For practising go with a sample project
+GoLang Project - Using Gorm,Gin,Postgres
