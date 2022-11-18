@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"CollegeAdministration/models"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -28,11 +29,17 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 
 	token := ctx.Param("token")
-	token_id := uuid.MustParse(token)
+	token_id, err := uuid.Parse(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
 	status, err1 := h.service.CheckTokenValidity(token_id)
 	if err1 != nil {
 		ctx.JSON(http.StatusInternalServerError, err1.Error())
-	} else if status  {
+		return
+	}
+	if status {
 		response, err := h.service.RetrieveCA()
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err.Error())

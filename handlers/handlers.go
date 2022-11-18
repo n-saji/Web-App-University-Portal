@@ -23,6 +23,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/instructorlogin/:instructorId/:emailId/:password", h.InstructorLoginCreation)
 	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
+	rc.GET("/get-ranking/:token/:coursename", h.GetRankingForACourse)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
