@@ -48,7 +48,7 @@ type InstructorLogin struct {
 }
 
 type Token_generator struct {
-	Token     uuid.UUID	`gorm:"primary_key;unique;type:uuid;"`
+	Token     uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
 	ValidFrom time.Time
 	ValidTill time.Time
 	IsValid   bool
@@ -58,4 +58,10 @@ type StudentsMarksForCourse struct {
 	StudentId       []string
 	StudentNameMark map[string]int64
 	Ranking         map[int64]string
+}
+
+type StudentSelectiveData struct {
+	Name       string
+	Course     string
+	RollNumber string
 }
