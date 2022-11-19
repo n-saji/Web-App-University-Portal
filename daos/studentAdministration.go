@@ -150,6 +150,9 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 	condition["name"] = sd.Name
 	condition["age"] = sd.Age
 	condition["roll_number"] = sd.RollNumber
+	if sd.CourseId != uuid.Nil {
+		condition["course_id"] = sd.CourseId
+	}
 
 	err := ac.dbConn.Model(models.StudentInfo{}).Where(condition).Find(&sd1).Error
 	if err != nil {
