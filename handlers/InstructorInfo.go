@@ -21,19 +21,19 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 	if err != nil {
 		err = fmt.Errorf("unable to store values")
 		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 	id, response := h.service.InsertInstructorDet(insd)
-	if response == nil {
-		reply.Msg = "Successfully created. Create login for accessing db"
-		reply.URl = fmt.Sprintf("/instructorlogin/%s/:emailid/:password", id)
-		reply.Err = "nil"
-	} else {
-		reply.Err = response.Error()
-	}
-
 	if response != nil {
+		reply.Err = response.Error()
 		ctx.JSON(http.StatusInternalServerError, &reply)
-	} else {
+		return
+	}
+	reply.Msg = "Successfully created. Create login for accessing db"
+	reply.URl = fmt.Sprintf("/instructorlogin/%s/:emailid/:password", id)
+	reply.Err = "nil"
+
+	if response == nil {
 		ctx.IndentedJSON(http.StatusCreated, &reply)
 	}
 }
