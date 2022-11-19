@@ -35,4 +35,8 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 API TO CREATE -
  delete student-marks
 re-organize the structure
+
+BUG
+While updating student detail validate name and roll number
+creating student name and roll number must be unique - many student one roll no happens now
 */
