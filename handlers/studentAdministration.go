@@ -154,3 +154,29 @@ func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 	}
 
 }
+
+func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
+	token := ctx.Param("token")
+	token_id, err := uuid.Parse(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "Token Expired")
+		return
+	}
+
+	response, err2 := h.service.GetAllStudentSelectiveData()
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusAccepted, response)
+
+}

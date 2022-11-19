@@ -21,7 +21,7 @@ func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 		return fmt.Errorf("roll number exits for another student")
 	}
 	sd, _ := ac.daos.GetStudentdetail(cv)
-	if sd.CourseId == cv.CourseId {
+	if sd != nil && sd.CourseId == cv.CourseId {
 		return fmt.Errorf("student with course exist")
 	}
 
@@ -60,9 +60,13 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo, oldCourse string) error {
 	if err4 != nil {
 		return fmt.Errorf("%s Course not Found", oldCourse)
 	}
-	rcaExist, err := ac.daos.GetStudentDetailsByRollNumberAndCourseId(rca.RollNumber, rcOld.Id)
-	if err != nil {
-		return fmt.Errorf("student roll number not found %s", err.Error())
+	rcaExist, _ := ac.daos.GetStudentdetail(
+		&models.StudentInfo{
+			RollNumber: rca.RollNumber,
+			Id:         rcOld.Id,
+			Name:       rca.Name})
+	if rcaExist == nil {
+		return fmt.Errorf("Student details mismatched")
 	}
 
 	if rcaExist.Id == uuid.Nil {
@@ -185,5 +189,27 @@ func (ac *Service) DeleteStudentCourseService(sn, cn string) (err error) {
 		return fmt.Errorf("failed to delete")
 	}
 	return nil
+
+}
+
+func (s *Service) GetAllStudentSelectiveData() ([]*models.StudentSelectiveData, error) {
+
+	ssd := []*models.StudentSelectiveData{}
+
+	student_data, err := s.daos.RetieveCollegeAdminstration()
+	if err != nil {
+		return nil, err
+	}
+	for _, each_student_data := range student_data {
+		ssd = append(ssd,
+			&models.StudentSelectiveData{
+				Name:       each_student_data.Name,
+				RollNumber: each_student_data.RollNumber,
+				Course:     each_student_data.ClassesEnrolled.CourseName,
+			})
+
+	}
+
+	return ssd, nil
 
 }
