@@ -12,7 +12,6 @@ func (ac *AdminstrationCloud) InsertInstructorDetails(id *models.InstructorDetai
 		log.Println("Not able to insert instructor details", err)
 		return fmt.Errorf("error while inserting instructor details %s", err.Error())
 	}
-	log.Println("Stored to database")
 	return nil
 }
 

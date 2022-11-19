@@ -15,7 +15,6 @@ func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.Stud
 		log.Println("Not able to insert to student_infos table ", err)
 		return fmt.Errorf("failed! %s", err.Error())
 	}
-	log.Println("Stored to database")
 	return nil
 
 }
@@ -67,7 +66,6 @@ func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) 
 	var cad *models.StudentInfo
 	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
 	if val.Error != nil {
-		log.Println("Not able to insert to student_infos table ", val.Error)
 		return nil, val.Error
 	}
 	return cad, nil
@@ -148,7 +146,12 @@ func (ac *AdminstrationCloud) DeleteCourseForAStudent(st_name string, c_id uuid.
 func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.StudentInfo, error) {
 
 	var sd1 models.StudentInfo
-	err := ac.dbConn.Where(&sd).Find(&sd1).Error
+	condition := make(map[string]interface{})
+	condition["name"] = sd.Name
+	condition["age"] = sd.Age
+	condition["roll_number"] = sd.RollNumber
+
+	err := ac.dbConn.Model(models.StudentInfo{}).Where(condition).Find(&sd1).Error
 	if err != nil {
 		return nil, err
 	}

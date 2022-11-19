@@ -3,7 +3,6 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 
 	"github.com/google/uuid"
 )
@@ -17,9 +16,12 @@ func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 
 	cv.ClassesEnrolled.Id = cv_id.Id
 	cv.CourseId = cv_id.Id
+	sd_existing, _ := ac.daos.GetStudentDetailsByRollNumber(cv.RollNumber)
+	if sd_existing != nil && sd_existing.Name != cv.Name {
+		return fmt.Errorf("roll number exits for another student")
+	}
 	sd, _ := ac.daos.GetStudentdetail(cv)
-	log.Println(sd)
-	if sd != nil {
+	if sd.CourseId == cv.CourseId {
 		return fmt.Errorf("student with course exist")
 	}
 
