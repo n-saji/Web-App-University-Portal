@@ -3,7 +3,6 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 	"regexp"
 	"time"
 
@@ -42,8 +41,7 @@ func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
 	token_table.Token = token
 	token_table.IsValid = true
 	token_table.ValidFrom = time.Now()
-	token_table.ValidTill = token_table.ValidFrom.Add(time.Minute * 5)
-	log.Println(token_table)
+	token_table.ValidTill = token_table.ValidFrom.Add(time.Minute * 15)
 
 	err := ac.daos.InsertToken(token_table)
 	if err != nil {
@@ -72,12 +70,15 @@ func (ac *Service) CheckTokenExpiry(token uuid.UUID) error {
 		return err
 	}
 	time_now := time.Now()
-	if token_details.ValidTill.Minute() < time_now.Minute() || token_details.ValidTill.Hour() < time_now.Hour() {
+
+	diff := token_details.ValidTill.Sub(time_now)
+	if diff.Seconds() < 0 {
 		err2 := ac.daos.SetTokenFalse(token)
 		if err2 != nil {
 			return err2
 		}
 		return fmt.Errorf("token expired! Generate new token")
 	}
+
 	return nil
 }
