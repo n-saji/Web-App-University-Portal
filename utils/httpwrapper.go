@@ -28,7 +28,6 @@ func MakeRequest(method, url, name string, req, res interface{}) (int, error) {
 			return 0, err2
 		}
 		json.Unmarshal(content, &res)
-		log.Println(res)
 		return 200, nil
 
 	}
