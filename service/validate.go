@@ -3,7 +3,6 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 	"regexp"
 	"time"
 
@@ -43,7 +42,6 @@ func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
 	token_table.IsValid = true
 	token_table.ValidFrom = time.Now()
 	token_table.ValidTill = token_table.ValidFrom.Add(time.Minute * 5)
-	log.Println(token_table)
 
 	err := ac.daos.InsertToken(token_table)
 	if err != nil {

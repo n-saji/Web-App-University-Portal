@@ -12,10 +12,9 @@ func (ac *AdminstrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseIn
 
 	err := ac.dbConn.Table("course_infos").Create(ca).Error
 	if err != nil {
-		log.Println("Not able to insert to course_infos table ", err)
+		log.Println("not able to insert to course_infos table ", err)
 		return fmt.Errorf("failed! %s", err.Error())
 	}
-	log.Println("Stored to database")
 	return nil
 
 }
