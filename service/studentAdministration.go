@@ -93,8 +93,8 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo, oldCourse string) error {
 		rca.CourseId = rcNew.Id
 	}
 	rca.MarksId = sm.Id
-	sm.Grade = rca.StudentMarks.Grade
 	sm.Marks = rca.StudentMarks.Marks
+	sm.Grade = ac.GenerateGradeForMarks(sm.Marks)
 	sm.CourseName = rca.ClassesEnrolled.CourseName
 	sm.CourseId = rca.CourseId
 	rca.StudentMarks = *sm
