@@ -59,3 +59,23 @@ func (s *Service) GetAllStudentsMarksForGivenCourse(course_name string) (*models
 	return smfc, nil
 
 }
+
+func (s *Service) GenerateGradeForMarks(marks int64) string {
+
+	if marks > 90 {
+		return "S"
+	} else if marks <= 90 && marks > 80 {
+		return "A+"
+	} else if marks <= 80 && marks > 70 {
+		return "A"
+	} else if marks <= 70 && marks > 60 {
+		return "B+"
+	} else if marks <= 60 && marks > 50 {
+		return "B"
+	} else if marks <= 50 && marks > 40 {
+		return "C"
+	} else {
+		return "Fail"
+	}
+
+}

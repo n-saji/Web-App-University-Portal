@@ -37,7 +37,7 @@ func (ac *AdminstrationCloud) GetMarksByStudentId(id uuid.UUID) (*models.Student
 
 func (ac *AdminstrationCloud) UpdateStudentMarks(sm *models.StudentMarks) error {
 
-	err := ac.dbConn.Save(&sm).Error
+	err := ac.dbConn.Table("student_marks").Where("id = ?", sm.Id).Updates(models.StudentMarks{Marks: sm.Marks, Grade: sm.Grade}).Error //Save(&sm).Error
 
 	if err != nil {
 		return err
