@@ -24,7 +24,6 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.GET("/get-ranking/:token/:coursename", h.GetRankingForACourse)
-	rc.GET("/get-studdent-name-course/:token", h.GetSelectedFieldsAllStudent)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -37,6 +36,7 @@ API TO CREATE -
  delete student-marks
 re-organize the structure
 
-BUG -
-
+BUG - 
+While updating student detail validate name and roll number
+creating student name and roll number must be unique - many student one roll no happens now
 */
