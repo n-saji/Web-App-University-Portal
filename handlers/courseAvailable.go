@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"CollegeAdministration/models"
+	"CollegeAdministration/utils"
 	"fmt"
 	"log"
 	"net/http"
@@ -65,13 +66,21 @@ func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteCA(ctx *gin.Context) {
+	type response struct {
+		Message string
+		Courses []models.CourseInfo
+	}
 
 	var CourseName string = ctx.Param("courseName")
 	err := h.service.DeleteCA(CourseName)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
+		ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
+		res := response{}
+		token, _ := h.service.GetTokenAfterLogging()
+		utils.MakeRequest(http.MethodGet, "http://localhost:5050/RetrieveCoursesAvailable/"+token.String(), "Fetching course", nil, &res.Courses)
+		res.Message = "Please select from existing course"
+		ctx.IndentedJSON(200, res)
 	} else {
 		ctx.JSON(http.StatusOK, "Success")
 	}
-
 }
