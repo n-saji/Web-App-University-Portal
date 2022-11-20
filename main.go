@@ -38,7 +38,7 @@ func main() {
 	handler_connection := handlers.New(ServiceConnection)
 
 	r := handler_connection.GetRouter()
-	main_err := r.Run(":5050")
+	main_err := r.Run(config.Port)
 	if main_err != nil {
 		log.Println("MAIN - ERROR ", main_err)
 	}
