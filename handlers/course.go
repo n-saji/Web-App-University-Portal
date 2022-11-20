@@ -49,6 +49,10 @@ func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteCA(ctx *gin.Context) {
+	type response struct {
+		Message string
+		Courses []models.CourseInfo
+	}
 
 	var CourseName string = ctx.Param("courseName")
 	err := h.service.DeleteCA(CourseName)
