@@ -7,8 +7,8 @@ import (
 )
 
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
-	rc.POST("/InsertToCoursesAvailable", h.InsertCA)
-	rc.POST("/InsertToCollegeAdministration", h.InsertCAd)
+	rc.POST("/insert-course", h.InsertCA)
+	rc.POST("/insert-student-details", h.InsertCAd)
 	rc.GET("/RetrieveCoursesAvailable/:token", h.RetrieveValuesCA)
 	rc.GET("/RetrieveCollegeAdministration/:token", h.RetrieveValuesCAd)
 	rc.PATCH("/UpdateCoursesAvailable/:name", h.UpdateValuesCA)
@@ -37,6 +37,4 @@ API TO CREATE -
 re-organize the structure
 
 BUG - 
-While updating student detail validate name and roll number
-creating student name and roll number must be unique - many student one roll no happens now
 */
