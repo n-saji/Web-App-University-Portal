@@ -20,7 +20,7 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
 	} else {
-		ctx.JSON(http.StatusCreated, "Successfully inserted to table")
+		ctx.JSON(http.StatusCreated, "successfully inserted to table")
 	}
 }
 
@@ -110,7 +110,7 @@ func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 			ctx.JSON(http.StatusOK, res)
 		}
 	} else {
-		ctx.JSON(http.StatusBadRequest, "Token Expired")
+		ctx.JSON(http.StatusBadRequest, "token expired")
 	}
 
 }
@@ -124,7 +124,7 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 	if err != nil {
 		ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
 	} else {
-		ctx.IndentedJSON(http.StatusOK, "Deleted")
+		ctx.IndentedJSON(http.StatusOK, "deleted")
 	}
 }
 
@@ -150,7 +150,7 @@ func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 			ctx.IndentedJSON(http.StatusOK, model)
 		}
 	} else {
-		ctx.JSON(http.StatusBadRequest, "Token Expired")
+		ctx.JSON(http.StatusBadRequest, "token expired")
 	}
 
 }
@@ -168,7 +168,7 @@ func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
 		return
 	}
 	if !status {
-		ctx.JSON(http.StatusBadRequest, "Token Expired")
+		ctx.JSON(http.StatusBadRequest, "token expired")
 		return
 	}
 
