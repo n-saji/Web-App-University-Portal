@@ -29,8 +29,8 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, &reply)
 		return
 	}
-	reply.Msg = "Successfully created. Create login for accessing db"
-	reply.URl = fmt.Sprintf("/instructorlogin/%s/:emailid/:password", id)
+	reply.Msg = "successfully created. Create login for accessing db"
+	reply.URl = fmt.Sprintf("/instructor-login-with-id/%s/:emailid/:password", id)
 	reply.Err = "nil"
 
 	if response == nil {
@@ -55,6 +55,6 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 	} else {
-		ctx.IndentedJSON(http.StatusOK, "Deleted Instructor")
+		ctx.IndentedJSON(http.StatusOK, "deleted instructor: "+name)
 	}
 }
