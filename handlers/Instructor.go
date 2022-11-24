@@ -44,7 +44,7 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 	} else {
-		ctx.IndentedJSON(http.StatusCreated, rid)
+		ctx.IndentedJSON(http.StatusOK, rid)
 	}
 }
 

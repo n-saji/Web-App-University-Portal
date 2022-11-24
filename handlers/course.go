@@ -73,7 +73,7 @@ func (h *Handler) DeleteCA(ctx *gin.Context) {
 		res := models.DeleteResponse{}
 		token, _ := h.service.GetTokenAfterLogging()
 		utils.MakeRequest(http.MethodGet, "http://localhost:5050/retrieve-all-courses/"+token.String(), "Fetching course", nil, &res.Courses)
-		res.Message = err.Error() + " Please select from existing course"
+		res.Message = err.Error() + "! Please select from existing course"
 		ctx.IndentedJSON(http.StatusNotFound, res)
 	} else {
 		ctx.JSON(http.StatusOK, "successfully deleted")
