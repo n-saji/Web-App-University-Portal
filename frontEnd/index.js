@@ -13,6 +13,7 @@ function userlogin() {
 
 async function CheckValidity() {
   //const endpoint = new URL(`http://localhost:5050/instructor-login/${username}/${password}`);
+  
   // const endpoint = new URL ('http://localhost:5050/retrieve-instructors')
   let response = await fetch("http://localhost:5050/retrieve-instructors");
   let json;
