@@ -1,29 +1,48 @@
 function userlogin() {
-  // const emailId  = document.getElementById("username").value;
-  //const password = document.getElementById("password").value;
-  const returnvalue = document.getElementById("response");
-  //id1.innerHTML = emailId.value+password.value
-  //id1.addEventListener('click',userlogin);
+  const emailId = document.getElementById("username").value;
+  if (!emailId) {
+    alert("Please enter username.");
+    return;
+  }
+  const password = document.getElementById("password").value;
+  if (!password) {
+    alert("Please enter password.");
+    return;
+  }
+  const returnvalue = document.getElementById("loginButton");
 
-  var valis = CheckValidity();
-  returnvalue.innerHTML = valis;
-  returnvalue.addEventListener("click", CheckValidity);
-  return valis[0];
+  returnvalue.addEventListener("click", toCheckValidity(emailId, password));
 }
 
-async function CheckValidity() {
-  //const endpoint = new URL(`http://localhost:5050/instructor-login/${username}/${password}`);
-  
-  // const endpoint = new URL ('http://localhost:5050/retrieve-instructors')
-  let response = await fetch("http://localhost:5050/retrieve-instructors");
-  let json;
-  if (response.ok === true) {
-    json = await response.json();
-    console.log(json[0]);
-  } else {
-    console.log("iam here");
-    alert("HTTP-Error: " + response.status);
+async function toCheckValidity(emailId, password) {
+  let uuid = await CheckValidity(emailId, password).catch((error) =>
+    console.log(error)
+  );
+  if (uuid != "") {
+    console.log("correct", uuid);
+    window.open("allInstructor.html");
   }
-  let raw = JSON.stringify(json,undefined,2);
-  return raw;
+}
+
+async function CheckValidity(username, password) {
+  let response = await fetch(
+    `http://localhost:5050/instructor-login/${username}/${password}`
+  );
+  let uuid_instructor = await response.json();
+  if (response.ok === true) {
+    // window
+    //   .open(
+    //     `http://localhost:5050/retrieve-all-courses/${responsemsg}`,
+    //     "_blank"
+    //   )
+    //   .focus();
+    // window.location.replace(
+    //   `http://localhost:5050/retrieve-all-courses/${responsemsg}`
+    // );
+    //window.location.replace("allCourse.html");
+    return uuid_instructor;
+  } else {
+    alert("HTTP-Error: " + uuid_instructor);
+    return "";
+  }
 }
