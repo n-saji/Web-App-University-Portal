@@ -18,6 +18,6 @@ async function populateInstructors() {
       .join("");
 }
 
-async function insertInstructor(){
-  let createInstructor = await fetch()
+async function insertInstructor() {
+  window.open("createInstructor.html");
 }
