@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -28,7 +27,7 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 		if err1 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err1.Error())
 		} else {
-			ctx.JSON(http.StatusAccepted, fmt.Sprintf("successfully created. Use token for accessing Db-> %s", token.String()))
+			ctx.JSON(http.StatusAccepted, token.String())
 		}
 
 	}
@@ -54,7 +53,7 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 		if err2 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err2.Error())
 		} else {
-			ctx.JSON(http.StatusAccepted, fmt.Sprintf("Successfully LogedIn Use token for accessing Db-> %s", token.String()))
+			ctx.JSON(http.StatusAccepted, token.String())
 		}
 
 	}

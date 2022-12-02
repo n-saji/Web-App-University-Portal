@@ -1,0 +1,29 @@
+.heading {
+  text-align: center;
+  color: green;
+}
+.input {
+  border-radius: 5px;
+  width: 190px;
+  border: 2px solid rebeccapurple;
+  font-size: medium;
+}
+
+.div1 {
+  text-align: center;
+  display: block;
+  align-self: auto;
+  margin: auto;
+}
+
+.button {
+  border-radius: 5px;
+  border-color: green;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: white;
+}
+.button:hover {
+  background-color: #0b7c0f; /* Green */
+  color: white;
+}
