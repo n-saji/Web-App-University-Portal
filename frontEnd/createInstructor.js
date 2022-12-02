@@ -36,6 +36,7 @@ async function InsertInstructorValues() {
   console.log(response);
   if (createInstructor.ok != true) {
     alert(response.Err);
+  } else if (createInstructor.ok == true) {
+    document.getElementById("responseBody").innerHTML = "Inserted Data";
   }
-  document.getElementById("responseBody").innerHTML = "Inserted Data";
 }
