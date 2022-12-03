@@ -3,12 +3,10 @@ package handlers
 import (
 	"CollegeAdministration/models"
 	"CollegeAdministration/utils"
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertCA(ctx *gin.Context) {
@@ -29,26 +27,32 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 
-	token := ctx.Param("token")
-	token_id, err := uuid.Parse(token)
+	// token := ctx.Param("token")
+	// token_id, err := uuid.Parse(token)
+	// if err != nil {
+	// 	ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+	// 	return
+	// }
+	// status, err1 := h.service.CheckTokenValidity(token_id)
+	// if err1 != nil {
+	// 	ctx.JSON(http.StatusInternalServerError, err1.Error())
+	// 	return
+	// }
+	// if status {
+	// 	response, err := h.service.RetrieveCA()
+	// 	if err != nil {
+	// 		ctx.JSON(http.StatusInternalServerError, err.Error())
+	// 	} else {
+	// 		ctx.JSON(http.StatusOK, response)
+	// 	}
+	// } else {
+	// 	ctx.JSON(http.StatusBadRequest, "token expired")
+	// }
+	response, err := h.service.RetrieveCA()
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if status {
-		response, err := h.service.RetrieveCA()
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-		} else {
-			ctx.JSON(http.StatusOK, response)
-		}
+		ctx.JSON(http.StatusInternalServerError, err.Error())
 	} else {
-		ctx.JSON(http.StatusBadRequest, "token expired")
+		ctx.JSON(http.StatusOK, response)
 	}
 
 }

@@ -15,13 +15,15 @@
       <h3>Department</h3>
       <input type="text" id="dp" />
       <h3>CourseName</h3>
-      <input type="text" id="cn" />
+      <select id="cn_drop_down" name="courses"></select>
       <br />
       <button onclick="InsertInstructorValues()" id="submitInstructor">
         Submit
       </button>
 
       <h3 id="responseBody"></h3>
+      <button id="redirect_to_login" onclick="create_account_new()"></button>
     </dev>
   </body>
+  <script src="allCourse.js"></script>
 </html>

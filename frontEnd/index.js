@@ -20,7 +20,7 @@ async function toCheckValidity(emailId, password) {
   );
   if (uuid != "") {
     console.log("correct", uuid);
-    window.open("allInstructor.html");
+    window.location.replace("allInstructor.html");
   }
 }
 
