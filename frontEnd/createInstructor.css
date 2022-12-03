@@ -19,3 +19,23 @@
   display: block;
   margin: auto;
 }
+#cn_drop_down {
+  width: 140px;
+  height: 25px;
+}
+
+#redirect_to_login {
+  border-radius: 15px;
+  border-color: darkred;
+
+  padding: 5px;
+  margin-top: 20px;
+  background-color: red;
+  width: 70px;
+  color: white;
+  height: 45px;
+}
+#redirect_to_login:hover {
+  background-color: #0b7c0f; /* Green */
+  color: white;
+}

@@ -9,7 +9,7 @@ import (
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.POST("/insert-course", h.InsertCA)
 	rc.POST("/insert-student-details", h.InsertCAd)
-	rc.GET("/retrieve-all-courses/:token", h.RetrieveValuesCA)
+	rc.GET("/retrieve-all-courses", h.RetrieveValuesCA)
 	rc.GET("/retrieve-college-administration/:token", h.RetrieveValuesCAd)
 	rc.PATCH("/update-course/:name", h.UpdateValuesCA)
 	rc.PATCH("/update-student-details/:coursename", h.UpdateValuesCAd)
@@ -24,7 +24,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.GET("/get-ranking/:token/:coursename", h.GetRankingForACourse)
-	rc.GET("/get-student-name-course/:token",h.GetSelectedFieldsAllStudent)
+	rc.GET("/get-student-name-course/:token", h.GetSelectedFieldsAllStudent)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -37,5 +37,5 @@ API TO CREATE -
  delete student-marks
 re-organize the structure
 
-BUG - 
+BUG -
 */
