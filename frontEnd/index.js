@@ -3,7 +3,6 @@ function userlogin() {
   const username_style = document.getElementById("username");
   const emailId_warning = document.getElementById("tempfix");
 
-  username_style.style.border = "2px solid rebeccapurple";
   if (!emailId) {
     username_style.style.border = "2px solid red";
     emailId.innerHTML = "!";
