@@ -26,9 +26,12 @@ async function populateInstructors() {
 }
 
 async function insertInstructor() {
-  window.open("createInstructor.html");
+  window.location.replace("createInstructor.html");
 }
 
 function hideInstructors() {
   document.getElementById("instructor_table").style.display = "none";
+}
+function setbackpage() {
+  window.location.replace("index.html");
 }

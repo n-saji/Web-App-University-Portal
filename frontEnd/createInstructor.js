@@ -50,5 +50,18 @@ async function InsertInstructorValues() {
 }
 
 async function create_account_new() {
+  let instructorcode = document.getElementById("ic").value;
+  let instructorname = document.getElementById("in").value;
+  let department = document.getElementById("dp").value;
+  let coursename = document.getElementById("cn_drop_down").value;
+  if (
+    !instructorcode ||
+    !instructorname ||
+    !department ||
+    coursename == "Choose Course"
+  ) {
+    alert("Please fill details");
+    return;
+  }
   window.location.replace("createInstructorAccount.html");
 }

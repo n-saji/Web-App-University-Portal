@@ -11,14 +11,29 @@
       <h2 class="heading">Please Login</h2>
 
       <div class="div1">
-        <h3 class="sub_heading">Username</h3>
-        <input class="input" type="email" id="username" />
-        <h3 class="sub_heading">Password</h3>
-        <input class="input" type="password" id="password" />
+        <div class="line1">
+          <h3 class="usr_pass_heading">Username</h3>
+          <input class="input_usr_pass" type="email" id="username" />
+        </div>
         <br />
-        <button class="button" onclick="userlogin()" id="loginButton">
-          Login
-        </button>
+        <div class="line2">
+          <h3 class="usr_pass_heading">Password</h3>
+          <input class="input_usr_pass" type="password" id="password" />
+        </div>
+        <br />
+        <div class="line3">
+          <button class="login_button" onclick="userlogin()" id="loginButton">
+            Login
+          </button>
+          <button
+            class="login_button"
+            onclick="forgotPassword()"
+            id="forgotButton"
+          >
+            Forgot
+          </button>
+          <p id="tempfix"></p>
+        </div>
       </div>
     </body>
   </head>

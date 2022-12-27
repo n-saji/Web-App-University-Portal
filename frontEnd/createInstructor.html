@@ -7,7 +7,7 @@
   </head>
   <body>
     <dev class="fields">
-      <h2>Create Instructor Details</h2>
+      <h2>Create Instructor</h2>
       <h3>InstructorCode</h3>
       <input type="text" id="ic" />
       <h3>InstructorName</h3>
@@ -17,12 +17,14 @@
       <h3>CourseName</h3>
       <select id="cn_drop_down" name="courses"></select>
       <br />
-      <button onclick="InsertInstructorValues()" id="submitInstructor">
-        Submit
-      </button>
-
       <h3 id="responseBody"></h3>
-      <button id="redirect_to_login" onclick="create_account_new()"></button>
+    </dev>
+    <dev class="inline_buttons">
+      <button onclick="InsertInstructorValues()" id="submitInstructor">
+        Submit</button
+      ><button id="redirect_to_login" onclick="create_account_new()">
+        Create Account
+      </button>
     </dev>
   </body>
   <script src="allCourse.js"></script>

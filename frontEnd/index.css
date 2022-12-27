@@ -1,12 +1,20 @@
+body {
+  background-image: url("clg_login_photo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .heading {
   text-align: center;
-  color: green;
+  color: rgb(17, 0, 128);
+  font-family: "Courier New", Courier, monospace;
 }
-.input {
+.input_usr_pass {
   border-radius: 5px;
   width: 190px;
   border: 2px solid rebeccapurple;
   font-size: medium;
+  height: fit-content;
+  margin-top: 20px;
 }
 
 .div1 {
@@ -15,15 +23,55 @@
   align-self: auto;
   margin: auto;
 }
-
-.button {
+.line1 {
+  display: inline-flex;
+}
+.login_button {
   border-radius: 5px;
   border-color: green;
   padding: 5px;
   margin-top: 20px;
   background-color: white;
+  cursor: pointer;
+  margin: 20px;
 }
-.button:hover {
-  background-color: #0b7c0f; /* Green */
-  color: white;
+.login_button:hover {
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+.usr_pass_heading {
+  margin-right: 50px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.line2 {
+  display: inline-flex;
+}
+#tempfix {
+  font-size: 25px;
+  color: rgb(69, 0, 18);
+  animation: blinker 0.5s linear infinite;
+  text-shadow: 20px;
+}
+@keyframes blinker {
+  100% {
+    color: yellow;
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  60% {
+    color: red;
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  20% {
+    color: yellow;
+    opacity: 1;
+  }
+  0% {
+    color: yellow;
+    opacity: 0;
+  }
 }

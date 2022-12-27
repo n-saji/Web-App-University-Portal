@@ -14,6 +14,17 @@ function userlogin() {
   returnvalue.addEventListener("click", toCheckValidity(emailId, password));
 }
 
+function forgotPassword() {
+  const returnvalue = document.getElementById("tempfix");
+  returnvalue.style.display = "block";
+  returnvalue.innerHTML = "&#9888Feature under development&#9888";
+  setTimeout(disablefunction, 3000);
+}
+function disablefunction() {
+  const returnvalue = document.getElementById("tempfix");
+  returnvalue.style.display = "none";
+}
+
 async function toCheckValidity(emailId, password) {
   let uuid = await CheckValidity(emailId, password).catch((error) =>
     console.log(error)
