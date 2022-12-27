@@ -1,12 +1,24 @@
 function userlogin() {
   const emailId = document.getElementById("username").value;
+  const username_style = document.getElementById("username");
+  const emailId_warning = document.getElementById("tempfix");
+
+  username_style.style.border = "2px solid rebeccapurple";
   if (!emailId) {
-    alert("Please enter username.");
+    username_style.style.border = "2px solid red";
+    emailId.innerHTML = "!";
+    emailId_warning.style.display = "block";
+    emailId_warning.innerHTML = "Email can't be empty";
+    setTimeout(disablefunction, 3000);
     return;
   }
   const password = document.getElementById("password").value;
+  const password_style = document.getElementById("password");
   if (!password) {
-    alert("Please enter password.");
+    password_style.style.border = "2px solid red";
+    emailId_warning.style.display = "block";
+    emailId_warning.innerHTML = "Password can't be empty";
+    setTimeout(disablefunction, 3000);
     return;
   }
   const returnvalue = document.getElementById("loginButton");
@@ -36,24 +48,17 @@ async function toCheckValidity(emailId, password) {
 }
 
 async function CheckValidity(username, password) {
+  const emailId_warning = document.getElementById("tempfix");
   let response = await fetch(
     `http://localhost:5050/instructor-login/${username}/${password}`
   );
   let uuid_instructor = await response.json();
-  if (response.ok === true) {
-    // window
-    //   .open(
-    //     `http://localhost:5050/retrieve-all-courses/${responsemsg}`,
-    //     "_blank"
-    //   )
-    //   .focus();
-    // window.location.replace(
-    //   `http://localhost:5050/retrieve-all-courses/${responsemsg}`
-    // );
-    //window.location.replace("allCourse.html");
+  if (response.ok == true) {
     return uuid_instructor;
   } else {
-    alert("HTTP-Error: " + uuid_instructor);
+    emailId_warning.style.display = "block";
+    emailId_warning.innerHTML = "Wrong Credentials";
+    setTimeout(disablefunction, 3000);
     return "";
   }
 }
