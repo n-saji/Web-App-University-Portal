@@ -14,9 +14,10 @@ async function InsertInstructorValues() {
     alert("Please enter department.");
     return;
   }
-  let coursename = document.getElementById("cn").value;
-  if (!coursename) {
-    alert("Please enter coursename.");
+  let coursename = document.getElementById("cn_drop_down").value;
+  console.log(coursename);
+  if (coursename == "Choose Course") {
+    alert("Please choose a course.");
     return;
   }
   let createInstructor = await fetch(
@@ -37,6 +38,30 @@ async function InsertInstructorValues() {
   if (createInstructor.ok != true) {
     alert(response.Err);
   } else if (createInstructor.ok == true) {
-    document.getElementById("responseBody").innerHTML = "Inserted Data";
+    document.getElementById("responseBody").innerHTML =
+      "Added<br> Please Create EmailId and Password";
+
+    let rtl = document.getElementById("redirect_to_login");
+    rtl.innerHTML = "Create Account";
+    let URL = `http://localhost:5050` + response.URl;
+    document.cookie = `url=${URL}`;
+    localStorage.setItem("URL_Create_Login", URL);
   }
+}
+
+async function create_account_new() {
+  let instructorcode = document.getElementById("ic").value;
+  let instructorname = document.getElementById("in").value;
+  let department = document.getElementById("dp").value;
+  let coursename = document.getElementById("cn_drop_down").value;
+  if (
+    !instructorcode ||
+    !instructorname ||
+    !department ||
+    coursename == "Choose Course"
+  ) {
+    alert("Please fill details");
+    return;
+  }
+  window.location.replace("createInstructorAccount.html");
 }

@@ -1,36 +1,72 @@
+body {
+  background-color: aquamarine;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#headers {
+  text-align: center;
+}
+.headers_tab {
+  display: inline-flex;
+  margin-left: 40%;
+}
 #instructor_table {
   border-radius: 5px solid black;
   text-align: center;
   width: 600px;
   margin-left: 150px;
 }
-#instructorTable {
-  font-size: medium;
-  border: 2px;
+.logout_headers {
+  margin-top: 20px;
+  margin-left: 450px;
+  height: 30px;
+}
+.logout_headers:hover {
+  box-shadow: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  border-color: red;
+  background-color: rgba(255, 0, 0, 0.736);
 }
 #button_to_show_instructors {
+  color: white;
   border-radius: 45px;
-  border-color: darkred;
+  border-color: green;
+  margin-left: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: green;
+  width: 60px;
+}
+#button_to_show_instructors:hover {
+  background-color: darkgreen; /* Green */
+  color: white;
+}
+#button_to_hide_instructors {
+  color: white;
+  border-radius: 45px;
+  border-color: red;
   margin-left: 50px;
   padding: 5px;
   margin-top: 20px;
   background-color: red;
-  width: 40px;
+  width: 60px;
 }
-#button_to_show_instructors:hover {
-  background-color: #0b7c0f; /* Green */
+#button_to_hide_instructors:hover {
+  background-color: darkred;
   color: white;
 }
 #button_to_add_instructor {
   border-radius: 45px;
-  border-color: darkred;
+  border-color: orange;
   margin-left: 50px;
   padding: 5px;
   margin-top: 20px;
-  background-color: red;
-  width: 40px;
+  background-color: orange;
+  width: 60px;
+  color: white;
 }
 #button_to_add_instructor:hover {
-  background-color: #0b7c0f; /* Green */
+  background-color: darkorange; /* Green */
   color: white;
 }
