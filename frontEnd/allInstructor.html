@@ -3,28 +3,35 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="allInstructor.css" />
     <script src="allInstructor.js"></script>
-    <title>Instructor Details</title>
+    <title>Instructor Page</title>
   </head>
   <body>
-    <h1>Instructor Details</h1>
+    <dev class="headers_tab">
+      <h1 id="headers">Instructor Dashboard</h1>
+      <button class="logout_headers" onclick="setbackpage()">Log Out</button>
+    </dev>
     <h2>
-      Click button to show Instructors details<button
+      Instructors details<button
         id="button_to_show_instructors"
         onclick="populateInstructors()"
-      ></button>
+      >
+        Show</button
+      ><button id="button_to_hide_instructors" onclick="hideInstructors()">
+        Hide
+      </button>
     </h2>
     <table id="instructor_table">
-      <thead>
-        <tr>
-          <th>InstructorCode</th>
-          <th>InstructorName</th>
-          <th>Department</th>
-          <th>CourseName</th>
-        </tr>
-      </thead>
-      <tbody id="instructorTable"></tbody>
+      <thead id="instructor_table_head"></thead>
+      <tbody id="instructor_table_body"></tbody>
     </table>
 
-    <h2>Too add new Instructor<button id = "button_to_add_instructor" onclick="insertInstructor()"></button></h2>
+    <h2>
+      Add new Instructor<button
+        id="button_to_add_instructor"
+        onclick="insertInstructor()"
+      >
+        link
+      </button>
+    </h2>
   </body>
 </html>

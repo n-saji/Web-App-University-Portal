@@ -1,21 +1,45 @@
-#submitInstructor {
-  border-radius: 15px;
-  border-color: darkred;
-
-  padding: 5px;
-  margin-top: 20px;
-  background-color: red;
-  width: 70px;
-  color: white;
-  height: 45px;
+body {
+  background-color: aquamarine;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-#submitInstructor:hover {
-  background-color: #0b7c0f; /* Green */
-  color: white;
-}
-
 .fields {
   text-align: center;
   display: block;
   margin: auto;
+}
+.inline_buttons {
+  position: absolute;
+  left: 45%;
+  display: inline-block;
+}
+#cn_drop_down {
+  width: 140px;
+  height: 25px;
+}
+#submitInstructor {
+  border-radius: 5px;
+  border-color: green;
+  margin-top: 10px;
+  background-color: green;
+
+  color: white;
+
+  margin-right: 10px;
+}
+#submitInstructor:hover {
+  background-color: blueviolet; /* Green */
+  color: white;
+}
+#redirect_to_login {
+  border-radius: 5px;
+  border-color: rgb(140, 90, 3);
+
+  background-color: rgb(255, 162, 0);
+
+  color: white;
+}
+#redirect_to_login:hover {
+  background-color: #0b7c0f; /* Green */
+  color: white;
 }
