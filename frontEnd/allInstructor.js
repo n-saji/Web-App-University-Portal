@@ -35,3 +35,7 @@ function hideInstructors() {
 function setbackpage() {
   window.location.replace("index.html");
 }
+
+function setdashboard() {
+  window.location.replace("allinstructor.html");
+}

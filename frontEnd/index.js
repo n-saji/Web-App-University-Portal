@@ -37,11 +37,8 @@ function disablefunction() {
 }
 
 async function toCheckValidity(emailId, password) {
-  let uuid = await CheckValidity(emailId, password).catch((error) =>
-    console.log(error)
-  );
+  let uuid = await CheckValidity(emailId, password);
   if (uuid != "") {
-    console.log("correct", uuid);
     window.location.replace("allInstructor.html");
   }
 }
@@ -51,8 +48,8 @@ async function CheckValidity(username, password) {
   let response = await fetch(
     `http://localhost:5050/instructor-login/${username}/${password}`
   );
-  let uuid_instructor = await response.json();
-  if (response.ok == true) {
+  if (response.status != 500) {
+    let uuid_instructor = await response.json();
     return uuid_instructor;
   } else {
     emailId_warning.style.display = "block";
