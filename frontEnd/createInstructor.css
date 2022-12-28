@@ -1,7 +1,37 @@
-body {
+body,
+html {
+  height: 100%;
+  margin: 0;
   background-color: aquamarine;
-  background-repeat: no-repeat;
   background-size: cover;
+}
+.tab {
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+}
+.tab button {
+  background-color: inherit;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: white;
+  font-size: medium;
+}
+.tab button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.736);
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.tab .headers {
+  color: white;
+  font-size: 25px;
+  padding-left: 550px;
+  padding-right: 553px;
 }
 .fields {
   text-align: center;

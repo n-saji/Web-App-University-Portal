@@ -20,7 +20,7 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 	password := parameter.ByName("password")
 	err := h.service.ValidateLogin(emailId, password)
 	if err != nil {
-		ctx.JSON(http.StatusNotAcceptable, err.Error())
+		ctx.JSON(http.StatusInternalServerError, err.Error())
 	} else if err2 == nil {
 		err1 := h.service.StoreInstructoLogindetails(uuid, emailId, password)
 		token, _ := h.service.GetTokenAfterLogging()
@@ -40,11 +40,11 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 	password := parameter.ByName("password")
 	err := h.service.ValidateLogin(emailId, password)
 	if err != nil {
-		ctx.JSON(http.StatusNotAcceptable, err.Error())
+		ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
 	err1 := h.service.CheckCredentials(emailId, password)
 	if err1 != nil {
-		ctx.JSON(http.StatusUnauthorized, err1.Error())
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
 	}
 
 	if err == nil && err1 == nil {

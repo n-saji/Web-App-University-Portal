@@ -1,34 +1,46 @@
-body {
+body,
+html {
+  height: 100%;
+  margin: 0;
   background-color: aquamarine;
-  background-repeat: no-repeat;
   background-size: cover;
 }
-#headers {
-  text-align: center;
+.tab {
+  background-color: black;
+  overflow: hidden;
+  display: flex;
 }
-.headers_tab {
-  display: inline-flex;
-  margin-left: 40%;
+.tab button {
+  background-color: inherit;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: white;
+  font-size: medium;
 }
-#instructor_table {
+.tab button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.736);
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.tab .headers {
+  color: white;
+  font-size: 25px;
+  padding-left: 530px;
+  padding-right: 530px;
+}
+
+.instructor_table {
   border-radius: 5px solid black;
   text-align: center;
   width: 600px;
   margin-left: 150px;
 }
-.logout_headers {
-  margin-top: 20px;
-  margin-left: 450px;
-  height: 30px;
-}
-.logout_headers:hover {
-  box-shadow: 20px;
-  cursor: pointer;
-  border-radius: 4px;
-  border-color: red;
-  background-color: rgba(255, 0, 0, 0.736);
-}
-#button_to_show_instructors {
+.button_to_show_instructors {
   color: white;
   border-radius: 45px;
   border-color: green;
@@ -38,11 +50,11 @@ body {
   background-color: green;
   width: 60px;
 }
-#button_to_show_instructors:hover {
+.button_to_show_instructors:hover {
   background-color: darkgreen; /* Green */
   color: white;
 }
-#button_to_hide_instructors {
+.button_to_hide_instructors {
   color: white;
   border-radius: 45px;
   border-color: red;
@@ -52,11 +64,11 @@ body {
   background-color: red;
   width: 60px;
 }
-#button_to_hide_instructors:hover {
+.button_to_hide_instructors:hover {
   background-color: darkred;
   color: white;
 }
-#button_to_add_instructor {
+.button_to_add_instructor {
   border-radius: 45px;
   border-color: orange;
   margin-left: 50px;
@@ -66,7 +78,7 @@ body {
   width: 60px;
   color: white;
 }
-#button_to_add_instructor:hover {
+.button_to_add_instructor:hover {
   background-color: darkorange; /* Green */
   color: white;
 }
