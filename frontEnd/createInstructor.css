@@ -9,6 +9,7 @@ html {
   background-color: black;
   overflow: hidden;
   display: flex;
+  justify-content: space-between;
 }
 .tab button {
   background-color: inherit;
@@ -30,8 +31,6 @@ html {
 .tab .headers {
   color: white;
   font-size: 25px;
-  padding-left: 550px;
-  padding-right: 553px;
 }
 .fields {
   text-align: center;

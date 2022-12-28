@@ -1,0 +1,50 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background-color: aquamarine;
+  background-size: cover;
+}
+.tab {
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+.tab button {
+  background-color: inherit;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: white;
+  font-size: medium;
+}
+.tab button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.736);
+}
+.tab .headers {
+  color: white;
+  font-size: 25px;
+}
+.body_content {
+  display: grid;
+}
+.instructor_table {
+  margin: 10px;
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+th {
+  border: 2px solid black;
+  padding: 20px;
+  background-color: cornsilk;
+}
+.instructor_table td {
+  background-color: grey;
+  color: white;
+  text-align: center;
+  border: 1px solid black;
+}
