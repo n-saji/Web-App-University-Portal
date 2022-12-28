@@ -9,6 +9,7 @@ html {
   background-color: black;
   overflow: hidden;
   display: flex;
+  justify-content: space-between;
 }
 .tab button {
   background-color: inherit;
@@ -30,8 +31,6 @@ html {
 .tab .headers {
   color: white;
   font-size: 25px;
-  padding-left: 530px;
-  padding-right: 530px;
 }
 
 .instructor_table {
@@ -81,4 +80,11 @@ html {
 .button_to_add_instructor:hover {
   background-color: darkorange; /* Green */
   color: white;
+}
+.body_content{
+  align-content: center;
+  justify-content: center;
+}
+.instructor_table_body{
+  border: 2px solid black;
 }
