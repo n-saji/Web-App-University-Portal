@@ -8,6 +8,7 @@ function setdashboard() {
 
 async function InsertCourseValues() {
   let course_name = document.getElementById("cn").value;
+  let response_for_creation = document.getElementById("response_for_creation");
   if (!course_name) {
     alert("Please enter Course Name.");
     return;

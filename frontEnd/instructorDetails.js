@@ -8,9 +8,11 @@ async function populateInstructors() {
     let table1 = document.getElementById("instructor_table");
     let tr = document.createElement("tr");
     tr.innerHTML = `<td>${each_value.InstructorCode}</td>
-       <td>${each_value.InstructorName}</td>
+       <td id=${i}>${each_value.InstructorName}</td>
        <td>${each_value.Department}</td>
-       <td>${each_value.CourseName}</td>`;
+       <td>${each_value.CourseName}</td>
+       <td><button>U</button></td>
+       <td><button onclick=deleteInstructor(${i})>X</button></td>`;
     table1.appendChild(tr);
   }
 }
@@ -20,4 +22,26 @@ function setdashboard() {
 }
 function setbackpage() {
   window.location.replace("createInstructor.html");
+}
+async function deleteInstructor(index) {
+  let index_name = document.getElementById(String(index));
+
+  //let response_for_deleteion = document.getElementById("response_for_deleteion");
+
+  let deleteCourse = await fetch(
+    `http://localhost:5050/delete-instructor/${index_name.innerHTML}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+  let response = await deleteCourse.json();
+  if (!deleteCourse.ok) {
+    console.log("failed", response);
+  } else {
+    console.log("success", response);
+    window.location.reload();
+  }
 }
