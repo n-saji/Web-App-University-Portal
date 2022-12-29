@@ -7,23 +7,24 @@ import (
 )
 
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
-	rc.POST("/InsertToCoursesAvailable", h.InsertCA)
-	rc.POST("/InsertToCollegeAdministration", h.InsertCAd)
-	rc.GET("/RetrieveCoursesAvailable/:token", h.RetrieveValuesCA)
-	rc.GET("/RetrieveCollegeAdministration/:token", h.RetrieveValuesCAd)
-	rc.PATCH("/UpdateCoursesAvailable/:name", h.UpdateValuesCA)
-	rc.PATCH("/UpdateCollegeAdministration/:coursename", h.UpdateValuesCAd)
-	rc.DELETE("/DeleteCoursesAvailable/:courseName", h.DeleteCA)
-	rc.DELETE("DeleteStudentInfo/:rollnumber", h.DeleteSA)
-	rc.PATCH("UpdateStudentNameAndAge/:name", h.UpdateStudentNameAndAge)
-	rc.GET("FindAllCourseForAStudent/:token/:name", h.FetchAllCourseForAStudent)
-	rc.POST("/InsertInstructorDetails", h.InstructorInfoHandlers)
-	rc.GET("/RetrieveInstructors", h.RetrieveInstructorDetails)
-	rc.DELETE("/DeleteStudentCourse/:name/:course", h.DeleteStudentCourse)
-	rc.GET("/instructorlogin/:instructorId/:emailId/:password", h.InstructorLoginCreation)
+	rc.POST("/insert-course", h.InsertCA)
+	rc.POST("/insert-student-details", h.InsertCAd)
+	rc.GET("/retrieve-all-courses", h.RetrieveValuesCA)
+	rc.GET("/retrieve-college-administration/:token", h.RetrieveValuesCAd)
+	rc.PATCH("/update-course/:name", h.UpdateValuesCA)
+	rc.PATCH("/update-student-details/:coursename", h.UpdateValuesCAd)
+	rc.DELETE("/delete-course/:courseName", h.DeleteCA)
+	rc.DELETE("delete-student-info/:rollnumber", h.DeleteSA)
+	rc.PATCH("update-student-same-and-age/:name", h.UpdateStudentNameAndAge)
+	rc.GET("find-all-course-for-student/:token/:name", h.FetchAllCourseForAStudent)
+	rc.POST("/insert-instructor-details", h.InstructorInfoHandlers)
+	rc.GET("/retrieve-instructors", h.RetrieveInstructorDetails)
+	rc.DELETE("/delete-student-course/:name/:course", h.DeleteStudentCourse)
+	rc.GET("/instructor-login-with-id/:instructorId/:emailId/:password", h.InstructorLoginCreation)
 	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.GET("/get-ranking/:token/:coursename", h.GetRankingForACourse)
+	rc.GET("/get-student-name-course/:token", h.GetSelectedFieldsAllStudent)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -36,7 +37,5 @@ API TO CREATE -
  delete student-marks
 re-organize the structure
 
-BUG - 
-While updating student detail validate name and roll number
-creating student name and roll number must be unique - many student one roll no happens now
+BUG -
 */

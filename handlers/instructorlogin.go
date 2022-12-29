@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,15 +19,18 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 	emailId := parameter.ByName("emailId")
 	password := parameter.ByName("password")
 	err := h.service.ValidateLogin(emailId, password)
+	err3 := h.service.CheckEmailExist(emailId)
 	if err != nil {
-		ctx.JSON(http.StatusNotAcceptable, err.Error())
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+	} else if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
 	} else if err2 == nil {
 		err1 := h.service.StoreInstructoLogindetails(uuid, emailId, password)
 		token, _ := h.service.GetTokenAfterLogging()
 		if err1 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err1.Error())
 		} else {
-			ctx.JSON(http.StatusAccepted, fmt.Sprintf("Successfully Created Use token for accessing Db-> %s", token.String()))
+			ctx.JSON(http.StatusAccepted, token.String())
 		}
 
 	}
@@ -41,11 +43,11 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 	password := parameter.ByName("password")
 	err := h.service.ValidateLogin(emailId, password)
 	if err != nil {
-		ctx.JSON(http.StatusNotAcceptable, err.Error())
+		ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
 	err1 := h.service.CheckCredentials(emailId, password)
 	if err1 != nil {
-		ctx.JSON(http.StatusUnauthorized, err1.Error())
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
 	}
 
 	if err == nil && err1 == nil {
@@ -54,7 +56,7 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 		if err2 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err2.Error())
 		} else {
-			ctx.JSON(http.StatusAccepted, fmt.Sprintf("Successfully LogedIn Use token for accessing Db-> %s", token.String()))
+			ctx.JSON(http.StatusAccepted, token.String())
 		}
 
 	}

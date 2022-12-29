@@ -65,3 +65,7 @@ type StudentSelectiveData struct {
 	Course     string
 	RollNumber string
 }
+type DeleteResponse struct {
+	Message string
+	Courses []CourseInfo
+}

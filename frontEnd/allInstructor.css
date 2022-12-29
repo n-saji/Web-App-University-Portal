@@ -1,0 +1,89 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background-color: darkcyan;
+  background-size: cover;
+}
+.tab {
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  font-family: fantasy;
+}
+.tab button {
+  background-color: inherit;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: white;
+  font-size: medium;
+}
+.tab button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.736);
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.tab .headers {
+  color: white;
+  font-size: 25px;
+}
+.button_to_show_instructors {
+  color: white;
+  border-radius: 45px;
+  border-color: green;
+  margin-left: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: green;
+  width: 60px;
+}
+.button_to_show_instructors:hover {
+  background-color: darkgreen;
+  color: white;
+  cursor: pointer;
+}
+.button_to_add_instructor {
+  border-radius: 45px;
+  border-color: orange;
+  margin-left: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: orange;
+  width: 60px;
+  color: white;
+}
+.button_to_add_instructor:hover {
+  background-color: darkorange; 
+  color: white;
+  cursor: pointer;
+}
+.body_content{
+  margin-left: 20px;
+  font-size: larger;
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ font-weight: bold;
+}
+.instructor_table_body{
+  border: 2px solid black;
+}
+.button_to_add_course{
+  border-radius: 45px;
+  border-color: darkorchid;
+  margin-left: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: pink;
+  width: 60px;
+  color: white;
+}
+.button_to_add_course:hover {
+  background-color: darkorchid;
+  color: white;
+  cursor: pointer;
+}

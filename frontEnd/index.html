@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js"></script>
+    <title>College Administration</title>
+    <body>
+      <h1 class="heading">Welcome to College Portal</h1>
+
+      <h2 class="heading">Please Login</h2>
+
+      <div class="div1">
+        <div class="line1">
+          <h3 class="usr_pass_heading">Username</h3>
+          <input class="input_usr_pass" type="email" id="username" />
+        </div>
+        <br />
+        <div class="line2">
+          <h3 class="usr_pass_heading">Password</h3>
+          <input class="input_usr_pass" type="password" id="password" />
+        </div>
+        <br />
+        <div class="line3">
+          <button class="login_button" onclick="userlogin()" id="loginButton">
+            Login
+          </button>
+          <button
+            class="login_button"
+            onclick="forgotPassword()"
+            id="forgotButton"
+          >
+            Forgot
+          </button>
+          <p id="tempfix"></p>
+        </div>
+      </div>
+    </body>
+  </head>
+</html>
