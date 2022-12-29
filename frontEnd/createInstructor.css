@@ -2,7 +2,7 @@ body,
 html {
   height: 100%;
   margin: 0;
-  background-color: aquamarine;
+  background-color: darkcyan;
   background-size: cover;
 }
 .tab {
@@ -38,23 +38,25 @@ html {
   margin: auto;
 }
 .inline_buttons {
+  margin-top: 30px;
   position: absolute;
-  left: 45%;
+  left: 44%;
   display: inline-block;
 }
 #cn_drop_down {
   width: 140px;
   height: 25px;
+  background-color: rgba(24, 24, 24, 0.867);
+  color: white;
 }
 #submitInstructor {
   border-radius: 5px;
   border-color: green;
   margin-top: 10px;
   background-color: green;
-
+  height: 30px;
   color: white;
-
-  margin-right: 10px;
+  margin-right: 20px;
 }
 #submitInstructor:hover {
   background-color: blueviolet; /* Green */
@@ -65,10 +67,16 @@ html {
   border-color: rgb(140, 90, 3);
 
   background-color: rgb(255, 162, 0);
-
+  height: 30px;
   color: white;
 }
 #redirect_to_login:hover {
   background-color: #0b7c0f; /* Green */
   color: white;
+}
+#ic,
+#in,
+#dp,
+#cn_drop_down {
+  border-radius: 5px;
 }
