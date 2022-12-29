@@ -21,6 +21,16 @@ func (ac *Service) ValidateLogin(email, password string) error {
 	}
 	return nil
 }
+func (ac *Service) CheckEmailExist(email string) error {
+	ok, err := ac.daos.CheckForEmail(email)
+	if err != nil {
+		return err
+	}
+	if ok {
+		return fmt.Errorf("email exists!")
+	}
+	return nil
+}
 func (ac *Service) CheckCredentials(email, password string) error {
 
 	exits, err := ac.daos.CheckLoginExits(email, password)
