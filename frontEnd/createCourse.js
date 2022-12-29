@@ -28,6 +28,6 @@ async function InsertCourseValues() {
     let response_for_creation = document.getElementById(
       "response_for_creation"
     );
-    response_for_creation.innerHTML = "Successffully Created";
+    response_for_creation.innerHTML = "Successfully Created";
   }
 }

@@ -29,3 +29,45 @@ html {
   color: white;
   font-size: 25px;
 }
+#submitCourse {
+  border-radius: 4px;
+  border-color: darkorchid;
+  padding: 5px;
+  background-color: pink;
+  color: white;
+}
+#submitCourse:hover {
+  background-color: darkorchid;
+  color: white;
+}
+.fields {
+  width: 50%;
+  margin-top: 50px;
+  margin-left: 25%;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+}
+#cn {
+  border-radius: 5px;
+}
+.inline_content {
+  width: 300px;
+  margin-top: 30px;
+  justify-content: space-between;
+  text-align: center;
+  margin: auto;
+  display: flex;
+}
+.inline_buttons {
+  margin-top: 40px;
+}
+#cn {
+  margin-top: 15px;
+  height: 30px;
+}
+#response_for_creation {
+  text-align: center;
+  margin-top: 50px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
