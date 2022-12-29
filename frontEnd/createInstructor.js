@@ -66,7 +66,7 @@ async function create_account_new() {
   window.location.replace("createInstructorAccount.html");
 }
 function setbackpage() {
-  window.location.replace("index.html");
+  window.location.replace("instructorDetails.html");
 }
 
 function setdashboard() {

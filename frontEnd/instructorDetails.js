@@ -19,5 +19,5 @@ function setdashboard() {
   window.location.replace("allinstructor.html");
 }
 function setbackpage() {
-  window.location.replace("index.html");
+  window.location.replace("createInstructor.html");
 }
