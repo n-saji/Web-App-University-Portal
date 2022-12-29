@@ -16,3 +16,6 @@ function setbackpage() {
 function setdashboard() {
   window.location.replace("allinstructor.html");
 }
+async function insertCourse(){
+  window.location.replace("createCourse.html");
+}
