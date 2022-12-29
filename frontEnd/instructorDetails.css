@@ -35,21 +35,26 @@ html {
 .instructor_table {
   margin: 10px;
   border: 2px solid black;
-  border-collapse: collapse;
+
+  border-radius: 5px;
 }
 th {
   border: 2px solid black;
   padding: 20px;
   background-color: cornsilk;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .instructor_table td {
   background-color: grey;
   color: white;
   text-align: center;
   border: 1px solid black;
+  font-size: medium;
 }
 tr:hover td {
   background-color: coral;
+  color: black;
+font-weight: bold;
 }
 .delete_button {
   border-radius: 4px;
