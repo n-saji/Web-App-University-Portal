@@ -48,3 +48,14 @@ th {
   text-align: center;
   border: 1px solid black;
 }
+.delete_button{
+  border-radius: 4px;
+  border-color: darkred;
+  background-color: red;
+  color: white;
+}
+.delete_button:hover {
+  background-color: darkred;
+  color: white;
+  cursor: pointer;
+}

@@ -12,7 +12,7 @@ async function populateInstructors() {
        <td>${each_value.Department}</td>
        <td>${each_value.CourseName}</td>
        <td><button>U</button></td>
-       <td><button onclick=deleteInstructor(${i})>X</button></td>`;
+       <td><button onclick=deleteInstructor(${i}) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
 }
