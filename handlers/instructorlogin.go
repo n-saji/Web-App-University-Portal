@@ -19,8 +19,11 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 	emailId := parameter.ByName("emailId")
 	password := parameter.ByName("password")
 	err := h.service.ValidateLogin(emailId, password)
+	err3 := h.service.CheckEmailExist(emailId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
+	} else if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
 	} else if err2 == nil {
 		err1 := h.service.StoreInstructoLogindetails(uuid, emailId, password)
 		token, _ := h.service.GetTokenAfterLogging()
