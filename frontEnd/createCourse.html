@@ -9,20 +9,18 @@
     <div class="tab">
       <button class="dashboard" onclick="setdashboard()">Home</button>
       <p class="headers">Create Course</p>
-      <button class="logout_headers" onclick="setbackpage()">Show Instructors</button>
+      <button class="logout_headers" onclick="setbackpage()">
+        Show Instructors
+      </button>
     </div>
     <div class="fields">
-      
       <h3>Course Name</h3>
       <input type="text" id="cn" />
       <h3 id="responseBody"></h3>
     </div>
     <div class="inline_buttons">
-      <button onclick="InsertInstructorValues()" id="submitInstructor">
-        Submit</button
-      ><button id="redirect_to_login" onclick="create_account_new()">
-        Create Account
-      </button>
+      <button onclick="InsertCourseValues()" id="submitCourse">Submit</button>
     </div>
+    <h3 id="response_for_creation"></h3>
   </body>
 </html>
