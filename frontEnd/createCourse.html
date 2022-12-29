@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="createCourse.css" />
+    <script src="createCourse.js"></script>
+    <title>Create Course</title>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Create Course</p>
+      <button class="logout_headers" onclick="setbackpage()">
+        Show Instructors
+      </button>
+    </div>
+    <div class="fields">
+      <div class="inline_content">
+        <p>Course Name</p>
+        <input type="text" id="cn" />
+      </div>
+
+      <div class="inline_buttons">
+        <button onclick="InsertCourseValues()" id="submitCourse">Submit</button>
+      </div>
+    </div>
+    <h3 id="response_for_creation"></h3>
+  </body>
+</html>

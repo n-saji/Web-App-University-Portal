@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="createInstructor.css" />
+    <script src="createInstructor.js"></script>
+    <title>Create Instructor Details</title>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Create Instructor</p>
+      <button class="logout_headers" onclick="setbackpage()">Show Instructors</button>
+    </div>
+    <div class="fields">
+      
+      <h3>InstructorCode</h3>
+      <input type="text" id="ic" />
+      <h3>InstructorName</h3>
+      <input type="text" id="in" />
+      <h3>Department</h3>
+      <input type="text" id="dp" />
+      <h3>CourseName</h3>
+      <select id="cn_drop_down" name="courses"></select>
+      <br />
+      <h3 id="responseBody"></h3>
+    </div>
+    <div class="inline_buttons">
+      <button onclick="InsertInstructorValues()" id="submitInstructor">
+        Submit</button
+      ><button id="redirect_to_login" onclick="create_account_new()">
+        Create Account
+      </button>
+    </div>
+  </body>
+  <script src="allCourse.js"></script>
+</html>

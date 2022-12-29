@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="allInstructor.css" />
+    <script src="allInstructor.js"></script>
+    <title>Instructor Page</title>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Instructor Dashboard</p>
+      <button class="logout_headers" onclick="setbackpage()">Log Out</button>
+    </div>
+
+    <div class="body_content">
+      <p>
+        Instructors details<button
+          id="button_to_show_instructors"
+          class="button_to_show_instructors"
+          onclick="populateInstructors()"
+        >
+          Show
+        </button>
+      </p>
+
+      <p>
+        Add new Instructor<button
+          id="button_to_add_instructor"
+          class="button_to_add_instructor"
+          onclick="insertInstructor()"
+        >
+          link
+        </button>
+      </p>
+      <p>Add Course <button
+        id="button_to_add_course"
+        class="button_to_add_course"
+        onclick="insertCourse()"
+      >
+        link
+      </button></p>
+    </div>
+  </body>
+</html>
