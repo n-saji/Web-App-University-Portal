@@ -17,7 +17,7 @@ func (ac *AdminstrationCloud) InsertInstructorDetails(id *models.InstructorDetai
 
 func (ac *AdminstrationCloud) GetAllInstructor() ([]*models.InstructorDetails, error) {
 	var id []*models.InstructorDetails
-	err := ac.dbConn.Find(&id).Error
+	err := ac.dbConn.Order("instructor_name ASC").Find(&id).Error
 	if err != nil {
 		return nil, fmt.Errorf("not able to retrieve instructor details")
 	}
@@ -27,14 +27,14 @@ func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDeta
 	var id models.InstructorDetails
 	err := ac.dbConn.Where(&id_exits).Find(&id).Error
 	if err != nil {
-		return nil,fmt.Errorf("record not found")
+		return nil, fmt.Errorf("record not found")
 	}
 	return &id, nil
 }
 
-func (ac *AdminstrationCloud)DeleteInstructor(name string)(error){
+func (ac *AdminstrationCloud) DeleteInstructor(name string) error {
 
-	err := ac.dbConn.Where("instructor_name = ?",name).Delete(models.InstructorDetails{}).Error
+	err := ac.dbConn.Where("instructor_name = ?", name).Delete(models.InstructorDetails{}).Error
 
 	if err != nil {
 		return err
@@ -42,12 +42,12 @@ func (ac *AdminstrationCloud)DeleteInstructor(name string)(error){
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetInstructorWithName(name string)(*models.InstructorDetails,error){
+func (ac *AdminstrationCloud) GetInstructorWithName(name string) (*models.InstructorDetails, error) {
 
 	var is models.InstructorDetails
-	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where("instructor_name = ?",name).Find(&is).Error
+	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where("instructor_name = ?", name).Find(&is).Error
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-	return &is,nil
+	return &is, nil
 }

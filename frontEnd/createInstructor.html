@@ -6,8 +6,13 @@
     <title>Create Instructor Details</title>
   </head>
   <body>
-    <dev class="fields">
-      <h2>Create Instructor</h2>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Create Instructor</p>
+      <button class="logout_headers" onclick="setbackpage()">Show Instructors</button>
+    </div>
+    <div class="fields">
+      
       <h3>InstructorCode</h3>
       <input type="text" id="ic" />
       <h3>InstructorName</h3>
@@ -18,14 +23,14 @@
       <select id="cn_drop_down" name="courses"></select>
       <br />
       <h3 id="responseBody"></h3>
-    </dev>
-    <dev class="inline_buttons">
+    </div>
+    <div class="inline_buttons">
       <button onclick="InsertInstructorValues()" id="submitInstructor">
         Submit</button
       ><button id="redirect_to_login" onclick="create_account_new()">
         Create Account
       </button>
-    </dev>
+    </div>
   </body>
   <script src="allCourse.js"></script>
 </html>

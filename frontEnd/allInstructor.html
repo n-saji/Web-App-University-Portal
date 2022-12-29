@@ -6,32 +6,39 @@
     <title>Instructor Page</title>
   </head>
   <body>
-    <dev class="headers_tab">
-      <h1 id="headers">Instructor Dashboard</h1>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Instructor Dashboard</p>
       <button class="logout_headers" onclick="setbackpage()">Log Out</button>
-    </dev>
-    <h2>
-      Instructors details<button
-        id="button_to_show_instructors"
-        onclick="populateInstructors()"
-      >
-        Show</button
-      ><button id="button_to_hide_instructors" onclick="hideInstructors()">
-        Hide
-      </button>
-    </h2>
-    <table id="instructor_table">
-      <thead id="instructor_table_head"></thead>
-      <tbody id="instructor_table_body"></tbody>
-    </table>
+    </div>
 
-    <h2>
-      Add new Instructor<button
-        id="button_to_add_instructor"
-        onclick="insertInstructor()"
+    <div class="body_content">
+      <p>
+        Instructors details<button
+          id="button_to_show_instructors"
+          class="button_to_show_instructors"
+          onclick="populateInstructors()"
+        >
+          Show
+        </button>
+      </p>
+
+      <p>
+        Add new Instructor<button
+          id="button_to_add_instructor"
+          class="button_to_add_instructor"
+          onclick="insertInstructor()"
+        >
+          link
+        </button>
+      </p>
+      <p>Add Course <button
+        id="button_to_add_course"
+        class="button_to_add_course"
+        onclick="insertCourse()"
       >
         link
-      </button>
-    </h2>
+      </button></p>
+    </div>
   </body>
 </html>

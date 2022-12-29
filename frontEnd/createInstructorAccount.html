@@ -2,17 +2,24 @@
   <head>
     <title>Create An Account</title>
     <meta charset="UTF-8" />
-
+    <link rel="stylesheet" href="createInstructorAccount.css" />
     <script src="createInstructorAccount.js"></script>
   </head>
   <body>
-    <h3>Make EmailId and Password</h3>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Create EmailId and Password</p>
+      <button class="logout_headers" onclick="setbackpage()">Log Out</button>
+    </div>
     <div class="div1">
-      <h3 class="sub_heading">Username</h3>
-      <input class="input" type="email" id="emailid" />
-      <h3 class="sub_heading">Password</h3>
+      <div class="div2">
+        <p class="sub_heading">Username</p>
+        <input class="input" type="email" id="emailid" />
+      </div>
+      <div class="div2">
+      <p class="sub_heading">Password</p>
       <input class="input" type="password" id="password" />
-      <br />
+    </div>
       <button class="button" onclick="createEmail()" id="createButton">
         Create Account
       </button>
