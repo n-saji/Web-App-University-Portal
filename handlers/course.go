@@ -27,27 +27,6 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 
-	// token := ctx.Param("token")
-	// token_id, err := uuid.Parse(token)
-	// if err != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-	// 	return
-	// }
-	// status, err1 := h.service.CheckTokenValidity(token_id)
-	// if err1 != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, err1.Error())
-	// 	return
-	// }
-	// if status {
-	// 	response, err := h.service.RetrieveCA()
-	// 	if err != nil {
-	// 		ctx.JSON(http.StatusInternalServerError, err.Error())
-	// 	} else {
-	// 		ctx.JSON(http.StatusOK, response)
-	// 	}
-	// } else {
-	// 	ctx.JSON(http.StatusBadRequest, "token expired")
-	// }
 	response, err := h.service.RetrieveCA()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
@@ -70,6 +49,10 @@ func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteCA(ctx *gin.Context) {
+	type response struct {
+		Message string
+		Courses []models.CourseInfo
+	}
 
 	var CourseName string = ctx.Param("courseName")
 	err := h.service.DeleteCA(CourseName)

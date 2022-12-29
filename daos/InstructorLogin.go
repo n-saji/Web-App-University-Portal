@@ -15,7 +15,7 @@ func (ac *AdminstrationCloud) CheckIDPresent(id uuid.UUID) error {
 		return err
 	}
 	if id_exits != "" {
-		return fmt.Errorf("already created ")
+		return fmt.Errorf("you have already created ")
 	}
 	return nil
 }
@@ -37,6 +37,20 @@ func (ac *AdminstrationCloud) CheckLoginExits(email, password string) (bool, err
 		return false, err
 	}
 	return true, nil
+}
+
+func (ac AdminstrationCloud) CheckForEmail(email string) (bool, error) {
+
+	var count int64
+	err := ac.dbConn.Select("count(*)").Table("instructor_logins").Where("email_id = ?", email).Find(&count).Error
+
+	if err != nil {
+		return false, err
+	}
+	if count != 0 {
+		return true, nil
+	}
+	return false, nil
 }
 
 func (ac *AdminstrationCloud) InsertToken(tg models.Token_generator) error {
