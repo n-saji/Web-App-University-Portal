@@ -18,8 +18,14 @@ async function createEmail() {
   let response_reply = await response.json();
   let reply_for_login = document.getElementById("response_for_login");
   if (!response.ok) {
-    reply_for_login.innerHTML = response_reply;
+    reply_for_login.innerHTML = response_reply+"!!";
   } else {
     reply_for_login.innerHTML = "Successffully Created";
   }
+}
+function setdashboard() {
+  window.location.replace("allinstructor.html");
+}
+function setbackpage() {
+  window.location.replace("index.html");
 }

@@ -1,0 +1,56 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background-color: aquamarine;
+  background-size: cover;
+}
+.tab {
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+.tab button {
+  background-color: inherit;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: white;
+  font-size: medium;
+}
+.tab button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.736);
+}
+.tab .headers {
+  color: white;
+  font-size: 25px;
+}
+.div1 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.div2 {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  margin: auto; 
+  width: 300px;
+  font-size:large;
+  font-family: cursive;
+  padding-bottom: 30px;
+}
+.input {
+  height: 30px;
+  margin-top: 15px;
+border-radius: 5px;
+}
+#response_for_login{
+  text-align: center;
+  padding: 50px;
+  color: red;
+}
