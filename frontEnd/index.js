@@ -52,10 +52,14 @@ async function toCheckValidity(emailId, password) {
 async function CheckValidity(username, password) {
   const emailId_warning = document.getElementById("tempfix");
   let response = await fetch(
-    `http://localhost:5050/instructor-login/${username}/${password}`
+    `http://localhost:5050/instructor-login/${username}/${password}`,
+    {
+      credentials: "same-origin",
+    }
   );
   if (response.status != 500) {
     let uuid_instructor = await response.json();
+    document.cookie = "token" + "=" + uuid_instructor + "; path=/";
     return uuid_instructor;
   } else {
     let username_style = document.getElementById("username");

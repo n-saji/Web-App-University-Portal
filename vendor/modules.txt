@@ -98,6 +98,9 @@ github.com/pelletier/go-toml/v2
 github.com/pelletier/go-toml/v2/internal/ast
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
+# github.com/rs/cors v1.8.3
+## explicit; go 1.13
+github.com/rs/cors
 # github.com/stretchr/testify v1.8.1
 ## explicit; go 1.13
 # github.com/ugorji/go/codec v1.2.7
