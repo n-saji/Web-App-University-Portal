@@ -24,14 +24,13 @@ html {
 }
 .tab button:hover {
   cursor: pointer;
-  background-color: rgba(255, 0, 0, 0.736);
-}
-.tab button.active {
-  background-color: #ccc;
+  background-color: grey
 }
 .tab .headers {
   color: white;
-  font-size: 25px;
+  font-size: 35px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 .fields {
   text-align: center;
