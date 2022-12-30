@@ -28,7 +28,7 @@ function userlogin() {
 function forgotPassword() {
   const returnvalue = document.getElementById("tempfix");
   returnvalue.style.display = "block";
-  returnvalue.innerHTML = "&#9888Feature under development&#9888";
+  returnvalue.innerHTML = "&#9888 Feature under development &#9888";
   setTimeout(disablefunction, 3000);
 }
 function disablefunction() {
