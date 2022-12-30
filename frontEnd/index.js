@@ -12,7 +12,8 @@ function userlogin() {
   let password_style = document.getElementById("password");
   let returnvalue = document.getElementById("loginButton");
 
-  if (emailId === "") {
+  if (!emailId) {
+    //username_style.style.border = "2px solid red";
     username_style.classList.add("error");
     emailId_warning.style.display = "block";
     emailId_warning.innerHTML = "Email can't be empty";

@@ -19,13 +19,14 @@ body {
 }
 
 .div1 {
-  text-align: center;
-  display: block;
-  align-self: auto;
   margin: auto;
+  width: 400px;
+  justify-content: space-between;
 }
 .line1 {
-  display: inline-flex;
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
 }
 .line2 {
   display: flex;
@@ -38,17 +39,21 @@ body {
   justify-content: space-evenly;
 }
 .error {
-  border: 2px solid red;
+  border-radius: 2px solid red;
 }
 
 .login_button {
-  border-radius: 5px;
+  border-radius: 20px;
   border-color: green;
   padding: 5px;
   margin-top: 20px;
-  background-color: white;
+  background-color: wheat;
   cursor: pointer;
   margin: 20px;
+  height: 40px;
+  width: 80px;
+  font-weight: 700;
+  font-family: monospace;
 }
 .login_button:hover {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8);
@@ -57,36 +62,22 @@ body {
   margin-right: 50px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-.line2 {
-  display: inline-flex;
-}
 #tempfix {
   font-size: 25px;
-  color: rgb(69, 0, 18);
+  color: rgb(255, 0, 68);
   animation: blinker 0.5s linear infinite;
   text-shadow: 20px;
+  margin: auto;
+  text-align: center;
+  width: 400px;
+  padding: 50px;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 @keyframes blinker {
-  100% {
+  50% {
     color: yellow;
     opacity: 1;
-  }
-  80% {
-    opacity: 0;
-  }
-  60% {
-    color: red;
-    opacity: 1;
-  }
-  40% {
-    opacity: 0;
-  }
-  20% {
-    color: yellow;
-    opacity: 1;
-  }
-  0% {
-    color: yellow;
-    opacity: 0;
   }
 }
