@@ -39,7 +39,6 @@ func main() {
 	handler_connection := handlers.New(ServiceConnection)
 
 	s := cron.New()
-	log.Println("testingn")
 	s.AddFunc("@every 1m", DaosConnection.RunMigrations)
 	s.Start()
 
@@ -48,4 +47,5 @@ func main() {
 	if main_err != nil {
 		log.Println("MAIN - ERROR ", main_err)
 	}
+	s.Stop()
 }
