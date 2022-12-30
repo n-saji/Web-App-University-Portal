@@ -80,3 +80,15 @@ html {
 #cn_drop_down {
   border-radius: 5px;
 }
+.error {
+  visibility: visible;
+  border: 2px solid red;
+}
+#error_log{
+  margin-top: 150px;
+  text-align: center;
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: lightcoral;
+  font-size: 25px;
+}

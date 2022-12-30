@@ -1,24 +1,33 @@
+function removeError() {
+  let instructorcode = document.getElementById("ic");
+  let instructorname = document.getElementById("in");
+  let department = document.getElementById("dp");
+  let coursename = document.getElementById("cn_drop_down");
+  instructorcode.classList.remove("error");
+  instructorname.classList.remove("error");
+  department.classList.remove("error");
+  coursename.classList.remove("error");
+}
 async function InsertInstructorValues() {
-  let instructorcode = document.getElementById("ic").value;
-  if (!instructorcode) {
-    alert("Please enter instructorcode.");
-    return;
+  let instructorcode = document.getElementById("ic");
+  let instructorname = document.getElementById("in");
+  let department = document.getElementById("dp");
+  let coursename = document.getElementById("cn_drop_down");
+  let error_log = document.getElementById("error_log");
+  if (instructorcode.value === "") {
+    instructorcode.classList.add("error");
   }
-  let instructorname = document.getElementById("in").value;
-  if (!instructorname) {
-    alert("Please enter instructorname.");
-    return;
+
+  if (instructorname.value === "") {
+    instructorname.classList.add("error");
   }
-  let department = document.getElementById("dp").value;
-  if (!department) {
-    alert("Please enter department.");
-    return;
+
+  if (department.value === "") {
+    department.classList.add("error");
   }
-  let coursename = document.getElementById("cn_drop_down").value;
-  console.log(coursename);
-  if (coursename == "Choose Course") {
-    alert("Please choose a course.");
-    return;
+
+  if (coursename.value == "Choose Course") {
+    coursename.classList.add("error");
   }
   let createInstructor = await fetch(
     `http://localhost:5050/insert-instructor-details`,
@@ -26,17 +35,18 @@ async function InsertInstructorValues() {
       method: "POST",
 
       body: JSON.stringify({
-        InstructorCode: instructorcode,
-        InstructorName: instructorname,
-        Department: department,
-        CourseName: coursename,
+        InstructorCode: instructorcode.value,
+        InstructorName: instructorname.value,
+        Department: department.value,
+        CourseName: coursename.value,
       }),
     }
   );
   let response = await createInstructor.json();
   console.log(response);
   if (createInstructor.ok != true) {
-    alert(response.Err);
+    error_log.innerHTML = "Error submitting!";
+
   } else if (createInstructor.ok == true) {
     document.getElementById("responseBody").innerHTML =
       "Added<br> Please Create EmailId and Password";

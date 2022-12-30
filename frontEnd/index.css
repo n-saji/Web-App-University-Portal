@@ -27,6 +27,20 @@ body {
 .line1 {
   display: inline-flex;
 }
+.line2 {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+}
+.line3 {
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+.error {
+  border: 2px solid red;
+}
+
 .login_button {
   border-radius: 5px;
   border-color: green;
