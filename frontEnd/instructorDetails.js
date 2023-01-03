@@ -1,8 +1,17 @@
 async function populateInstructors() {
+  let cookie_token = getCookie("token");
   let all_instructors = await fetch(
-    `http://localhost:5050/retrieve-instructors`
+    `http://localhost:5050/retrieve-instructors`,
+    {
+      credentials: "same-origin",
+      headers: { token: cookie_token },
+    }
   );
   let all_instructors_response = await all_instructors.json();
+  if (all_instructors_response == "authentication time-out") {
+    alert("Timed-out re login");
+    setTimeout(window.location.replace("index.html"), 2000);
+  }
   for (let i = 0; i < all_instructors_response.length; i++) {
     let each_value = all_instructors_response[i];
     let table1 = document.getElementById("instructor_table");
@@ -32,9 +41,7 @@ async function deleteInstructor(index) {
     `http://localhost:5050/delete-instructor/${index_name.innerHTML}`,
     {
       method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
+      credentials: "same-origin",
     }
   );
   let response = await deleteCourse.json();
@@ -44,4 +51,14 @@ async function deleteInstructor(index) {
     console.log("success", response);
     window.location.reload();
   }
+}
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
 }

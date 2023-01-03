@@ -51,7 +51,7 @@ func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
 	token_table.Token = token
 	token_table.IsValid = true
 	token_table.ValidFrom = time.Now()
-	token_table.ValidTill = token_table.ValidFrom.Add(time.Minute * 15)
+	token_table.ValidTill = token_table.ValidFrom.Add(time.Minute * 10)
 
 	err := ac.daos.InsertToken(token_table)
 	if err != nil {

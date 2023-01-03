@@ -1,26 +1,32 @@
+function removeError() {
+  let username_style = document.getElementById("username");
+  username_style.classList.remove("error");
+  let password_style = document.getElementById("password");
+  password_style.classList.remove("error");
+}
 function userlogin() {
-  const emailId = document.getElementById("username").value;
-  const username_style = document.getElementById("username");
-  const emailId_warning = document.getElementById("tempfix");
+  let emailId = document.getElementById("username").value;
+  let username_style = document.getElementById("username");
+  let emailId_warning = document.getElementById("tempfix");
+  let password = document.getElementById("password").value;
+  let password_style = document.getElementById("password");
+  let returnvalue = document.getElementById("loginButton");
 
   if (!emailId) {
-    username_style.style.border = "2px solid red";
-    emailId.innerHTML = "!";
+    //username_style.style.border = "2px solid red";
+    username_style.classList.add("error");
     emailId_warning.style.display = "block";
     emailId_warning.innerHTML = "Email can't be empty";
     setTimeout(disablefunction, 3000);
-    return;
   }
-  const password = document.getElementById("password").value;
-  const password_style = document.getElementById("password");
-  if (!password) {
-    password_style.style.border = "2px solid red";
+
+  if (password === "") {
+    password_style.classList.add("error");
     emailId_warning.style.display = "block";
     emailId_warning.innerHTML = "Password can't be empty";
     setTimeout(disablefunction, 3000);
     return;
   }
-  const returnvalue = document.getElementById("loginButton");
 
   returnvalue.addEventListener("click", toCheckValidity(emailId, password));
 }
@@ -28,7 +34,7 @@ function userlogin() {
 function forgotPassword() {
   const returnvalue = document.getElementById("tempfix");
   returnvalue.style.display = "block";
-  returnvalue.innerHTML = "&#9888Feature under development&#9888";
+  returnvalue.innerHTML = "&#9888 Feature under development &#9888";
   setTimeout(disablefunction, 3000);
 }
 function disablefunction() {
@@ -46,12 +52,20 @@ async function toCheckValidity(emailId, password) {
 async function CheckValidity(username, password) {
   const emailId_warning = document.getElementById("tempfix");
   let response = await fetch(
-    `http://localhost:5050/instructor-login/${username}/${password}`
+    `http://localhost:5050/instructor-login/${username}/${password}`,
+    {
+      credentials: "same-origin",
+    }
   );
   if (response.status != 500) {
     let uuid_instructor = await response.json();
+    document.cookie = "token" + "=" + uuid_instructor + "; path=/";
     return uuid_instructor;
   } else {
+    let username_style = document.getElementById("username");
+    username_style.classList.add("error");
+    let password_style = document.getElementById("password");
+    password_style.classList.add("error");
     emailId_warning.style.display = "block";
     emailId_warning.innerHTML = "Wrong Credentials";
     setTimeout(disablefunction, 3000);

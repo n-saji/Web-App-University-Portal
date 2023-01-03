@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
@@ -39,7 +40,20 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 }
 
 func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
+	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	cookie_token := ctx.Request.Header.Get("Token")
+
 	var rid []*models.InstructorDetails
+	if cookie_token == "" {
+		ctx.JSON(http.StatusInternalServerError, "authentication error")
+		return
+	}
+
+	validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
+	if !validity {
+		ctx.JSON(http.StatusInternalServerError, "authentication time-out")
+		return
+	}
 	rid, err := h.service.GetInstructorDetails()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
