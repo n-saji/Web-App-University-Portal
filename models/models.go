@@ -53,6 +53,8 @@ type Token_generator struct {
 	ValidTill time.Time
 	IsValid   bool
 }
+
+//not part of db
 type StudentsMarksForCourse struct {
 	Course_name     string
 	StudentId       []string
