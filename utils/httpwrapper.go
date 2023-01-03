@@ -9,7 +9,6 @@ import (
 
 func MakeRequest(method, url, name string, req, res interface{}) (int, error) {
 	client := &http.Client{}
-	//url := "http://localhost:5050/instructor-login/nikhilsaji200@gmail.com/Soja!@1122"
 	if method == "GET" {
 		request, err3 := http.NewRequest(method, url, nil)
 		request.Header.Add("Content-Type", "application/json")
