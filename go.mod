@@ -5,11 +5,14 @@ go 1.19
 require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/google/uuid v1.3.0
+	github.com/rs/cors v1.8.3
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.0
 	gorm.io/driver/postgres v1.4.5
 	gorm.io/gorm v1.24.1-0.20221019064659-5dd2bb482755
 )
+
+require github.com/stretchr/testify v1.8.1 // indirect
 
 require (
 	github.com/gin-contrib/cors v1.4.0
@@ -41,5 +44,6 @@ require (
 	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	golang.org/x/text v0.4.0 // indirect
 	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
+	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

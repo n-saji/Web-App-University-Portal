@@ -9,28 +9,34 @@
     <div class="tab">
       <button class="dashboard" onclick="setdashboard()">Home</button>
       <p class="headers">Create Instructor</p>
-      <button class="logout_headers" onclick="setbackpage()">Show Instructors</button>
+      <button class="logout_headers" onclick="setbackpage()">
+        Show Instructors
+      </button>
     </div>
     <div class="fields">
-      
       <h3>InstructorCode</h3>
-      <input type="text" id="ic" />
+      <input type="text" onchange="removeError()" id="ic" />
       <h3>InstructorName</h3>
-      <input type="text" id="in" />
+      <input type="text" onchange="removeError()" id="in" />
       <h3>Department</h3>
-      <input type="text" id="dp" />
+      <input type="text" onchange="removeError()" id="dp" />
       <h3>CourseName</h3>
-      <select id="cn_drop_down" name="courses"></select>
+      <select
+        id="cn_drop_down"
+        onchange="removeError()"
+        name="courses"
+      ></select>
       <br />
       <h3 id="responseBody"></h3>
     </div>
     <div class="inline_buttons">
       <button onclick="InsertInstructorValues()" id="submitInstructor">
         Submit</button
-      ><button id="redirect_to_login" onclick="create_account_new()">
+      ><button id="redirect_to_login" onclick="create_account_new()" style="cursor:not-allowed;">
         Create Account
       </button>
     </div>
+    <h3 id="error_log"></h3>
   </body>
   <script src="allCourse.js"></script>
 </html>
