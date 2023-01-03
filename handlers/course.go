@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertCA(ctx *gin.Context) {
@@ -26,6 +27,24 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 }
 
 func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
+
+	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	cookie_token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+
+	if cookie_token == "" {
+		ctx.JSON(http.StatusInternalServerError, "authentication error")
+		return
+	}
+
+	validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
+	if !validity {
+		ctx.JSON(http.StatusInternalServerError, "authentication time-out")
+		return
+	}
 
 	response, err := h.service.RetrieveCA()
 	if err != nil {
