@@ -4,7 +4,6 @@ import (
 	"CollegeAdministration/config"
 	"CollegeAdministration/daos"
 	"CollegeAdministration/handlers"
-	"CollegeAdministration/models"
 	"CollegeAdministration/service"
 	"database/sql"
 	"embed"
@@ -29,26 +28,19 @@ func main() {
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
 	}
-
-	// runMigration := flag.String("migration", "", "Flag to check if Migrations need to Run")
-
-	// flag.Parse()
-	// if runMigration != nil && strings.ToUpper(*runMigration) == "ON" {
-	// 	toRunGooseMigration(url)
-	// 	os.Exit(0)
-	// }
 	toRunGooseMigration(url)
 
-	err1 := db.Migrator().AutoMigrate(
-		&models.CourseInfo{},
-		&models.StudentInfo{},
-		&models.InstructorDetails{},
-		&models.InstructorLogin{},
-		&models.Token_generator{},
-	)
-	if err != nil {
-		log.Println("error found while migrating", err1)
-	}
+	//auto migrate disabling it as goose is integrated
+	// err1 := db.Migrator().AutoMigrate(
+	// 	&models.CourseInfo{},
+	// 	&models.StudentInfo{},
+	// 	&models.InstructorDetails{},
+	// 	&models.InstructorLogin{},
+	// 	&models.Token_generator{},
+	// )
+	// if err != nil {
+	// 	log.Println("error found while migrating", err1)
+	// }
 
 	DaosConnection := daos.New(db)
 	ServiceConnection := service.New(DaosConnection)
