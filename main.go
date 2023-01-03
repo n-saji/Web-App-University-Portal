@@ -47,7 +47,7 @@ func main() {
 	handler_connection := handlers.New(ServiceConnection)
 
 	s := cron.New()
-	s.AddFunc("@every 10m", DaosConnection.RunMigrations)
+	s.AddFunc("@every 10m", ServiceConnection.RunDailyMigrations)
 	s.Start()
 
 	r := handler_connection.GetRouter()
