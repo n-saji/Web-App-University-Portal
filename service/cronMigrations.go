@@ -21,8 +21,6 @@ func (s *Service) CheckOutDatedTokensSetFalse() {
 	for _, token := range all_tokens {
 
 		if token.ValidTill.Sub(time_now) < 0 {
-			log.Println("yes", token.ValidTill.Sub(time_now), token.ValidTill, time_now)
-			token.IsValid = false
 			s.daos.SetTokenFalse(token.Token)
 		}
 
