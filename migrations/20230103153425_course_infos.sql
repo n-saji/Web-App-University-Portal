@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS course_infos (
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE IF NOT EXISTS course_infos;
+DROP TABLE IF EXISTS course_infos;
 -- +goose StatementEnd
