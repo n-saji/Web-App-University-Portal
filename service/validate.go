@@ -27,7 +27,7 @@ func (ac *Service) CheckEmailExist(email string) error {
 		return err
 	}
 	if ok {
-		return fmt.Errorf("email exists!")
+		return fmt.Errorf("email exists")
 	}
 	return nil
 }
