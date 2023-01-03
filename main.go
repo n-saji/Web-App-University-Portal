@@ -47,7 +47,7 @@ func main() {
 	handler_connection := handlers.New(ServiceConnection)
 
 	s := cron.New()
-	go s.AddFunc("@every 10s", ServiceConnection.RunDailyMigrations)
+	go s.AddFunc("@every 10m", ServiceConnection.RunDailyMigrations)
 	s.Start()
 
 	r := handler_connection.GetRouter()
