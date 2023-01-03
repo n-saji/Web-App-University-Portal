@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS student_infos (
 -- +goose Down
 -- +goose StatementBegin
 ALTER TABLE IF EXISTS student_infos DROP CONSTRAINT IF EXISTS student_infos_course_id_fkey;
-ALTER TABLE IF EXISTS student_infos DROP CONSTRAINT IF EXISTSstudent_infos_marks_id_fkey;
-DROP TABLE IF NOT EXISTS student_infos;
+ALTER TABLE IF EXISTS student_infos DROP CONSTRAINT IF EXISTS student_infos_marks_id_fkey;
+DROP TABLE IF EXISTS student_infos;
 -- +goose StatementEnd
