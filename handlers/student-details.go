@@ -26,7 +26,12 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 
-	token := ctx.Param("token")
+	//token := ctx.Param("token")
+	token, err1 := ctx.Cookie("token")
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
 	token_id, err := uuid.Parse(token)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
@@ -90,7 +95,11 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 
 func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 
-	token := ctx.Param("token")
+	token, err2 := ctx.Cookie("token")
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
 	token_id, err := uuid.Parse(token)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
@@ -130,7 +139,11 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 
 func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 
-	token := ctx.Param("token")
+	token, err2 := ctx.Cookie("token")
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
 	course_name := ctx.Param("coursename")
 	token_id, err := uuid.Parse(token)
 	if err != nil {
@@ -156,7 +169,11 @@ func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 }
 
 func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
-	token := ctx.Param("token")
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
 	token_id, err := uuid.Parse(token)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())

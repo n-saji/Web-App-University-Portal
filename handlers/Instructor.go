@@ -9,12 +9,14 @@ import (
 	"github.com/google/uuid"
 )
 
+type res struct {
+	Msg string
+	Err string
+	URl string
+}
+
 func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
-	type res struct {
-		Msg string
-		Err string
-		URl string
-	}
+
 	var reply res
 	var insd *models.InstructorDetails
 	err := ctx.BindJSON(&insd)
@@ -41,9 +43,11 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 
 func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-	cookie_token := ctx.Request.Header.Get("Token")
-
-	var rid []*models.InstructorDetails
+	cookie_token, err1 := ctx.Cookie("token")
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
 	if cookie_token == "" {
 		ctx.JSON(http.StatusInternalServerError, "authentication error")
 		return
@@ -54,6 +58,7 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, "authentication time-out")
 		return
 	}
+
 	rid, err := h.service.GetInstructorDetails()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
