@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS token_generators (
     valid_from timestamp null,
     valid_till timestamp null,
     is_valid boolean null,
-    CONSTRAINT token_generators_pkey PRIMARY KEY (token),
+    CONSTRAINT token_generators_pkey PRIMARY KEY (token)
 );
 -- +goose StatementEnd
 
