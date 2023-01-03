@@ -1,5 +1,10 @@
 package service
 
+import (
+	"log"
+	"time"
+)
+
 func (s *Service) RunDailyMigrations() {
 
 	go s.CheckOutDatedTokensSetFalse()
@@ -8,6 +13,25 @@ func (s *Service) RunDailyMigrations() {
 
 func (s *Service) CheckOutDatedTokensSetFalse() {
 
+	all_tokens, err := s.daos.GetAllTokens()
+	if err != nil {
+		log.Panic(err)
+	}
+	var time_now = time.Now()
+	for _, token := range all_tokens {
+
+		if token.ValidTill.Sub(time_now) < 0 {
+			log.Println("yes", token.ValidTill.Sub(time_now), token.ValidTill, time_now)
+			token.IsValid = false
+			s.daos.SetTokenFalse(token.Token)
+		}
+
+	}
 }
 
-func (s *Service) DeleteNotValidTokens() {}
+func (s *Service) DeleteNotValidTokens() {
+	err := s.daos.RunMigrationsForRemovingOutDatedTokens()
+	if err != nil {
+		log.Panic(err)
+	}
+}
