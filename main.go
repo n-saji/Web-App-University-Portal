@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 
+	"gopkg.in/robfig/cron.v2"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -37,10 +38,14 @@ func main() {
 	ServiceConnection := service.New(DaosConnection)
 	handler_connection := handlers.New(ServiceConnection)
 
+	s := cron.New()
+	s.AddFunc("@every 10m", DaosConnection.RunMigrations)
+	s.Start()
+
 	r := handler_connection.GetRouter()
 	main_err := r.Run(config.Port)
 	if main_err != nil {
 		log.Println("MAIN - ERROR ", main_err)
 	}
-
+	s.Stop()
 }
