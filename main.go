@@ -6,13 +6,20 @@ import (
 	"CollegeAdministration/handlers"
 	"CollegeAdministration/models"
 	"CollegeAdministration/service"
+	"database/sql"
+	"embed"
 	"fmt"
 	"log"
 
+	_ "github.com/lib/pq"
+	"github.com/pressly/goose/v3"
 	"gopkg.in/robfig/cron.v2"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
+
+//go:embed migrations/*.sql
+var embedMigrations embed.FS
 
 func main() {
 
@@ -22,6 +29,15 @@ func main() {
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
 	}
+
+	// runMigration := flag.String("migration", "", "Flag to check if Migrations need to Run")
+
+	// flag.Parse()
+	// if runMigration != nil && strings.ToUpper(*runMigration) == "ON" {
+	// 	toRunGooseMigration(url)
+	// 	os.Exit(0)
+	// }
+	toRunGooseMigration(url)
 
 	err1 := db.Migrator().AutoMigrate(
 		&models.CourseInfo{},
@@ -49,3 +65,24 @@ func main() {
 	}
 	s.Stop()
 }
+
+func toRunGooseMigration(url string) {
+
+	db, err := sql.Open("postgres", url)
+	if err != nil {
+		log.Println("db conn failed")
+		panic(err)
+	}
+	// setup database
+	goose.SetBaseFS(embedMigrations)
+	if err := goose.SetDialect("postgres"); err != nil {
+		log.Println("Setting Goose Postgres Dialect Failed")
+		panic(err)
+	}
+	if err := goose.Up(db, "migrations"); err != nil {
+		log.Println("Goose Up Failed")
+		panic(err)
+	}
+}
+
+//goose postgres "user=postgres dbname=postgres sslmode=disable" down
