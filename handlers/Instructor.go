@@ -17,6 +17,26 @@ type res struct {
 
 func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	token_id, err4 := uuid.Parse(token)
+	if err4 != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "token expired")
+		return
+	}
+
 	var reply res
 	var insd *models.InstructorDetails
 	err := ctx.BindJSON(&insd)
@@ -68,6 +88,26 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteInstructor(ctx *gin.Context) {
+
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	token_id, err4 := uuid.Parse(token)
+	if err4 != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "token expired")
+		return
+	}
 
 	name := ctx.Param("name")
 	err := h.service.DeleteInstructor(name)
