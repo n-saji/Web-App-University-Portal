@@ -66,7 +66,7 @@ func (ac *Service) UpdateCAd(rca *models.StudentInfo, oldCourse string) error {
 			Id:         rcOld.Id,
 			Name:       rca.Name})
 	if rcaExist == nil {
-		return fmt.Errorf("Student details mismatched")
+		return fmt.Errorf("student details mismatched")
 	}
 
 	if rcaExist.Id == uuid.Nil {
