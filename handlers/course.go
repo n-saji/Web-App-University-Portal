@@ -3,13 +3,36 @@ package handlers
 import (
 	"CollegeAdministration/models"
 	"CollegeAdministration/utils"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertCA(ctx *gin.Context) {
+
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	token_id, err4 := uuid.Parse(token)
+	if err4 != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "token expired")
+		return
+	}
+
 	var ca models.CourseInfo
 	err := ctx.BindJSON(&ca)
 
@@ -27,6 +50,24 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 
+	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	cookie_token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+
+	if cookie_token == "" {
+		ctx.JSON(http.StatusInternalServerError, "authentication error")
+		return
+	}
+
+	validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
+	if !validity {
+		ctx.JSON(http.StatusInternalServerError, "authentication time-out")
+		return
+	}
+
 	response, err := h.service.RetrieveCA()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
@@ -36,6 +77,26 @@ func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 
 }
 func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
+
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	token_id, err4 := uuid.Parse(token)
+	if err4 != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "token expired")
+		return
+	}
 	var rc models.CourseInfo
 	var name = ctx.Param("name")
 	ctx.BindJSON(&rc)
@@ -49,6 +110,27 @@ func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteCA(ctx *gin.Context) {
+
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	token_id, err4 := uuid.Parse(token)
+	if err4 != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "token expired")
+		return
+	}
+
 	var CourseName string = ctx.Param("courseName")
 	err := h.service.DeleteCA(CourseName)
 	if err != nil {
