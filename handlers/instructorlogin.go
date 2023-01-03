@@ -38,7 +38,7 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 				Value: token.String(),
 				Path:  "/",
 			})
-			ctx.JSON(http.StatusAccepted, "Successfully")
+			ctx.JSON(http.StatusAccepted, "successfully created")
 		}
 
 	}
