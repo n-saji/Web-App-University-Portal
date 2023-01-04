@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (h *Handler) InsertCAd(ctx *gin.Context) {
+func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -45,7 +45,7 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 	}
 }
 
-func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
+func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 
 	token, err1 := ctx.Cookie("token")
 	if err1 != nil {
@@ -74,7 +74,7 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 	}
 }
 
-func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
+func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -108,7 +108,7 @@ func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 
 }
 
-func (h *Handler) DeleteSA(ctx *gin.Context) {
+func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
