@@ -17,9 +17,15 @@ func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
 	cv.ClassesEnrolled.Id = cv_id.Id
 	cv.CourseId = cv_id.Id
 	sd_existing, _ := ac.daos.GetStudentDetailsByRollNumber(cv.RollNumber)
-	if sd_existing != nil && sd_existing.Name != cv.Name {
-		return fmt.Errorf("roll number exits for another student")
+
+	for _, each_student := range sd_existing {
+		if each_student.Name == cv.Name && each_student.RollNumber == cv.RollNumber && each_student.ClassesEnrolled.CourseName == cv.ClassesEnrolled.CourseName {
+			return fmt.Errorf("student already present")
+		}
 	}
+	// if sd_existing != nil && sd_existing.Name != cv.Name {
+	// 	return fmt.Errorf("roll number exits for another student")
+	// }
 	sd, _ := ac.daos.GetStudentdetail(cv)
 	if sd != nil && sd.CourseId == cv.CourseId {
 		return fmt.Errorf("student with course exist")
@@ -123,10 +129,16 @@ func (ac *Service) DeleteStudent(rollNumber string) error {
 	if err != nil {
 		return err
 	}
-	err1 := ac.daos.DeleteStudentDaos(student.Id)
-	if err1 != nil {
-		return err1
+	for _, each_student := range student {
+		err1 := ac.daos.DeleteStudentDaos(each_student.Id)
+		if err1 != nil {
+			return err1
+		}
 	}
+	// err1 := ac.daos.DeleteStudentDaos(student.Id)
+	// if err1 != nil {
+	// 	return err1
+	// }
 	return nil
 }
 
