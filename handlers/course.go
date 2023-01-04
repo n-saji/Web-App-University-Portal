@@ -11,7 +11,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (h *Handler) InsertCA(ctx *gin.Context) {
+func (h *Handler) InsertCourse(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -48,7 +48,7 @@ func (h *Handler) InsertCA(ctx *gin.Context) {
 
 }
 
-func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
+func (h *Handler) RetrieveValuesCourse(ctx *gin.Context) {
 
 	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 	cookie_token, err3 := ctx.Cookie("token")
@@ -76,7 +76,7 @@ func (h *Handler) RetrieveValuesCA(ctx *gin.Context) {
 	}
 
 }
-func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
+func (h *Handler) UpdateValuesCourse(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -109,7 +109,7 @@ func (h *Handler) UpdateValuesCA(ctx *gin.Context) {
 
 }
 
-func (h *Handler) DeleteCA(ctx *gin.Context) {
+func (h *Handler) DeleteCourse(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
