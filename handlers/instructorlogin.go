@@ -38,7 +38,7 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 				Value:    token.String(),
 				Path:     "/",
 				HttpOnly: true,
-				SameSite: http.SameSiteDefaultMode,
+				Secure:   false,
 			})
 			ctx.JSON(http.StatusAccepted, "successfully created")
 		}
@@ -70,7 +70,7 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 			Value:    token.String(),
 			Path:     "/",
 			HttpOnly: true,
-			SameSite: http.SameSiteDefaultMode,
+			Secure:   false,
 		})
 		if err2 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err2.Error())
