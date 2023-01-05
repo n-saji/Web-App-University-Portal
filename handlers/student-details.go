@@ -230,6 +230,10 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 	parameter := ctx.Params
 	student_name := parameter.ByName("name")
 	course_name := parameter.ByName("course")
+	if student_name == ":name" || course_name == ":course" {
+		ctx.IndentedJSON(http.StatusInternalServerError, "parameter is empty")
+		return
+	}
 	err := h.service.DeleteStudentCourseService(student_name, course_name)
 	if err != nil {
 		ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
