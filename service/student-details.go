@@ -3,42 +3,59 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
+	"log"
 
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertValuesToCAd(cv *models.StudentInfo) error {
+func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 
-	cv_id, err := ac.daos.GetCourseByName(cv.ClassesEnrolled.CourseName)
+	course_details, err := ac.daos.GetCourseByName(new_student.ClassesEnrolled.CourseName)
 	if err != nil {
 		return fmt.Errorf("course Not Found")
 	}
 
-	cv.ClassesEnrolled.Id = cv_id.Id
-	cv.CourseId = cv_id.Id
-	sd_existing, _ := ac.daos.GetStudentDetailsByRollNumber(cv.RollNumber)
+	new_student.ClassesEnrolled.Id = course_details.Id
+	new_student.ClassesEnrolled = course_details
+	new_student.CourseId = course_details.Id
+	sd_existing, _ := ac.daos.GetStudentDetailsByRollNumber(new_student.RollNumber)
 
 	for _, each_student := range sd_existing {
-		if each_student.Name == cv.Name && each_student.RollNumber == cv.RollNumber && each_student.ClassesEnrolled.CourseName == cv.ClassesEnrolled.CourseName {
-			return fmt.Errorf("student already present")
+
+		course_details, _ := ac.daos.GetCourseById(each_student.CourseId)
+		each_student.ClassesEnrolled = course_details
+		log.Println(each_student, new_student)
+
+		if each_student.RollNumber == new_student.RollNumber {
+			if each_student.Name != new_student.Name {
+				return fmt.Errorf(fmt.Sprintf("student %s already present with roll number %s", each_student.Name, new_student.RollNumber))
+			}
+			if each_student.ClassesEnrolled.CourseName == new_student.ClassesEnrolled.CourseName {
+				return fmt.Errorf(fmt.Sprintf("student already present with course %s", each_student.ClassesEnrolled.CourseName))
+			}
+
+			if each_student.Age != new_student.Age {
+				return fmt.Errorf(fmt.Sprintf("student age  mismatch exisiting age %d", each_student.Age))
+			}
 		}
+
 	}
 	// if sd_existing != nil && sd_existing.Name != cv.Name {
 	// 	return fmt.Errorf("roll number exits for another student")
 	// }
-	sd, _ := ac.daos.GetStudentdetail(cv)
-	if sd != nil && sd.CourseId == cv.CourseId {
+	sd, _ := ac.daos.GetStudentdetail(new_student)
+	if sd != nil && sd.CourseId == new_student.CourseId {
 		return fmt.Errorf("student with course exist")
 	}
 
-	cv.Id = uuid.New()
-	sm, err2 := ac.InsertStudentIdInToMarksTable(cv)
+	new_student.Id = uuid.New()
+	sm, err2 := ac.InsertStudentIdInToMarksTable(new_student)
 	if err2 != nil {
 		return err2
 	}
-	cv.MarksId = sm.Id
+	new_student.MarksId = sm.Id
 
-	err1 := ac.daos.InsertValuesToCollegeAdminstration(cv)
+	err1 := ac.daos.InsertValuesToCollegeAdminstration(new_student)
 	if err1 != nil {
 		return err1
 	} else {
@@ -192,6 +209,7 @@ func (ac *Service) DeleteStudentCourseService(sn, cn string) (err error) {
 	var student_detail models.StudentInfo
 	student_detail.Name = sn
 	student_detail.CourseId = course_details.Id
+
 	_, err2 := ac.daos.GetStudentdetail(&student_detail)
 	if err2 != nil {
 		return err2

@@ -6,7 +6,7 @@ import (
 )
 
 func (s *Service) RunDailyMigrations() {
-
+	log.Println("running migrations")
 	go s.CheckOutDatedTokensSetFalse()
 	go s.DeleteNotValidTokens()
 }
