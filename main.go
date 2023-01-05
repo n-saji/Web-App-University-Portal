@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
 	}
-	
+
 	toRunGooseMigration(url)
 
 	//auto migrate disabled as goose is integrated
@@ -48,7 +48,7 @@ func main() {
 	handler_connection := handlers.New(ServiceConnection)
 
 	s := cron.New()
-	go s.AddFunc("@every 10s", ServiceConnection.RunDailyMigrations)
+	go s.AddFunc("@every 10m", ServiceConnection.RunDailyMigrations)
 	s.Start()
 
 	r := handler_connection.GetRouter()
