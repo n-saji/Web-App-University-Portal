@@ -55,3 +55,12 @@ func (ac *AdminstrationCloud) GetAllStudentsIDForACourse(course_id uuid.UUID) ([
 
 	return student_names, nil
 }
+
+func (ac *AdminstrationCloud) DeleteStudenetMarks(marks_id uuid.UUID) error {
+
+	err := ac.dbConn.Table("student_marks").Where("id = ?", marks_id).Delete(models.StudentMarks{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
