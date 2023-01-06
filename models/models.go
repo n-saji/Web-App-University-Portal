@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 )
 
@@ -49,12 +47,12 @@ type InstructorLogin struct {
 
 type Token_generator struct {
 	Token     uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
-	ValidFrom time.Time
-	ValidTill time.Time
+	ValidFrom int64
+	ValidTill int64
 	IsValid   bool
 }
 
-//not part of db
+// not part of db
 type StudentsMarksForCourse struct {
 	Course_name     string
 	StudentId       []string
