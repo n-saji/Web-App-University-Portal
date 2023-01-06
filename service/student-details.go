@@ -218,6 +218,10 @@ func (ac *Service) DeleteStudentCourseService(sn, cn string) (err error) {
 	if err != nil {
 		return fmt.Errorf("failed to delete")
 	}
+	err5 := ac.daos.DeleteStudenetMarks(student_detail.MarksId)
+	if err5 != nil {
+		return fmt.Errorf("failed to delete")
+	}
 	return nil
 
 }
