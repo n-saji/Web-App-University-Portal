@@ -9,7 +9,7 @@ import (
 var wg sync.WaitGroup
 
 func (s *Service) RunDailyMigrations() {
-	//making go routines synchronous 
+	//making go routines synchronous
 	wg.Add(2)
 	ch := make(chan int)
 	log.Println("running migrations")
@@ -28,7 +28,7 @@ func (s *Service) CheckOutDatedTokensSetFalse(ch chan int) {
 	var time_now = time.Now()
 	for _, token := range all_tokens {
 
-		if token.ValidTill.Sub(time_now) < 0 {
+		if token.ValidTill-time_now.Unix() < 0 {
 			s.daos.SetTokenFalse(token.Token)
 		}
 
