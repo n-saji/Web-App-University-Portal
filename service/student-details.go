@@ -54,6 +54,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 		return err2
 	}
 	new_student.MarksId = sm.Id
+ 
 
 	err1 := ac.daos.InsertValuesToCollegeAdminstration(new_student)
 	if err1 != nil {
