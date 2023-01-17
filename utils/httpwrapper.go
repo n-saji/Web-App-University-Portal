@@ -8,10 +8,11 @@ import (
 )
 
 func MakeRequest(method, url, name string, req, res interface{}) (int, error) {
+
 	client := &http.Client{}
 	if method == "GET" {
 		request, err3 := http.NewRequest(method, url, nil)
-		request.Header.Add("Content-Type", "application/json")
+		request.Header.Set("Internal-call", "true")
 		if err3 != nil {
 			log.Println(err3.Error())
 			return 0, err3
