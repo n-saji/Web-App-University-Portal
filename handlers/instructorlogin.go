@@ -34,9 +34,11 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 		} else {
 			token, _ := h.service.GetTokenAfterLogging()
 			http.SetCookie(ctx.Writer, &http.Cookie{
-				Name:  "token",
-				Value: token.String(),
-				Path:  "/",
+				Name:     "token",
+				Value:    token.String(),
+				Path:     "/",
+				HttpOnly: true,
+				Secure:   false,
 			})
 			ctx.JSON(http.StatusAccepted, "successfully created")
 		}
@@ -64,15 +66,17 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 	if err == nil && err1 == nil {
 		token, err2 := h.service.GetTokenAfterLogging()
 		http.SetCookie(ctx.Writer, &http.Cookie{
-			Name:  "token",
-			Value: token.String(),
-			Path:  "/",
+			Name:     "token",
+			Value:    token.String(),
+			Path:     "/",
+			HttpOnly: true,
+			Secure:   false,
 		})
 		if err2 != nil {
 			ctx.JSON(http.StatusNotAcceptable, err2.Error())
 			return
 		} else {
-			ctx.JSON(http.StatusAccepted, token.String())
+			ctx.JSON(http.StatusAccepted, "successfully logged-in")
 		}
 
 	}

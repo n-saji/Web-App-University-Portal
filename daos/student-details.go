@@ -61,9 +61,9 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) (*models.StudentInfo, error) {
+func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) ([]*models.StudentInfo, error) {
 
-	var cad *models.StudentInfo
+	var cad []*models.StudentInfo
 	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
 	if val.Error != nil {
 		return nil, val.Error
@@ -147,6 +147,9 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 
 	var sd1 models.StudentInfo
 	condition := make(map[string]interface{})
+	if sd.Id != uuid.Nil {
+		condition["id"] = sd.Id
+	}
 	if sd.Name != "" {
 		condition["name"] = sd.Name
 	}

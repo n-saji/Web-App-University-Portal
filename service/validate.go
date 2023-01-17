@@ -27,7 +27,7 @@ func (ac *Service) CheckEmailExist(email string) error {
 		return err
 	}
 	if ok {
-		return fmt.Errorf("email exists!")
+		return fmt.Errorf("email exists")
 	}
 	return nil
 }
@@ -47,11 +47,12 @@ func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
 	var token_table models.Token_generator
 
 	token := uuid.New()
-
 	token_table.Token = token
 	token_table.IsValid = true
-	token_table.ValidFrom = time.Now()
-	token_table.ValidTill = token_table.ValidFrom.Add(time.Minute * 10)
+	tn := time.Now()
+	token_table.ValidFrom = tn.Unix()
+	validtill := tn.Add(time.Minute * 10)
+	token_table.ValidTill = validtill.Unix()
 
 	err := ac.daos.InsertToken(token_table)
 	if err != nil {
@@ -80,9 +81,8 @@ func (ac *Service) CheckTokenExpiry(token uuid.UUID) error {
 		return err
 	}
 	time_now := time.Now()
-
-	diff := token_details.ValidTill.Sub(time_now)
-	if diff.Seconds() < 0 {
+	diff := token_details.ValidTill - time_now.Unix()
+	if diff < 0 {
 		err2 := ac.daos.SetTokenFalse(token)
 		if err2 != nil {
 			return err2

@@ -28,9 +28,10 @@ func main() {
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
 	}
+
 	toRunGooseMigration(url)
 
-	//auto migrate disabling it as goose is integrated
+	//auto migrate disabled as goose is integrated
 	// err1 := db.Migrator().AutoMigrate(
 	// 	&models.CourseInfo{},
 	// 	&models.StudentInfo{},
