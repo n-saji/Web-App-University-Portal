@@ -52,8 +52,10 @@ func (ac *AdminstrationCloud) RetieveCoursesAvailable() ([]*models.CourseInfo, e
 
 }
 func (ac *AdminstrationCloud) UpdateCourseByName(name string, rc *models.CourseInfo) error {
-	rcOld, _ := ac.GetCourseByName(name)
-
+	rcOld, err1 := ac.GetCourseByName(name)
+	if err1 != nil {
+		return fmt.Errorf("course not available %s", err1.Error())
+	}
 	rc.Id = rcOld.Id
 	err := ac.dbConn.Save(&rc).Error
 	if err != nil {
@@ -81,4 +83,3 @@ func (ac *AdminstrationCloud) DeleteCourse(id uuid.UUID) (bool, error) {
 	}
 	return true, nil
 }
-
