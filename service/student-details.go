@@ -54,7 +54,6 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 		return err2
 	}
 	new_student.MarksId = sm.Id
- 
 
 	err1 := ac.daos.InsertValuesToCollegeAdminstration(new_student)
 	if err1 != nil {
@@ -74,7 +73,7 @@ func (ac *Service) RetrieveCAd() ([]*models.StudentInfo, error) {
 	return rca, nil
 }
 
-func (ac *Service) UpdateCAd(rca *models.StudentInfo, oldCourse string) error {
+func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string) error {
 
 	rcOld, err4 := ac.daos.GetCourseByName(oldCourse)
 	rcNew, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)

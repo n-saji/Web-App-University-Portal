@@ -99,7 +99,7 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 	oldCourse := ctx.Param("coursename")
 	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
-	err := h.service.UpdateCAd(&rcd, oldCourse)
+	err := h.service.Update_Student_Details(&rcd, oldCourse)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {
