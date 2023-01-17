@@ -14,7 +14,7 @@ func (ac *Service) InsertStudentIdInToMarksTable(cv *models.StudentInfo) (*model
 	sm.CourseId = cv.ClassesEnrolled.Id
 	sm.CourseName = cv.ClassesEnrolled.CourseName
 	sm.StudentId = cv.Id
-	sm.Grade = "not graded"
+	sm.Grade = "nil"
 	err := ac.daos.CreateStudentMarks(&sm)
 	if err != nil {
 		return nil, err
