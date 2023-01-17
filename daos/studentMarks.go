@@ -64,3 +64,12 @@ func (ac *AdminstrationCloud) DeleteStudenetMarks(marks_id uuid.UUID) error {
 	}
 	return nil
 }
+
+func (ac *AdminstrationCloud) UpdateStudentMarksTableCourse(new_course string,student_id uuid.UUID)error{
+
+	err := ac.dbConn.Table("student_marks").Where("student_id = ?",student_id).Update("course_name",new_course).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
