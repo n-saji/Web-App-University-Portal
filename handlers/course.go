@@ -50,22 +50,26 @@ func (h *Handler) InsertCourse(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCourse(ctx *gin.Context) {
 
-	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-	cookie_token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
-	}
+	//ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	ok := ctx.GetHeader("Internal-call")
 
-	if cookie_token == "" {
-		ctx.JSON(http.StatusInternalServerError, "authentication error")
-		return
-	}
+	if ok != "true" {
+		cookie_token, err3 := ctx.Cookie("token")
+		if err3 != nil {
+			ctx.JSON(http.StatusInternalServerError, err3.Error())
+			return
+		}
 
-	validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
-	if !validity {
-		ctx.JSON(http.StatusInternalServerError, "authentication time-out")
-		return
+		if cookie_token == "" {
+			ctx.JSON(http.StatusInternalServerError, "authentication error")
+			return
+		}
+
+		validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
+		if !validity {
+			ctx.JSON(http.StatusInternalServerError, "authentication time-out")
+			return
+		}
 	}
 
 	response, err := h.service.RetrieveCA()
@@ -135,8 +139,11 @@ func (h *Handler) DeleteCourse(ctx *gin.Context) {
 	err := h.service.DeleteCA(CourseName)
 	if err != nil {
 		res := models.DeleteResponse{}
-		token, _ := h.service.GetTokenAfterLogging()
-		utils.MakeRequest(http.MethodGet, "http://localhost:5050/retrieve-all-courses/"+token.String(), "Fetching course", nil, &res.Courses)
+		_, err1 := utils.MakeRequest(http.MethodGet, "http://localhost:5050/retrieve-all-courses", "Fetching course", nil, &res.Courses)
+		if err1 != nil {
+			ctx.IndentedJSON(http.StatusInternalServerError, err1)
+			return
+		}
 		res.Message = err.Error() + "! Please select from existing course"
 		ctx.IndentedJSON(http.StatusNotFound, res)
 	} else {
