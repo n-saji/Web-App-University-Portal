@@ -147,6 +147,9 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 
 	var sd1 models.StudentInfo
 	condition := make(map[string]interface{})
+	if sd.Id != uuid.Nil {
+		condition["id"] = sd.Id
+	}
 	if sd.Name != "" {
 		condition["name"] = sd.Name
 	}
