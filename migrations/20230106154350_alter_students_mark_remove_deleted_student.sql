@@ -1,9 +1,20 @@
 -- +goose Up
 -- +goose StatementBegin
-SELECT 'up SQL query';
+CREATE OR REPLACE FUNCTION delete_student_marks()
+RETURNS TRIGGER AS $my_table$
+BEGIN
+   DELETE FROM public.student_marks
+    WHERE student_id not in (SELECT id::text from  public.student_infos);
+RETURN NEW;
+END;
+$my_table$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER deleting_student_mark_trigger
+after
+delete ON student_infos FOR EACH ROW EXECUTE PROCEDURE delete_student_marks();
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-SELECT 'down SQL query';
+DROP TRIGGER IF EXISTS student_infos on student_infos;
 -- +goose StatementEnd
