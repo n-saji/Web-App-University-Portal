@@ -86,7 +86,7 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 	rcaExist, _ := ac.daos.GetStudentdetail(
 		&models.StudentInfo{
 			RollNumber: rca.RollNumber,
-			Id:         rcOld.Id,
+			CourseId:   rcOld.Id,
 			Name:       rca.Name})
 	if rcaExist == nil {
 		return fmt.Errorf("student details mismatched/does not exists")
