@@ -89,7 +89,7 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 			Id:         rcOld.Id,
 			Name:       rca.Name})
 	if rcaExist == nil {
-		return fmt.Errorf("student details mismatched")
+		return fmt.Errorf("student details mismatched/does not exists")
 	}
 
 	if rcaExist.Id == uuid.Nil {
@@ -123,6 +123,9 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 	}
 	rca.MarksId = sm.Id
 	sm.Marks = rca.StudentMarks.Marks
+	if sm.Marks > 100 {
+		return fmt.Errorf("entered mark is beyond limit")
+	}
 	sm.Grade = ac.GenerateGradeForMarks(sm.Marks)
 	sm.CourseName = rca.ClassesEnrolled.CourseName
 	sm.CourseId = rca.CourseId
