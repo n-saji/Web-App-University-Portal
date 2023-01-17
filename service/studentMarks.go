@@ -2,6 +2,7 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -14,6 +15,7 @@ func (ac *Service) InsertStudentIdInToMarksTable(cv *models.StudentInfo) (*model
 	sm.CourseId = cv.ClassesEnrolled.Id
 	sm.CourseName = cv.ClassesEnrolled.CourseName
 	sm.StudentId = cv.Id
+	sm.Grade = "nil"
 	err := ac.daos.CreateStudentMarks(&sm)
 	if err != nil {
 		return nil, err
@@ -29,11 +31,14 @@ func (s *Service) GetAllStudentsMarksForGivenCourse(course_name string) (*models
 	var err error
 	course_model, err1 := s.daos.GetCourseByName(course_name)
 	if err1 != nil {
-		return nil, err1
+		return nil, fmt.Errorf("no course exits %s", err1.Error())
 	}
 	smfc.StudentId, err = s.daos.GetAllStudentsIDForACourse(course_model.Id)
 	if err != nil {
 		return nil, err
+	}
+	if len(smfc.StudentId) == 0 {
+		return nil, fmt.Errorf("no student data exists")
 	}
 	smfc.Course_name = course_model.CourseName
 

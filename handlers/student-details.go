@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (h *Handler) InsertCAd(ctx *gin.Context) {
+func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -45,7 +45,7 @@ func (h *Handler) InsertCAd(ctx *gin.Context) {
 	}
 }
 
-func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
+func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 
 	token, err1 := ctx.Cookie("token")
 	if err1 != nil {
@@ -74,7 +74,7 @@ func (h *Handler) RetrieveValuesCAd(ctx *gin.Context) {
 	}
 }
 
-func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
+func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -99,7 +99,7 @@ func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 	oldCourse := ctx.Param("coursename")
 	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
-	err := h.service.UpdateCAd(&rcd, oldCourse)
+	err := h.service.Update_Student_Details(&rcd, oldCourse)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {
@@ -108,7 +108,7 @@ func (h *Handler) UpdateValuesCAd(ctx *gin.Context) {
 
 }
 
-func (h *Handler) DeleteSA(ctx *gin.Context) {
+func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
@@ -230,6 +230,10 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 	parameter := ctx.Params
 	student_name := parameter.ByName("name")
 	course_name := parameter.ByName("course")
+	if student_name == ":name" || course_name == ":course" {
+		ctx.IndentedJSON(http.StatusInternalServerError, "parameter is empty")
+		return
+	}
 	err := h.service.DeleteStudentCourseService(student_name, course_name)
 	if err != nil {
 		ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
