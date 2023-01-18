@@ -38,4 +38,5 @@ API TO CREATE -
 re-organize the structure
 
 BUG -
+while updating course name , update it in instructor table
 */
