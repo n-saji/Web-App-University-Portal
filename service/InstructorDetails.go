@@ -79,3 +79,15 @@ func (s *Service) DeleteInstructor(name string) error {
 	}
 	return nil
 }
+
+func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models.InstructorDetails)(error){
+
+	err := s.daos.UpdateInstructor(req_id,cond)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
