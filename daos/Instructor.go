@@ -64,6 +64,7 @@ func (ac *AdminstrationCloud) GetInstructorWithSpecifics(condition models.Instru
 
 func (ac *AdminstrationCloud) UpdateInstructor(req_id models.InstructorDetails, condition models.InstructorDetails) error {
 
+	log.Println(condition)
 	q := ac.dbConn.Model(models.InstructorDetails{}).Where(condition).Updates(req_id)
 	if q.Error != nil {
 		return q.Error
