@@ -57,7 +57,7 @@ func (ac *Service) UpdateCA(name string, rc *models.CourseInfo) error {
 	}
 	err := ac.daos.UpdateCourseByName(name, rc)
 	if err != nil {
-		return fmt.Errorf("not able to update %s", err.Error())
+		return fmt.Errorf("not able to update! %s", err.Error())
 	}
 	return nil
 }
