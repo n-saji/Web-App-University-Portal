@@ -80,14 +80,39 @@ func (s *Service) DeleteInstructor(name string) error {
 	return nil
 }
 
-func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models.InstructorDetails)(error){
+func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models.InstructorDetails) error {
 
-	err := s.daos.UpdateInstructor(req_id,cond)
-
+	list_details, err := s.GetInstructorDetailWithSpecifics(cond)
 	if err != nil {
-		return err
+		return fmt.Errorf(fmt.Sprint("fetching error " + err.Error()))
+	}
+	if len(list_details) == 0 {
+		return fmt.Errorf("no instructor found with given details")
+	}
+	if req_id.CourseName != "" {
+		status := s.daos.CheckCourse(req_id.CourseName)
+		if !status {
+			return fmt.Errorf("course doesn not exits")
+		}
+	}
+
+	err1 := s.daos.UpdateInstructor(req_id, cond)
+
+	if err1 != nil {
+		return err1
 	}
 
 	return nil
+
+}
+func (s *Service) GetInstructorDetailWithSpecifics(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
+
+	//var id_list []models.InstructorDetails
+
+	id_list, err := s.daos.RetieveInstructorDetailsWithCondition(req)
+	if err != nil {
+		return nil, fmt.Errorf("error %s", err.Error())
+	}
+	return id_list, nil
 
 }
