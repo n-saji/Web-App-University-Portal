@@ -41,4 +41,5 @@ re-organize the structure
 BUG -
 
 create new service for retrieve individual details
+delete handler not working frontend
 */
