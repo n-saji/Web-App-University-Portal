@@ -118,41 +118,39 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 	}
 }
 
-func (h *Handler) UpdateInstructor(ctx *gin.Context){
+func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 
 	token, err3 := ctx.Cookie("token")
 	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
 		return
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 		return
 	}
 
-	id := &models.InstructorDetails{}
-	err := ctx.BindJSON(&id)
+	req_id := &models.InstructorDetails{}
+	err := ctx.BindJSON(&req_id)
 	if err != nil {
 		err = fmt.Errorf("unable to store values")
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 	cond := &models.InstructorDetails{}
-	params := ctx.Params
-	if val1 := params.ByName("instructor_code"); val1 != ""{
+	query_params := ctx.Query
+	if val1 := query_params("instructor_code"); val1 != "" {
 		cond.InstructorCode = val1
 	}
-	if val1 := params.ByName("instructor_name"); val1 != ""{
+	if val1 := query_params("instructor_name"); val1 != "" {
 		cond.InstructorName = val1
 	}
+	err1 := h.service.Update_Instructor(*req_id, *cond)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusOK, fmt.Sprint("Updated "+req_id.InstructorName))
 }
