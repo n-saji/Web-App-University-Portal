@@ -25,7 +25,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.GET("/get-ranking/:coursename", h.GetRankingForACourse)
 	rc.GET("/get-student-name-course", h.GetSelectedFieldsAllStudent)
-	rc.PATCH("/update-instructor",h.UpdateInstructor)
+	rc.PATCH("/update-instructor", h.UpdateInstructor)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -39,5 +39,6 @@ API TO CREATE -
 re-organize the structure
 
 BUG -
-while updating course name , update it in instructor table
+update instuctor do validations
+create new service for retrieve individual details
 */
