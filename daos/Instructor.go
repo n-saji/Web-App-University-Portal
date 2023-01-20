@@ -64,10 +64,18 @@ func (ac *AdminstrationCloud) GetInstructorWithSpecifics(condition models.Instru
 
 func (ac *AdminstrationCloud) UpdateInstructor(req_id models.InstructorDetails, condition models.InstructorDetails) error {
 
-	log.Println(condition)
 	q := ac.dbConn.Model(models.InstructorDetails{}).Where(condition).Updates(req_id)
 	if q.Error != nil {
 		return q.Error
 	}
 	return nil
+}
+
+func (ac *AdminstrationCloud) RetieveInstructorDetailsWithCondition(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
+	var list []*models.InstructorDetails
+	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where(req).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
 }
