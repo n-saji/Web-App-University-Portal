@@ -30,12 +30,12 @@ type StudentMarks struct {
 }
 
 type InstructorDetails struct {
-	Id              uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
-	InstructorCode  string
-	InstructorName  string
-	Department      string
-	CourseId        uuid.UUID
-	CourseName      string
+	Id              uuid.UUID  `gorm:"primary_key;unique;type:uuid" json:"id"`
+	InstructorCode  string     `json:"instructor_code"`
+	InstructorName  string     `json:"instructor_name"`
+	Department      string     `json:"department"`
+	CourseId        uuid.UUID  `json:"course_id"`
+	CourseName      string     `json:"course_name"`
 	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
