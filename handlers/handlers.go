@@ -42,4 +42,5 @@ BUG -
 
 create new service for retrieve individual details
 delete handler not working frontend
+fe all pages check if working - cookie issue
 */
