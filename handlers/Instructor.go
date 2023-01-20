@@ -117,3 +117,42 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 		ctx.IndentedJSON(http.StatusOK, "deleted instructor: "+name)
 	}
 }
+
+func (h *Handler) UpdateInstructor(ctx *gin.Context){
+
+	token, err3 := ctx.Cookie("token")
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	token_id, err4 := uuid.Parse(token)
+	if err4 != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
+		return
+	}
+	status, err1 := h.service.CheckTokenValidity(token_id)
+	if err1 != nil {
+		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		return
+	}
+	if !status {
+		ctx.JSON(http.StatusBadRequest, "token expired")
+		return
+	}
+
+	id := &models.InstructorDetails{}
+	err := ctx.BindJSON(&id)
+	if err != nil {
+		err = fmt.Errorf("unable to store values")
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	cond := &models.InstructorDetails{}
+	params := ctx.Params
+	if val1 := params.ByName("instructor_code"); val1 != ""{
+		cond.InstructorCode = val1
+	}
+	if val1 := params.ByName("instructor_name"); val1 != ""{
+		cond.InstructorName = val1
+	}
+}
