@@ -7,7 +7,6 @@ import (
 	"CollegeAdministration/service"
 	"database/sql"
 	"embed"
-	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -23,25 +22,13 @@ var embedMigrations embed.FS
 func main() {
 
 	config.Init()
-	url := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", config.Postgres_Host, config.Postgres_User, config.Postgres_Password, config.Postgres_Db_Name, config.Postgres_Port)
-	db, err := gorm.Open(postgres.Open(url), &gorm.Config{})
+	//url := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", config.Postgres_Host, config.Postgres_User, config.Postgres_Password, config.Postgres_Db_Name, config.Postgres_Port)
+	db, err := gorm.Open(postgres.Open(config.DB_URL), &gorm.Config{})
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
 	}
 
-	toRunGooseMigration(url)
-
-	//auto migrate disabled as goose is integrated
-	// err1 := db.Migrator().AutoMigrate(
-	// 	&models.CourseInfo{},
-	// 	&models.StudentInfo{},
-	// 	&models.InstructorDetails{},
-	// 	&models.InstructorLogin{},
-	// 	&models.Token_generator{},
-	// )
-	// if err != nil {
-	// 	log.Println("error found while migrating", err1)
-	// }
+	toRunGooseMigration(config.DB_URL)
 
 	DaosConnection := daos.New(db)
 	ServiceConnection := service.New(DaosConnection)
