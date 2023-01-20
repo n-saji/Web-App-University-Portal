@@ -94,6 +94,8 @@ func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models
 		if !status {
 			return fmt.Errorf("course doesn not exits")
 		}
+		course_details, _ := s.daos.GetCourseByName(req_id.CourseName)
+		req_id.CourseId = course_details.Id
 	}
 
 	err1 := s.daos.UpdateInstructor(req_id, cond)
@@ -107,12 +109,11 @@ func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models
 }
 func (s *Service) GetInstructorDetailWithSpecifics(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
 
-	//var id_list []models.InstructorDetails
-
 	id_list, err := s.daos.RetieveInstructorDetailsWithCondition(req)
 	if err != nil {
 		return nil, fmt.Errorf("error %s", err.Error())
 	}
+
 	return id_list, nil
 
 }
