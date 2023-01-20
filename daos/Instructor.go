@@ -51,3 +51,22 @@ func (ac *AdminstrationCloud) GetInstructorWithName(name string) (*models.Instru
 	}
 	return &is, nil
 }
+
+func (ac *AdminstrationCloud) GetInstructorWithSpecifics(condition models.InstructorDetails) ([]*models.InstructorDetails, error) {
+
+	var is []*models.InstructorDetails
+	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where(condition).Find(&is).Error
+	if err != nil {
+		return nil, err
+	}
+	return is, nil
+}
+
+func (ac *AdminstrationCloud) UpdateInstructor(req_id models.InstructorDetails, condition models.InstructorDetails) error {
+
+	q := ac.dbConn.Model(models.InstructorDetails{}).Where(condition).Updates(req_id)
+	if q.Error != nil {
+		return q.Error
+	}
+	return nil
+}
