@@ -147,11 +147,14 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	if val1 := query_params("instructor_name"); val1 != "" {
 		cond.InstructorName = val1
 	}
+	if val1 := query_params("course_name"); val1 != "" {
+		cond.CourseName = val1
+	}
 
 	err1 := h.service.Update_Instructor(*req_id, *cond)
 	if err1 != nil {
 		ctx.JSON(http.StatusInternalServerError, err1.Error())
 		return
 	}
-	ctx.IndentedJSON(http.StatusOK, fmt.Sprint("Updated details for "+req_id.InstructorName))
+	ctx.IndentedJSON(http.StatusOK, fmt.Sprint("Updated details"))
 }
