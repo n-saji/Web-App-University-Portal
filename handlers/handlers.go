@@ -39,6 +39,6 @@ API TO CREATE -
 re-organize the structure
 
 BUG -
-update instuctor do validations
+
 create new service for retrieve individual details
 */
