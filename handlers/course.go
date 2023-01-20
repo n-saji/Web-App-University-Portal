@@ -50,25 +50,22 @@ func (h *Handler) InsertCourse(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesCourse(ctx *gin.Context) {
 
-	//ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 	ok := ctx.GetHeader("Internal-call")
 
 	if ok != "true" {
-		cookie_token, err3 := ctx.Cookie("token")
-		if err3 != nil {
-			ctx.JSON(http.StatusInternalServerError, err3.Error())
-			return
+		token := ctx.GetHeader("Token")
+		var err1 error
+		if token == "" {
+			token, err1 = ctx.Cookie("token")
+			if err1 != nil {
+				ctx.JSON(http.StatusInternalServerError, err1.Error())
+				return
+			}
 		}
 
-		if cookie_token == "" {
-			ctx.JSON(http.StatusInternalServerError, "authentication error")
-			return
-		}
-
-		validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
-		if !validity {
-			ctx.JSON(http.StatusInternalServerError, "authentication time-out")
-			return
+		err2 := h.service.CheckTokenWithCookie(token)
+		if err2 != nil {
+			ctx.JSON(http.StatusInternalServerError, err2.Error())
 		}
 	}
 
