@@ -14,7 +14,7 @@
       </button>
     </div>
 
-    <div class="body_content">
+    <div class="body_content" id="body_content">
       <table id="course_table" class="course_table">
         <tr>
           <th>Sl No.</th>
@@ -23,6 +23,17 @@
           <th>Delete</th>
         </tr>
       </table>
+      <div class="popup" id="popup">
+        <input
+          type="text"
+          id="course_name"
+          placeholder="Enter Updated Course Name"
+        />
+        <div class="button_popup">
+          <button type="button" onclick="closeForm()">Cancel</button>
+          <button type="button" id="update_course">Update</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>
