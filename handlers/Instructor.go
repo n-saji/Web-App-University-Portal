@@ -29,6 +29,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	var reply res
@@ -70,6 +71,7 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	rid, err := h.service.GetInstructorDetails()
