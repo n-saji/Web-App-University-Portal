@@ -24,7 +24,7 @@ html {
 }
 .tab button:hover {
   cursor: pointer;
-  background-color: grey
+  background-color: grey;
 }
 .tab .headers {
   color: white;
@@ -45,7 +45,8 @@ th {
   border: 2px solid black;
   padding: 20px;
   background-color: cornsilk;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .instructor_table td {
   background-color: grey;
@@ -57,7 +58,7 @@ th {
 tr:hover td {
   background-color: coral;
   color: black;
-font-weight: bold;
+  font-weight: 500;
 }
 .delete_button {
   border-radius: 4px;
