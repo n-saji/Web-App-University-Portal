@@ -2,34 +2,27 @@ package handlers
 
 import (
 	"CollegeAdministration/models"
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
-		return
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 	}
 
 	var cad models.StudentInfo
@@ -47,53 +40,44 @@ func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 
 func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 
-	token, err1 := ctx.Cookie("token")
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	token_id, err := uuid.Parse(token)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if status {
-		response, err := h.service.RetrieveCAd()
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-		} else {
-			ctx.JSON(http.StatusOK, response)
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
 		}
-	} else {
-		ctx.JSON(http.StatusBadRequest, "Token Expired")
 	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+	}
+	response, err := h.service.RetrieveCAd()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+	} else {
+		ctx.JSON(http.StatusOK, response)
+	}
+
 }
 
 func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
-		return
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 	}
 
 	oldCourse := ctx.Param("coursename")
@@ -110,24 +94,19 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 
 func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
-		return
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 	}
 
 	rollNumber := ctx.Param("rollnumber")
@@ -142,24 +121,19 @@ func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 }
 func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
-		return
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 	}
 
 	var rcd *models.StudentInfo
@@ -176,55 +150,45 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 
 func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 
-	token, err2 := ctx.Cookie("token")
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
-		return
 	}
-	token_id, err := uuid.Parse(token)
+	student_name := ctx.Param("name")
+	res, err := h.service.FetchStudentCourse(student_name)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if status {
-		student_name := ctx.Param("name")
-		res, err := h.service.FetchStudentCourse(student_name)
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, error.Error(err))
-		} else {
-			ctx.JSON(http.StatusOK, res)
-		}
+		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {
-		ctx.JSON(http.StatusBadRequest, "token expired")
+		ctx.JSON(http.StatusOK, res)
 	}
 
 }
 
 func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
-		return
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 	}
 
 	parameter := ctx.Params
@@ -244,54 +208,44 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 
 func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 
-	token, err2 := ctx.Cookie("token")
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
-		return
 	}
 	course_name := ctx.Param("coursename")
-	token_id, err := uuid.Parse(token)
+	model, err := h.service.GetAllStudentsMarksForGivenCourse(course_name)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if status {
-		model, err := h.service.GetAllStudentsMarksForGivenCourse(course_name)
-		if err != nil {
-			ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
-		} else {
-			ctx.IndentedJSON(http.StatusOK, model)
-		}
+		ctx.IndentedJSON(http.StatusInternalServerError, err.Error())
 	} else {
-		ctx.JSON(http.StatusBadRequest, "token expired")
+		ctx.IndentedJSON(http.StatusOK, model)
 	}
 
 }
 
 func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			return
+		}
 	}
-	token_id, err := uuid.Parse(token)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
-		return
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 	}
 
 	response, err2 := h.service.GetAllStudentSelectiveData()
