@@ -13,11 +13,12 @@ async function InsertCourseValues() {
     alert("Please enter Course Name.");
     return;
   }
+  let cookie_token = getCookie("token");
   let createCourse = await fetch(`http://localhost:5050/insert-course`, {
     method: "POST",
-
+    headers: { Token: cookie_token },
     body: JSON.stringify({
-      CourseName: course_name,
+      course_name: course_name,
     }),
   });
   let response = await createCourse.json();
@@ -30,4 +31,15 @@ async function InsertCourseValues() {
     );
     response_for_creation.innerHTML = "Successfully Created";
   }
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
 }
