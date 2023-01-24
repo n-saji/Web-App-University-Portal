@@ -23,6 +23,7 @@ func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	var cad models.StudentInfo
@@ -53,6 +54,7 @@ func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 	response, err := h.service.RetrieveCAd()
 	if err != nil {
@@ -78,6 +80,7 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	oldCourse := ctx.Param("coursename")
@@ -107,6 +110,7 @@ func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	rollNumber := ctx.Param("rollnumber")
@@ -134,6 +138,7 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	var rcd *models.StudentInfo
@@ -163,6 +168,7 @@ func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 	student_name := ctx.Param("name")
 	res, err := h.service.FetchStudentCourse(student_name)
@@ -189,6 +195,7 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	parameter := ctx.Params
@@ -221,6 +228,7 @@ func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 	course_name := ctx.Param("coursename")
 	model, err := h.service.GetAllStudentsMarksForGivenCourse(course_name)
@@ -246,6 +254,7 @@ func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	response, err2 := h.service.GetAllStudentSelectiveData()
