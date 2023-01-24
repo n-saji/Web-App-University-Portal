@@ -20,7 +20,7 @@ async function populateInstructors() {
        <td id=${i}>${each_value.instructor_name}</td>
        <td>${each_value.department}</td>
        <td>${each_value.course_name}</td>
-       <td><button>U</button></td>
+       <td><button class="update_button">U</button></td>
        <td><button onclick=deleteInstructor(${i}) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }

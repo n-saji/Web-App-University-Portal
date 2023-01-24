@@ -21,7 +21,7 @@ async function populateCourse() {
     let tr = document.createElement("tr");
     tr.innerHTML = `<td>${i + 1}</td>
          <td id=${i}>${each_value.course_name}</td>
-         <td><button>U</button></td>
+         <td><button class="update_button">U</button></td>
          <td><button onclick=deleteCourse(${i}) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
