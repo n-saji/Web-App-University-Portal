@@ -24,6 +24,7 @@ func (h *Handler) InsertCourse(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	var ca models.CourseInfo
@@ -59,6 +60,7 @@ func (h *Handler) RetrieveValuesCourse(ctx *gin.Context) {
 		err2 := h.service.CheckTokenWithCookie(token)
 		if err2 != nil {
 			ctx.JSON(http.StatusInternalServerError, err2.Error())
+			return
 		}
 	}
 
@@ -85,6 +87,7 @@ func (h *Handler) UpdateValuesCourse(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 	var rc models.CourseInfo
 	var name = ctx.Param("name")
@@ -113,6 +116,7 @@ func (h *Handler) DeleteCourse(ctx *gin.Context) {
 	err2 := h.service.CheckTokenWithCookie(token)
 	if err2 != nil {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
 	}
 
 	var CourseName string = ctx.Param("courseName")
