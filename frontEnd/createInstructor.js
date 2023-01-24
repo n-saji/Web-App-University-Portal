@@ -33,10 +33,12 @@ async function InsertInstructorValues() {
   if (coursename.value == "Choose Course") {
     coursename.classList.add("error");
   }
+  let cookie_token = getCookie("token");
   let createInstructor = await fetch(
     `http://localhost:5050/insert-instructor-details`,
     {
       method: "POST",
+      headers: { Token: cookie_token },
 
       body: JSON.stringify({
         InstructorCode: instructorcode.value,
@@ -87,4 +89,15 @@ function setbackpage() {
 
 function setdashboard() {
   window.location.replace("allinstructor.html");
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
 }
