@@ -11,7 +11,7 @@ async function populateCourse() {
     headers: { token: cookie_token },
   });
   let all_course_response = await all_course.json();
-  if (all_course_response == "authentication time-out") {
+  if (all_course_response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
   }
