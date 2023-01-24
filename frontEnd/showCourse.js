@@ -21,7 +21,7 @@ async function populateCourse() {
     let tr = document.createElement("tr");
     tr.innerHTML = `<td>${i + 1}</td>
          <td id=${i}>${each_value.course_name}</td>
-         <td><button class="update_button">U</button></td>
+         <td><button onclick=updateCourse(${i}) class="update_button">U</button></td>
          <td><button onclick=deleteCourse(${i}) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
@@ -45,6 +45,28 @@ async function deleteCourse(index) {
     {
       method: "DELETE",
       headers: { Token: cookie_token },
+    }
+  );
+  let response = await deleteCourse.json();
+  if (!deleteCourse.ok) {
+    console.log("failed", response);
+  } else {
+    console.log("success", response);
+    window.location.reload();
+  }
+}
+
+async function updateCourse(index) {
+  let index_name = document.getElementById(String(index));
+  console.log(index_name.innerHTML);
+  let deleteCourse = await fetch(
+    `http://localhost:5050/update-course/${index_name.innerHTML}`,
+    {
+      method: "PATCH",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        course_name: instructorcode.value,
+      }),
     }
   );
   let response = await deleteCourse.json();
