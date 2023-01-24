@@ -34,6 +34,7 @@ async function InsertInstructorValues() {
     coursename.classList.add("error");
   }
   let cookie_token = getCookie("token");
+  console.log(cookie_token)
   let createInstructor = await fetch(
     `http://localhost:5050/insert-instructor-details`,
     {
@@ -41,10 +42,10 @@ async function InsertInstructorValues() {
       headers: { Token: cookie_token },
 
       body: JSON.stringify({
-        InstructorCode: instructorcode.value,
-        InstructorName: instructorname.value,
-        Department: department.value,
-        CourseName: coursename.value,
+        instructor_code: instructorcode.value,
+        instructor_name: instructorname.value,
+        department: department.value,
+        course_name: coursename.value,
       }),
     }
   );
