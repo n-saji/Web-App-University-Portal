@@ -56,17 +56,17 @@ async function deleteCourse(index) {
   }
 }
 
-async function updateCourse(index) {
-  let index_name = document.getElementById(String(index));
-  let new_course_value = document.getElementById("course_name");
+async function updateCourse(course) {
+  //let index_name = document.getElementById(String(index));
+  let new_course_value = document.getElementById("course_name").value;
   let cookie_token = getCookie("token");
   let updateCourse = await fetch(
-    `http://localhost:5050/update-course/${index_name.innerHTML}`,
+    `http://localhost:5050/update-course/${course}`,
     {
       method: "PATCH",
       headers: { Token: cookie_token },
       body: JSON.stringify({
-        course_name: new_course_value.innerHTML,
+        course_name: new_course_value,
       }),
     }
   );
@@ -75,6 +75,7 @@ async function updateCourse(index) {
     console.log("failed", response);
   } else {
     console.log("success", response);
+    window.location.reload();
   }
   let popup = document.getElementById("popup");
   popup.classList.remove("open-popup");
@@ -82,12 +83,15 @@ async function updateCourse(index) {
 function openForm(index_value) {
   let popup = document.getElementById("popup");
   popup.classList.add("open-popup");
-
-  let update_buttons = document.getElementById("update_course");
-
-  //update_buttons.onselect(updateCourse(index_value));
+  let old_course = document.getElementById("old_course");
+  let index_name = document.getElementById(String(index_value));
+  old_course.innerHTML = index_name.innerHTML;
 }
 function closeForm() {
   let popup = document.getElementById("popup");
   popup.classList.remove("open-popup");
+}
+function callUpdateFunction() {
+  let old_course = document.getElementById("old_course").innerHTML;
+  updateCourse(old_course);
 }
