@@ -24,7 +24,7 @@ html {
 }
 .tab button:hover {
   cursor: pointer;
-  background-color: grey
+  background-color: grey;
 }
 .tab .headers {
   color: white;
@@ -41,25 +41,26 @@ html {
   display: flex;
   text-align: center;
   justify-content: space-between;
-  margin: auto; 
+  margin: auto;
   width: 300px;
-  font-size:large;
+  font-size: large;
   font-family: cursive;
   padding-bottom: 30px;
 }
 .input {
   height: 30px;
   margin-top: 15px;
-border-radius: 5px;
+  border-radius: 5px;
 }
-#response_for_login{
+#response_for_login {
   text-align: center;
   padding: 50px;
   color: orange;
   font-size: large;
   font-stretch: expanded;
   font-weight: 800;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 #createButton {
   border-radius: 5px;
@@ -72,7 +73,7 @@ border-radius: 5px;
   padding-bottom: 10px;
 }
 #createButton:hover {
-  background-color: black; 
+  background-color: black;
   color: white;
   border-color: green;
 }

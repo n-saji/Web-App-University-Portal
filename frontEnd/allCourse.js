@@ -9,16 +9,15 @@ dropdown.selectedIndex = 0;
 fetch(url, {
   headers: { token: cookie_token },
 })
-
   .then(function (response) {
     if (response.status !== 200) {
       console.warn(
         "Looks like there was a problem. Status Code: " + response.status
       );
       response.json().then(function (data) {
-          alert(data)
-          setTimeout(window.location.replace("index.html"), 2000);
-        });
+        alert(data);
+        setTimeout(window.location.replace("index.html"), 2000);
+      });
       return;
     }
     response.json().then(function (data) {
