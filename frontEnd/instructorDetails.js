@@ -16,11 +16,11 @@ async function populateInstructors() {
     let each_value = all_instructors_response[i];
     let table1 = document.getElementById("instructor_table");
     let tr = document.createElement("tr");
-    tr.innerHTML = `<td>${each_value.InstructorCode}</td>
-       <td id=${i}>${each_value.InstructorName}</td>
-       <td>${each_value.Department}</td>
-       <td>${each_value.CourseName}</td>
-       <td><button>U</button></td>
+    tr.innerHTML = `<td>${each_value.instructor_code}</td>
+       <td id=${i}>${each_value.instructor_name}</td>
+       <td>${each_value.department}</td>
+       <td>${each_value.course_name}</td>
+       <td><button class="update_button">U</button></td>
        <td><button onclick=deleteInstructor(${i}) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
@@ -36,12 +36,12 @@ async function deleteInstructor(index) {
   let index_name = document.getElementById(String(index));
 
   //let response_for_deleteion = document.getElementById("response_for_deleteion");
-
+  let cookie_token = getCookie("token");
   let deleteCourse = await fetch(
     `http://localhost:5050/delete-instructor/${index_name.innerHTML}`,
     {
       method: "DELETE",
-      credentials: "same-origin",
+      headers: { Token: cookie_token },
     }
   );
   let response = await deleteCourse.json();

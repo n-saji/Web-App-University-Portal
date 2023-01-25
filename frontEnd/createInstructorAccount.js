@@ -14,7 +14,6 @@ async function createEmail() {
   }
   let url_final = url_sliced + emailid + "/" + password;
   let response = await fetch(url_final);
-  console.log(response);
   let response_reply = await response.json();
   let reply_for_login = document.getElementById("response_for_login");
   if (!response.ok) {

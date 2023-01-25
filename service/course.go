@@ -45,9 +45,19 @@ func (ac *Service) UpdateCA(name string, rc *models.CourseInfo) error {
 			return err1
 		}
 	}
+	all_inst, err2 := ac.daos.GetInstructorWithSpecifics(models.InstructorDetails{CourseName: name})
+	if err2 != nil {
+		return err2
+	}
+	for _, each_inst := range all_inst {
+		err3 := ac.daos.UpdateInstructor(models.InstructorDetails{CourseName: rc.CourseName}, models.InstructorDetails{Id: each_inst.Id})
+		if err3 != nil {
+			return err3
+		}
+	}
 	err := ac.daos.UpdateCourseByName(name, rc)
 	if err != nil {
-		return fmt.Errorf("not able to update %s", err.Error())
+		return fmt.Errorf("not able to update! %s", err.Error())
 	}
 	return nil
 }

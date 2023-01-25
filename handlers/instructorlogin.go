@@ -48,7 +48,7 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 }
 
 func (h *Handler) InstructorLogin(ctx *gin.Context) {
-	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
 	parameter := ctx.Params
 	emailId := parameter.ByName("emailId")
 	password := parameter.ByName("password")
@@ -65,6 +65,7 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 
 	if err == nil && err1 == nil {
 		token, err2 := h.service.GetTokenAfterLogging()
+		ctx.Writer.Header().Set("token", token.String())
 		http.SetCookie(ctx.Writer, &http.Cookie{
 			Name:     "token",
 			Value:    token.String(),

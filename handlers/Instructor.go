@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 type res struct {
@@ -17,23 +16,19 @@ type res struct {
 
 func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 		return
 	}
 
@@ -62,20 +57,20 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 }
 
 func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
-	ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-	cookie_token, err1 := ctx.Cookie("token")
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if cookie_token == "" {
-		ctx.JSON(http.StatusInternalServerError, "authentication error")
-		return
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
 	}
 
-	validity, _ := h.service.CheckTokenValidity(uuid.MustParse(cookie_token))
-	if !validity {
-		ctx.JSON(http.StatusInternalServerError, "authentication time-out")
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 		return
 	}
 
@@ -89,23 +84,19 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 
 func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
 	}
-	token_id, err4 := uuid.Parse(token)
-	if err4 != nil {
-		ctx.JSON(http.StatusInternalServerError, fmt.Errorf("error parsing uuid").Error())
-		return
-	}
-	status, err1 := h.service.CheckTokenValidity(token_id)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
-		return
-	}
-	if !status {
-		ctx.JSON(http.StatusBadRequest, "token expired")
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
 		return
 	}
 
@@ -116,4 +107,49 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 	} else {
 		ctx.IndentedJSON(http.StatusOK, "deleted instructor: "+name)
 	}
+}
+
+func (h *Handler) UpdateInstructor(ctx *gin.Context) {
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+
+	req_id := &models.InstructorDetails{}
+	err := ctx.BindJSON(&req_id)
+	if err != nil {
+		err = fmt.Errorf("unable to store values")
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	cond := &models.InstructorDetails{}
+	query_params := ctx.Query
+	if val1 := query_params("instructor_code"); val1 != "" {
+		cond.InstructorCode = val1
+	}
+	if val1 := query_params("instructor_name"); val1 != "" {
+		cond.InstructorName = val1
+	}
+	if val1 := query_params("course_name"); val1 != "" {
+		cond.CourseName = val1
+	}
+
+	err3 := h.service.Update_Instructor(*req_id, *cond)
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusOK, "updated details")
 }
