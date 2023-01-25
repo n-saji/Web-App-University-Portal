@@ -1,5 +1,5 @@
 function setbackpage() {
-  window.location.replace("instructorDetails.html");
+  window.location.replace("showCourse.html");
 }
 
 function setdashboard() {
