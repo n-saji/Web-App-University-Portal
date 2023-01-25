@@ -24,7 +24,7 @@ html {
 }
 .tab button:hover {
   cursor: pointer;
-  background-color: grey
+  background-color: grey;
 }
 .tab button.active {
   background-color: #ccc;
@@ -61,20 +61,21 @@ html {
   color: white;
 }
 .button_to_add_instructor:hover {
-  background-color: darkorange; 
+  background-color: darkorange;
   color: white;
   cursor: pointer;
 }
-.body_content{
+.body_content {
   margin-left: 20px;
   font-size: larger;
- font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
- font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
 }
-.instructor_table_body{
+.instructor_table_body {
   border: 2px solid black;
 }
-.button_to_add_course{
+.button_to_add_course {
   border-radius: 45px;
   border-color: darkorchid;
   margin-left: 50px;
@@ -89,7 +90,7 @@ html {
   color: white;
   cursor: pointer;
 }
-.button_to_show_course{
+.button_to_show_course {
   border-radius: 45px;
   border-color: darkorchid;
   margin-left: 50px;
