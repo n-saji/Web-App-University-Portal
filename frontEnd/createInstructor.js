@@ -58,7 +58,7 @@ async function InsertInstructorValues() {
     document.getElementById("responseBody").innerHTML =
       "Added<br> Please Create Account";
     redirect_to_login.classList.add("diplay-property");
-    inline_buttons.classList.add("inline_buttons_css")
+    inline_buttons.classList.add("inline_buttons_css");
     redirect_to_login.innerHTML = "Create Account";
     let URL = `http://localhost:5050` + response.URl;
     document.cookie = `url=${URL}`;
