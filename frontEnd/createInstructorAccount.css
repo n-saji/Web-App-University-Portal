@@ -24,11 +24,13 @@ html {
 }
 .tab button:hover {
   cursor: pointer;
-  background-color: rgba(255, 0, 0, 0.736);
+  background-color: grey
 }
 .tab .headers {
   color: white;
-  font-size: 25px;
+  font-size: 35px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 .div1 {
   text-align: center;
@@ -53,7 +55,11 @@ border-radius: 5px;
 #response_for_login{
   text-align: center;
   padding: 50px;
-  color: red;
+  color: orange;
+  font-size: large;
+  font-stretch: expanded;
+  font-weight: 800;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 #createButton {
   border-radius: 5px;
