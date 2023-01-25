@@ -86,7 +86,7 @@ tr:hover td {
   cursor: pointer;
 }
 
-.popup{
+.popup {
   width: 500px;
   background-color: darkgray;
   border-color: black;
@@ -95,35 +95,34 @@ tr:hover td {
   border-width: 2px;
   position: absolute;
   top: 0%;
-  left:  50%;
-  transform: translate(-50%,-50%) scale(0.1);
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
   text-align: center;
   padding: 0 30px 30px;
   visibility: hidden;
-  transition: transform 0.4s , top 0.4s;
+  transition: transform 0.4s, top 0.4s;
 }
-.open-popup{
+.open-popup {
   visibility: visible;
   top: 50%;
-  transform: translate(-50%,-50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.popup button{
+.popup button {
   width: 40%;
   margin-top: 50px;
   padding: 10px 0;
-  background:#6fd649;
+  background: #6fd649;
   color: #fff;
   border: 0%;
   outline: none;
   font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgb(0, 0, 0,0.2);
-
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.2);
 }
 
-#course_name{
+#course_name {
   margin-top: 50px;
   width: 400px;
   height: 50px;
@@ -131,7 +130,7 @@ tr:hover td {
   background-color: lightgray;
   color: black;
 }
-#old_course{
+#old_course {
   background-color: lightgray;
   margin-top: 40px;
   width: 400px;
@@ -143,5 +142,5 @@ tr:hover td {
   padding-bottom: 50px;
   padding-left: 10px;
   border-radius: 4px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
