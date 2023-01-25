@@ -41,8 +41,5 @@ re-organize the structure
 BUG -
 
 create new service for retrieve individual details
-delete handler not working frontend
-fe all pages check if working - cookie issue
-need to figure out how to update course
 make buttons as icon using heroicons
 */
