@@ -17,7 +17,7 @@ func (h *Handler) InsertCourse(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -53,7 +53,7 @@ func (h *Handler) RetrieveValuesCourse(ctx *gin.Context) {
 		if token == "" {
 			token, err1 = ctx.Cookie("token")
 			if err1 != nil {
-				ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+				ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 				return
 			}
 		}
@@ -80,7 +80,7 @@ func (h *Handler) UpdateValuesCourse(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -92,6 +92,10 @@ func (h *Handler) UpdateValuesCourse(ctx *gin.Context) {
 	}
 	var rc models.CourseInfo
 	var name = ctx.Param("name")
+	if name == ":name" {
+		ctx.JSON(http.StatusInternalServerError, "new course can't be empty")
+		return
+	}
 	ctx.BindJSON(&rc)
 	err := h.service.UpdateCA(name, &rc)
 	if err != nil {
@@ -109,7 +113,7 @@ func (h *Handler) DeleteCourse(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
