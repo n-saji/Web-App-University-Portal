@@ -21,7 +21,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
 			return
 		}
 	}
@@ -63,7 +63,7 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
 			return
 		}
 	}
@@ -89,7 +89,7 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, err1.Error())
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
 			return
 		}
 	}
@@ -111,10 +111,14 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 
 func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 
-	token, err3 := ctx.Cookie("token")
-	if err3 != nil {
-		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
 	}
 
 	err2 := h.service.CheckTokenWithCookie(token)
@@ -142,10 +146,10 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 		cond.CourseName = val1
 	}
 
-	err1 := h.service.Update_Instructor(*req_id, *cond)
-	if err1 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
+	err3 := h.service.Update_Instructor(*req_id, *cond)
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
 		return
 	}
-	ctx.IndentedJSON(http.StatusOK, fmt.Sprint("Updated details"))
+	ctx.IndentedJSON(http.StatusOK, "updated details")
 }
