@@ -16,10 +16,10 @@ function setbackpage() {
 function setdashboard() {
   window.location.replace("allinstructor.html");
 }
-async function insertCourse(){
+async function insertCourse() {
   window.location.replace("createCourse.html");
 }
 
-function showCourse(){
+function showCourse() {
   window.location.replace("showCourse.html");
 }
