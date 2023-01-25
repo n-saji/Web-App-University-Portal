@@ -34,7 +34,7 @@ async function InsertInstructorValues() {
     coursename.classList.add("error");
   }
   let cookie_token = getCookie("token");
-  console.log(cookie_token)
+  console.log(cookie_token);
   let createInstructor = await fetch(
     `http://localhost:5050/insert-instructor-details`,
     {
@@ -50,18 +50,14 @@ async function InsertInstructorValues() {
     }
   );
   let response = await createInstructor.json();
-  console.log(response);
   if (createInstructor.ok != true) {
-    redirect_to_login.style.cursor = "not-allowed";
     error_log.style.visibility = "visible";
     error_log.innerHTML = "Error submitting!<br>" + response.Err;
   } else if (createInstructor.ok == true) {
-    redirect_to_login.style.cursor = "pointer";
     document.getElementById("responseBody").innerHTML =
       "Added<br> Please Create Account";
-
-    let rtl = document.getElementById("redirect_to_login");
-    rtl.innerHTML = "Create Account";
+    redirect_to_login.classList.add("diplay-property");
+    redirect_to_login.innerHTML = "Create Account";
     let URL = `http://localhost:5050` + response.URl;
     document.cookie = `url=${URL}`;
     localStorage.setItem("URL_Create_Login", URL);
