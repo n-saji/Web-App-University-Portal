@@ -19,3 +19,7 @@ function setdashboard() {
 async function insertCourse(){
   window.location.replace("createCourse.html");
 }
+
+function showCourse(){
+  window.location.replace("showCourse.html");
+}

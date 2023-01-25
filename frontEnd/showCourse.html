@@ -1,0 +1,47 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="showCourse.css" />
+    <script src="showCourse.js"></script>
+    <title>Course List</title>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Course List</p>
+      <button class="logout_headers" onclick="setaddcourse()">
+        Add Course
+      </button>
+    </div>
+
+    <div class="body_content" id="body_content">
+      <table id="course_table" class="course_table">
+        <tr>
+          <th>Sl No.</th>
+          <th>Course Name</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </table>
+      <div class="popup" id="popup">
+        <h2>Update Course</h2>
+        <form id="old_course"></form>
+        <input
+          type ="text"
+          placeholder="Enter Updated Course Name"
+          id="course_name"
+        />
+        <div class="button_popup">
+          <button type="button" onclick="closeForm()">Cancel</button>
+          <button
+            type="button"
+            id="update_course"
+            onclick="callUpdateFunction()"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
