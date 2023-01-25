@@ -22,7 +22,6 @@ var embedMigrations embed.FS
 func main() {
 
 	config.Init()
-	//url := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", config.Postgres_Host, config.Postgres_User, config.Postgres_Password, config.Postgres_Db_Name, config.Postgres_Port)
 	db, err := gorm.Open(postgres.Open(config.DB_URL), &gorm.Config{})
 	if err != nil {
 		log.Println("Found err while connecting to database", err)
@@ -53,7 +52,6 @@ func toRunGooseMigration(url string) {
 		log.Println("db conn failed")
 		panic(err)
 	}
-	// setup database
 	goose.SetBaseFS(embedMigrations)
 	if err := goose.SetDialect("postgres"); err != nil {
 		log.Println("Setting Goose Postgres Dialect Failed")
@@ -65,4 +63,3 @@ func toRunGooseMigration(url string) {
 	}
 }
 
-//goose postgres "user=postgres dbname=postgres sslmode=disable" down
