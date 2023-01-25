@@ -40,8 +40,11 @@ html {
 .inline_buttons {
   margin-top: 30px;
   position: absolute;
-  left: 44%;
+  left: 48%;
   display: inline-block;
+}
+.inline_buttons_css {
+  left: 44%;
 }
 #cn_drop_down {
   width: 140px;
@@ -65,7 +68,7 @@ html {
 .redirect_to_login {
   border-radius: 5px;
   border-color: rgb(140, 90, 3);
-  visibility: hidden;
+  display: none;
   background-color: rgb(255, 162, 0);
   height: 30px;
   color: white;
@@ -93,6 +96,6 @@ html {
   font-size: 25px;
 }
 .diplay-property {
-  visibility: visible;
+  display: inline-block;
   cursor: pointer;
 }
