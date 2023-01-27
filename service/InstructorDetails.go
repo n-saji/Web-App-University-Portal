@@ -117,3 +117,26 @@ func (s *Service) GetInstructorDetailWithSpecifics(req models.InstructorDetails)
 	return id_list, nil
 
 }
+
+func (s *Service) DeleteInstructorWithConditions(id_condition *models.InstructorDetails) error {
+
+	id_list, err := s.daos.RetieveInstructorDetailsWithCondition(*id_condition)
+	if err != nil {
+		return err
+	}
+	for _, each_id := range id_list {
+		if each_id.Id == uuid.Nil {
+			return fmt.Errorf("instructor not found")
+		}
+		err1 := s.daos.DeleteInstructorLogin(each_id.Id)
+		if err1 != nil {
+			return err1
+		}
+		err2 := s.daos.DeleteInstructorWithConditions(each_id)
+		if err2 != nil {
+			return err2
+		}
+	}
+
+	return nil
+}
