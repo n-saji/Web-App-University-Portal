@@ -18,6 +18,7 @@ async function InsertInstructorValues() {
   let error_log = document.getElementById("error_log");
   let redirect_to_login = document.getElementById("redirect_to_login");
   let inline_buttons = document.getElementById("inline_buttons");
+  var submitInstructor = document.getElementById("submitInstructor");
 
   if (instructorcode.value === "") {
     instructorcode.classList.add("error");
@@ -60,6 +61,8 @@ async function InsertInstructorValues() {
     redirect_to_login.classList.add("diplay-property");
     inline_buttons.classList.add("inline_buttons_css");
     redirect_to_login.innerHTML = "Create Account";
+    submitInstructor.disabled = true;
+    submitInstructor.classList.add("when_submited");
     let URL = `http://localhost:5050` + response.URl;
     document.cookie = `url=${URL}`;
     localStorage.setItem("URL_Create_Login", URL);
