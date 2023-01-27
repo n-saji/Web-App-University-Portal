@@ -65,6 +65,11 @@ html {
   background-color: blueviolet; /* Green */
   color: white;
 }
+
+.when_submited {
+  cursor: not-allowed;
+}
+
 .redirect_to_login {
   border-radius: 5px;
   border-color: rgb(140, 90, 3);
