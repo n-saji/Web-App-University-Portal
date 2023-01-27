@@ -19,11 +19,13 @@ async function populateInstructors() {
     tr.innerHTML = `<td>${each_value.instructor_code}</td>
        <td id=${i}>${each_value.instructor_name}</td>
        <td>${each_value.department}</td>
+
        <td id=${each_value.course_name + i}>${each_value.course_name}</td>
        <td><button class="update_button">U</button></td>
        <td><button onclick=deleteInstructor(${i},${
       each_value.course_name + i
     }) class="delete_button">X</button></td>`;
+
     table1.appendChild(tr);
   }
 }
@@ -34,6 +36,7 @@ function setdashboard() {
 function setbackpage() {
   window.location.replace("createInstructor.html");
 }
+
 async function deleteInstructor(index, course_name_index) {
   console.log(index,course_name_index)
   let index_name = document.getElementById(index);
@@ -47,6 +50,7 @@ async function deleteInstructor(index, course_name_index) {
       course_name: course_name_index.innerText,
     }),
   });
+
   let response = await deleteCourse.json();
   if (!deleteCourse.ok) {
     console.log("failed", response);
