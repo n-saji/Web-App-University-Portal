@@ -19,9 +19,11 @@ async function populateInstructors() {
     tr.innerHTML = `<td>${each_value.instructor_code}</td>
        <td id=${i}>${each_value.instructor_name}</td>
        <td>${each_value.department}</td>
-       <td>${each_value.course_name}</td>
+       <td id=${each_value.course_name + i}>${each_value.course_name}</td>
        <td><button class="update_button">U</button></td>
-       <td><button onclick=deleteInstructor(${i}) class="delete_button">X</button></td>`;
+       <td><button onclick=deleteInstructor(${i},${
+      each_value.course_name + i
+    }) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
 }
@@ -32,18 +34,19 @@ function setdashboard() {
 function setbackpage() {
   window.location.replace("createInstructor.html");
 }
-async function deleteInstructor(index) {
-  let index_name = document.getElementById(String(index));
-
-  //let response_for_deleteion = document.getElementById("response_for_deleteion");
+async function deleteInstructor(index, course_name_index) {
+  console.log(index,course_name_index)
+  let index_name = document.getElementById(index);
+  console.log(index_name, course_name_index);
   let cookie_token = getCookie("token");
-  let deleteCourse = await fetch(
-    `http://localhost:5050/delete-instructor/${index_name.innerHTML}`,
-    {
-      method: "DELETE",
-      headers: { Token: cookie_token },
-    }
-  );
+  let deleteCourse = await fetch(`http://localhost:5050/delete-instructor`, {
+    method: "DELETE",
+    headers: { Token: cookie_token },
+    body: JSON.stringify({
+      instructor_name: index_name.innerText,
+      course_name: course_name_index.innerText,
+    }),
+  });
   let response = await deleteCourse.json();
   if (!deleteCourse.ok) {
     console.log("failed", response);
