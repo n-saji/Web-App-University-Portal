@@ -152,13 +152,6 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
 
 	}
-
-	err2 := h.service.CheckTokenWithCookie(token)
-	if err2 != nil {
-		ctx.JSON(http.StatusInternalServerError, err2.Error())
-
-		return
-	}
 	ctx.IndentedJSON(http.StatusOK, "updated details")
 }
 
