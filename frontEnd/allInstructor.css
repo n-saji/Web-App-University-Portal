@@ -105,3 +105,18 @@ html {
   color: white;
   cursor: pointer;
 }
+.button_to_add_student {
+  border-radius: 45px;
+  border-color: darkorchid;
+  margin-left: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: blue;
+  width: 60px;
+  color: white;
+}
+.button_to_add_student:hover {
+  background-color: darkblue;
+  color: white;
+  cursor: pointer;
+}

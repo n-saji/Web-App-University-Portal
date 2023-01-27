@@ -23,3 +23,7 @@ async function insertCourse() {
 function showCourse() {
   window.location.replace("showCourse.html");
 }
+
+function insertStudent() {
+  window.location.replace("addStudent.html");
+}
