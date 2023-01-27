@@ -79,3 +79,14 @@ func (ac *AdminstrationCloud) RetieveInstructorDetailsWithCondition(req models.I
 	}
 	return list, nil
 }
+
+
+func (ac *AdminstrationCloud) DeleteInstructorWithConditions(id *models.InstructorDetails) error {
+
+	err := ac.dbConn.Where(id).Delete(models.InstructorDetails{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+

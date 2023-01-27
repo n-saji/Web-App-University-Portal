@@ -92,6 +92,7 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
 			return
 		}
+
 	}
 
 	err2 := h.service.CheckTokenWithCookie(token)
@@ -149,7 +150,49 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	err3 := h.service.Update_Instructor(*req_id, *cond)
 	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
+
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+
 		return
 	}
 	ctx.IndentedJSON(http.StatusOK, "updated details")
 }
+
+func (h *Handler) DeleteInstructorWithConditions(ctx *gin.Context) {
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
+	}
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+
+	req_id := &models.InstructorDetails{}
+	err := ctx.BindJSON(&req_id)
+	if err != nil {
+		err = fmt.Errorf("unable to store values")
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	err3 := h.service.DeleteInstructorWithConditions(req_id)
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusOK, "deleted instructor")
+}
+
+
