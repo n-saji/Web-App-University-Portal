@@ -43,4 +43,5 @@ BUG -
 
 create new service for retrieve individual details
 make buttons as icon using heroicons
+when deleteing course or instructor make sure any dependencies to be removed or throw error
 */
