@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="addStudent.css" />
+    <script src="addStudent.js"></script>
+    <title>Student Page</title>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Add Student</p>
+      <button class="logout_headers" onclick="setbackpage()">
+        Show Students
+      </button>
+    </div>
+
+    <div class="body_content">
+      <h3>Name</h3>
+      <input type="text" onchange="removeError()" id="name" />
+      <h3>Age</h3>
+      <input type="text" onchange="removeError()" id="age" />
+      <h3>RollNumber</h3>
+      <input type="text" onchange="removeError()" id="roll_number" />
+      <h3>CourseName</h3>
+      <select
+        id="cn_drop_down"
+        onchange="removeError()"
+        name="courses"
+      ></select>
+      <br />
+      <h3 id="responseBody"></h3>
+    </div>
+    <div class="inline_buttons" id="inline_buttons">
+      <button type="button" onclick="InsertStudentValues()" id="submitStudent">
+        Submit
+      </button>
+    </div>
+    <h3 id="error_log"></h3>
+  </body>
+  <script src="allCourse.js"></script>
+</html>

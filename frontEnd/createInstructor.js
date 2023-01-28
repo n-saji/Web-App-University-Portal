@@ -38,7 +38,6 @@ async function InsertInstructorValues() {
     coursename.classList.add("error");
   }
   let cookie_token = getCookie("token");
-  console.log(cookie_token);
   let createInstructor = await fetch(
     `http://localhost:5050/insert-instructor-details`,
     {
