@@ -16,16 +16,16 @@ function getCookie(name) {
   return null;
 }
 async function deleteStudent(index, course_name_index) {
-  console.log(index,course_name_index)
   let index_name = document.getElementById(index);
-  console.log(index_name, course_name_index);
   let cookie_token = getCookie("token");
-  let deleteCourse = await fetch(`http://localhost:5050/delete-instructor`, {
+  let deleteCourse = await fetch(`http://localhost:5050/delete-student`, {
     method: "DELETE",
     headers: { Token: cookie_token },
     body: JSON.stringify({
-      instructor_name: index_name.innerText,
-      course_name: course_name_index.innerText,
+      RollNumber: index_name.innerText,
+      ClassesEnrolled: {
+        course_name: course_name_index.innerText,
+      },
     }),
   });
   let response = await deleteCourse.json();
