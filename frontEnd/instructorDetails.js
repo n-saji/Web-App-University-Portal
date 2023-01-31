@@ -35,9 +35,7 @@ function setbackpage() {
   window.location.replace("createInstructor.html");
 }
 async function deleteInstructor(index, course_name_index) {
-  console.log(index,course_name_index)
   let index_name = document.getElementById(index);
-  console.log(index_name, course_name_index);
   let cookie_token = getCookie("token");
   let deleteCourse = await fetch(`http://localhost:5050/delete-instructor`, {
     method: "DELETE",
