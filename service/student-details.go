@@ -250,3 +250,30 @@ func (s *Service) GetAllStudentSelectiveData() ([]*models.StudentSelectiveData, 
 	return ssd, nil
 
 }
+func (ac *Service) DeleteStudentSpecifics(st_req *models.StudentInfo) (err error) {
+
+	course_details, err1 := ac.daos.GetCourseByName(st_req.ClassesEnrolled.CourseName)
+	if err1 != nil {
+		return fmt.Errorf("course not found")
+	}
+	// var student_detail models.StudentInfo
+	// student_detail.Name = sn
+	// student_detail.CourseId = course_details.Id
+
+	st_details, err2 := ac.daos.GetStudentdetail(st_req)
+	if err2 != nil {
+		return err2
+	}
+	st_details.ClassesEnrolled = course_details
+	//to test if triggers are working
+	// err5 := ac.daos.DeleteStudenetMarks(st_details.MarksId)
+	// if err5 != nil {
+	// 	return fmt.Errorf("failed to delete")
+	// }
+	err = ac.daos.DeleteStudentWithSpecifics(st_details)
+	if err != nil {
+		return fmt.Errorf("failed to delete")
+	}
+	return nil
+
+}
