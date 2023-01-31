@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="showStudents.css" />
+    <script src="showStudents.js"></script>
+    <title>Student Details</title>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="dashboard" onclick="setdashboard()">Home</button>
+      <p class="headers">Student Details</p>
+      <button class="logout_headers" onclick="setbackpage()">
+        Add Student
+      </button>
+    </div>
+    <div class="body_content">
+      <table id="student_table" class="student_table">
+        <tr>
+          <th>Name</th>
+          <th>Roll Number</th>
+          <th>Age</th>
+          <th>Course Name</th>
+          <th>Marks</th>
+          <th>Grade</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
