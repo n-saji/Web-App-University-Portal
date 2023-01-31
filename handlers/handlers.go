@@ -27,6 +27,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/get-student-name-course", h.GetSelectedFieldsAllStudent)
 	rc.PATCH("/update-instructor", h.UpdateInstructor)
 	rc.DELETE("/delete-instructor", h.DeleteInstructorWithConditions)
+	rc.DELETE("/delete-student", h.DeleteStudentWithSpecifics)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
