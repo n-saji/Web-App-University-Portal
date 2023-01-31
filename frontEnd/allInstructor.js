@@ -27,3 +27,7 @@ function showCourse() {
 function insertStudent() {
   window.location.replace("addStudent.html");
 }
+
+function showStudents() {
+  window.location.replace("showStudents.html");
+}

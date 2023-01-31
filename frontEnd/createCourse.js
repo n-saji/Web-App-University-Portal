@@ -25,7 +25,6 @@ async function InsertCourseValues() {
   if (!createCourse.ok) {
     response_for_creation.innerHTML = response + "!!";
   } else {
-    console.log(response);
     let response_for_creation = document.getElementById(
       "response_for_creation"
     );
