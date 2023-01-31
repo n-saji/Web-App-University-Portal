@@ -46,7 +46,6 @@ async function populateInstructors() {
     }
   );
   let all_students_response = await all_students.json();
-  console.log(all_students_response);
   if (all_students_response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
