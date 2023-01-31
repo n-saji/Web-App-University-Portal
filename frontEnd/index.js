@@ -61,7 +61,6 @@ async function CheckValidity(username, password) {
     let uuid_instructor = await response.json();
     document.cookie =
       "token" + "=" + response.headers.get("Token") + "; path=/";
-    console.log(document.cookie);
     return uuid_instructor;
   } else {
     let username_style = document.getElementById("username");

@@ -111,12 +111,27 @@ html {
   margin-left: 50px;
   padding: 5px;
   margin-top: 20px;
-  background-color: blue;
+  background-color: maroon;
   width: 60px;
   color: white;
 }
 .button_to_add_student:hover {
-  background-color: darkblue;
+  background-color: rgb(101, 18, 18);
+  color: white;
+  cursor: pointer;
+}
+.button_to_show_students {
+  border-radius: 45px;
+  border-color: darkorchid;
+  margin-left: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: rgb(5, 93, 93);
+  width: 60px;
+  color: white;
+}
+.button_to_show_students:hover {
+  background-color: darkcyan;
   color: white;
   cursor: pointer;
 }

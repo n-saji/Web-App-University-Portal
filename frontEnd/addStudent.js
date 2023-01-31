@@ -1,6 +1,9 @@
 function setdashboard() {
   window.location.replace("allinstructor.html");
 }
+function setbackpage() {
+  window.location.replace("showStudents.html");
+}
 
 async function InsertStudentValues() {
   let student_name = document.getElementById("name");
