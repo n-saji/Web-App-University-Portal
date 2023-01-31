@@ -292,7 +292,7 @@ func (h *Handler) DeleteStudentWithSpecifics(ctx *gin.Context) {
 		return
 	}
 	err3 := h.service.DeleteStudentSpecifics(st_req)
-	if err2 != nil {
+	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
 		return
 	}
