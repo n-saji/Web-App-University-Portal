@@ -258,11 +258,44 @@ func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
 		return
 	}
 
-	response, err2 := h.service.GetAllStudentSelectiveData()
+	response, err4 := h.service.GetAllStudentSelectiveData()
 	if err2 != nil {
-		ctx.JSON(http.StatusInternalServerError, err1.Error())
+		ctx.JSON(http.StatusInternalServerError, err4.Error())
 		return
 	}
 	ctx.IndentedJSON(http.StatusAccepted, response)
+
+}
+func (h *Handler) DeleteStudentWithSpecifics(ctx *gin.Context) {
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			return
+		}
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+
+	st_req := &models.StudentInfo{}
+	err := ctx.BindJSON(st_req)
+	if err != nil {
+		err = fmt.Errorf("unable to store values")
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	err3 := h.service.DeleteStudentSpecifics(st_req)
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusAccepted, "Success")
 
 }
