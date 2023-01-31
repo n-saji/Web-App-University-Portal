@@ -173,3 +173,11 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 	}
 	return &sd1, nil
 }
+func (ac *AdminstrationCloud) DeleteStudentWithSpecifics(st_req *models.StudentInfo) error {
+
+	err := ac.dbConn.Where(st_req).Delete(models.StudentInfo{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

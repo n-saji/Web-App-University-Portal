@@ -67,6 +67,14 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 func (ac *Service) RetrieveCAd() ([]*models.StudentInfo, error) {
 
 	rca, err := ac.daos.RetieveCollegeAdminstration()
+	for _, each_student := range rca {
+		if each_student.ClassesEnrolled.CourseName == "" {
+			deleted_course, _ := ac.daos.GetCourseByName("Course Deleted")
+			each_student.ClassesEnrolled = deleted_course
+			each_student.CourseId = deleted_course.Id
+			ac.daos.UpdateClgStudent(each_student)
+		}
+	}
 	if err != nil {
 		return rca, err
 	}
@@ -248,5 +256,25 @@ func (s *Service) GetAllStudentSelectiveData() ([]*models.StudentSelectiveData, 
 	}
 
 	return ssd, nil
+
+}
+func (ac *Service) DeleteStudentSpecifics(st_req *models.StudentInfo) (err error) {
+
+	course_details, err1 := ac.daos.GetCourseByName(st_req.ClassesEnrolled.CourseName)
+	if err1 != nil {
+		return fmt.Errorf("course not found")
+	}
+
+	st_details, err2 := ac.daos.GetStudentdetail(st_req)
+	if err2 != nil {
+		return err2
+	}
+	st_details.ClassesEnrolled = course_details
+
+	err = ac.daos.DeleteStudentWithSpecifics(st_details)
+	if err != nil {
+		return fmt.Errorf("failed to delete")
+	}
+	return nil
 
 }
