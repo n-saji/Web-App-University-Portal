@@ -21,21 +21,51 @@ async function InsertInstructorValues() {
 
   var submitInstructor = document.getElementById("submitInstructor");
 
-
-  if (instructorcode.value === "") {
+  if (instructorcode.value == "") {
     instructorcode.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
   }
 
-  if (instructorname.value === "") {
+  if (instructorname.value == "") {
     instructorname.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
   }
 
-  if (department.value === "") {
+  if (department.value == "") {
     department.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
   }
 
   if (coursename.value == "Choose Course") {
     coursename.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
+  }
+  if (
+    instructorcode.value == "" ||
+    instructorname.value == "" ||
+    department.value == "" ||
+    coursename.value == "Choose Course"
+  ) {
+    setTimeout(removeError, 3000);
+    setTimeout(function () {
+      submitInstructor.classList.remove("when_submited");
+      submitInstructor.disabled = false;
+    }, 3000);
+    return;
+  }
+
+  if (
+    instructorcode.value != "" &&
+    instructorname.value != "" &&
+    department.value != "" &&
+    coursename.value != "Choose Course"
+  ) {
+    submitInstructor.classList.remove("when_submited");
+    submitInstructor.disabled = false;
   }
   let cookie_token = getCookie("token");
   let createInstructor = await fetch(

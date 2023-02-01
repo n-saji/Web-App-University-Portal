@@ -3,7 +3,6 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 
 	"github.com/google/uuid"
 )
@@ -24,7 +23,6 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 
 		course_details, _ := ac.daos.GetCourseById(each_student.CourseId)
 		each_student.ClassesEnrolled = course_details
-		log.Println(each_student, new_student)
 
 		if each_student.RollNumber == new_student.RollNumber {
 			if each_student.Name != new_student.Name {
