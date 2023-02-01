@@ -77,13 +77,6 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   let old_instructor_name = document.getElementById("old_instructor_name");
   let old_department_name = document.getElementById("old_department_name");
   let old_course_name = document.getElementById("old_course_name");
-  console.log(
-    old_instructor_code.innerHTML,
-    old_instructor_name.innerHTML,
-    old_department_name.innerHTML,
-    old_course_name.innerHTML
-  );
-  console.log(code, name_index, dpt, course_name);
 
   url = `http://localhost:5050/update-instructor`;
   if (old_instructor_code.innerHTML != "") {
@@ -95,7 +88,6 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   if (old_course_name.innerHTML != "") {
     url = url + `&course_name=${old_course_name.innerHTML}`;
   }
-  console.log(url);
   let updateCourse = await fetch(url, {
     method: "PATCH",
     headers: { Token: cookie_token },
@@ -139,12 +131,6 @@ function callUpdateFunction() {
   let req_department_name = document.getElementById("req_department_name");
   let req_course_name = document.getElementById("req_course_name");
 
-  console.log(
-    req_instructor_code.value,
-    req_instructor_name.value,
-    req_department_name.value,
-    req_course_name.value
-  );
   UpdateInstructor(
     req_instructor_code.value,
     req_instructor_name.value,
