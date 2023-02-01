@@ -24,11 +24,9 @@ async function populateInstructors() {
       each_value.department
     }</td>
        <td id=${each_value.course_name[0] + i}>${each_value.course_name}</td>
-       <td><button onclick=UpdateInstructor("${
-         each_value.instructor_code
-       }",${i},${each_value.department.replace(" ", "") + i},${
-      each_value.course_name[0] + i
-    }) class="update_button">U</button></td>
+       <td><button onclick=openForm("${each_value.instructor_code}",${i},${
+      each_value.department.replace(" ", "") + i
+    },${each_value.course_name[0] + i}) class="update_button">U</button></td>
        <td><button onclick=deleteInstructor(${i},${
       each_value.course_name[0] + i
     }) class="delete_button">X</button></td>`;
@@ -75,27 +73,37 @@ function getCookie(name) {
 async function UpdateInstructor(code, name_index, dpt, course_name) {
   let index_name = document.getElementById(name_index);
   let cookie_token = getCookie("token");
-  let req_instructor_code = ""
-  let req_instructor_name = ""
-  let req_course_name = ""
-  url = `http://localhost:5050/update-instructor`
-  if (code != ""){
-    url = url + `?instructor_code=${code}`
+  let old_instructor_code = document.getElementById("old_instructor_code");
+  let old_instructor_name = document.getElementById("old_instructor_name");
+  let old_department_name = document.getElementById("old_department_name");
+  let old_course_name = document.getElementById("old_course_name");
+  console.log(
+    old_instructor_code.innerHTML,
+    old_instructor_name.innerHTML,
+    old_department_name.innerHTML,
+    old_course_name.innerHTML
+  );
+  console.log(code, name_index, dpt, course_name);
+
+  url = `http://localhost:5050/update-instructor`;
+  if (old_instructor_code.innerHTML != "") {
+    url = url + `?instructor_code=${old_instructor_code.innerHTML}`;
   }
-  if (index_name.innerHTML != ""){
-    url = url + `&instructor_name=${index_name.innerHTML}`
+  if (old_instructor_name.innerHTML != "") {
+    url = url + `&instructor_name=${old_instructor_name.innerHTML}`;
   }
-  if (course_name.innerHTML != ""){
-    url = url + `&course_name=${course_name.innerHTML}`
+  if (old_course_name.innerHTML != "") {
+    url = url + `&course_name=${old_course_name.innerHTML}`;
   }
+  console.log(url);
   let updateCourse = await fetch(url, {
     method: "PATCH",
     headers: { Token: cookie_token },
     body: JSON.stringify({
       instructor_code: code,
-      instructor_name: index_name.innerHTML,
-      department: dpt.innerHTML,
-      course_name: course_name.innerHTML,
+      instructor_name: name_index,
+      department: dpt,
+      course_name: course_name,
     }),
   });
   let response = await updateCourse.json();
@@ -105,4 +113,42 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
     console.log("success", response);
     window.location.reload();
   }
+}
+function openForm(code, name_index, dpt, course_name) {
+  let popup = document.getElementById("popup");
+  popup.classList.add("open-popup");
+
+  let index_name = document.getElementById(name_index);
+  let old_instructor_code = document.getElementById("old_instructor_code");
+  let old_instructor_name = document.getElementById("old_instructor_name");
+  let old_department_name = document.getElementById("old_department_name");
+  let old_course_name = document.getElementById("old_course_name");
+
+  old_instructor_code.innerHTML = code;
+  old_instructor_name.innerHTML = index_name.innerHTML;
+  old_department_name.innerHTML = dpt.innerHTML;
+  old_course_name.innerHTML = course_name.innerHTML;
+}
+function closeForm() {
+  let popup = document.getElementById("popup");
+  popup.classList.remove("open-popup");
+}
+function callUpdateFunction() {
+  let req_instructor_code = document.getElementById("req_instructor_code");
+  let req_instructor_name = document.getElementById("req_instructor_name");
+  let req_department_name = document.getElementById("req_department_name");
+  let req_course_name = document.getElementById("req_course_name");
+
+  console.log(
+    req_instructor_code.value,
+    req_instructor_name.value,
+    req_department_name.value,
+    req_course_name.value
+  );
+  UpdateInstructor(
+    req_instructor_code.value,
+    req_instructor_name.value,
+    req_department_name.value,
+    req_course_name.value
+  );
 }
