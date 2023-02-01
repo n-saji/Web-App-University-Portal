@@ -16,13 +16,21 @@ async function populateInstructors() {
     let each_value = all_instructors_response[i];
     let table1 = document.getElementById("instructor_table");
     let tr = document.createElement("tr");
-    tr.innerHTML = `<td>${each_value.instructor_code}</td>
+    tr.innerHTML = `<td id=${each_value.instructor_code} >${
+      each_value.instructor_code
+    }</td>
        <td id=${i}>${each_value.instructor_name}</td>
-       <td>${each_value.department}</td>
-       <td id=${each_value.course_name + i}>${each_value.course_name}</td>
-       <td><button class="update_button">U</button></td>
+       <td id=${each_value.department.replace(" ", "") + i} >${
+      each_value.department
+    }</td>
+       <td id=${each_value.course_name[0] + i}>${each_value.course_name}</td>
+       <td><button onclick=UpdateInstructor("${
+         each_value.instructor_code
+       }",${i},${each_value.department.replace(" ", "") + i},${
+      each_value.course_name[0] + i
+    }) class="update_button">U</button></td>
        <td><button onclick=deleteInstructor(${i},${
-      each_value.course_name + i
+      each_value.course_name[0] + i
     }) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
@@ -62,4 +70,39 @@ function getCookie(name) {
     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
+}
+
+async function UpdateInstructor(code, name_index, dpt, course_name) {
+  let index_name = document.getElementById(name_index);
+  let cookie_token = getCookie("token");
+  let req_instructor_code = ""
+  let req_instructor_name = ""
+  let req_course_name = ""
+  url = `http://localhost:5050/update-instructor`
+  if (code != ""){
+    url = url + `?instructor_code=${code}`
+  }
+  if (index_name.innerHTML != ""){
+    url = url + `&instructor_name=${index_name.innerHTML}`
+  }
+  if (course_name.innerHTML != ""){
+    url = url + `&course_name=${course_name.innerHTML}`
+  }
+  let updateCourse = await fetch(url, {
+    method: "PATCH",
+    headers: { Token: cookie_token },
+    body: JSON.stringify({
+      instructor_code: code,
+      instructor_name: index_name.innerHTML,
+      department: dpt.innerHTML,
+      course_name: course_name.innerHTML,
+    }),
+  });
+  let response = await updateCourse.json();
+  if (!updateCourse.ok) {
+    console.log("failed", response);
+  } else {
+    console.log("success", response);
+    window.location.reload();
+  }
 }
