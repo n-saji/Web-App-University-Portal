@@ -23,7 +23,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/get-ranking/:coursename", h.GetRankingForACourse)
 	rc.GET("/get-student-name-course", h.GetSelectedFieldsAllStudent)
 	rc.DELETE("/delete-student", h.DeleteStudentWithSpecifics)
-	
+
 	rc.POST("/insert-instructor-details", h.InstructorInfoHandlers)
 	rc.GET("/retrieve-instructors", h.RetrieveInstructorDetails)
 	rc.GET("/instructor-login-with-id/:instructorId/:emailId/:password", h.InstructorLoginCreation)
@@ -46,4 +46,5 @@ re-organize the structure
 
 BUG -
 make buttons as icon using heroicons
+make ui chandes for landing page after loging in
 */
