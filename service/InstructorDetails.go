@@ -92,7 +92,7 @@ func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models
 	if req_id.CourseName != "" {
 		status := s.daos.CheckCourse(req_id.CourseName)
 		if !status {
-			return fmt.Errorf("course doesn not exits")
+			return fmt.Errorf("course does not exits")
 		}
 		course_details, _ := s.daos.GetCourseByName(req_id.CourseName)
 		req_id.CourseId = course_details.Id
