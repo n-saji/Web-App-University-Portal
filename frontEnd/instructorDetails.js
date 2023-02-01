@@ -71,14 +71,14 @@ function getCookie(name) {
 }
 
 async function UpdateInstructor(code, name_index, dpt, course_name) {
-  let index_name = document.getElementById(name_index);
+  //let index_name = document.getElementById(name_index);
   let cookie_token = getCookie("token");
   let old_instructor_code = document.getElementById("old_instructor_code");
   let old_instructor_name = document.getElementById("old_instructor_name");
-  let old_department_name = document.getElementById("old_department_name");
+  //let old_department_name = document.getElementById("old_department_name");
   let old_course_name = document.getElementById("old_course_name");
 
-  url = `http://localhost:5050/update-instructor`;
+  let url = `http://localhost:5050/update-instructor`;
   if (old_instructor_code.innerHTML != "") {
     url = url + `?instructor_code=${old_instructor_code.innerHTML}`;
   }
@@ -88,6 +88,11 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   if (old_course_name.innerHTML != "") {
     url = url + `&course_name=${old_course_name.innerHTML}`;
   }
+
+  if (course_name == "Choose Course") {
+    course_name = "";
+  }
+
   let updateCourse = await fetch(url, {
     method: "PATCH",
     headers: { Token: cookie_token },
@@ -129,7 +134,7 @@ function callUpdateFunction() {
   let req_instructor_code = document.getElementById("req_instructor_code");
   let req_instructor_name = document.getElementById("req_instructor_name");
   let req_department_name = document.getElementById("req_department_name");
-  let req_course_name = document.getElementById("req_course_name");
+  let req_course_name = document.getElementById("cn_drop_down");
 
   UpdateInstructor(
     req_instructor_code.value,
