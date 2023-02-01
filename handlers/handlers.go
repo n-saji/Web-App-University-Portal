@@ -45,6 +45,5 @@ API TO CREATE -
 re-organize the structure
 
 BUG -
-
 make buttons as icon using heroicons
 */
