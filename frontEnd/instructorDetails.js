@@ -8,7 +8,7 @@ async function populateInstructors() {
     }
   );
   let all_instructors_response = await all_instructors.json();
-  if (all_instructors_response == "authentication time-out") {
+  if (all_instructors_response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
   }
