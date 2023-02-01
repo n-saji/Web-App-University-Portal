@@ -104,6 +104,10 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
     }),
   });
   let response = await updateCourse.json();
+  if (response == "token expired! Generate new token") {
+    alert("Timed-out re login");
+    setTimeout(window.location.replace("index.html"), 2000);
+  }
   if (!updateCourse.ok) {
     console.log("failed", response);
   } else {
