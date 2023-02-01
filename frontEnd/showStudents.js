@@ -54,18 +54,19 @@ async function populateInstructors() {
     let each_value = all_students_response[i];
     let table1 = document.getElementById("student_table");
     let tr = document.createElement("tr");
-    tr.innerHTML = `<td>${each_value.Name}</td>
-       <td id=${i}>${each_value.RollNumber}</td>
-       <td>${each_value.Age}</td>
-       <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
-      each_value.ClassesEnrolled.course_name
-    }</td>
-       <td>${each_value.StudentMarks.Marks}</td>
-       <td>${each_value.StudentMarks.Grade}</td>
-       <td><button class="update_button">U</button></td>
-       <td><button onclick=deleteStudent(${i},${
-      each_value.ClassesEnrolled.course_name[0] + i
-    }) class="delete_button">X</button></td>`;
+    tr.innerHTML = 
+       `<td id=${i}>${each_value.RollNumber}</td>
+        <td>${each_value.Name}</td>
+        <td>${each_value.Age}</td>
+        <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
+                each_value.ClassesEnrolled.course_name
+           }</td>
+        <td>${each_value.StudentMarks.Marks}</td>
+        <td>${each_value.StudentMarks.Grade}</td>
+        <td><button class="update_button">U</button></td>
+        <td><button onclick=deleteStudent(${i},${
+              each_value.ClassesEnrolled.course_name[0] + i
+              }) class="delete_button">X</button></td>`;
     table1.appendChild(tr);
   }
 }
