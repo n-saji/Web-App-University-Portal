@@ -3,6 +3,7 @@ package handlers
 import (
 	"CollegeAdministration/models"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -63,7 +64,7 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -89,7 +90,7 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 
@@ -117,7 +118,7 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -131,8 +132,9 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	req_id := &models.InstructorDetails{}
 	err := ctx.BindJSON(&req_id)
 	if err != nil {
+		log.Println(err)
 		err = fmt.Errorf("unable to store values")
-		ctx.JSON(http.StatusInternalServerError, err.Error())
+		ctx.JSON(http.StatusInternalServerError, err.Error()+" err:")
 		return
 	}
 	cond := &models.InstructorDetails{}
@@ -145,8 +147,12 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	}
 	if val1 := query_params("course_name"); val1 != "" {
 		cond.CourseName = val1
+		log.Println(cond)
 	}
-
+	if cond.InstructorCode == "" && cond.InstructorName == "" && cond.CourseName == "" {
+		ctx.JSON(http.StatusInternalServerError, "No query Params")
+		return
+	}
 	err3 := h.service.Update_Instructor(*req_id, *cond)
 	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
@@ -162,7 +168,7 @@ func (h *Handler) DeleteInstructorWithConditions(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
