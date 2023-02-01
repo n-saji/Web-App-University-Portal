@@ -97,11 +97,17 @@ func (h *Handler) UpdateValuesCourse(ctx *gin.Context) {
 		return
 	}
 	ctx.BindJSON(&rc)
+	if name == rc.CourseName {
+		ctx.JSON(http.StatusOK, "no changes")
+		return
+	}
 	err := h.service.UpdateCA(name, &rc)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+		return
 	} else {
 		ctx.JSON(http.StatusOK, "successfully updated")
+		return
 	}
 
 }

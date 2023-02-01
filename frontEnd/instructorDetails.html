@@ -24,6 +24,43 @@
           <th>Delete</th>
         </tr>
       </table>
+      <div class="popup" id="popup">
+        <h2>Update Instructor</h2>
+        <form id="old_instructor_code"></form>
+        <input
+          type="text"
+          placeholder="Enter New Instructor Code"
+          id="req_instructor_code"
+        />
+        <form id="old_instructor_name"></form>
+        <input
+          type="text"
+          placeholder="Enter New Instructor Name"
+          id="req_instructor_name"
+        />
+        <form id="old_department_name"></form>
+        <input
+          type="text"
+          placeholder="Enter New Department Name"
+          id="req_department_name"
+        />
+        <form id="old_course_name"></form>
+        <select
+        id="cn_drop_down"
+        name="courses"
+      ></select>
+        <div class="button_popup">
+          <button type="button" onclick="closeForm()">Cancel</button>
+          <button
+            type="button"
+            id="update_course"
+            onclick="callUpdateFunction()"
+          >
+            Update
+          </button>
+        </div>
+      </div>
     </div>
   </body>
+  <script src="allCourse.js"></script>
 </html>
