@@ -146,7 +146,6 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	}
 	if val1 := query_params("course_name"); val1 != "" {
 		cond.CourseName = val1
-		log.Println(cond)
 	}
 	if cond.InstructorCode == "" && cond.InstructorName == "" && cond.CourseName == "" {
 		ctx.JSON(http.StatusInternalServerError, "No query Params")
