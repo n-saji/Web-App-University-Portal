@@ -11,6 +11,7 @@ async function populateInstructors() {
   if (all_instructors_response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
+    return;
   }
   for (let i = 0; i < all_instructors_response.length; i++) {
     let each_value = all_instructors_response[i];
@@ -30,6 +31,7 @@ async function populateInstructors() {
        <td><button onclick=deleteInstructor(${i},${
       each_value.course_name[0] + i
     }) class="delete_button">X</button></td>`;
+
     table1.appendChild(tr);
   }
 }
@@ -40,6 +42,7 @@ function setdashboard() {
 function setbackpage() {
   window.location.replace("createInstructor.html");
 }
+
 async function deleteInstructor(index, course_name_index) {
   let index_name = document.getElementById(index);
   let cookie_token = getCookie("token");
@@ -51,6 +54,7 @@ async function deleteInstructor(index, course_name_index) {
       course_name: course_name_index.innerText,
     }),
   });
+
   let response = await deleteCourse.json();
   if (!deleteCourse.ok) {
     console.log("failed", response);
@@ -107,6 +111,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
+    return;
   }
   if (!updateCourse.ok) {
     console.log("failed", response);
