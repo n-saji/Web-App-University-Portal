@@ -11,6 +11,7 @@ async function populateInstructors() {
   if (all_instructors_response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
+    return;
   }
   for (let i = 0; i < all_instructors_response.length; i++) {
     let each_value = all_instructors_response[i];
@@ -110,6 +111,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
+    return;
   }
   if (!updateCourse.ok) {
     console.log("failed", response);
