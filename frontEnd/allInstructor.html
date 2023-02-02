@@ -9,7 +9,17 @@
     <div class="tab">
       <button class="dashboard">Home</button>
       <p class="headers">Instructor Dashboard</p>
-      <button class="logout_headers" onclick="setbackpage()">Log Out</button>
+
+      <div class="dropdown" id="dropdown">
+        <p class="headers" id="instructor_name"></p>
+        <button
+          class="logout_headers"
+          id="logout_headers"
+          onclick="setbackpage()"
+        >
+          Log Out
+        </button>
+      </div>
     </div>
 
     <div class="body_content">

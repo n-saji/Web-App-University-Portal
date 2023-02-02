@@ -46,6 +46,9 @@ async function getInstructorDetails() {
     setTimeout(window.location.replace("index.html"), 2000);
     return;
   }
+  let i_name = document.getElementById("instructor_name");
+
+  i_name.innerHTML = response.instructor_name ;
 }
 
 function getCookie(name) {
