@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION delete_instructor_login()
 RETURNS TRIGGER AS $my_table$
 BEGIN
    DELETE FROM public.instructor_logins
-    WHERE instructor_id not in (SELECT id from  public.instructor_details);
+    WHERE id not in (SELECT id::text from  public.instructor_details);
 RETURN NEW;
 END;
 $my_table$ LANGUAGE plpgsql;
