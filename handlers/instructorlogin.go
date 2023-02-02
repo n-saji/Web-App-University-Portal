@@ -40,6 +40,13 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 				HttpOnly: true,
 				Secure:   false,
 			})
+			http.SetCookie(ctx.Writer, &http.Cookie{
+				Name:     "account_id",
+				Value:    uuid.String(),
+				Path:     "/",
+				HttpOnly: true,
+				Secure:   false,
+			})
 			ctx.JSON(http.StatusAccepted, "successfully created")
 		}
 
@@ -62,13 +69,24 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err1.Error())
 		return
 	}
-
+	instructor_id, err3 := h.service.GetInstructorIDWithEmail(emailId)
+	if err3 != nil {
+		ctx.JSON(http.StatusInternalServerError, err3.Error())
+		return
+	}
 	if err == nil && err1 == nil {
 		token, err2 := h.service.GetTokenAfterLogging()
 		ctx.Writer.Header().Set("token", token.String())
 		http.SetCookie(ctx.Writer, &http.Cookie{
 			Name:     "token",
 			Value:    token.String(),
+			Path:     "/",
+			HttpOnly: true,
+			Secure:   false,
+		})
+		http.SetCookie(ctx.Writer, &http.Cookie{
+			Name:     "account_id",
+			Value:    instructor_id,
 			Path:     "/",
 			HttpOnly: true,
 			Secure:   false,
