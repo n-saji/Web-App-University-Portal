@@ -193,4 +193,27 @@ func (h *Handler) DeleteInstructorWithConditions(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, "deleted instructor")
 }
 
-
+func (h *Handler) GetInstructorNameWithId(ctx *gin.Context) {
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
+			return
+		}
+	}
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+	params := ctx.Params
+	id := params.ByName("id")
+	i_details, err := h.service.GetInstructorNamewithId(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusOK, i_details)
+}
