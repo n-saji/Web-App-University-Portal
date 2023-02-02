@@ -33,6 +33,8 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 			return
 		} else {
 			token, _ := h.service.GetTokenAfterLogging()
+			ctx.Writer.Header().Set("token", token.String())
+			ctx.Writer.Header().Set("account_id", uuid.String())
 			http.SetCookie(ctx.Writer, &http.Cookie{
 				Name:     "token",
 				Value:    token.String(),
@@ -77,6 +79,7 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 	if err == nil && err1 == nil {
 		token, err2 := h.service.GetTokenAfterLogging()
 		ctx.Writer.Header().Set("token", token.String())
+		ctx.Writer.Header().Set("account_id", instructor_id)
 		http.SetCookie(ctx.Writer, &http.Cookie{
 			Name:     "token",
 			Value:    token.String(),
