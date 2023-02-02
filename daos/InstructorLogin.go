@@ -104,3 +104,13 @@ func (ac *AdminstrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) err
 	}
 	return nil
 }
+
+func (ac *AdminstrationCloud) GetIDUsingEmail(email string) (string, error) {
+	var instructor_id string
+	err := ac.dbConn.Model(models.InstructorLogin{}).Select("id").Where("email_id = ?", email).Find(&instructor_id).Error
+
+	if err != nil {
+		return "", err
+	}
+	return instructor_id, nil
+}
