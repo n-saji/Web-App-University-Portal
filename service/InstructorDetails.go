@@ -140,3 +140,12 @@ func (s *Service) DeleteInstructorWithConditions(id_condition *models.Instructor
 
 	return nil
 }
+
+func (s *Service) GetInstructorIDWithEmail(email string) (string, error) {
+
+	instructor_id, err := s.daos.GetIDUsingEmail(email)
+	if err != nil {
+		return "", fmt.Errorf("failed fetching :" + err.Error())
+	}
+	return instructor_id, nil
+}
