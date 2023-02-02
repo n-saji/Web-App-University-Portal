@@ -24,8 +24,8 @@ func (h *Handler) GetRouter() *gin.Engine {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://127.0.0.1:5500", "http://localhost:5050"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "POST"},
-		AllowHeaders:     []string{"Origin", "content-type", "Set-Cookie", "Token"},
-		ExposeHeaders:    []string{"Content-Length", "Set-Cookie", "Token"},
+		AllowHeaders:     []string{"Origin", "content-type", "Set-Cookie", "token", "account_id"},
+		ExposeHeaders:    []string{"Content-Length", "Set-Cookie", "token", "account_id"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
 			return origin == "http://127.0.0.1:5500" || origin == "http://localhost:5050"
