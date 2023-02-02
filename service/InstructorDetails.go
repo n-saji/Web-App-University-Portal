@@ -149,3 +149,17 @@ func (s *Service) GetInstructorIDWithEmail(email string) (string, error) {
 	}
 	return instructor_id, nil
 }
+
+func (s *Service) GetInstructorNamewithId(id string) (*models.InstructorDetails, error) {
+	iid := &models.InstructorDetails{}
+	id_uuid, err1 := uuid.Parse(id)
+	if err1 != nil {
+		return nil, err1
+	}
+	iid.Id = id_uuid
+	i_details, err := s.daos.GetInstructorDetail(iid)
+	if err != nil {
+		return nil, err
+	}
+	return i_details, nil
+}
