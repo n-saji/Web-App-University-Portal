@@ -1,8 +1,8 @@
-async function populateInstructors() {
+function populateInstructors() {
   window.location.replace("instructorDetails.html");
 }
 
-async function insertInstructor() {
+function insertInstructor() {
   window.location.replace("createInstructor.html");
 }
 
@@ -13,7 +13,7 @@ function setbackpage() {
 function setdashboard() {
   window.location.replace("allinstructor.html");
 }
-async function insertCourse() {
+function insertCourse() {
   window.location.replace("createCourse.html");
 }
 
@@ -28,3 +28,29 @@ function insertStudent() {
 function showStudents() {
   window.location.replace("showStudents.html");
 }
+
+async function getInstructorDetails() {
+  let cookie_token = getCookie("token");
+  let instructor_id = getCookie("account_id");
+  let getDetails = await fetch(
+    `http://localhost:5050/get-instructor-name-by-id/${instructor_id}`,
+    {
+      method: "GET",
+      headers: { Token: cookie_token },
+    }
+  );
+  let response = await getDetails.json();
+  console.log(response.instructor_name);
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+getInstructorDetails();
