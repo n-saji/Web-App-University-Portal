@@ -143,6 +143,11 @@ async function updateStudent(
     }
   );
   let response = await updateStudent.json();
+  if (response == "token expired! Generate new token") {
+    alert("Timed-out re login");
+    setTimeout(window.location.replace("index.html"), 2000);
+    return;
+  }
   if (updateStudent.status != 200) {
     console.log("failed", response);
   } else {
