@@ -63,7 +63,7 @@ async function populateInstructors() {
     }</td>
         <td>${each_value.StudentMarks.Marks}</td>
         <td>${each_value.StudentMarks.Grade}</td>
-        <td><button class="update_button">U</button></td>
+        <td><button onclick=openPopUpForUpdate() class="update_button">U</button></td>
         <td><button onclick=deleteStudent(${i},${
       each_value.ClassesEnrolled.course_name[0] + i
     }) class="delete_button">X</button></td>`;
@@ -71,3 +71,24 @@ async function populateInstructors() {
   }
 }
 populateInstructors();
+
+function openPopUpForUpdate() {
+  let req_roll_number = document.getElementById("pop-up-roll-number");
+  let req_name = document.getElementById("pop-up-name");
+  let req_age = document.getElementById("pop-up-age");
+  let req_course_name = document.getElementById("pop-up-course-name");
+  let req_marks = document.getElementById("pop-up-marks");
+  //let req_grade = document.getElementById("pop-up-grade");
+  updateStudent(
+    req_roll_number,
+    req_name,
+    req_age,
+    req_course_name,
+    req_marks,
+    req_grade
+  );
+}
+async function updateStudent() {
+
+}
+function closePopUpBySubmit() {}
