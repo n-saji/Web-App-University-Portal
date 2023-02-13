@@ -80,12 +80,6 @@ populateInstructors();
 
 function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
   let old_roll_number_inner_html = document.getElementById(roll_number);
-  console.log(
-    roll_number,
-    old_roll_number_inner_html.innerHTML,
-    name.innerHTML,
-    course_name.innerHTML
-  );
 
   let popup = document.getElementById("popup");
   popup.classList.add("open-popup");
@@ -102,25 +96,102 @@ function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
   old_course_name.innerHTML = course_name.innerHTML;
   old_marks.innerHTML = marks;
 }
-async function updateStudent() {}
+async function updateStudent(
+  req_roll_number,
+  req_name,
+  req_age,
+  req_course_name,
+  req_marks
+) {
+  let old_roll_number = document.getElementById("old_roll_number");
+  let old_name = document.getElementById("old_name");
+  let old_age = document.getElementById("old_age");
+  let old_course_name = document.getElementById("old_course_name");
+  let old_marks = document.getElementById("old_marks");
+  if (req_roll_number == "") {
+    req_roll_number = old_roll_number.innerHTML;
+  }
+  if (req_name == "") {
+    req_name = old_name.innerHTML;
+  }
+  if (req_age == 0) {
+    req_age = old_age.innerHTML;
+  }
+  if (req_course_name == "Choose Course") {
+    req_course_name = old_course_name.innerHTML;
+  }
+  if (req_marks == 0) {
+    req_marks = old_marks.innerHTML;
+  }
+  let cookie_token = getCookie("token");
+  let updateStudent = await fetch(
+    `http://localhost:5050/update-student-details/${old_course_name.innerHTML}`,
+    {
+      method: "PATCH",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        Name: req_name,
+        RollNumber: req_roll_number,
+        Age: parseInt(req_age),
+        ClassesEnrolled: {
+          course_name: req_course_name,
+        },
+        StudentMarks: {
+          Marks: parseInt(req_marks),
+        },
+      }),
+    }
+  );
+  let response = await updateStudent.json();
+  if (updateStudent.status != 200) {
+    console.log("failed", response);
+  } else {
+    console.log("success", response);
+    window.location.reload();
+  }
+  let popup = document.getElementById("popup");
+  popup.classList.remove("open-popup");
+}
 
 function closePopUpByCancel() {
   let popup = document.getElementById("popup");
   popup.classList.remove("open-popup");
 }
 function closePopUpBySubmit() {
-  let req_roll_number = document.getElementById("pop-up-roll-number");
-  let req_name = document.getElementById("pop-up-name");
-  let req_age = document.getElementById("pop-up-age");
-  let req_course_name = document.getElementById("pop-up-course-name");
-  let req_marks = document.getElementById("pop-up-marks");
-  //let req_grade = document.getElementById("pop-up-grade");
-  updateStudent(
-    req_roll_number,
-    req_name,
-    req_age,
-    req_course_name,
-    req_marks,
-    req_grade
+  let req_roll_number = document.getElementById("pop_up_roll_number");
+  let req_name = document.getElementById("pop_up_name");
+  let req_age = document.getElementById("pop_up_age");
+  let req_course_name = document.getElementById("cn_drop_down");
+  let req_marks = document.getElementById("pop_up_marks");
+  console.log(
+    req_roll_number.value,
+    req_name.value,
+    req_age.value,
+    req_course_name.value,
+    req_marks.value
   );
+  updateStudent(
+    req_roll_number.value,
+    req_name.value,
+    req_age.value,
+    req_course_name.value,
+    req_marks.value
+  );
+}
+
+window.onkeydown = function (event) {
+  if (event.keyCode == 27) {
+    closePopUpByCancel();
+  }
+};
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
 }
