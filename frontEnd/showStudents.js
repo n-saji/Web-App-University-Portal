@@ -79,8 +79,9 @@ async function populateInstructors() {
 populateInstructors();
 
 function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
-  let old_roll_number_inner_html = document.getElementById(String(roll_number));
+  let old_roll_number_inner_html = document.getElementById(roll_number);
   console.log(
+    roll_number,
     old_roll_number_inner_html.innerHTML,
     name.innerHTML,
     course_name.innerHTML
