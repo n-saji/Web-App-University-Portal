@@ -56,14 +56,20 @@ async function populateInstructors() {
     let table1 = document.getElementById("student_table");
     let tr = document.createElement("tr");
     tr.innerHTML = `<td id=${i}>${each_value.RollNumber}</td>
-        <td>${each_value.Name}</td>
-        <td>${each_value.Age}</td>
+        <td id=${each_value.Name.replace(" ", "") + i}>${each_value.Name}</td>
+        <td id=${each_value.Age}>${each_value.Age}</td>
         <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
       each_value.ClassesEnrolled.course_name
     }</td>
-        <td>${each_value.StudentMarks.Marks}</td>
+        <td id=${each_value.StudentMarks.Marks}>${
+      each_value.StudentMarks.Marks
+    }</td>
         <td>${each_value.StudentMarks.Grade}</td>
-        <td><button onclick=openPopUpForUpdate() class="update_button">U</button></td>
+        <td><button onclick=openPopUpByUpdate(${i},${
+      each_value.Name.replace(" ", "") + i
+    },${each_value.Age},${each_value.ClassesEnrolled.course_name[0] + i},${
+      each_value.StudentMarks.Marks
+    }) class="update_button">U</button></td>
         <td><button onclick=deleteStudent(${i},${
       each_value.ClassesEnrolled.course_name[0] + i
     }) class="delete_button">X</button></td>`;
@@ -72,7 +78,36 @@ async function populateInstructors() {
 }
 populateInstructors();
 
-function openPopUpForUpdate() {
+function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
+  let old_roll_number_inner_html = document.getElementById(String(roll_number));
+  console.log(
+    old_roll_number_inner_html.innerHTML,
+    name.innerHTML,
+    course_name.innerHTML
+  );
+
+  let popup = document.getElementById("popup");
+  popup.classList.add("open-popup");
+
+  let old_roll_number = document.getElementById("old_roll_number");
+  let old_name = document.getElementById("old_name");
+  let old_age = document.getElementById("old_age");
+  let old_course_name = document.getElementById("old_course_name");
+  let old_marks = document.getElementById("old_marks");
+
+  old_roll_number.innerHTML = old_roll_number_inner_html.innerHTML;
+  old_name.innerHTML = name.innerHTML;
+  old_age.innerHTML = age;
+  old_course_name.innerHTML = course_name.innerHTML;
+  old_marks.innerHTML = marks;
+}
+async function updateStudent() {}
+
+function closePopUpByCancel() {
+  let popup = document.getElementById("popup");
+  popup.classList.remove("open-popup");
+}
+function closePopUpBySubmit() {
   let req_roll_number = document.getElementById("pop-up-roll-number");
   let req_name = document.getElementById("pop-up-name");
   let req_age = document.getElementById("pop-up-age");
@@ -88,7 +123,3 @@ function openPopUpForUpdate() {
     req_grade
   );
 }
-async function updateStudent() {
-
-}
-function closePopUpBySubmit() {}
