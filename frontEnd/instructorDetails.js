@@ -75,11 +75,9 @@ function getCookie(name) {
 }
 
 async function UpdateInstructor(code, name_index, dpt, course_name) {
-  //let index_name = document.getElementById(name_index);
   let cookie_token = getCookie("token");
   let old_instructor_code = document.getElementById("old_instructor_code");
   let old_instructor_name = document.getElementById("old_instructor_name");
-  //let old_department_name = document.getElementById("old_department_name");
   let old_course_name = document.getElementById("old_course_name");
 
   let url = `http://localhost:5050/update-instructor`;
