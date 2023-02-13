@@ -121,11 +121,11 @@ tr:hover td {
   box-shadow: 0 2px 5px rgb(0, 0, 0, 0.2);
 }
 
-#pop-up-roll-number,
-#pop-up-name,
-#pop-up-age,
+#pop_up_roll_number,
+#pop_up_name,
+#pop_up_age,
 #cn_drop_down,
-#pop-up-marks {
+#pop_up_marks {
   margin-top: 5px;
   margin-bottom: 5px;
 

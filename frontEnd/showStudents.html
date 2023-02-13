@@ -32,25 +32,25 @@
         <input
           type="text"
           placeholder="Enter New Roll number"
-          id="pop-up-roll-number"
+          id="pop_up_roll_number"
         />
 
         <form id="old_name"></form>
-        <input type="text" placeholder="Enter New Name" id="pop-up-name" />
+        <input type="text" placeholder="Enter New Name" id="pop_up_name" />
 
         <form id="old_age"></form>
-        <input type="text" placeholder="Enter New Age" id="pop-up-age" />
+        <input type="text" placeholder="Enter New Age" id="pop_up_age" />
 
         <form id="old_course_name"></form>
         <select id="cn_drop_down" name="courses"></select>
         <form id="old_marks"></form>
-        <input type="text" placeholder="Enter New Marks" id="pop-up-marks" />
+        <input type="text" placeholder="Enter New Marks" id="pop_up_marks" />
         <div class="button_popup">
           <button type="button" onclick="closePopUpByCancel()">Cancel</button>
           <button
             type="button"
-            id="pop-up-course-name"
-            onclick="callUpdateFunction()"
+            id="update_course"
+            onclick="closePopUpBySubmit()"
           >
             Update
           </button>
