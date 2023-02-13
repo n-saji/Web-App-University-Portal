@@ -3,6 +3,7 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
+	"strconv"
 
 	"github.com/google/uuid"
 )
@@ -13,7 +14,9 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 	if err != nil {
 		return fmt.Errorf("course Not Found")
 	}
-
+	if _, err := strconv.ParseFloat(new_student.Name, 64); err == nil {
+		return fmt.Errorf("name cant be number")
+	}
 	new_student.ClassesEnrolled.Id = course_details.Id
 	new_student.ClassesEnrolled = course_details
 	new_student.CourseId = course_details.Id
