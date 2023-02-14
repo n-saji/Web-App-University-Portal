@@ -3,7 +3,6 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 	"regexp"
 	"time"
 
@@ -46,7 +45,6 @@ func (ac *Service) CheckCredentials(email, password string) error {
 	if err4 != nil {
 		return fmt.Errorf("wrong password entered")
 	}
-	log.Println(email, string(hashed_password), string(password))
 
 	return nil
 }
