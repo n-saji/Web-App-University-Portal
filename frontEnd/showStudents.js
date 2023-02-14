@@ -79,7 +79,6 @@ async function populateInstructors() {
 populateInstructors();
 
 function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
-  console.log(roll_number, roll_number.innerHTML);
   let popup = document.getElementById("popup");
   popup.classList.add("open-popup");
 
@@ -144,17 +143,20 @@ async function updateStudent(
   let response = await updateStudent.json();
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
+    window.location.replace("index.html");
     return;
   }
   if (updateStudent.status != 200) {
+    let err = document.getElementById("error_msg");
+    err.classList.add("err_msg");
+    err.innerHTML = response;
     console.log("failed", response);
   } else {
     console.log("success", response);
+    let popup = document.getElementById("popup");
+    popup.classList.remove("open-popup");
     window.location.reload();
   }
-  let popup = document.getElementById("popup");
-  popup.classList.remove("open-popup");
 }
 
 function closePopUpByCancel() {
@@ -167,13 +169,6 @@ function closePopUpBySubmit() {
   let req_age = document.getElementById("pop_up_age");
   let req_course_name = document.getElementById("cn_drop_down");
   let req_marks = document.getElementById("pop_up_marks");
-  console.log(
-    req_roll_number.value,
-    req_name.value,
-    req_age.value,
-    req_course_name.value,
-    req_marks.value
-  );
   updateStudent(
     req_roll_number.value,
     req_name.value,
