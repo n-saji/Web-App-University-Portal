@@ -55,7 +55,7 @@ async function populateInstructors() {
     let each_value = all_students_response[i];
     let table1 = document.getElementById("student_table");
     let tr = document.createElement("tr");
-    tr.innerHTML = `<td id=${i}>${each_value.RollNumber}</td>
+    tr.innerHTML = `<td id=${"id_" + i}>${each_value.RollNumber}</td>
         <td id=${each_value.Name.replace(" ", "") + i}>${each_value.Name}</td>
         <td id=${each_value.Age}>${each_value.Age}</td>
         <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
@@ -65,7 +65,7 @@ async function populateInstructors() {
       each_value.StudentMarks.Marks
     }</td>
         <td>${each_value.StudentMarks.Grade}</td>
-        <td><button onclick=openPopUpByUpdate(${i},${
+        <td><button onclick=openPopUpByUpdate(${"id_" + i},${
       each_value.Name.replace(" ", "") + i
     },${each_value.Age},${each_value.ClassesEnrolled.course_name[0] + i},${
       each_value.StudentMarks.Marks
@@ -79,8 +79,7 @@ async function populateInstructors() {
 populateInstructors();
 
 function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
-  let old_roll_number_inner_html = document.getElementById(roll_number);
-
+  console.log(roll_number, roll_number.innerHTML);
   let popup = document.getElementById("popup");
   popup.classList.add("open-popup");
 
@@ -90,7 +89,7 @@ function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
   let old_course_name = document.getElementById("old_course_name");
   let old_marks = document.getElementById("old_marks");
 
-  old_roll_number.innerHTML = old_roll_number_inner_html.innerHTML;
+  old_roll_number.innerHTML = roll_number.innerHTML;
   old_name.innerHTML = name.innerHTML;
   old_age.innerHTML = age;
   old_course_name.innerHTML = course_name.innerHTML;
