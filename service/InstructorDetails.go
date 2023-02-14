@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (uuid.UUID, error) {
@@ -39,12 +40,18 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 	return id, nil
 }
 
-func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, passowrd string) error {
+func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password string) error {
 
 	var credentials models.InstructorLogin
+
+	crypted_password, err2 := bcrypt.GenerateFromPassword([]byte(password), 10)
+	if err2 != nil {
+		return fmt.Errorf("error parsing password")
+	}
 	credentials.Id = id
 	credentials.EmailId = emailid
-	credentials.Password = passowrd
+	credentials.Password = string(crypted_password)
+	
 	if id == uuid.Nil {
 		return fmt.Errorf("uuid cant be null")
 	}
