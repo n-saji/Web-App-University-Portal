@@ -40,7 +40,6 @@ async function getInstructorDetails() {
     }
   );
   let response = await getDetails.json();
-  console.log(response.instructor_name);
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
