@@ -55,7 +55,7 @@ async function populateInstructors() {
     let each_value = all_students_response[i];
     let table1 = document.getElementById("student_table");
     let tr = document.createElement("tr");
-    tr.innerHTML = `<td id=${i}>${each_value.RollNumber}</td>
+    tr.innerHTML = `<td id=${"id_" + i}>${each_value.RollNumber}</td>
         <td id=${each_value.Name.replace(" ", "") + i}>${each_value.Name}</td>
         <td id=${each_value.Age}>${each_value.Age}</td>
         <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
@@ -65,7 +65,7 @@ async function populateInstructors() {
       each_value.StudentMarks.Marks
     }</td>
         <td>${each_value.StudentMarks.Grade}</td>
-        <td><button onclick=openPopUpByUpdate(${i},${
+        <td><button onclick=openPopUpByUpdate(${"id_" + i},${
       each_value.Name.replace(" ", "") + i
     },${each_value.Age},${each_value.ClassesEnrolled.course_name[0] + i},${
       each_value.StudentMarks.Marks
@@ -79,8 +79,6 @@ async function populateInstructors() {
 populateInstructors();
 
 function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
-  let old_roll_number_inner_html = document.getElementById(roll_number);
-
   let popup = document.getElementById("popup");
   popup.classList.add("open-popup");
 
@@ -90,7 +88,7 @@ function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
   let old_course_name = document.getElementById("old_course_name");
   let old_marks = document.getElementById("old_marks");
 
-  old_roll_number.innerHTML = old_roll_number_inner_html.innerHTML;
+  old_roll_number.innerHTML = roll_number.innerHTML;
   old_name.innerHTML = name.innerHTML;
   old_age.innerHTML = age;
   old_course_name.innerHTML = course_name.innerHTML;
@@ -125,7 +123,7 @@ async function updateStudent(
   }
   let cookie_token = getCookie("token");
   let updateStudent = await fetch(
-    `http://localhost:5050/update-student-details/${old_course_name.innerHTML}`,
+    `http://localhost:5050/update-student-details/${old_roll_number.innerHTML}/${old_name.innerHTML}/${old_course_name.innerHTML}`,
     {
       method: "PATCH",
       headers: { Token: cookie_token },
@@ -145,17 +143,20 @@ async function updateStudent(
   let response = await updateStudent.json();
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
+    window.location.replace("index.html");
     return;
   }
   if (updateStudent.status != 200) {
+    let err = document.getElementById("error_msg");
+    err.classList.add("err_msg");
+    err.innerHTML = response;
     console.log("failed", response);
   } else {
     console.log("success", response);
+    let popup = document.getElementById("popup");
+    popup.classList.remove("open-popup");
     window.location.reload();
   }
-  let popup = document.getElementById("popup");
-  popup.classList.remove("open-popup");
 }
 
 function closePopUpByCancel() {
@@ -168,13 +169,7 @@ function closePopUpBySubmit() {
   let req_age = document.getElementById("pop_up_age");
   let req_course_name = document.getElementById("cn_drop_down");
   let req_marks = document.getElementById("pop_up_marks");
-  console.log(
-    req_roll_number.value,
-    req_name.value,
-    req_age.value,
-    req_course_name.value,
-    req_marks.value
-  );
+
   updateStudent(
     req_roll_number.value,
     req_name.value,
