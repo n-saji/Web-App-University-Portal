@@ -95,6 +95,9 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 	if _, err := strconv.ParseFloat(rca.Name, 64); err == nil {
 		return fmt.Errorf("name cant be number")
 	}
+	if rca.Age <= 0 {
+		return fmt.Errorf("invalid age")
+	}
 	rcaExist, _ := ac.daos.GetStudentdetail(
 		&models.StudentInfo{
 			RollNumber: oldRollNumber,
