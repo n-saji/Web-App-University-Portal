@@ -8,18 +8,18 @@ body {
 }
 .input_usr_pass {
   border-radius: 5px;
-  width: 190px;
+  width: 250px;
   border: 2px solid rebeccapurple;
-  font-size: medium;
+  font-size: large;
   height: 35px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .div1 {
   margin-top: 100px;
-  margin-left: 37%;
+  margin-left: 33%;
   text-align: center;
-  width: 400px;
+  width: 500px;
   justify-content: space-between;
 }
 .line1 {
@@ -29,7 +29,7 @@ body {
 }
 .line2 {
   display: flex;
-  margin: auto;
+  margin-top: 30px;
   justify-content: space-between;
 }
 .line3 {
@@ -60,7 +60,8 @@ body {
 }
 .usr_pass_heading {
   margin-right: 50px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 27px;
 }
 #tempfix {
   font-size: 25px;
