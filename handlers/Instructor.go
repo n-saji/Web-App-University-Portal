@@ -93,6 +93,7 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
+
 	}
 
 	err2 := h.service.CheckTokenWithCookie(token)
@@ -154,7 +155,7 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	err3 := h.service.Update_Instructor(*req_id, *cond)
 	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
-		return
+
 	}
 	ctx.IndentedJSON(http.StatusOK, "updated details")
 }

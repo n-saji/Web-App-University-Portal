@@ -169,6 +169,7 @@ function closePopUpBySubmit() {
   let req_age = document.getElementById("pop_up_age");
   let req_course_name = document.getElementById("cn_drop_down");
   let req_marks = document.getElementById("pop_up_marks");
+
   updateStudent(
     req_roll_number.value,
     req_name.value,
