@@ -88,8 +88,6 @@ function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
   let old_course_name = document.getElementById("old_course_name");
   let old_marks = document.getElementById("old_marks");
 
-  console.log(name)
-
   old_roll_number.innerHTML = roll_number.innerHTML;
   old_name.innerHTML = name.innerHTML;
   old_age.innerHTML = age;
