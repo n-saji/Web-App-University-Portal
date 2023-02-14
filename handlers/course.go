@@ -37,6 +37,7 @@ func (h *Handler) InsertCourse(ctx *gin.Context) {
 	response := h.service.InsertValuesToCA(&ca)
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
+		return
 	} else {
 		ctx.JSON(http.StatusCreated, "successfully inserted to table")
 	}
@@ -68,6 +69,7 @@ func (h *Handler) RetrieveValuesCourse(ctx *gin.Context) {
 	response, err := h.service.RetrieveCA()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
 	} else {
 		ctx.JSON(http.StatusOK, response)
 	}
@@ -107,7 +109,6 @@ func (h *Handler) UpdateValuesCourse(ctx *gin.Context) {
 		return
 	} else {
 		ctx.JSON(http.StatusOK, "successfully updated")
-		return
 	}
 
 }
