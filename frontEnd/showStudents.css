@@ -79,6 +79,8 @@ tr:hover td {
   border-color: darkred;
   background-color: red;
   color: white;
+  width: 40px;
+  height: 30px;
 }
 .delete_button:hover {
   background-color: darkred;
@@ -90,6 +92,8 @@ tr:hover td {
   border-color: darkgreen;
   background-color: green;
   color: white;
+  width: 40px;
+  height: 30px;
 }
 .update_button:hover {
   background-color: darkgreen;
