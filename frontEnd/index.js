@@ -62,13 +62,13 @@ async function CheckValidity(username, password) {
       "account_id" + "=" + response.headers.get("account_id") + "; path=/";
     return uuid_instructor;
   } else {
-    let uuid_instructor = await response.json();
+    let response_reply = await response.json();
     let username_style = document.getElementById("username");
     username_style.classList.add("error");
     let password_style = document.getElementById("password");
     password_style.classList.add("error");
     emailId_warning.style.display = "block";
-    emailId_warning.innerHTML = uuid_instructor;
+    emailId_warning.innerHTML = response_reply;
     setTimeout(disablefunction, 3000);
     return "";
   }
