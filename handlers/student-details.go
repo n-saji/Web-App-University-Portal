@@ -47,7 +47,7 @@ func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -73,7 +73,7 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -85,9 +85,16 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 	}
 
 	oldCourse := ctx.Param("coursename")
+	oldName := ctx.Param("student_name")
+	oldRollNumber := ctx.Param("roll_number")
+
+	if oldCourse == ":coursename" || oldName == ":student_name" || oldRollNumber == ":roll_number" {
+		ctx.JSON(http.StatusBadRequest, "Empty Inputs from Client")
+		return
+	}
 	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
-	err := h.service.Update_Student_Details(&rcd, oldCourse)
+	err := h.service.Update_Student_Details(&rcd, oldCourse,oldName,oldRollNumber)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {
@@ -103,7 +110,7 @@ func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -131,7 +138,7 @@ func (h *Handler) UpdateStudentNameAndAge(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -161,7 +168,7 @@ func (h *Handler) FetchAllCourseForAStudent(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -188,7 +195,7 @@ func (h *Handler) DeleteStudentCourse(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -221,7 +228,7 @@ func (h *Handler) GetRankingForACourse(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -247,7 +254,7 @@ func (h *Handler) GetSelectedFieldsAllStudent(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
@@ -273,7 +280,7 @@ func (h *Handler) DeleteStudentWithSpecifics(ctx *gin.Context) {
 	if token == "" {
 		token, err1 = ctx.Cookie("token")
 		if err1 != nil {
-			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -",err1.Error()))
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
 			return
 		}
 	}
