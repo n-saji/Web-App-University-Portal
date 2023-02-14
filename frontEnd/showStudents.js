@@ -124,7 +124,7 @@ async function updateStudent(
   }
   let cookie_token = getCookie("token");
   let updateStudent = await fetch(
-    `http://localhost:5050/update-student-details/${old_course_name.innerHTML}`,
+    `http://localhost:5050/update-student-details/${old_roll_number.innerHTML}/${old_name.innerHTML}/${old_course_name.innerHTML}`,
     {
       method: "PATCH",
       headers: { Token: cookie_token },
