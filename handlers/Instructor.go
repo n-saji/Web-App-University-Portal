@@ -3,7 +3,6 @@ package handlers
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -134,7 +133,6 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	req_id := &models.InstructorDetails{}
 	err := ctx.BindJSON(&req_id)
 	if err != nil {
-		log.Println(err)
 		err = fmt.Errorf("unable to store values")
 		ctx.JSON(http.StatusInternalServerError, err.Error()+" err:")
 		return
