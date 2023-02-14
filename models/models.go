@@ -36,7 +36,7 @@ type InstructorDetails struct {
 	Department      string     `json:"department"`
 	CourseId        uuid.UUID  `json:"course_id"`
 	CourseName      string     `json:"course_name"`
-	ClassesEnrolled CourseInfo `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	ClassesEnrolled CourseInfo `gorm:"foreignKey:course_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 type InstructorLogin struct {

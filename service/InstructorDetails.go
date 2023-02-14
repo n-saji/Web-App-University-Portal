@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (uuid.UUID, error) {
@@ -39,12 +40,18 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 	return id, nil
 }
 
-func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, passowrd string) error {
+func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password string) error {
 
 	var credentials models.InstructorLogin
+
+	crypted_password, err2 := bcrypt.GenerateFromPassword([]byte(password), 10)
+	if err2 != nil {
+		return fmt.Errorf("error parsing password")
+	}
 	credentials.Id = id
 	credentials.EmailId = emailid
-	credentials.Password = passowrd
+	credentials.Password = string(crypted_password)
+	
 	if id == uuid.Nil {
 		return fmt.Errorf("uuid cant be null")
 	}
@@ -92,7 +99,7 @@ func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models
 	if req_id.CourseName != "" {
 		status := s.daos.CheckCourse(req_id.CourseName)
 		if !status {
-			return fmt.Errorf("course doesn not exits")
+			return fmt.Errorf("course does not exits")
 		}
 		course_details, _ := s.daos.GetCourseByName(req_id.CourseName)
 		req_id.CourseId = course_details.Id
@@ -116,4 +123,50 @@ func (s *Service) GetInstructorDetailWithSpecifics(req models.InstructorDetails)
 
 	return id_list, nil
 
+}
+
+func (s *Service) DeleteInstructorWithConditions(id_condition *models.InstructorDetails) error {
+
+	id_list, err := s.daos.RetieveInstructorDetailsWithCondition(*id_condition)
+	if err != nil {
+		return err
+	}
+	for _, each_id := range id_list {
+		if each_id.Id == uuid.Nil {
+			return fmt.Errorf("instructor not found")
+		}
+		err1 := s.daos.DeleteInstructorLogin(each_id.Id)
+		if err1 != nil {
+			return err1
+		}
+		err2 := s.daos.DeleteInstructorWithConditions(each_id)
+		if err2 != nil {
+			return err2
+		}
+	}
+
+	return nil
+}
+
+func (s *Service) GetInstructorIDWithEmail(email string) (string, error) {
+
+	instructor_id, err := s.daos.GetIDUsingEmail(email)
+	if err != nil {
+		return "", fmt.Errorf("failed fetching :" + err.Error())
+	}
+	return instructor_id, nil
+}
+
+func (s *Service) GetInstructorNamewithId(id string) (*models.InstructorDetails, error) {
+	iid := &models.InstructorDetails{}
+	id_uuid, err1 := uuid.Parse(id)
+	if err1 != nil {
+		return nil, err1
+	}
+	iid.Id = id_uuid
+	i_details, err := s.daos.GetInstructorDetail(iid)
+	if err != nil {
+		return nil, err
+	}
+	return i_details, nil
 }

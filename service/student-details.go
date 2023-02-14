@@ -3,7 +3,7 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
+	"strconv"
 
 	"github.com/google/uuid"
 )
@@ -14,7 +14,9 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 	if err != nil {
 		return fmt.Errorf("course Not Found")
 	}
-
+	if _, err := strconv.ParseFloat(new_student.Name, 64); err == nil {
+		return fmt.Errorf("name cant be number")
+	}
 	new_student.ClassesEnrolled.Id = course_details.Id
 	new_student.ClassesEnrolled = course_details
 	new_student.CourseId = course_details.Id
@@ -24,7 +26,6 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 
 		course_details, _ := ac.daos.GetCourseById(each_student.CourseId)
 		each_student.ClassesEnrolled = course_details
-		log.Println(each_student, new_student)
 
 		if each_student.RollNumber == new_student.RollNumber {
 			if each_student.Name != new_student.Name {
@@ -67,29 +68,43 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 func (ac *Service) RetrieveCAd() ([]*models.StudentInfo, error) {
 
 	rca, err := ac.daos.RetieveCollegeAdminstration()
+	for _, each_student := range rca {
+		if each_student.ClassesEnrolled.CourseName == "" {
+			deleted_course, _ := ac.daos.GetCourseByName("Course Deleted")
+			each_student.ClassesEnrolled = deleted_course
+			each_student.CourseId = deleted_course.Id
+			ac.daos.UpdateClgStudent(each_student)
+		}
+	}
 	if err != nil {
 		return rca, err
 	}
 	return rca, nil
 }
 
-func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string) error {
+func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string, oldName string, oldRollNumber string) error {
 
 	rcOld, err4 := ac.daos.GetCourseByName(oldCourse)
 	rcNew, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
 	if err1 != nil {
-		return fmt.Errorf("%s Course not Found", rcNew.CourseName)
+		return fmt.Errorf("course not found - %s", rca.ClassesEnrolled.CourseName)
 	}
 	if err4 != nil {
-		return fmt.Errorf("%s Course not Found", oldCourse)
+		return fmt.Errorf("course not found %s", oldCourse)
+	}
+	if _, err := strconv.ParseFloat(rca.Name, 64); err == nil {
+		return fmt.Errorf("name cant be number")
+	}
+	if rca.Age <= 0 {
+		return fmt.Errorf("invalid age")
 	}
 	rcaExist, _ := ac.daos.GetStudentdetail(
 		&models.StudentInfo{
-			RollNumber: rca.RollNumber,
+			RollNumber: oldRollNumber,
 			CourseId:   rcOld.Id,
-			Name:       rca.Name})
+			Name:       oldName})
 	if rcaExist == nil {
-		return fmt.Errorf("student details mismatched/does not exists")
+		return fmt.Errorf("student details mismatched or does not exists")
 	}
 
 	if rcaExist.Id == uuid.Nil {
@@ -248,5 +263,25 @@ func (s *Service) GetAllStudentSelectiveData() ([]*models.StudentSelectiveData, 
 	}
 
 	return ssd, nil
+
+}
+func (ac *Service) DeleteStudentSpecifics(st_req *models.StudentInfo) (err error) {
+
+	course_details, err1 := ac.daos.GetCourseByName(st_req.ClassesEnrolled.CourseName)
+	if err1 != nil {
+		return fmt.Errorf("course not found")
+	}
+
+	st_details, err2 := ac.daos.GetStudentdetail(st_req)
+	if err2 != nil {
+		return err2
+	}
+	st_details.ClassesEnrolled = course_details
+
+	err = ac.daos.DeleteStudentWithSpecifics(st_details)
+	if err != nil {
+		return fmt.Errorf("failed to delete")
+	}
+	return nil
 
 }

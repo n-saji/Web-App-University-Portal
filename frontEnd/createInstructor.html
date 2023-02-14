@@ -14,23 +14,36 @@
       </button>
     </div>
     <div class="fields">
-      <h3>InstructorCode</h3>
-      <input type="text" onchange="removeError()" id="ic" />
-      <h3>InstructorName</h3>
-      <input type="text" onchange="removeError()" id="in" />
-      <h3>Department</h3>
-      <input type="text" onchange="removeError()" id="dp" />
-      <h3>CourseName</h3>
-      <select
-        id="cn_drop_down"
-        onchange="removeError()"
-        name="courses"
-      ></select>
+      <div class="fields_1">
+        <h3>Code</h3>
+        <input type="text" onchange="removeError()" id="ic" />
+      </div>
+      <div class="fields_2">
+        <h3>Name</h3>
+        <input type="text" onchange="removeError()" id="in" />
+      </div>
+      <div class="fields_3">
+        <h3>Department</h3>
+        <input type="text" onchange="removeError()" id="dp" />
+      </div>
+      <div class="fields_4">
+        <h3>Course</h3>
+        <select
+          id="cn_drop_down"
+          onchange="removeError()"
+          name="courses"
+        ></select>
+      </div>
+
       <br />
-      <h3 id="responseBody"></h3>
+      <div class="fields_5"><h3 id="responseBody"></h3></div>
     </div>
     <div class="inline_buttons" id="inline_buttons">
-      <button onclick="InsertInstructorValues()" id="submitInstructor">
+      <button
+        type="button"
+        onclick="InsertInstructorValues()"
+        id="submitInstructor"
+      >
         Submit</button
       ><button
         id="redirect_to_login"

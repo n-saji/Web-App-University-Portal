@@ -19,23 +19,55 @@ async function InsertInstructorValues() {
   let redirect_to_login = document.getElementById("redirect_to_login");
   let inline_buttons = document.getElementById("inline_buttons");
 
-  if (instructorcode.value === "") {
+  var submitInstructor = document.getElementById("submitInstructor");
+
+  if (instructorcode.value == "") {
     instructorcode.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
   }
 
-  if (instructorname.value === "") {
+  if (instructorname.value == "") {
     instructorname.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
   }
 
-  if (department.value === "") {
+  if (department.value == "") {
     department.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
   }
 
   if (coursename.value == "Choose Course") {
     coursename.classList.add("error");
+    submitInstructor.classList.add("when_submited");
+    submitInstructor.disabled = true;
+  }
+  if (
+    instructorcode.value == "" ||
+    instructorname.value == "" ||
+    department.value == "" ||
+    coursename.value == "Choose Course"
+  ) {
+    setTimeout(removeError, 3000);
+    setTimeout(function () {
+      submitInstructor.classList.remove("when_submited");
+      submitInstructor.disabled = false;
+    }, 3000);
+    return;
+  }
+
+  if (
+    instructorcode.value != "" &&
+    instructorname.value != "" &&
+    department.value != "" &&
+    coursename.value != "Choose Course"
+  ) {
+    submitInstructor.classList.remove("when_submited");
+    submitInstructor.disabled = false;
   }
   let cookie_token = getCookie("token");
-  console.log(cookie_token);
   let createInstructor = await fetch(
     `http://localhost:5050/insert-instructor-details`,
     {
@@ -60,6 +92,10 @@ async function InsertInstructorValues() {
     redirect_to_login.classList.add("diplay-property");
     inline_buttons.classList.add("inline_buttons_css");
     redirect_to_login.innerHTML = "Create Account";
+
+    submitInstructor.disabled = true;
+    submitInstructor.classList.add("when_submited");
+
     let URL = `http://localhost:5050` + response.URl;
     document.cookie = `url=${URL}`;
     localStorage.setItem("URL_Create_Login", URL);

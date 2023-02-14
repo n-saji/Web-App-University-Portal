@@ -16,5 +16,5 @@ delete ON student_infos FOR EACH ROW EXECUTE PROCEDURE delete_student_marks();
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TRIGGER IF EXISTS student_infos on student_infos;
+DROP TRIGGER IF EXISTS deleting_student_mark_trigger on student_infos;
 -- +goose StatementEnd

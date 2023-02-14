@@ -21,7 +21,7 @@ func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.Stud
 func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
-	err := ac.dbConn.Find(&rca).Error
+	err := ac.dbConn.Order("roll_number").Order("name").Find(&rca).Error
 	if err != nil {
 		return nil, err
 	}
@@ -172,4 +172,12 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 		return nil, fmt.Errorf("no record found")
 	}
 	return &sd1, nil
+}
+func (ac *AdminstrationCloud) DeleteStudentWithSpecifics(st_req *models.StudentInfo) error {
+
+	err := ac.dbConn.Where(st_req).Delete(models.StudentInfo{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }

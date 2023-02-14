@@ -46,7 +46,7 @@ func (ac *AdminstrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, er
 func (ac *AdminstrationCloud) RetieveCoursesAvailable() ([]*models.CourseInfo, error) {
 
 	var rca []*models.CourseInfo
-	err := ac.dbConn.Find(&rca).Error
+	err := ac.dbConn.Order("course_name").Find(&rca).Error
 
 	return rca, err
 

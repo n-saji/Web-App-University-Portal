@@ -9,12 +9,22 @@
     <div class="tab">
       <button class="dashboard">Home</button>
       <p class="headers">Instructor Dashboard</p>
-      <button class="logout_headers" onclick="setbackpage()">Log Out</button>
+
+      <div class="dropdown" id="dropdown">
+        <p class="headers" id="instructor_name"></p>
+        <button
+          class="logout_headers"
+          id="logout_headers"
+          onclick="setbackpage()"
+        >
+          Log Out
+        </button>
+      </div>
     </div>
 
     <div class="body_content">
       <p>
-        Instructors details<button
+        Show Instructors<button
           id="button_to_show_instructors"
           class="button_to_show_instructors"
           onclick="populateInstructors()"
@@ -28,7 +38,16 @@
           class="button_to_show_course"
           onclick="showCourse()"
         >
-          link
+          Show
+        </button>
+      </p>
+      <p>
+        Show All Students<button
+          id="button_to_show_students"
+          class="button_to_show_students"
+          onclick="showStudents()"
+        >
+          Show
         </button>
       </p>
       <p>
@@ -46,6 +65,16 @@
           id="button_to_add_course"
           class="button_to_add_course"
           onclick="insertCourse()"
+        >
+          link
+        </button>
+      </p>
+      <p>
+        Add Student
+        <button
+          id="button_to_add_student"
+          class="button_to_add_student"
+          onclick="insertStudent()"
         >
           link
         </button>

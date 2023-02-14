@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (ac *Service) ValidateLogin(email, password string) error {
@@ -33,13 +34,18 @@ func (ac *Service) CheckEmailExist(email string) error {
 }
 func (ac *Service) CheckCredentials(email, password string) error {
 
-	exits, err := ac.daos.CheckLoginExits(email, password)
-	if err != nil {
-		return err
+	hashed_password, err1 := ac.daos.FetchPasswordUsingID(email)
+	if err1 != nil {
+		return err1
 	}
-	if !exits {
-		return fmt.Errorf("email or password wrong! Re Enter")
+	if hashed_password == "" {
+		return fmt.Errorf("wrong email id")
 	}
+	err4 := bcrypt.CompareHashAndPassword([]byte(hashed_password), []byte(password))
+	if err4 != nil {
+		return fmt.Errorf("wrong password entered")
+	}
+
 	return nil
 }
 
@@ -51,7 +57,7 @@ func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
 	token_table.IsValid = true
 	tn := time.Now()
 	token_table.ValidFrom = tn.Unix()
-	validtill := tn.Add(time.Minute * 10)
+	validtill := tn.Add(time.Minute * 15)
 	token_table.ValidTill = validtill.Unix()
 
 	err := ac.daos.InsertToken(token_table)
@@ -93,7 +99,7 @@ func (ac *Service) CheckTokenExpiry(token uuid.UUID) error {
 	return nil
 }
 
-func (s *Service)CheckTokenWithCookie(token string) error {
+func (s *Service) CheckTokenWithCookie(token string) error {
 
 	token_id, err4 := uuid.Parse(token)
 	if err4 != nil {

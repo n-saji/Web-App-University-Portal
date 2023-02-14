@@ -28,16 +28,16 @@ func (ac *AdminstrationCloud) StoreCredentialsForInstructor(il models.Instructor
 	}
 	return nil
 }
-func (ac *AdminstrationCloud) CheckLoginExits(email, password string) (bool, error) {
+// func (ac *AdminstrationCloud) CheckLoginExits(email, password string) (bool, error) {
 
-	var iid string
-	err := ac.dbConn.Select("id").Table("instructor_logins").Where("email_id = ? AND password = ?", email, password).Find(&iid).Error
+// 	var iid string
+// 	err := ac.dbConn.Select("id").Table("instructor_logins").Where("email_id = ? AND password = ?", email, password).Find(&iid).Error
 
-	if iid == "" {
-		return false, err
-	}
-	return true, nil
-}
+// 	if iid == "" {
+// 		return false, err
+// 	}
+// 	return true, nil
+// }
 
 func (ac AdminstrationCloud) CheckForEmail(email string) (bool, error) {
 
@@ -103,4 +103,24 @@ func (ac *AdminstrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) err
 		return err
 	}
 	return nil
+}
+
+func (ac *AdminstrationCloud) GetIDUsingEmail(email string) (string, error) {
+	var instructor_id string
+	err := ac.dbConn.Model(models.InstructorLogin{}).Select("id").Where("email_id = ?", email).Find(&instructor_id).Error
+
+	if err != nil {
+		return "", err
+	}
+	return instructor_id, nil
+}
+
+func (ac *AdminstrationCloud) FetchPasswordUsingID(email string) (string, error) {
+	var password string
+	err := ac.dbConn.Model(models.InstructorLogin{}).Select("password").Where("email_id = ?", email).Find(&password).Error
+
+	if err != nil {
+		return "", err
+	}
+	return password, nil
 }
