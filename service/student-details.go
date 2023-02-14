@@ -82,7 +82,7 @@ func (ac *Service) RetrieveCAd() ([]*models.StudentInfo, error) {
 	return rca, nil
 }
 
-func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string) error {
+func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string, oldName string, oldRollNumber string) error {
 
 	rcOld, err4 := ac.daos.GetCourseByName(oldCourse)
 	rcNew, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
@@ -92,13 +92,16 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 	if err4 != nil {
 		return fmt.Errorf("%s Course not Found", oldCourse)
 	}
+	if _, err := strconv.ParseFloat(rca.Name, 64); err == nil {
+		return fmt.Errorf("name cant be number")
+	}
 	rcaExist, _ := ac.daos.GetStudentdetail(
 		&models.StudentInfo{
-			RollNumber: rca.RollNumber,
+			RollNumber: oldRollNumber,
 			CourseId:   rcOld.Id,
-			Name:       rca.Name})
+			Name:       oldName})
 	if rcaExist == nil {
-		return fmt.Errorf("student details mismatched/does not exists")
+		return fmt.Errorf("student details mismatched or does not exists")
 	}
 
 	if rcaExist.Id == uuid.Nil {

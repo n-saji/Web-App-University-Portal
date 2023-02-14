@@ -15,7 +15,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 	rc.POST("/insert-student-details", h.InsertStudentDetails)
 	rc.GET("/retrieve-college-administration", h.RetrieveValuesForStudent)
-	rc.PATCH("/update-student-details/:coursename", h.UpdateValuesForStudent)
+	rc.PATCH("/update-student-details/:roll_number/:student_name/:coursename", h.UpdateValuesForStudent)
 	rc.DELETE("delete-student-info/:rollnumber", h.DeleteStudentDetails)
 	rc.PATCH("update-student-name-and-age/:name", h.UpdateStudentNameAndAge)
 	rc.GET("find-all-course-for-student/:name", h.FetchAllCourseForAStudent)
