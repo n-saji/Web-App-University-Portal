@@ -87,10 +87,10 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 	rcOld, err4 := ac.daos.GetCourseByName(oldCourse)
 	rcNew, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
 	if err1 != nil {
-		return fmt.Errorf("%s Course not Found", rcNew.CourseName)
+		return fmt.Errorf("course not found - %s", rca.ClassesEnrolled.CourseName)
 	}
 	if err4 != nil {
-		return fmt.Errorf("%s Course not Found", oldCourse)
+		return fmt.Errorf("course not found %s", oldCourse)
 	}
 	if _, err := strconv.ParseFloat(rca.Name, 64); err == nil {
 		return fmt.Errorf("name cant be number")
