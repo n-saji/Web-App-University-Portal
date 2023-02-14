@@ -53,9 +53,10 @@ async function populateInstructors() {
   }
   for (let i = 0; i < all_students_response.length; i++) {
     let each_value = all_students_response[i];
-    let table1 = document.getElementById("student_table");
+    let table_body = document.getElementById("t_body");
     let tr = document.createElement("tr");
-    tr.innerHTML = `<td id=${"id_" + i}>${each_value.RollNumber}</td>
+    tr.innerHTML = `
+    <td id=${"id_" + i}>${each_value.RollNumber}</td>
         <td id=${each_value.Name.replace(" ", "") + i}>${each_value.Name}</td>
         <td id=${each_value.Age}>${each_value.Age}</td>
         <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
@@ -72,8 +73,9 @@ async function populateInstructors() {
     }) class="update_button">U</button></td>
         <td><button onclick=deleteStudent(${i},${
       each_value.ClassesEnrolled.course_name[0] + i
-    }) class="delete_button">X</button></td>`;
-    table1.appendChild(tr);
+    }) class="delete_button">X</button></td>
+    `;
+    table_body.appendChild(tr);
   }
 }
 populateInstructors();
