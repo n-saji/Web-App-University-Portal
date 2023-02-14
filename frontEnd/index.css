@@ -1,12 +1,9 @@
 body {
-  /* background-image: url("asset/clg_login_photo.png");
-  background-repeat: no-repeat;
-  background-size: cover; */
   background-color: darkcyan;
 }
 .heading {
   text-align: center;
-  color: rgb(17, 0, 128);
+  color: white;
   font-family: "Courier New", Courier, monospace;
 }
 .input_usr_pass {
@@ -14,12 +11,14 @@ body {
   width: 190px;
   border: 2px solid rebeccapurple;
   font-size: medium;
-  height: fit-content;
-  margin-top: 20px;
+  height: 35px;
+  margin-top: 10px;
 }
 
 .div1 {
-  margin: auto;
+  margin-top: 100px;
+  margin-left: 37%;
+  text-align: center;
   width: 400px;
   justify-content: space-between;
 }
@@ -34,7 +33,7 @@ body {
   justify-content: space-between;
 }
 .line3 {
-  margin: auto;
+  margin-top: 50px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -43,7 +42,7 @@ body {
 }
 
 .login_button {
-  border-radius: 20px;
+  border-radius: 10px;
   border-color: green;
   padding: 5px;
   margin-top: 20px;
@@ -52,7 +51,8 @@ body {
   margin: 20px;
   height: 40px;
   width: 80px;
-  font-weight: 700;
+  font-size: larger;
+  font-weight: bold;
   font-family: monospace;
 }
 .login_button:hover {
