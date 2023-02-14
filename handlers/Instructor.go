@@ -78,6 +78,7 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	rid, err := h.service.GetInstructorDetails()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
 	} else {
 		ctx.IndentedJSON(http.StatusOK, rid)
 	}
@@ -106,6 +107,7 @@ func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 	err := h.service.DeleteInstructor(name)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
 	} else {
 		ctx.IndentedJSON(http.StatusOK, "deleted instructor: "+name)
 	}

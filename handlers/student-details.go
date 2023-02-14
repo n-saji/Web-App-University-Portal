@@ -35,6 +35,7 @@ func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 	response := h.service.InsertValuesToCAd(&cad)
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
+		return
 	} else {
 		ctx.JSON(http.StatusCreated, "successfully inserted to table")
 	}
@@ -60,6 +61,7 @@ func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 	response, err := h.service.RetrieveCAd()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
 	} else {
 		ctx.JSON(http.StatusOK, response)
 	}
@@ -97,6 +99,7 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 	err := h.service.Update_Student_Details(&rcd, oldCourse,oldName,oldRollNumber)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+		return
 	} else {
 		ctx.JSON(http.StatusOK, "Success")
 	}
