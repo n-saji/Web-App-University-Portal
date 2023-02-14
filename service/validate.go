@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (ac *Service) ValidateLogin(email, password string) error {
@@ -33,13 +34,18 @@ func (ac *Service) CheckEmailExist(email string) error {
 }
 func (ac *Service) CheckCredentials(email, password string) error {
 
-	exits, err := ac.daos.CheckLoginExits(email, password)
-	if err != nil {
-		return err
+	hashed_password, err1 := ac.daos.FetchPasswordUsingID(email)
+	if err1 != nil {
+		return err1
 	}
-	if !exits {
-		return fmt.Errorf("email or password wrong! Re Enter")
+	if hashed_password == "" {
+		return fmt.Errorf("wrong email id")
 	}
+	err4 := bcrypt.CompareHashAndPassword([]byte(hashed_password), []byte(password))
+	if err4 != nil {
+		return fmt.Errorf("wrong password entered")
+	}
+
 	return nil
 }
 

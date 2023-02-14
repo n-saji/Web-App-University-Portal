@@ -17,7 +17,7 @@ func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
 
 	ok := ac.daos.CheckCourse(cv.CourseName)
 	if ok {
-		return fmt.Errorf("course Name exists")
+		return fmt.Errorf("course name exists")
 	}
 	status := ac.daos.InsertValuesToCoursesAvailable(cv)
 	if status != nil {
