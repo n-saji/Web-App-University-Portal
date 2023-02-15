@@ -7,9 +7,9 @@ services:
       context: ./
     image: collegeadminstration
     depends_on:
-      - localhost
+      - db
     environment:
-      DB_HOST: localhost
+      DB_HOST: db
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: password
@@ -17,7 +17,7 @@ services:
 
     ports:
       - 5050:5050
-  localhost:
+  db:
     image: postgres
     environment:
       POSTGRES_USER: postgres
