@@ -5,7 +5,7 @@ name: Go
 
 on:
   push:
-    branches: [ "master" ,"main"]
+    branches: [ "master" ,"main", "feature_branch"]
   pull_request:
     branches: [ "master", "main"]
 
@@ -26,4 +26,9 @@ jobs:
     
     - name: Test
       run: go test -v ./...
+
+    - name: Run vet & lint
+      run: |
+            go vet .
+            golint .
 
