@@ -9,7 +9,6 @@ html {
   background-color: black;
   overflow: hidden;
   display: flex;
-  justify-content: space-between;
   font-family: fantasy;
 }
 .tab button {
@@ -29,12 +28,6 @@ html {
 .tab button.active {
   background-color: #ccc;
 }
-.tab .headers {
-  color: white;
-  font-size: 35px;
-  margin-top: 15px;
-  margin-bottom: 5px;
-}
 .button_to_show_instructors {
   color: white;
   border-radius: 45px;
@@ -50,21 +43,6 @@ html {
   color: white;
   cursor: pointer;
 }
-.button_to_add_instructor {
-  border-radius: 45px;
-  border-color: orange;
-  margin-left: 50px;
-  padding: 5px;
-  margin-top: 20px;
-  background-color: orange;
-  width: 60px;
-  color: white;
-}
-.button_to_add_instructor:hover {
-  background-color: darkorange;
-  color: white;
-  cursor: pointer;
-}
 .body_content {
   margin-left: 20px;
   font-size: larger;
@@ -74,21 +52,6 @@ html {
 }
 .instructor_table_body {
   border: 2px solid black;
-}
-.button_to_add_course {
-  border-radius: 45px;
-  border-color: darkorchid;
-  margin-left: 50px;
-  padding: 5px;
-  margin-top: 20px;
-  background-color: pink;
-  width: 60px;
-  color: white;
-}
-.button_to_add_course:hover {
-  background-color: darkorchid;
-  color: white;
-  cursor: pointer;
 }
 .button_to_show_course {
   border-radius: 45px;
@@ -105,42 +68,20 @@ html {
   color: white;
   cursor: pointer;
 }
-.button_to_add_student {
-  border-radius: 45px;
-  border-color: darkorchid;
-  margin-left: 50px;
-  padding: 5px;
-  margin-top: 20px;
-  background-color: maroon;
-  width: 60px;
-  color: white;
-}
-.button_to_add_student:hover {
-  background-color: rgb(101, 18, 18);
-  color: white;
-  cursor: pointer;
-}
 .button_to_show_students {
   border-radius: 45px;
   border-color: darkorchid;
   margin-left: 50px;
   padding: 5px;
   margin-top: 20px;
-  background-color: rgb(5, 93, 93);
+  background-color: rgb(186, 106, 8);
   width: 60px;
   color: white;
 }
 .button_to_show_students:hover {
-  background-color: darkcyan;
+  background-color: rgb(80, 55, 5);
   color: white;
   cursor: pointer;
-}
-#dropdown {
-  width: 200px;
-  text-align: center;
-  font-family: "Times New Roman", Times, serif;
-  padding-top: 5px;
-  padding-bottom: 5px;
 }
 #logout_headers {
   display: none;
@@ -155,6 +96,15 @@ html {
   border-width: 2px;
 }
 
+#dropdown {
+  width: 200px;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  padding-top: 5px;
+  padding-bottom: 5px;
+margin-left: 280px;
+}
+
 #dropdown:hover .logout_headers {
   display: block;
 }
@@ -166,11 +116,49 @@ html {
   font-size: 30px;
   margin-top: 20px;
   margin-bottom: 5px;
-
   border-color: white;
   border-radius: 5px;
 }
 
 .display_block {
   display: block;
+}
+#dropdown_1 {
+  width: 140px;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+
+}
+#add_button{
+  width: 100%;
+  height: 100%;
+  font-size: large;
+}
+#dropdown_1:hover .dropdown_content {
+  display: block;
+}
+.dropdown_content{
+  display: none;
+  position: absolute;
+  background-color: darkcyan;
+  width: inherit;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-color: black;
+  font-size: large;
+  font-family: "Times New Roman", Times, serif;
+  border-width: 2px;
+}
+.tab .main_headers {
+  color: white;
+  font-size: 35px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: 25%;
+}
+#home_button{
+  font-size: large;
+  width: 120px;
+}
+#add_course,#add_student,#add_instructor{
+width: 100%;
 }
