@@ -74,12 +74,12 @@ html {
   margin-left: 50px;
   padding: 5px;
   margin-top: 20px;
-  background-color: rgb(5, 93, 93);
+  background-color: rgb(186, 106, 8);
   width: 60px;
   color: white;
 }
 .button_to_show_students:hover {
-  background-color: darkcyan;
+  background-color: rgb(80, 55, 5);
   color: white;
   cursor: pointer;
 }
