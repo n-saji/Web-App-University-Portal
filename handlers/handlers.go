@@ -42,10 +42,10 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
- delete student-marks
 re-organize the structure
+sort table by each column (need to create seperate api for ordering by)
+
 
 BUG -
 make buttons as icon using heroicons
-make ui chandes for landing page after loging in
 */
