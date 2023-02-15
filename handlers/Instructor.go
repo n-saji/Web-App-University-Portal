@@ -11,7 +11,7 @@ import (
 type res struct {
 	Msg string
 	Err string
-	URl string
+	URL string
 }
 
 func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
@@ -48,7 +48,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 		return
 	}
 	reply.Msg = "successfully created. Create login for accessing db"
-	reply.URl = fmt.Sprintf("/instructor-login-with-id/%s/:emailid/:password", id)
+	reply.URL = fmt.Sprintf("/instructor-login-with-id/%s/:emailid/:password", id)
 	reply.Err = "nil"
 
 	if response == nil {
