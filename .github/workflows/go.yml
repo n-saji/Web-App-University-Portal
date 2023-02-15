@@ -5,7 +5,7 @@ name: Go
 
 on:
   push:
-    branches: [ "master" ,"main"]
+    branches: [ "master" ,"main", "feature_branch"]
   pull_request:
     branches: [ "master", "main"]
 
@@ -20,10 +20,21 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
+    
+    - name: Install dependencies
+      run: |
+        go version
+        go get -u golang.org/x/lint/golint
+        go mod tidy
+        go mod vendor
 
     - name: Build
-      run: go build -v ./...
-    
+      run: go build .
+
+    - name: Run vet & lint
+      run: |
+            go vet .
+      
     - name: Test
-      run: go test -v ./...
+      run: go test .
 
