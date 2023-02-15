@@ -95,8 +95,7 @@ async function InsertInstructorValues() {
 
     submitInstructor.disabled = true;
     submitInstructor.classList.add("when_submited");
-
-    let URL = `http://localhost:5050` + response.URl;
+    let URL = `http://localhost:5050` + response.URL;
     document.cookie = `url=${URL}`;
     localStorage.setItem("URL_Create_Login", URL);
   }
