@@ -7,11 +7,25 @@
   </head>
   <body>
     <div class="tab">
-      <button class="dashboard">Home</button>
-      <p class="headers">Instructor Dashboard</p>
+      <button class="home_button" id="home_button">Home</button>
+
+      <div class="dropdown_1" id="dropdown_1">
+        <button class="add_button" id="add_button">Add</button>
+        <div class="dropdown_content">
+          <button id="add_course" onclick="insertCourse()">Add Course</button>
+          <button id="add_student" onclick="insertStudent()">
+            Add Student
+          </button>
+          <button id="add_instructor" onclick="insertInstructor()">
+            Add Instructor
+          </button>
+        </div>
+      </div>
+
+      <p class="main_headers" id="main_headers">Instructor Dashboard</p>
 
       <div class="dropdown" id="dropdown">
-        <p class="headers" id="instructor_name"></p>
+        <p class="instructor_name" id="instructor_name"></p>
         <button
           class="logout_headers"
           id="logout_headers"
@@ -48,35 +62,6 @@
           onclick="showStudents()"
         >
           Show
-        </button>
-      </p>
-      <p>
-        Add new Instructor<button
-          id="button_to_add_instructor"
-          class="button_to_add_instructor"
-          onclick="insertInstructor()"
-        >
-          link
-        </button>
-      </p>
-      <p>
-        Add Course
-        <button
-          id="button_to_add_course"
-          class="button_to_add_course"
-          onclick="insertCourse()"
-        >
-          link
-        </button>
-      </p>
-      <p>
-        Add Student
-        <button
-          id="button_to_add_student"
-          class="button_to_add_student"
-          onclick="insertStudent()"
-        >
-          link
         </button>
       </p>
     </div>
