@@ -44,7 +44,7 @@ html {
   width: 100%;
   border-collapse: collapse;
 }
-.table_headers{
+.table_headers {
   border: 2px solid black;
 }
 th {
@@ -54,7 +54,6 @@ th {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: large;
-  
 }
 .student_table tr {
   height: 35px;
@@ -65,7 +64,6 @@ th {
   text-align: center;
   border: 2px solid black;
   font-size: 18px;
-  
 }
 tr:hover td {
   background-color: coral;
@@ -114,7 +112,7 @@ tr:hover td {
   padding: 0 30px 30px;
   visibility: hidden;
   transition: transform 0.4s, top 0.4s;
-  margin-top: 50px; 
+  margin-top: 50px;
 }
 .open-popup {
   visibility: visible;
