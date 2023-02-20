@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (uuid.UUID, error) {
+func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.UUID, error) {
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
 		return uuid.Nil, fmt.Errorf("course not available")
@@ -18,6 +18,11 @@ func (ac *Service) InsertInstructorDet(iid *models.InstructorDetails) (uuid.UUID
 	cd_exist, _ := ac.daos.GetInstructorDetail(iid)
 	if cd_exist.Id != uuid.Nil {
 		return uuid.Nil, fmt.Errorf("instructor exits")
+	}
+	ok, err2 := ac.ValidateInstructorDetails(iid)
+
+	if !ok {
+		return uuid.Nil, err2
 	}
 	iid.Id = uuid.New()
 	err := ac.daos.InsertInstructorDetails(iid)
@@ -51,7 +56,7 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password st
 	credentials.Id = id
 	credentials.EmailId = emailid
 	credentials.Password = string(crypted_password)
-	
+
 	if id == uuid.Nil {
 		return fmt.Errorf("uuid cant be null")
 	}
@@ -87,7 +92,7 @@ func (s *Service) DeleteInstructor(name string) error {
 	return nil
 }
 
-func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models.InstructorDetails) error {
+func (s *Service) Update_Instructor(req_id *models.InstructorDetails, cond models.InstructorDetails) error {
 
 	list_details, err := s.GetInstructorDetailWithSpecifics(cond)
 	if err != nil {
@@ -103,6 +108,12 @@ func (s *Service) Update_Instructor(req_id models.InstructorDetails, cond models
 		}
 		course_details, _ := s.daos.GetCourseByName(req_id.CourseName)
 		req_id.CourseId = course_details.Id
+	}
+
+	ok, err2 := s.ValidateInstructorDetails(req_id)
+
+	if !ok {
+		return err2
 	}
 
 	err1 := s.daos.UpdateInstructor(req_id, cond)
