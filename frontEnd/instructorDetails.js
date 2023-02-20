@@ -95,7 +95,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
     course_name = "";
   }
 
-  let updateCourse = await fetch(url, {
+  let updateInstructor = await fetch(url, {
     method: "PATCH",
     headers: { Token: cookie_token },
     body: JSON.stringify({
@@ -105,13 +105,16 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
       course_name: course_name,
     }),
   });
-  let response = await updateCourse.json();
+  let response = await updateInstructor.json();
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
     setTimeout(window.location.replace("index.html"), 2000);
     return;
   }
-  if (!updateCourse.ok) {
+  if (!updateInstructor.ok) {
+    let err = document.getElementById("error_msg");
+    err.classList.add("err_msg");
+    err.innerHTML = response;
     console.log("failed", response);
   } else {
     console.log("success", response);

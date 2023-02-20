@@ -14,7 +14,7 @@ type res struct {
 	URL string
 }
 
-func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
+func (h *Handler) AddInstructor(ctx *gin.Context) {
 
 	token := ctx.GetHeader("Token")
 	var err1 error
@@ -41,7 +41,7 @@ func (h *Handler) InstructorInfoHandlers(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	id, response := h.service.InsertInstructorDet(insd)
+	id, response := h.service.InsertInstructorDetails(insd)
 	if response != nil {
 		reply.Err = response.Error()
 		ctx.JSON(http.StatusInternalServerError, &reply)
@@ -152,7 +152,7 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, "No query Params")
 		return
 	}
-	err3 := h.service.Update_Instructor(*req_id, *cond)
+	err3 := h.service.Update_Instructor(req_id, *cond)
 	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
 		return
