@@ -157,3 +157,6 @@ tr:hover td {
   border-radius: 4px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+.err_msg {
+  color: red;
+}
