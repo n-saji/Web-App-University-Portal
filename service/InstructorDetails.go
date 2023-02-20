@@ -48,9 +48,6 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 func (s *Service) GetInstructorDetailsWithConditions(order_clause string) ([]*models.InstructorDetails, error) {
 
 	id, err := s.daos.GetAllInstructorOrderByCondition(order_clause)
-	// if order_clause == ""{
-	// 	return nil , fmt.Errorf("order clause can't be empty")
-	// }
 	for _, eachId := range id {
 		eachId.ClassesEnrolled, _ = s.daos.GetCourseByName(eachId.CourseName)
 	}
