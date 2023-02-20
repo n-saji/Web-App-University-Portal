@@ -103,7 +103,7 @@ func (h *Handler) RetrieveInstructorDetailsByOrder(ctx *gin.Context) {
 	}
 	order_clause := ctx.Params.ByName("order_by")
 	log.Println(order_clause)
-	//order_clause =ctx.Query("order_by")
+	// or use order_clause =ctx.Query("order_by")
 	rid, err := h.service.GetInstructorDetailsWithConditions(order_clause)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
