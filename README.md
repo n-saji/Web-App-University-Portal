@@ -1,5 +1,5 @@
 # Go-Practise
 GoLang Project - Using Gorm,Gin,Postgres
 
-# Fron-tend
+# Front-end
 Added Frontend Using HTML, CSS and JS
