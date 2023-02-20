@@ -26,6 +26,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 	rc.POST("/insert-instructor-details", h.AddInstructor)
 	rc.GET("/retrieve-instructors", h.RetrieveInstructorDetails)
+	rc.GET("/retrieve-instructors/:order_by", h.RetrieveInstructorDetailsByOrder)
 	rc.GET("/instructor-login-with-id/:instructorId/:emailId/:password", h.InstructorLoginCreation)
 	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
