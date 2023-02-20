@@ -1,7 +1,7 @@
 # Go-Practise
 
 ## Backend
-GoLang Project - Using Gorm,Gin,Postgres
+Using GoLang,Postgres
 
 ## Frontend
-Added Frontend Using HTML, CSS and JS
+Using HTML, CSS and JS
