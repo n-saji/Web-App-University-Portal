@@ -3,6 +3,7 @@ package handlers
 import (
 	"CollegeAdministration/models"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -75,6 +76,35 @@ func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
 	}
 
 	rid, err := h.service.GetInstructorDetails()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	} else {
+		ctx.IndentedJSON(http.StatusOK, rid)
+	}
+}
+
+func (h *Handler) RetrieveInstructorDetailsByOrder(ctx *gin.Context) {
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
+			return
+		}
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+	order_clause := ctx.Params.ByName("order_by")
+	log.Println(order_clause)
+	// or use order_clause =ctx.Query("order_by")
+	rid, err := h.service.GetInstructorDetailsWithConditions(order_clause)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
