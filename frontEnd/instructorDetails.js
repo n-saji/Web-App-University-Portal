@@ -15,7 +15,7 @@ async function populateInstructors() {
   }
   for (let i = 0; i < all_instructors_response.length; i++) {
     let each_value = all_instructors_response[i];
-    let table1 = document.getElementById("instructor_table");
+    let table_body = document.getElementById("table_body");
     let tr = document.createElement("tr");
     tr.innerHTML = `<td id=${each_value.instructor_code} >${
       each_value.instructor_code
@@ -32,7 +32,7 @@ async function populateInstructors() {
       each_value.course_name[0] + i
     }) class="delete_button">X</button></td>`;
 
-    table1.appendChild(tr);
+    table_body.appendChild(tr);
   }
 }
 populateInstructors();
@@ -152,4 +152,44 @@ function callUpdateFunction() {
     req_department_name.value,
     req_course_name.value
   );
+}
+
+async function populateInstructorsWithCondition(order) {
+  let cookie_token = getCookie("token");
+  let all_instructors = await fetch(
+    `http://localhost:5050/retrieve-instructors/${order}`,
+    {
+      headers: { token: cookie_token },
+    }
+  );
+  let all_instructors_response = await all_instructors.json();
+  if (all_instructors_response == "token expired! Generate new token") {
+    alert("Timed-out re login");
+    setTimeout(window.location.replace("index.html"), 2000);
+    return;
+  }
+
+  let table_body = document.getElementById("table_body");
+  table_body.innerText = "";
+  for (let i = 0; i < all_instructors_response.length; i++) {
+    let each_value = all_instructors_response[i];
+
+    let tr = document.createElement("tr");
+    tr.innerHTML = `<td id=${each_value.instructor_code} >${
+      each_value.instructor_code
+    }</td>
+       <td id=${i}>${each_value.instructor_name}</td>
+       <td id=${each_value.department.replace(" ", "") + i} >${
+      each_value.department
+    }</td>
+       <td id=${each_value.course_name[0] + i}>${each_value.course_name}</td>
+       <td><button onclick=openForm("${each_value.instructor_code}",${i},${
+      each_value.department.replace(" ", "") + i
+    },${each_value.course_name[0] + i}) class="update_button">U</button></td>
+       <td><button onclick=deleteInstructor(${i},${
+      each_value.course_name[0] + i
+    }) class="delete_button">X</button></td>`;
+
+    table_body.appendChild(tr);
+  }
 }

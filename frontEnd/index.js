@@ -51,9 +51,19 @@ async function toCheckValidity(emailId, password) {
 
 async function CheckValidity(username, password) {
   const emailId_warning = document.getElementById("tempfix");
+  let error_while_fetching_api;
   let response = await fetch(
     `http://localhost:5050/instructor-login/${username}/${password}`
-  );
+  ).catch((err) => {
+    error_while_fetching_api = err;
+  });
+  if (error_while_fetching_api == "TypeError: Failed to fetch") {
+    let error = document.getElementById("tempfix");
+    error.style.display = "block";
+    error.innerHTML = "server down &#9760;";
+    setTimeout(disablefunction, 4000);
+    return "";
+  }
   if (response.status != 500) {
     let uuid_instructor = await response.json();
     document.cookie =
@@ -63,6 +73,7 @@ async function CheckValidity(username, password) {
     return uuid_instructor;
   } else {
     let response_reply = await response.json();
+    console.log(response_reply);
     let username_style = document.getElementById("username");
     username_style.classList.add("error");
     let password_style = document.getElementById("password");

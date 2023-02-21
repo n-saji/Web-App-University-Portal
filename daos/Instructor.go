@@ -23,6 +23,40 @@ func (ac *AdminstrationCloud) GetAllInstructor() ([]*models.InstructorDetails, e
 	}
 	return id, nil
 }
+
+func (ac *AdminstrationCloud) GetAllInstructorOrderByCondition(order_clause string) ([]*models.InstructorDetails, error) {
+	var id []*models.InstructorDetails
+	q := ac.dbConn
+	switch order_clause {
+	case "instructor_code":
+
+		q = q.Order("instructor_code ASC")
+
+	case "instructor_name":
+
+		q = q.Order("instructor_name ASC")
+
+	case "department":
+
+		q = q.Order("department ASC")
+
+	case "course_name":
+
+		q = q.Order("course_name ASC")
+
+	default:
+
+		return nil, fmt.Errorf("no order by clause given")
+
+	}
+	q = q.Find(&id)
+	err := q.Error
+	if err != nil {
+		return nil, fmt.Errorf("not able to retrieve instructor details")
+	}
+	return id, nil
+}
+
 func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDetails) (*models.InstructorDetails, error) {
 	var id models.InstructorDetails
 	err := ac.dbConn.Where(&id_exits).Find(&id).Error

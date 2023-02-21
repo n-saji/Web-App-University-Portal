@@ -45,6 +45,18 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 	return id, nil
 }
 
+func (s *Service) GetInstructorDetailsWithConditions(order_clause string) ([]*models.InstructorDetails, error) {
+
+	id, err := s.daos.GetAllInstructorOrderByCondition(order_clause)
+	for _, eachId := range id {
+		eachId.ClassesEnrolled, _ = s.daos.GetCourseByName(eachId.CourseName)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return id, nil
+}
+
 func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password string) error {
 
 	var credentials models.InstructorLogin
