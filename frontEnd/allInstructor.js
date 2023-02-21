@@ -32,13 +32,21 @@ function showStudents() {
 async function getInstructorDetails() {
   let cookie_token = getCookie("token");
   let instructor_id = getCookie("account_id");
+  let api_error;
   let getDetails = await fetch(
     `http://localhost:5050/get-instructor-name-by-id/${instructor_id}`,
     {
       method: "GET",
       headers: { Token: cookie_token },
     }
-  );
+  ).catch((err) => {
+    api_error = err;
+  });
+  if (api_error == "TypeError: Failed to fetch") {
+    alert("Internal Server Error Please Login Again");
+    window.location.replace("index.html");
+    return "";
+  }
   let response = await getDetails.json();
   if (response == "token expired! Generate new token") {
     alert("Timed-out re login");
