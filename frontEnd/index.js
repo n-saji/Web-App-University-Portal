@@ -45,7 +45,7 @@ function disablefunction() {
 async function toCheckValidity(emailId, password) {
   let uuid = await CheckValidity(emailId, password);
   if (uuid != "") {
-    window.location.replace("allInstructor.html");
+    window.location.replace("dashboard.html");
   }
 }
 
