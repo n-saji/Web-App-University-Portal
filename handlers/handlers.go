@@ -46,7 +46,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 /*
 API TO CREATE -
 re-organize the structure
-sort table by each column (need to create seperate api for ordering by)
+sort table by each column (need to create seperate api for ordering by) - Done for students
 
 
 BUG -
