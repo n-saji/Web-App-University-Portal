@@ -15,14 +15,37 @@
     </div>
     <div class="body_content">
       <table id="instructor_table" class="instructor_table">
-        <tr>
-          <th>Instructor Code</th>
-          <th>Instructor Name</th>
-          <th>Department</th>
-          <th>CourseName</th>
-          <th>Update</th>
-          <th>Delete</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>
+              <button
+                onclick="populateInstructorsWithCondition('instructor_code')"
+              >
+                Instructor Code
+              </button>
+            </th>
+            <th>
+              <button
+                onclick="populateInstructorsWithCondition('instructor_name')"
+              >
+                Instructor Name
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsWithCondition('department')">
+                Department
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsWithCondition('course_name')">
+                CourseName
+              </button>
+            </th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody id="table_body"></tbody>
       </table>
       <div class="popup" id="popup">
         <h2>Update Instructor</h2>
