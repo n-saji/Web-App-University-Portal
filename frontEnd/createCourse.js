@@ -3,7 +3,7 @@ function setbackpage() {
 }
 
 function setdashboard() {
-  window.location.replace("allinstructor.html");
+  window.location.replace("dashboard.html");
 }
 
 async function InsertCourseValues() {

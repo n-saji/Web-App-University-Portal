@@ -34,6 +34,8 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.DELETE("/delete-instructor", h.DeleteInstructorWithConditions)
 	rc.GET("get-instructor-name-by-id/:id", h.GetInstructorNameWithId)
 
+	rc.GET("/check-token-status", h.CheckTokenStatus)
+
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
