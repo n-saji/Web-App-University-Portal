@@ -3,7 +3,6 @@ package handlers
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -102,7 +101,7 @@ func (h *Handler) RetrieveInstructorDetailsByOrder(ctx *gin.Context) {
 		return
 	}
 	order_clause := ctx.Params.ByName("order_by")
-	log.Println(order_clause)
+
 	// or use order_clause =ctx.Query("order_by")
 	rid, err := h.service.GetInstructorDetailsWithConditions(order_clause)
 	if err != nil {
