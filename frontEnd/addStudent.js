@@ -1,5 +1,5 @@
 function setdashboard() {
-  window.location.replace("allinstructor.html");
+  window.location.replace("dashboard.html");
 }
 function setbackpage() {
   window.location.replace("showStudents.html");
