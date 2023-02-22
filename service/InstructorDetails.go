@@ -26,11 +26,13 @@ func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.
 	}
 	iid.Id = uuid.New()
 	StudentList, _ := ac.daos.RetieveCollegeAdminstration()
+	var student_with_course []models.StudentInfo
 	for _, each_student := range StudentList {
 		if each_student.CourseId == iid.CourseId {
-			iid.Info.StudentsList = append(iid.Info.StudentsList, *each_student)
+			student_with_course = append(student_with_course, *each_student)
 		}
 	}
+	iid.Info.StudentsList = student_with_course
 	err := ac.daos.InsertInstructorDetails(iid)
 	if err != nil {
 		log.Println("Error while inserting details")
@@ -110,6 +112,46 @@ func (s *Service) DeleteInstructor(name string) error {
 	return nil
 }
 
+func (s *Service) Update_Instructor_Info(req_id *models.InstructorDetails, cond models.InstructorDetails) error {
+	list_details, err := s.GetInstructorDetailWithSpecifics(cond)
+	if err != nil {
+		return fmt.Errorf(fmt.Sprint("fetching error " + err.Error()))
+	}
+	if len(list_details) == 0 {
+		return fmt.Errorf("no instructor found with given details")
+	}
+	if req_id.CourseName != "" {
+		status := s.daos.CheckCourse(req_id.CourseName)
+		if !status {
+			return fmt.Errorf("course does not exits")
+		}
+		course_details, _ := s.daos.GetCourseByName(req_id.CourseName)
+		req_id.CourseId = course_details.Id
+	}
+
+	ok, err2 := s.ValidateInstructorDetails(req_id)
+
+	if !ok {
+		return err2
+	}
+
+	StudentList, _ := s.daos.RetieveCollegeAdminstration()
+	var student_with_course []models.StudentInfo
+	for _, each_student := range StudentList {
+		if each_student.CourseId == req_id.CourseId {
+			student_with_course = append(student_with_course, *each_student)
+		}
+	}
+	req_id.Info.StudentsList = student_with_course
+	err1 := s.daos.UpdateInstructorInfo(req_id, &cond)
+
+	if err1 != nil {
+		return err1
+	}
+
+	return nil
+}
+
 func (s *Service) Update_Instructor(req_id *models.InstructorDetails, cond models.InstructorDetails) error {
 
 	list_details, err := s.GetInstructorDetailWithSpecifics(cond)
@@ -135,12 +177,13 @@ func (s *Service) Update_Instructor(req_id *models.InstructorDetails, cond model
 	}
 
 	StudentList, _ := s.daos.RetieveCollegeAdminstration()
+	var student_with_course []models.StudentInfo
 	for _, each_student := range StudentList {
 		if each_student.CourseId == req_id.CourseId {
-			req_id.Info.StudentsList = append(req_id.Info.StudentsList, *each_student)
+			student_with_course = append(student_with_course, *each_student)
 		}
 	}
-
+	req_id.Info.StudentsList = student_with_course
 	err1 := s.daos.UpdateInstructor(req_id, &cond)
 
 	if err1 != nil {

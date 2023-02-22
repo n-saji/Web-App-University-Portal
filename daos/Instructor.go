@@ -105,6 +105,14 @@ func (ac *AdminstrationCloud) UpdateInstructor(req_id *models.InstructorDetails,
 	return nil
 }
 
+func (ac *AdminstrationCloud) UpdateInstructorInfo(req_id *models.InstructorDetails, condition *models.InstructorDetails) error {
+	q := ac.dbConn.Model(models.InstructorDetails{}).Where(condition).Update("info", req_id.Info)
+	if q.Error != nil {
+		return q.Error
+	}
+	return nil
+}
+
 func (ac *AdminstrationCloud) RetieveInstructorDetailsWithCondition(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
 	var list []*models.InstructorDetails
 	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where(req).Find(&list).Error
