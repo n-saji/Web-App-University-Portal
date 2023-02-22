@@ -41,9 +41,6 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 		}
 
 	}
-	// if sd_existing != nil && sd_existing.Name != cv.Name {
-	// 	return fmt.Errorf("roll number exits for another student")
-	// }
 	sd, _ := ac.daos.GetStudentdetail(new_student)
 	if sd != nil && sd.CourseId == new_student.CourseId {
 		return fmt.Errorf("student with course exist")
@@ -155,10 +152,21 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 		return err5
 	}
 	if rcNew.Id != rcOld.Id {
-		instructor_list, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rca.CourseId})
-		for _, each_instructor := range instructor_list {
-			ac.Update_Instructor(each_instructor, models.InstructorDetails{Id: each_instructor.Id, CourseId: rcOld.Id})
-			ac.Update_Instructor(each_instructor, models.InstructorDetails{Id: each_instructor.Id, CourseId: rcNew.Id})
+
+		instructor_list_old, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rcOld.Id})
+		for _, each_instructor := range instructor_list_old {
+			err := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
+			if err != nil {
+				return err
+			}
+		}
+
+		instructor_list_new, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rcNew.Id})
+		for _, each_instructor := range instructor_list_new {
+			err1 := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
+			if err1 != nil {
+				return err1
+			}
 		}
 	}
 	return nil
