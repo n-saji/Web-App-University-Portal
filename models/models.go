@@ -1,6 +1,9 @@
 package models
 
 import (
+	"database/sql/driver"
+	"encoding/json"
+
 	"github.com/google/uuid"
 )
 
@@ -37,6 +40,7 @@ type InstructorDetails struct {
 	CourseId        uuid.UUID  `json:"course_id"`
 	CourseName      string     `json:"course_name"`
 	ClassesEnrolled CourseInfo `gorm:"foreignKey:course_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Info            Info       `gorm:"type:jsonb;" json:"info"`
 }
 
 type InstructorLogin struct {
@@ -68,4 +72,20 @@ type StudentSelectiveData struct {
 type DeleteResponse struct {
 	Message string
 	Courses []CourseInfo
+}
+
+type Info struct {
+	StudentsList []StudentInfo `json:"students_list"`
+}
+
+func (j Info) Value() (driver.Value, error) {
+	valueString, err := json.Marshal(j)
+	return string(valueString), err
+}
+
+func (j *Info) Scan(value interface{}) error {
+	if err := json.Unmarshal(value.([]byte), &j); err != nil {
+		return err
+	}
+	return nil
 }
