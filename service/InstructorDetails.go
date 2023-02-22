@@ -28,7 +28,7 @@ func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.
 	StudentList, _ := ac.daos.RetieveCollegeAdminstration()
 	for _, each_student := range StudentList {
 		if each_student.CourseId == iid.CourseId {
-			iid.StudentsList.List = append(iid.StudentsList.List, *each_student)
+			iid.StudentsList.Info = append(iid.StudentsList.Info, *each_student)
 		}
 	}
 	err := ac.daos.InsertInstructorDetails(iid)
@@ -137,7 +137,7 @@ func (s *Service) Update_Instructor(req_id *models.InstructorDetails, cond model
 	StudentList, _ := s.daos.RetieveCollegeAdminstration()
 	for _, each_student := range StudentList {
 		if each_student.CourseId == req_id.CourseId {
-			req_id.StudentsList.List = append(req_id.StudentsList.List, *each_student)
+			req_id.StudentsList.Info = append(req_id.StudentsList.Info, *each_student)
 		}
 	}
 
