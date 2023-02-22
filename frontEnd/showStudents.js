@@ -16,13 +16,12 @@ function getCookie(name) {
   return null;
 }
 async function deleteStudent(index, course_name_index) {
-  let index_name = document.getElementById(index);
   let cookie_token = getCookie("token");
   let deleteCourse = await fetch(`http://localhost:5050/delete-student`, {
     method: "DELETE",
     headers: { Token: cookie_token },
     body: JSON.stringify({
-      RollNumber: index_name.innerText,
+      RollNumber: index.innerText,
       ClassesEnrolled: {
         course_name: course_name_index.innerText,
       },
@@ -71,7 +70,7 @@ async function populateInstructors() {
     },${each_value.Age},${each_value.ClassesEnrolled.course_name[0] + i},${
       each_value.StudentMarks.Marks
     }) class="update_button">U</button></td>
-        <td><button onclick=deleteStudent(${i},${
+        <td><button onclick=deleteStudent(${"id_" + i},${
       each_value.ClassesEnrolled.course_name[0] + i
     }) class="delete_button">X</button></td>
     `;
