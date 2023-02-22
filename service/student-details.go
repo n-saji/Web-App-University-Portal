@@ -154,6 +154,13 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 	if err5 != nil {
 		return err5
 	}
+	if rcNew.Id != rcOld.Id {
+		instructor_list, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rca.CourseId})
+		for _, each_instructor := range instructor_list {
+			ac.Update_Instructor(each_instructor, models.InstructorDetails{Id: each_instructor.Id, CourseId: rcOld.Id})
+			ac.Update_Instructor(each_instructor, models.InstructorDetails{Id: each_instructor.Id, CourseId: rcNew.Id})
+		}
+	}
 	return nil
 
 }
