@@ -53,5 +53,5 @@ make buttons as icon using heroicons
 
 Features -
 re-organize the structure
-Add students under each instructor
+MAke UI changes for each instructor by redirecting to list of students under each instructor (add a new button)
 */
