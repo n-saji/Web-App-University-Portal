@@ -33,14 +33,14 @@ type StudentMarks struct {
 }
 
 type InstructorDetails struct {
-	Id              uuid.UUID    `gorm:"primary_key;unique;type:uuid" json:"id"`
-	InstructorCode  string       `json:"instructor_code"`
-	InstructorName  string       `json:"instructor_name"`
-	Department      string       `json:"department"`
-	CourseId        uuid.UUID    `json:"course_id"`
-	CourseName      string       `json:"course_name"`
-	ClassesEnrolled CourseInfo   `gorm:"foreignKey:course_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	StudentsList    StudentsList `gorm:"type:jsonb;" json:"students_list"`
+	Id              uuid.UUID  `gorm:"primary_key;unique;type:uuid" json:"id"`
+	InstructorCode  string     `json:"instructor_code"`
+	InstructorName  string     `json:"instructor_name"`
+	Department      string     `json:"department"`
+	CourseId        uuid.UUID  `json:"course_id"`
+	CourseName      string     `json:"course_name"`
+	ClassesEnrolled CourseInfo `gorm:"foreignKey:course_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Info            Info       `gorm:"type:jsonb;" json:"info"`
 }
 
 type InstructorLogin struct {
@@ -74,16 +74,16 @@ type DeleteResponse struct {
 	Courses []CourseInfo
 }
 
-type StudentsList struct {
-	Info []StudentInfo `json:"info"`
+type Info struct {
+	StudentsList []StudentInfo `json:"students_list"`
 }
 
-func (j StudentsList) Value() (driver.Value, error) {
+func (j Info) Value() (driver.Value, error) {
 	valueString, err := json.Marshal(j)
 	return string(valueString), err
 }
 
-func (j *StudentsList) Scan(value interface{}) error {
+func (j *Info) Scan(value interface{}) error {
 	if err := json.Unmarshal(value.([]byte), &j); err != nil {
 		return err
 	}
