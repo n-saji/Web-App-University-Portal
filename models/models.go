@@ -75,7 +75,7 @@ type DeleteResponse struct {
 }
 
 type StudentsList struct {
-	List []StudentInfo `json:"lists"`
+	Info []StudentInfo `json:"info"`
 }
 
 func (j StudentsList) Value() (driver.Value, error) {
