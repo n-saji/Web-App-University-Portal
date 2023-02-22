@@ -45,10 +45,13 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 /*
 API TO CREATE -
-re-organize the structure
 sort table by each column (need to create seperate api for ordering by) - Done for students
 
 
 BUG -
 make buttons as icon using heroicons
+
+Features -
+re-organize the structure
+Add students under each instructor
 */
