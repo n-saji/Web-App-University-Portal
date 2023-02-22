@@ -56,9 +56,16 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 	err1 := ac.daos.InsertValuesToCollegeAdminstration(new_student)
 	if err1 != nil {
 		return err1
-	} else {
-		return nil
 	}
+
+	instructor_list_old, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: new_student.CourseId})
+	for _, each_instructor := range instructor_list_old {
+		err := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 
 }
 
