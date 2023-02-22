@@ -8,11 +8,13 @@ import (
 
 func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
+	//course
 	rc.POST("/insert-course", h.InsertCourse)
 	rc.GET("/retrieve-all-courses", h.RetrieveValuesCourse)
 	rc.PATCH("/update-course/:name", h.UpdateValuesCourse)
 	rc.DELETE("/delete-course/:courseName", h.DeleteCourse)
 
+	//student
 	rc.POST("/insert-student-details", h.InsertStudentDetails)
 	rc.GET("/retrieve-college-administration", h.RetrieveValuesForStudent)
 	rc.PATCH("/update-student-details/:roll_number/:student_name/:coursename", h.UpdateValuesForStudent)
@@ -24,6 +26,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/get-student-name-course", h.GetSelectedFieldsAllStudent)
 	rc.DELETE("/delete-student", h.DeleteStudentWithSpecifics)
 
+	//instructor
 	rc.POST("/insert-instructor-details", h.AddInstructor)
 	rc.GET("/retrieve-instructors", h.RetrieveInstructorDetails)
 	rc.GET("/retrieve-instructors/:order_by", h.RetrieveInstructorDetailsByOrder)
