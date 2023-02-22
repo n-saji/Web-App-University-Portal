@@ -16,13 +16,12 @@ function getCookie(name) {
   return null;
 }
 async function deleteStudent(index, course_name_index) {
-  let index_name = document.getElementById(index);
   let cookie_token = getCookie("token");
   let deleteCourse = await fetch(`http://localhost:5050/delete-student`, {
     method: "DELETE",
     headers: { Token: cookie_token },
     body: JSON.stringify({
-      RollNumber: index_name.innerText,
+      RollNumber: index.innerText,
       ClassesEnrolled: {
         course_name: course_name_index.innerText,
       },
@@ -71,7 +70,7 @@ async function populateInstructors() {
     },${each_value.Age},${each_value.ClassesEnrolled.course_name[0] + i},${
       each_value.StudentMarks.Marks
     }) class="update_button">U</button></td>
-        <td><button onclick=deleteStudent(${i},${
+        <td><button onclick=deleteStudent(${"id_" + i},${
       each_value.ClassesEnrolled.course_name[0] + i
     }) class="delete_button">X</button></td>
     `;
@@ -196,4 +195,28 @@ function getCookie(name) {
     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
+}
+
+setInterval(checkTokenValidity, 300000);
+
+async function checkTokenValidity() {
+  let api_error;
+  let cookie_token = getCookie("token");
+  let api_response = await fetch(`http://localhost:5050/check-token-status`, {
+    method: "GET",
+    headers: { Token: cookie_token },
+  }).catch((err) => {
+    api_error = err;
+  });
+  if (api_error == "TypeError: Failed to fetch") {
+    alert("Internal Server Error Please Login Again");
+    window.location.replace("index.html");
+    return "";
+  }
+  let response = await api_response.json();
+  if (response == "token expired! Generate new token") {
+    alert("Timed-out re login");
+    window.location.replace("index.html");
+    return;
+  }
 }
