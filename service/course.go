@@ -50,7 +50,7 @@ func (ac *Service) UpdateCA(name string, rc *models.CourseInfo) error {
 		return err2
 	}
 	for _, each_inst := range all_inst {
-		err3 := ac.daos.UpdateInstructor(&models.InstructorDetails{CourseName: rc.CourseName}, models.InstructorDetails{Id: each_inst.Id})
+		err3 := ac.daos.UpdateInstructor(&models.InstructorDetails{CourseName: rc.CourseName}, &models.InstructorDetails{Id: each_inst.Id})
 		if err3 != nil {
 			return err3
 		}

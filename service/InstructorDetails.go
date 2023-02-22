@@ -25,6 +25,12 @@ func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.
 		return uuid.Nil, err2
 	}
 	iid.Id = uuid.New()
+	StudentList, _ := ac.daos.RetieveCollegeAdminstration()
+	for _, each_student := range StudentList {
+		if each_student.CourseId == iid.CourseId {
+			iid.StudentsList.List = append(iid.StudentsList.List, *each_student)
+		}
+	}
 	err := ac.daos.InsertInstructorDetails(iid)
 	if err != nil {
 		log.Println("Error while inserting details")
@@ -128,7 +134,14 @@ func (s *Service) Update_Instructor(req_id *models.InstructorDetails, cond model
 		return err2
 	}
 
-	err1 := s.daos.UpdateInstructor(req_id, cond)
+	StudentList, _ := s.daos.RetieveCollegeAdminstration()
+	for _, each_student := range StudentList {
+		if each_student.CourseId == req_id.CourseId {
+			req_id.StudentsList.List = append(req_id.StudentsList.List, *each_student)
+		}
+	}
+
+	err1 := s.daos.UpdateInstructor(req_id, &cond)
 
 	if err1 != nil {
 		return err1
