@@ -116,7 +116,7 @@ func (ac *AdminstrationCloud) GetIDUsingEmail(email string) (string, error) {
 	return instructor_id, nil
 }
 
-func (ac *AdminstrationCloud) FetchPasswordUsingID(email string) (string, error) {
+func (ac *AdminstrationCloud) FetchPasswordUsingEmailID(email string) (string, error) {
 	var password string
 	err := ac.dbConn.Model(models.InstructorLogin{}).Select("password").Where("email_id = ?", email).Find(&password).Error
 
@@ -124,4 +124,16 @@ func (ac *AdminstrationCloud) FetchPasswordUsingID(email string) (string, error)
 		return "", err
 	}
 	return password, nil
+}
+
+func (ac *AdminstrationCloud) FetchPasswordUsingID(id uuid.UUID) (*models.InstructorLogin, error) {
+
+	var credentials *models.InstructorLogin
+	id_string := id.String()
+	err := ac.dbConn.Model(models.InstructorLogin{}).Select("*").Where("id = ?", id_string).Find(&credentials).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return credentials, nil
 }
