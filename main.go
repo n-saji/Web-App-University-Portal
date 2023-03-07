@@ -35,6 +35,7 @@ func main() {
 
 	s := cron.New()
 	go s.AddFunc("@every 10m", ServiceConnection.RunDailyMigrations)
+	go ServiceConnection.AccountDetailsMigration()
 	s.Start()
 
 	r := handler_connection.GetRouter()
@@ -62,4 +63,3 @@ func toRunGooseMigration(url string) {
 		panic(err)
 	}
 }
-
