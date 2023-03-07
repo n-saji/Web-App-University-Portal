@@ -28,6 +28,7 @@ func (ac *AdminstrationCloud) StoreCredentialsForInstructor(il models.Instructor
 	}
 	return nil
 }
+
 // func (ac *AdminstrationCloud) CheckLoginExits(email, password string) (bool, error) {
 
 // 	var iid string
