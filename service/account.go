@@ -10,7 +10,7 @@ func (s *Service) AccountDetailsMigration() error {
 
 	var complete_account []*models.Account
 
-	student_details, _ := s.RetrieveCAd()
+	student_details, _ := s.Retrieve_student_details()
 	for _, student_detail := range student_details {
 		account_dataset := &models.Account{}
 		account_dataset.Id = student_detail.Id
@@ -19,7 +19,12 @@ func (s *Service) AccountDetailsMigration() error {
 		complete_account = append(complete_account, account_dataset)
 	}
 
-	instructor_details, _ := s.GetInstructorDetails()
+	instructor_details, err2 := s.GetInstructorDetails()
+	if err2 != nil {
+		err_statement := "Failed getting credentials" + err2.Error()
+		return fmt.Errorf(err_statement)
+	}
+
 	for _, instructor_detail := range instructor_details {
 		account_dataset := &models.Account{}
 		account_dataset.Id = instructor_detail.Id
