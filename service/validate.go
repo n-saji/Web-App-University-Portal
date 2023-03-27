@@ -34,7 +34,7 @@ func (ac *Service) CheckEmailExist(email string) error {
 }
 func (ac *Service) CheckCredentials(email, password string) error {
 
-	hashed_password, err1 := ac.daos.FetchPasswordUsingID(email)
+	hashed_password, err1 := ac.daos.FetchPasswordUsingEmailID(email)
 	if err1 != nil {
 		return err1
 	}
