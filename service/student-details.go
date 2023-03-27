@@ -3,6 +3,7 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -64,6 +65,16 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 		if err != nil {
 			return err
 		}
+	}
+	account := &models.Account{}
+	account.Id = new_student.Id
+	account.Info.Credentials.Id = new_student.Id
+	account.Name = new_student.Name
+
+	err3 := ac.daos.AccountMigrationsCreate([]*models.Account{account})
+	if err3 != nil {
+		log.Println("error storing in account student")
+		return err3
 	}
 	return nil
 
