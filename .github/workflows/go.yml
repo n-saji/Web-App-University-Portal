@@ -5,36 +5,34 @@ name: Go
 
 on:
   push:
-    branches: [ "master" ,"main", "feature_branch"]
+    branches: ["master", "main"]
   pull_request:
-    branches: [ "master", "main"]
+    branches: ["main", "feature_branch"]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.19
-    
-    - name: Install dependencies
-      run: |
-        go version
-        go get -u golang.org/x/lint/golint
-        go mod tidy
-        go mod vendor
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
 
-    - name: Build
-      run: go build .
+      - name: Install dependencies
+        run: |
+          go version
+          go get -u golang.org/x/lint/golint
+          go mod tidy
+          go mod vendor
 
-    - name: Run vet & lint
-      run: |
-            go vet .
-      
-    - name: Test
-      run: go test .
+      - name: Build
+        run: go build .
 
+      - name: Run vet & lint
+        run: |
+          go vet .
+
+      - name: Test
+        run: go test .

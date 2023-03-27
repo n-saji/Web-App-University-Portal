@@ -38,6 +38,17 @@ func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.
 		log.Println("Error while inserting details")
 		return uuid.Nil, err
 	}
+	account := &models.Account{}
+	account.Id = iid.Id
+	account.Info.Credentials.Id = iid.Id
+	account.Name = iid.InstructorName
+
+	err3 := ac.daos.AccountMigrationsCreate([]*models.Account{account})
+	if err3 != nil {
+		log.Println("error storing in account")
+		return uuid.Nil, nil
+	}
+
 	return iid.Id, nil
 }
 
@@ -87,6 +98,22 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password st
 	err = ac.daos.StoreCredentialsForInstructor(credentials)
 	if err != nil {
 		return err
+	}
+	iid, err := ac.daos.GetInstructorDetail(&models.InstructorDetails{Id: id})
+	if err != nil {
+		return err
+	}
+	account := &models.Account{}
+	account.Id = iid.Id
+	account.Info.Credentials = models.InstructorLogin{Id: iid.Id,
+		EmailId:  emailid,
+		Password: string(crypted_password)}
+	account.Name = iid.InstructorName
+
+	err3 := ac.daos.AccountMigrationsUpdate([]*models.Account{account})
+	if err3 != nil {
+		log.Println("error storing in account instructor")
+		return err3
 	}
 	return nil
 }
