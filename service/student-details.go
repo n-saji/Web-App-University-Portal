@@ -69,7 +69,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 
 }
 
-func (ac *Service) RetrieveCAd() ([]*models.StudentInfo, error) {
+func (ac *Service) Retrieve_student_details() ([]*models.StudentInfo, error) {
 
 	rca, err := ac.daos.RetieveCollegeAdminstration()
 	for _, each_student := range rca {
