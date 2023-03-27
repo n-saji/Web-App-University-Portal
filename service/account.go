@@ -10,7 +10,11 @@ func (s *Service) AccountDetailsMigration() error {
 
 	var complete_account []*models.Account
 
-	student_details, _ := s.Retrieve_student_details()
+	student_details, err := s.Retrieve_student_details()
+	if err != nil {
+		err_statement := "Failed to get details" + err.Error()
+		return fmt.Errorf(err_statement)
+	}
 	for _, student_detail := range student_details {
 		account_dataset := &models.Account{}
 		account_dataset.Id = student_detail.Id
@@ -43,9 +47,9 @@ func (s *Service) AccountDetailsMigration() error {
 
 	}
 	//s.daos.AccountMigrationsCreate(complete_account)
-	err := s.daos.AccountMigrationsUpdate(complete_account)
-	if err != nil {
-		err_statement := "Failed migration" + err.Error()
+	err1 := s.daos.AccountMigrationsUpdate(complete_account)
+	if err1 != nil {
+		err_statement := "Failed migration" + err1.Error()
 		log.Println(err_statement)
 		return fmt.Errorf(err_statement)
 	}
