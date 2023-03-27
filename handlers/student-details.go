@@ -58,7 +58,7 @@ func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
 		return
 	}
-	response, err := h.service.RetrieveCAd()
+	response, err := h.service.Retrieve_student_details()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -96,7 +96,7 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 	}
 	var rcd models.StudentInfo
 	ctx.BindJSON(&rcd)
-	err := h.service.Update_Student_Details(&rcd, oldCourse,oldName,oldRollNumber)
+	err := h.service.Update_Student_Details(&rcd, oldCourse, oldName, oldRollNumber)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 		return
