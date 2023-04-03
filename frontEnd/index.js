@@ -84,3 +84,14 @@ async function CheckValidity(username, password) {
     return "";
   }
 }
+
+function showPassword(){
+  var img_src = document.getElementById("image_for_show_password");
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+
+  } else {
+    x.type = "password";
+  }
+}
