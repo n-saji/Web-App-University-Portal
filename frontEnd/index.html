@@ -13,17 +13,30 @@
       <div class="div1">
         <div class="line1">
           <h3 class="usr_pass_heading">Email</h3>
-          <input class="input_usr_pass" type="email" id="username" />
+          <input
+            style="margin-right: 25px"
+            class="input_usr_pass"
+            type="email"
+            id="username"
+          />
         </div>
         <br />
         <div class="line2">
           <h3 class="usr_pass_heading">Password</h3>
-          <input
-            class="input_usr_pass"
-            onchange="removeError()"
-            type="password"
-            id="password"
-          />
+          <div class="password_div">
+            <input
+              class="input_usr_pass"
+              onchange="removeError()"
+              type="password"
+              id="password"
+            /><img
+              class="image_for_show_password"
+              id="image_for_show_password"
+              src="/frontEnd/asset/view.png"
+              alt="eye"
+              onclick="showPassword()"
+            />
+          </div>
         </div>
         <br />
         <div class="line3">
