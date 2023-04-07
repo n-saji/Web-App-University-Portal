@@ -40,6 +40,7 @@ body {
   margin-left: 5px;
   width: 20px;
   height: 30px;
+  cursor: pointer;
 }
 .hide_element {
   display: none;
