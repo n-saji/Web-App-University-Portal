@@ -58,12 +58,25 @@ func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err2.Error())
 		return
 	}
-	response, err := h.service.Retrieve_student_details()
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
-		return
+
+	order_by := ctx.Query("order")
+
+	if order_by == "" {
+		response, err := h.service.Retrieve_student_details()
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+			return
+		} else {
+			ctx.JSON(http.StatusOK, response)
+		}
 	} else {
-		ctx.JSON(http.StatusOK, response)
+		response, err := h.service.Retrieve_student_detailsbyOrder(order_by)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+			return
+		} else {
+			ctx.JSON(http.StatusOK, response)
+		}
 	}
 
 }
