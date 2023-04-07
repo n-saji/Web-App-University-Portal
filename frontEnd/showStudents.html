@@ -16,12 +16,16 @@
     <div class="body_content">
       <table id="student_table" class="student_table">
         <thead class="table_headers">
-          <th><button>Roll Number</button></th>
-          <th><button>Name</button></th>
-          <th><button>Age</button></th>
-          <th><button>Course Name</button></th>
-          <th><button>Marks</button></th>
-          <th><button>Grade</button></th>
+          <th>
+            <button onclick="populateInstructorsbyOrder('roll_number')">
+              Roll Number
+            </button>
+          </th>
+          <th><button nclick="populateInstructorsbyOrder('name')">Name</button></th>
+          <th><button nclick="populateInstructorsbyOrder('age')">Age</button></th>
+          <th><button nclick="populateInstructorsbyOrder('course_name')">Course Name</button></th>
+          <th><button nclick="populateInstructorsbyOrder('marks')">Marks</button></th>
+          <th><button nclick="populateInstructorsbyOrder('grade')">Grade</button></th>
           <th>Update</th>
           <th>Delete</th>
         </thead>
