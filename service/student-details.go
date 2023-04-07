@@ -97,6 +97,23 @@ func (ac *Service) Retrieve_student_details() ([]*models.StudentInfo, error) {
 	return rca, nil
 }
 
+func (ac *Service) Retrieve_student_detailsbyOrder(order string) ([]*models.StudentInfo, error) {
+
+	rca, err := ac.daos.RetieveCollegeAdminstrationByOrder(order)
+	for _, each_student := range rca {
+		if each_student.ClassesEnrolled.CourseName == "" {
+			deleted_course, _ := ac.daos.GetCourseByName("Course Deleted")
+			each_student.ClassesEnrolled = deleted_course
+			each_student.CourseId = deleted_course.Id
+			ac.daos.UpdateClgStudent(each_student)
+		}
+	}
+	if err != nil {
+		return rca, err
+	}
+	return rca, nil
+}
+
 func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string, oldName string, oldRollNumber string) error {
 
 	rcOld, err4 := ac.daos.GetCourseByName(oldCourse)

@@ -220,3 +220,46 @@ async function checkTokenValidity() {
     return;
   }
 }
+
+async function populateInstructorsbyOrder(order) {
+  let cookie_token = getCookie("token");
+  let all_students = await fetch(
+    `http://localhost:5050/retrieve-college-administration?order=${order}`,
+    {
+      credentials: "same-origin",
+      headers: { token: cookie_token },
+    }
+  );
+  let all_students_response = await all_students.json();
+  if (all_students_response == "token expired! Generate new token") {
+    alert("Timed-out re login");
+    setTimeout(window.location.replace("index.html"), 2000);
+    return;
+  }
+  for (let i = 0; i < all_students_response.length; i++) {
+    let each_value = all_students_response[i];
+    let table_body = document.getElementById("t_body");
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+    <td id=${"id_" + i}>${each_value.RollNumber}</td>
+        <td id=${each_value.Name.replace(" ", "") + i}>${each_value.Name}</td>
+        <td id=${each_value.Age}>${each_value.Age}</td>
+        <td id=${each_value.ClassesEnrolled.course_name[0] + i}>${
+      each_value.ClassesEnrolled.course_name
+    }</td>
+        <td id=${each_value.StudentMarks.Marks}>${
+      each_value.StudentMarks.Marks
+    }</td>
+        <td>${each_value.StudentMarks.Grade}</td>
+        <td><button onclick=openPopUpByUpdate(${"id_" + i},${
+      each_value.Name.replace(" ", "") + i
+    },${each_value.Age},${each_value.ClassesEnrolled.course_name[0] + i},${
+      each_value.StudentMarks.Marks
+    }) class="update_button">U</button></td>
+        <td><button onclick=deleteStudent(${"id_" + i},${
+      each_value.ClassesEnrolled.course_name[0] + i
+    }) class="delete_button">X</button></td>
+    `;
+    table_body.appendChild(tr);
+  }
+}
