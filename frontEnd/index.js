@@ -85,13 +85,26 @@ async function CheckValidity(username, password) {
   }
 }
 
-function showPassword(){
+function showPassword() {
   var img_src = document.getElementById("image_for_show_password");
+  var password_img = document.getElementById("password_img");
   var x = document.getElementById("password");
+  var hide_img = document.getElementById("hide_img");
+
   if (x.type === "password") {
     x.type = "text";
-
+    if (hide_img != null) {
+      hide_img.remove();
+    }
+    img_src.classList.remove("hide_element");
   } else {
     x.type = "password";
+    var img_val = document.createElement("img");
+    img_val.src = "/frontEnd/asset/eye.png";
+    img_val.classList.add("image_for_show_password");
+    img_val.onclick = showPassword;
+    img_val.id = "hide_img";
+    img_src.classList.add("hide_element");
+    password_img.appendChild(img_val);
   }
 }
