@@ -236,6 +236,9 @@ async function populateInstructorsbyOrder(order) {
     setTimeout(window.location.replace("index.html"), 2000);
     return;
   }
+
+  let table_body = document.getElementById("t_body");
+  table_body.innerText = "";
   for (let i = 0; i < all_students_response.length; i++) {
     let each_value = all_students_response[i];
     let table_body = document.getElementById("t_body");
