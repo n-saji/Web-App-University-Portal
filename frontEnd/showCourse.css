@@ -2,7 +2,7 @@ body,
 html {
   height: 100%;
   margin: 0;
-  background-color: darkcyan;
+  background-color: rgb(71, 138, 0);
   background-size: cover;
 }
 .tab {
@@ -14,7 +14,7 @@ html {
 }
 .tab button {
   background-color: inherit;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
@@ -37,9 +37,9 @@ html {
 }
 .body_content {
   display: block;
+  border: 2px solid white;
 }
 .course_table {
-  border: 3px solid black;
   width: 100%;
   border-collapse: collapse;
 }
@@ -47,12 +47,12 @@ html {
   height: 35px;
 }
 th {
-  border: 2px solid black;
   padding: 20px;
-  background-color: cornsilk;
+  background-color: black;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: large;
+  color: white;
 }
 .course_table td {
   background-color: grey;
