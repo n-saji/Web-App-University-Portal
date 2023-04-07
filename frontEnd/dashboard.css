@@ -86,7 +86,7 @@ html {
 #logout_headers {
   display: none;
   position: absolute;
-  background-color: darkcyan;
+  background-color: rgba(0, 0, 0, 0.471);
   width: inherit;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-color: black;
@@ -139,7 +139,7 @@ html {
 .dropdown_content {
   display: none;
   position: absolute;
-  background-color: darkcyan;
+  background-color: rgba(0, 0, 0, 0.471);
   width: inherit;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-color: black;
@@ -147,7 +147,15 @@ html {
   font-family: "Times New Roman", Times, serif;
   border-width: 2px;
 }
-
+#add_course:hover {
+  background-color: black;
+}
+#add_student:hover {
+  background-color: black;
+}
+#add_instructor:hover {
+  background-color: black;
+}
 .tab .main_headers {
   color: white;
   font-size: 35px;
