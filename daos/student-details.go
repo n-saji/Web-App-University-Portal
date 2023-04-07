@@ -88,6 +88,42 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstrationByOrder(order_by string
 		}
 	}
 
+	if order_by == "course_name" || order_by == "marks" || order_by == "grade" {
+		if order_by == "course_name" {
+			for i := 0; i < len(rca)-1; i++ {
+				for j := i; j < len(rca); j++ {
+					if rca[i].ClassesEnrolled.CourseName > rca[j].ClassesEnrolled.CourseName {
+						temp := rca[j]
+						rca[j] = rca[i]
+						rca[i] = temp
+					}
+				}
+			}
+		}
+		if order_by == "grade" {
+			for i := 0; i < len(rca)-1; i++ {
+				for j := i; j < len(rca); j++ {
+					if rca[i].StudentMarks.Grade > rca[j].StudentMarks.Grade {
+						temp := rca[j]
+						rca[j] = rca[i]
+						rca[i] = temp
+					}
+				}
+			}
+		}
+		if order_by == "marks" {
+			for i := 0; i < len(rca)-1; i++ {
+				for j := i; j < len(rca); j++ {
+					if rca[i].StudentMarks.Marks > rca[j].StudentMarks.Marks {
+						temp := rca[j]
+						rca[j] = rca[i]
+						rca[i] = temp
+					}
+				}
+			}
+		}
+	}
+
 	return rca, nil
 
 }
