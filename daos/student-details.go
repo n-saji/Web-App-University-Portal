@@ -59,29 +59,35 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstrationByOrder(order_by string
 		if err != nil {
 			return nil, err
 		}
-
-		for _, eachRCA := range rca {
-			existingRC, err := ac.GetCourseById(eachRCA.CourseId)
-			if existingRC.Id == uuid.Nil {
-				continue
-			} else if err != nil {
-				return nil, err
-			} else {
-				eachRCA.ClassesEnrolled = existingRC
-			}
-		}
-
-		for _, eachRCA := range rca {
-			existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
-			if existingRC.Id == uuid.Nil {
-				continue
-			} else if err != nil {
-				return nil, err
-			} else {
-				eachRCA.StudentMarks = *existingRC
-			}
+	} else {
+		err := ac.dbConn.Find(&rca).Error
+		if err != nil {
+			return nil, err
 		}
 	}
+
+	for _, eachRCA := range rca {
+		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
+			return nil, err
+		} else {
+			eachRCA.ClassesEnrolled = existingRC
+		}
+	}
+
+	for _, eachRCA := range rca {
+		existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
+			return nil, err
+		} else {
+			eachRCA.StudentMarks = *existingRC
+		}
+	}
+
 	return rca, nil
 
 }
