@@ -1,5 +1,5 @@
 body {
-  background-color: darkcyan;
+  background-color: rgb(71, 138, 0);
 }
 .heading {
   text-align: center;
@@ -40,6 +40,10 @@ body {
   margin-left: 5px;
   width: 20px;
   height: 30px;
+  cursor: pointer;
+}
+.hide_element {
+  display: none;
 }
 .line3 {
   margin-top: 50px;

@@ -23,19 +23,22 @@
         <br />
         <div class="line2">
           <h3 class="usr_pass_heading">Password</h3>
-          <div class="password_div">
+          <div class="password_div" id="password_div">
             <input
               class="input_usr_pass"
               onchange="removeError()"
               type="password"
               id="password"
-            /><img
-              class="image_for_show_password"
-              id="image_for_show_password"
-              src="/frontEnd/asset/view.png"
-              alt="eye"
-              onclick="showPassword()"
             />
+            <div class="password_img" id="password_img">
+              <img
+                class="image_for_show_password"
+                id="image_for_show_password"
+                src="/frontEnd/asset/view.png"
+                alt="eye"
+                onclick="showPassword()"
+              />
+            </div>
           </div>
         </div>
         <br />
