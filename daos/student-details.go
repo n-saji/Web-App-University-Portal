@@ -51,6 +51,83 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentIn
 
 }
 
+func (ac *AdminstrationCloud) RetieveCollegeAdminstrationByOrder(order_by string) ([]*models.StudentInfo, error) {
+
+	var rca []*models.StudentInfo
+	if order_by == "roll_number" || order_by == "age" || order_by == "name" {
+		err := ac.dbConn.Order(order_by).Find(&rca).Error
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		err := ac.dbConn.Find(&rca).Error
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	for _, eachRCA := range rca {
+		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
+			return nil, err
+		} else {
+			eachRCA.ClassesEnrolled = existingRC
+		}
+	}
+
+	for _, eachRCA := range rca {
+		existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
+		if existingRC.Id == uuid.Nil {
+			continue
+		} else if err != nil {
+			return nil, err
+		} else {
+			eachRCA.StudentMarks = *existingRC
+		}
+	}
+
+	if order_by == "course_name" || order_by == "marks" || order_by == "grade" {
+		if order_by == "course_name" {
+			for i := 0; i < len(rca)-1; i++ {
+				for j := i; j < len(rca); j++ {
+					if rca[i].ClassesEnrolled.CourseName > rca[j].ClassesEnrolled.CourseName {
+						temp := rca[j]
+						rca[j] = rca[i]
+						rca[i] = temp
+					}
+				}
+			}
+		}
+		if order_by == "grade" {
+			for i := 0; i < len(rca)-1; i++ {
+				for j := i; j < len(rca); j++ {
+					if rca[i].StudentMarks.Grade > rca[j].StudentMarks.Grade {
+						temp := rca[j]
+						rca[j] = rca[i]
+						rca[i] = temp
+					}
+				}
+			}
+		}
+		if order_by == "marks" {
+			for i := 0; i < len(rca)-1; i++ {
+				for j := i; j < len(rca); j++ {
+					if rca[i].StudentMarks.Marks > rca[j].StudentMarks.Marks {
+						temp := rca[j]
+						rca[j] = rca[i]
+						rca[i] = temp
+					}
+				}
+			}
+		}
+	}
+
+	return rca, nil
+
+}
+
 func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 
 	err := ac.dbConn.Save(&rca).Error
