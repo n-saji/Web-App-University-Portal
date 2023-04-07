@@ -54,30 +54,32 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentIn
 func (ac *AdminstrationCloud) RetieveCollegeAdminstrationByOrder(order_by string) ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
-	err := ac.dbConn.Order(order_by).Find(&rca).Error
-	if err != nil {
-		return nil, err
-	}
-
-	for _, eachRCA := range rca {
-		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
-		if existingRC.Id == uuid.Nil {
-			continue
-		} else if err != nil {
+	if order_by == "roll_number" || order_by == "age" || order_by == "name" {
+		err := ac.dbConn.Order(order_by).Find(&rca).Error
+		if err != nil {
 			return nil, err
-		} else {
-			eachRCA.ClassesEnrolled = existingRC
 		}
-	}
 
-	for _, eachRCA := range rca {
-		existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
-		if existingRC.Id == uuid.Nil {
-			continue
-		} else if err != nil {
-			return nil, err
-		} else {
-			eachRCA.StudentMarks = *existingRC
+		for _, eachRCA := range rca {
+			existingRC, err := ac.GetCourseById(eachRCA.CourseId)
+			if existingRC.Id == uuid.Nil {
+				continue
+			} else if err != nil {
+				return nil, err
+			} else {
+				eachRCA.ClassesEnrolled = existingRC
+			}
+		}
+
+		for _, eachRCA := range rca {
+			existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
+			if existingRC.Id == uuid.Nil {
+				continue
+			} else if err != nil {
+				return nil, err
+			} else {
+				eachRCA.StudentMarks = *existingRC
+			}
 		}
 	}
 	return rca, nil
