@@ -41,6 +41,9 @@ body {
   width: 20px;
   height: 30px;
 }
+.hide_element {
+  display: none;
+}
 .line3 {
   margin-top: 50px;
   display: flex;
