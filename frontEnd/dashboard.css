@@ -151,12 +151,18 @@ html {
 }
 #add_course:hover {
   background-color: black;
+  transition: border-color 1s ease; 
+  border-color: red;
 }
 #add_student:hover {
   background-color: black;
+  border-color: red;
+  transition: border-color 1s ease; 
 }
 #add_instructor:hover {
   background-color: black;
+  border-color: red;
+  transition: border-color 1s ease; 
 }
 .tab .main_headers {
   color: white;
