@@ -24,7 +24,9 @@
         </tr>
       </table>
       <div class="popup" id="popup">
-        <h2>Update Course</h2>
+        <div class="popup_headers">
+          <h2>Update Course</h2>
+        </div>
         <form id="old_course"></form>
         <input
           type="text"
@@ -32,8 +34,11 @@
           id="course_name"
         />
         <div class="button_popup">
-          <button type="button" onclick="closeForm()">Cancel</button>
+          <button class="button_for_popup" type="button" onclick="closeForm()">
+            Cancel
+          </button>
           <button
+            class="button_for_popup"
             type="button"
             id="update_course"
             onclick="callUpdateFunction()"
