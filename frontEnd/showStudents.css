@@ -130,7 +130,7 @@ tr:hover td {
   visibility: hidden;
   transition: transform 0.4s, top 0.4s;
   margin-top: 50px;
-  height: 450px;
+  height: 600px;
   overflow-y: scroll;
 }
 .popup_headers {
