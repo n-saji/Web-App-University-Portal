@@ -4,6 +4,7 @@ html {
   margin: 0;
   background-color: rgb(71, 138, 0);
   background-size: cover;
+  overflow: hidden;
 }
 .tab {
   background-color: black;
@@ -37,7 +38,7 @@ html {
 }
 .body_content {
   display: block;
-  max-height: 100vh;
+  max-height: 742px;
   overflow-y: scroll;
   border: 2px solid white;
 }
