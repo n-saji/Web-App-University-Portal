@@ -114,81 +114,85 @@ func (ac *Service) Retrieve_student_detailsbyOrder(order string) ([]*models.Stud
 	return rca, nil
 }
 
-func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse string, oldName string, oldRollNumber string) error {
+func (ac *Service) Update_Student_Details(update_student *models.StudentInfo, oldCourse string, oldName string, oldRollNumber string) error {
 
-	rcOld, err4 := ac.daos.GetCourseByName(oldCourse)
-	rcNew, err1 := ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
+	course_old, err4 := ac.daos.GetCourseByName(oldCourse)
+	course_new, err1 := ac.daos.GetCourseByName(update_student.ClassesEnrolled.CourseName)
 	if err1 != nil {
-		return fmt.Errorf("course not found - %s", rca.ClassesEnrolled.CourseName)
+		return fmt.Errorf("course not found - %s", update_student.ClassesEnrolled.CourseName)
 	}
 	if err4 != nil {
 		return fmt.Errorf("course not found %s", oldCourse)
 	}
-	if _, err := strconv.ParseFloat(rca.Name, 64); err == nil {
+	if _, err := strconv.ParseFloat(update_student.Name, 64); err == nil {
 		return fmt.Errorf("name cant be number")
 	}
-	if rca.Age <= 0 {
+	if update_student.Age <= 0 {
 		return fmt.Errorf("invalid age")
 	}
-	rcaExist, _ := ac.daos.GetStudentdetail(
+	existing_student, _ := ac.daos.GetStudentdetail(
 		&models.StudentInfo{
 			RollNumber: oldRollNumber,
-			CourseId:   rcOld.Id,
+			CourseId:   course_old.Id,
 			Name:       oldName})
-	if rcaExist == nil {
+
+	if existing_student == nil {
 		return fmt.Errorf("student details mismatched or does not exists")
 	}
 
-	if rcaExist.Id == uuid.Nil {
-		return fmt.Errorf("the student does not have %s registered", rcOld.CourseName)
+	if existing_student.Id == uuid.Nil {
+		return fmt.Errorf("the student does not have %s registered", course_old.CourseName)
 	}
-	rcaNew, _ := ac.daos.GetStudentDetailsByRollNumberAndCourseId(rca.RollNumber, rcNew.Id)
-	if rcaNew.Id != uuid.Nil && rcOld.Id != rcNew.Id {
-		return fmt.Errorf("the student already has %s registered can't duplicate course ,please make course in url and body same", rcNew.CourseName)
+	rcaNew, _ := ac.daos.GetStudentDetailsByRollNumberAndCourseId(update_student.RollNumber, course_new.Id)
+	if rcaNew.Id != uuid.Nil && course_old.Id != course_new.Id {
+		return fmt.Errorf("the student already has %s registered can't duplicate course ,please make course in url and body same", course_new.CourseName)
 	}
 
-	if rcOld.Id != rcNew.Id && rcaNew.Id == uuid.Nil {
-		rca.Id = rcaExist.Id
+	if course_old.Id != course_new.Id && rcaNew.Id == uuid.Nil {
+		update_student.Id = existing_student.Id
 
-	} else {
+	} else if rcaNew.Id != uuid.Nil {
 
-		rcaOld, err := ac.daos.GetStudentDetailsByRollNumberAndCourseId(rca.RollNumber, rcOld.Id)
+		rcaOld, err := ac.daos.GetStudentDetailsByRollNumberAndCourseId(update_student.RollNumber, course_old.Id)
+
 		if err != nil {
 			return fmt.Errorf("student roll number not found %s", err.Error())
 		}
-		rca.Id = rcaOld.Id
+		update_student.Id = rcaOld.Id
+	} else {
+		update_student.Id = existing_student.Id
 	}
 
-	sm, err2 := ac.daos.GetMarksByStudentId(rca.Id)
+	sm, err2 := ac.daos.GetMarksByStudentId(update_student.Id)
 	if err2 != nil {
 		return err2
 	}
-	if rca.ClassesEnrolled.Id == uuid.Nil {
-		rcNew, _ = ac.daos.GetCourseByName(rca.ClassesEnrolled.CourseName)
-		rca.ClassesEnrolled.Id = rcNew.Id
-		rca.CourseId = rcNew.Id
+	if update_student.ClassesEnrolled.Id == uuid.Nil {
+		course_new, _ = ac.daos.GetCourseByName(update_student.ClassesEnrolled.CourseName)
+		update_student.ClassesEnrolled.Id = course_new.Id
+		update_student.CourseId = course_new.Id
 	}
-	rca.MarksId = sm.Id
-	sm.Marks = rca.StudentMarks.Marks
+	update_student.MarksId = sm.Id
+	sm.Marks = update_student.StudentMarks.Marks
 	if sm.Marks > 100 {
 		return fmt.Errorf("entered mark is beyond limit")
 	}
 	sm.Grade = ac.GenerateGradeForMarks(sm.Marks)
-	sm.CourseName = rca.ClassesEnrolled.CourseName
-	sm.CourseId = rca.CourseId
-	rca.StudentMarks = *sm
+	sm.CourseName = update_student.ClassesEnrolled.CourseName
+	sm.CourseId = update_student.CourseId
+	update_student.StudentMarks = *sm
 
 	err3 := ac.daos.UpdateStudentMarks(sm)
 	if err3 != nil {
 		return err3
 	}
-	err5 := ac.daos.UpdateClgStudent(rca)
+	err5 := ac.daos.UpdateClgStudent(update_student)
 	if err5 != nil {
 		return err5
 	}
-	if rcNew.Id != rcOld.Id {
+	if course_new.Id != course_old.Id {
 
-		instructor_list_old, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rcOld.Id})
+		instructor_list_old, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: course_old.Id})
 		for _, each_instructor := range instructor_list_old {
 			err := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
 			if err != nil {
@@ -196,7 +200,7 @@ func (ac *Service) Update_Student_Details(rca *models.StudentInfo, oldCourse str
 			}
 		}
 
-		instructor_list_new, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rcNew.Id})
+		instructor_list_new, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: course_new.Id})
 		for _, each_instructor := range instructor_list_new {
 			err1 := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
 			if err1 != nil {

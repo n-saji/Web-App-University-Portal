@@ -88,6 +88,11 @@ function openForm(index_value) {
   let index_name = document.getElementById(String(index_value));
   old_course.innerHTML = index_name.innerHTML;
 }
+window.onkeydown = function (event) {
+  if (event.keyCode == 27) {
+    closeForm();
+  }
+};
 function closeForm() {
   let popup = document.getElementById("popup");
   popup.classList.remove("open-popup");
