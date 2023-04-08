@@ -107,6 +107,8 @@ async function updateStudent(
   let old_age = document.getElementById("old_age");
   let old_course_name = document.getElementById("old_course_name");
   let old_marks = document.getElementById("old_marks");
+  let popup = document.getElementById("popup");
+  let err = document.getElementById("error_msg");
   if (req_roll_number == "") {
     req_roll_number = old_roll_number.innerHTML;
   }
@@ -148,13 +150,12 @@ async function updateStudent(
     return;
   }
   if (updateStudent.status != 200) {
-    let err = document.getElementById("error_msg");
     err.classList.add("err_msg");
     err.innerHTML = response;
     console.log("failed", response);
+    popup.scrollTo(0, 600);
   } else {
     console.log("success", response);
-    let popup = document.getElementById("popup");
     popup.classList.remove("open-popup");
     window.location.reload();
   }
@@ -162,6 +163,8 @@ async function updateStudent(
 
 function closePopUpByCancel() {
   let popup = document.getElementById("popup");
+  let err = document.getElementById("error_msg");
+  err.innerHTML = "";
   popup.classList.remove("open-popup");
 }
 function closePopUpBySubmit() {
