@@ -93,18 +93,19 @@ function showPassword() {
 
   if (x.type === "password") {
     x.type = "text";
-    if (hide_img != null) {
-      hide_img.remove();
-    }
-    img_src.classList.remove("hide_element");
-  } else {
-    x.type = "password";
     var img_val = document.createElement("img");
-    img_val.src = "/frontEnd/asset/eye.png";
+    img_val.src = "/frontEnd/asset/view.png";
     img_val.classList.add("image_for_show_password");
     img_val.onclick = showPassword;
     img_val.id = "hide_img";
     img_src.classList.add("hide_element");
     password_img.appendChild(img_val);
+
+  } else {
+    x.type = "password";
+    if (hide_img != null) {
+      hide_img.remove();
+    }
+    img_src.classList.remove("hide_element");
   }
 }
