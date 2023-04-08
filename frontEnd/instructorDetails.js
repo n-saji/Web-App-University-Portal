@@ -136,6 +136,13 @@ function openForm(code, name_index, dpt, course_name) {
   old_department_name.innerHTML = dpt.innerHTML;
   old_course_name.innerHTML = course_name.innerHTML;
 }
+
+window.onkeydown = function (event) {
+  if (event.keyCode == 27) {
+    closeForm();
+  }
+};
+
 function closeForm() {
   let popup = document.getElementById("popup");
   popup.classList.remove("open-popup");
