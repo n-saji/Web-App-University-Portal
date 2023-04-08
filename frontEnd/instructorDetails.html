@@ -48,19 +48,13 @@
         <tbody id="table_body"></tbody>
       </table>
       <div class="popup" id="popup">
-        <h2>Update Instructor</h2>
+        <div class="popup_headers">
+          <h2>Update Instructor</h2>
+        </div>
         <form id="old_instructor_code"></form>
-        <input
-          type="text"
-          placeholder="Update Code"
-          id="req_instructor_code"
-        />
+        <input type="text" placeholder="Update Code" id="req_instructor_code" />
         <form id="old_instructor_name"></form>
-        <input
-          type="text"
-          placeholder="Update Name"
-          id="req_instructor_name"
-        />
+        <input type="text" placeholder="Update Name" id="req_instructor_name" />
         <form id="old_department_name"></form>
         <input
           type="text"
@@ -69,17 +63,20 @@
         />
         <form id="old_course_name"></form>
         <select id="cn_drop_down" name="courses"></select>
+        <h3 id="error_msg"></h3>
         <div class="button_popup">
-          <button type="button" onclick="closeForm()">Cancel</button>
+          <button class="button_for_popup" type="button" onclick="closeForm()">
+            Cancel
+          </button>
           <button
             type="button"
+            class="button_for_popup"
             id="update_course"
             onclick="callUpdateFunction()"
           >
             Update
           </button>
         </div>
-        <h3 id="error_msg"></h3>
       </div>
     </div>
   </body>
