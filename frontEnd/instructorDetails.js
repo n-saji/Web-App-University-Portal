@@ -79,6 +79,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   let old_instructor_code = document.getElementById("old_instructor_code");
   let old_instructor_name = document.getElementById("old_instructor_name");
   let old_course_name = document.getElementById("old_course_name");
+  let popup = document.getElementById("popup");
 
   let url = `http://localhost:5050/update-instructor`;
   if (old_instructor_code.innerHTML != "") {
@@ -116,6 +117,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
     err.classList.add("err_msg");
     err.innerHTML = response;
     console.log("failed", response);
+    popup.scrollTo(0, 600);
   } else {
     console.log("success", response);
     window.location.reload();
@@ -145,6 +147,8 @@ window.onkeydown = function (event) {
 
 function closeForm() {
   let popup = document.getElementById("popup");
+  let err = document.getElementById("error_msg");
+  err.innerHTML = "";
   popup.classList.remove("open-popup");
 }
 function callUpdateFunction() {
