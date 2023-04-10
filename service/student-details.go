@@ -54,7 +54,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 	}
 	new_student.MarksId = sm.Id
 
-	err1 := ac.daos.InsertValuesToCollegeAdminstration(new_student)
+	err1 := ac.daos.InsertValuesToCollegeAdministration(new_student)
 	if err1 != nil {
 		return err1
 	}
@@ -82,7 +82,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 
 func (ac *Service) Retrieve_student_details() ([]*models.StudentInfo, error) {
 
-	rca, err := ac.daos.RetieveCollegeAdminstration()
+	rca, err := ac.daos.RetrieveCollegeAdministration()
 	for _, each_student := range rca {
 		if each_student.ClassesEnrolled.CourseName == "" {
 			deleted_course, _ := ac.daos.GetCourseByName("Course Deleted")
@@ -99,7 +99,7 @@ func (ac *Service) Retrieve_student_details() ([]*models.StudentInfo, error) {
 
 func (ac *Service) Retrieve_student_detailsbyOrder(order string) ([]*models.StudentInfo, error) {
 
-	rca, err := ac.daos.RetieveCollegeAdminstrationByOrder(order)
+	rca, err := ac.daos.RetrieveCollegeAdministrationByOrder(order)
 	for _, each_student := range rca {
 		if each_student.ClassesEnrolled.CourseName == "" {
 			deleted_course, _ := ac.daos.GetCourseByName("Course Deleted")
@@ -302,7 +302,7 @@ func (s *Service) GetAllStudentSelectiveData() ([]*models.StudentSelectiveData, 
 
 	ssd := []*models.StudentSelectiveData{}
 
-	student_data, err := s.daos.RetieveCollegeAdminstration()
+	student_data, err := s.daos.RetrieveCollegeAdministration()
 	if err != nil {
 		return nil, err
 	}

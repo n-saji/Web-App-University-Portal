@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (AC *AdminstrationCloud) RunMigrationsForRemovingOutDatedTokens() error {
+func (AC *AdministrationCloud) RunMigrationsForRemovingOutDatedTokens() error {
 
 	err := AC.dbConn.Where("is_valid = ?", false).Delete(&models.Token_generator{}).Error
 	if err != nil {
@@ -15,7 +15,7 @@ func (AC *AdminstrationCloud) RunMigrationsForRemovingOutDatedTokens() error {
 	return nil
 }
 
-func (AC *AdminstrationCloud) GetAllTokens() ([]*models.Token_generator, error) {
+func (AC *AdministrationCloud) GetAllTokens() ([]*models.Token_generator, error) {
 
 	var all_tokens []*models.Token_generator
 	err := AC.dbConn.Select("*").Find(&all_tokens).Error
