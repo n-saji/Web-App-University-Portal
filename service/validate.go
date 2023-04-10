@@ -43,7 +43,7 @@ func (ac *Service) CheckCredentials(email, password string) error {
 	}
 	err4 := bcrypt.CompareHashAndPassword([]byte(hashed_password), []byte(password))
 	if err4 != nil {
-		return fmt.Errorf("wrong password entered")
+		return fmt.Errorf("wrong password")
 	}
 
 	return nil

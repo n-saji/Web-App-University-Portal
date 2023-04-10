@@ -25,7 +25,7 @@ func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.
 		return uuid.Nil, err2
 	}
 	iid.Id = uuid.New()
-	StudentList, _ := ac.daos.RetieveCollegeAdminstration()
+	StudentList, _ := ac.daos.RetrieveCollegeAdministration()
 	var student_with_course []models.StudentInfo
 	for _, each_student := range StudentList {
 		if each_student.CourseId == iid.CourseId {
@@ -162,7 +162,7 @@ func (s *Service) Update_Instructor_Info(req_id *models.InstructorDetails, cond 
 		return err2
 	}
 
-	StudentList, _ := s.daos.RetieveCollegeAdminstration()
+	StudentList, _ := s.daos.RetrieveCollegeAdministration()
 	var student_with_course []models.StudentInfo
 	for _, each_student := range StudentList {
 		if each_student.CourseId == req_id.CourseId {
@@ -203,7 +203,7 @@ func (s *Service) Update_Instructor(req_id *models.InstructorDetails, cond model
 		return err2
 	}
 
-	StudentList, _ := s.daos.RetieveCollegeAdminstration()
+	StudentList, _ := s.daos.RetrieveCollegeAdministration()
 	var student_with_course []models.StudentInfo
 	for _, each_student := range StudentList {
 		if each_student.CourseId == req_id.CourseId {

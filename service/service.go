@@ -5,10 +5,10 @@ import (
 )
 
 type Service struct {
-	daos *daos.AdminstrationCloud
+	daos *daos.AdministrationCloud
 }
 
-func New(db *daos.AdminstrationCloud) *Service {
+func New(db *daos.AdministrationCloud) *Service {
 	return &Service{
 		daos: db,
 	}
