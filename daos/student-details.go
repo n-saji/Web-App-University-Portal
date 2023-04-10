@@ -18,7 +18,7 @@ func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.Stud
 	return nil
 
 }
-func (ac *AdminstrationCloud) RetieveCollegeAdminstration() ([]*models.StudentInfo, error) {
+func (ac *AdminstrationCloud) RetrieveCollegeAdministration() ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 	err := ac.dbConn.Order("roll_number").Order("name").Find(&rca).Error
