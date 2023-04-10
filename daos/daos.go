@@ -4,10 +4,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type AdminstrationCloud struct {
+type AdministrationCloud struct {
 	dbConn *gorm.DB
 }
 
-func New(conn *gorm.DB) *AdminstrationCloud {
-	return &AdminstrationCloud{dbConn: conn}
+func New(conn *gorm.DB) *AdministrationCloud {
+	return &AdministrationCloud{dbConn: conn}
 }

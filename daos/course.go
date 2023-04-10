@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdminstrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseInfo) error {
+func (ac *AdministrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseInfo) error {
 
 	err := ac.dbConn.Table("course_infos").Create(ca).Error
 	if err != nil {
@@ -18,7 +18,7 @@ func (ac *AdminstrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseIn
 	return nil
 
 }
-func (ac *AdminstrationCloud) GetCourseByName(name string) (models.CourseInfo, error) {
+func (ac *AdministrationCloud) GetCourseByName(name string) (models.CourseInfo, error) {
 
 	var ca models.CourseInfo
 	val := ac.dbConn.Select("*").Table("course_infos").Where("course_name = ?", name).First(&ca)
@@ -29,7 +29,7 @@ func (ac *AdminstrationCloud) GetCourseByName(name string) (models.CourseInfo, e
 	return ca, nil
 }
 
-func (ac *AdminstrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, error) {
+func (ac *AdministrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, error) {
 
 	var ca models.CourseInfo
 	if id == uuid.Nil {
@@ -43,7 +43,7 @@ func (ac *AdminstrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, er
 	return ca, nil
 }
 
-func (ac *AdminstrationCloud) RetieveCoursesAvailable() ([]*models.CourseInfo, error) {
+func (ac *AdministrationCloud) RetieveCoursesAvailable() ([]*models.CourseInfo, error) {
 
 	var rca []*models.CourseInfo
 	err := ac.dbConn.Order("course_name").Find(&rca).Error
@@ -51,7 +51,7 @@ func (ac *AdminstrationCloud) RetieveCoursesAvailable() ([]*models.CourseInfo, e
 	return rca, err
 
 }
-func (ac *AdminstrationCloud) UpdateCourseByName(name string, rc *models.CourseInfo) error {
+func (ac *AdministrationCloud) UpdateCourseByName(name string, rc *models.CourseInfo) error {
 	rc_existing, _ := ac.GetCourseByName(rc.CourseName)
 	if rc_existing.Id != uuid.Nil {
 		return fmt.Errorf("course already exits")
@@ -68,7 +68,7 @@ func (ac *AdminstrationCloud) UpdateCourseByName(name string, rc *models.CourseI
 	return nil
 }
 
-func (ac *AdminstrationCloud) CheckCourse(coursename string) bool {
+func (ac *AdministrationCloud) CheckCourse(coursename string) bool {
 
 	var len int64
 	ac.dbConn.Model(models.CourseInfo{}).Where("course_name = ?", coursename).Count(&len)
@@ -79,7 +79,7 @@ func (ac *AdminstrationCloud) CheckCourse(coursename string) bool {
 	}
 }
 
-func (ac *AdminstrationCloud) DeleteCourse(id uuid.UUID) (bool, error) {
+func (ac *AdministrationCloud) DeleteCourse(id uuid.UUID) (bool, error) {
 
 	err := ac.dbConn.Where("id = ?", id).Delete(&models.CourseInfo{}).Error
 	if err != nil {

@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.StudentInfo) error {
+func (ac *AdministrationCloud) InsertValuesToCollegeAdminstration(ca *models.StudentInfo) error {
 
 	err := ac.dbConn.Table("student_infos").Create(ca).Error
 	if err != nil {
@@ -18,7 +18,7 @@ func (ac *AdminstrationCloud) InsertValuesToCollegeAdminstration(ca *models.Stud
 	return nil
 
 }
-func (ac *AdminstrationCloud) RetrieveCollegeAdministration() ([]*models.StudentInfo, error) {
+func (ac *AdministrationCloud) RetrieveCollegeAdministration() ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 	err := ac.dbConn.Order("roll_number").Order("name").Find(&rca).Error
@@ -51,7 +51,7 @@ func (ac *AdminstrationCloud) RetrieveCollegeAdministration() ([]*models.Student
 
 }
 
-func (ac *AdminstrationCloud) RetieveCollegeAdminstrationByOrder(order_by string) ([]*models.StudentInfo, error) {
+func (ac *AdministrationCloud) RetieveCollegeAdminstrationByOrder(order_by string) ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 	if order_by == "roll_number" || order_by == "age" || order_by == "name" {
@@ -128,7 +128,7 @@ func (ac *AdminstrationCloud) RetieveCollegeAdminstrationByOrder(order_by string
 
 }
 
-func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
+func (ac *AdministrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 
 	err := ac.dbConn.Save(&rca).Error
 
@@ -138,7 +138,7 @@ func (ac *AdminstrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) ([]*models.StudentInfo, error) {
+func (ac *AdministrationCloud) GetStudentDetailsByRollNumber(roll_number string) ([]*models.StudentInfo, error) {
 
 	var cad []*models.StudentInfo
 	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
@@ -147,7 +147,7 @@ func (ac *AdminstrationCloud) GetStudentDetailsByRollNumber(roll_number string) 
 	}
 	return cad, nil
 }
-func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
+func (ac *AdministrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 
 	var len int64
 	err := ac.dbConn.Model(models.StudentInfo{}).Where("roll_number = ?", roll_number).Count(&len).Error
@@ -163,7 +163,7 @@ func (ac *AdminstrationCloud) CheckForRollNo(roll_number string) (bool, error) {
 
 }
 
-func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.StudentInfo, error) {
+func (ac *AdministrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 
@@ -175,7 +175,7 @@ func (ac *AdminstrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID)
 	return rca, nil
 }
 
-func (ac *AdminstrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
+func (ac *AdministrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
 
 	err := ac.dbConn.Where("id = ?", studentId).Delete(&models.StudentInfo{}).Error
 
@@ -186,7 +186,7 @@ func (ac *AdminstrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetStudentDetailsByName(student_name string) (*[]models.StudentInfo, error) {
+func (ac *AdministrationCloud) GetStudentDetailsByName(student_name string) (*[]models.StudentInfo, error) {
 
 	var si *[]models.StudentInfo
 
@@ -201,7 +201,7 @@ func (ac *AdminstrationCloud) GetStudentDetailsByName(student_name string) (*[]m
 	return si, nil
 }
 
-func (ac *AdminstrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_number string, courseId uuid.UUID) (*models.StudentInfo, error) {
+func (ac *AdministrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_number string, courseId uuid.UUID) (*models.StudentInfo, error) {
 
 	var cad *models.StudentInfo
 	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ? AND course_id = ?", roll_number, courseId).Find(&cad)
@@ -212,7 +212,7 @@ func (ac *AdminstrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_numb
 	return cad, nil
 }
 
-func (ac *AdminstrationCloud) DeleteCourseForAStudent(st_name string, c_id uuid.UUID) error {
+func (ac *AdministrationCloud) DeleteCourseForAStudent(st_name string, c_id uuid.UUID) error {
 
 	err := ac.dbConn.Where("name = ? AND course_id = ?", st_name, c_id).Delete(models.StudentInfo{}).Error
 	if err != nil {
@@ -220,7 +220,7 @@ func (ac *AdminstrationCloud) DeleteCourseForAStudent(st_name string, c_id uuid.
 	}
 	return nil
 }
-func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.StudentInfo, error) {
+func (ac *AdministrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.StudentInfo, error) {
 
 	var sd1 models.StudentInfo
 	condition := make(map[string]interface{})
@@ -250,7 +250,7 @@ func (ac *AdminstrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.
 	}
 	return &sd1, nil
 }
-func (ac *AdminstrationCloud) DeleteStudentWithSpecifics(st_req *models.StudentInfo) error {
+func (ac *AdministrationCloud) DeleteStudentWithSpecifics(st_req *models.StudentInfo) error {
 
 	err := ac.dbConn.Where(st_req).Delete(models.StudentInfo{}).Error
 	if err != nil {

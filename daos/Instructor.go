@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func (ac *AdminstrationCloud) InsertInstructorDetails(id *models.InstructorDetails) error {
+func (ac *AdministrationCloud) InsertInstructorDetails(id *models.InstructorDetails) error {
 	err := ac.dbConn.Table("instructor_details").Create(id).Error
 	if err != nil {
 		log.Println("Not able to insert instructor details", err)
@@ -15,7 +15,7 @@ func (ac *AdminstrationCloud) InsertInstructorDetails(id *models.InstructorDetai
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetAllInstructor() ([]*models.InstructorDetails, error) {
+func (ac *AdministrationCloud) GetAllInstructor() ([]*models.InstructorDetails, error) {
 	var id []*models.InstructorDetails
 	err := ac.dbConn.Order("instructor_name ASC").Find(&id).Error
 	if err != nil {
@@ -24,7 +24,7 @@ func (ac *AdminstrationCloud) GetAllInstructor() ([]*models.InstructorDetails, e
 	return id, nil
 }
 
-func (ac *AdminstrationCloud) GetAllInstructorOrderByCondition(order_clause string) ([]*models.InstructorDetails, error) {
+func (ac *AdministrationCloud) GetAllInstructorOrderByCondition(order_clause string) ([]*models.InstructorDetails, error) {
 	var id []*models.InstructorDetails
 	q := ac.dbConn
 	switch order_clause {
@@ -57,7 +57,7 @@ func (ac *AdminstrationCloud) GetAllInstructorOrderByCondition(order_clause stri
 	return id, nil
 }
 
-func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDetails) (*models.InstructorDetails, error) {
+func (ac AdministrationCloud) GetInstructorDetail(id_exits *models.InstructorDetails) (*models.InstructorDetails, error) {
 	var id models.InstructorDetails
 	err := ac.dbConn.Where(&id_exits).Find(&id).Error
 	if err != nil {
@@ -66,7 +66,7 @@ func (ac AdminstrationCloud) GetInstructorDetail(id_exits *models.InstructorDeta
 	return &id, nil
 }
 
-func (ac *AdminstrationCloud) DeleteInstructor(name string) error {
+func (ac *AdministrationCloud) DeleteInstructor(name string) error {
 
 	err := ac.dbConn.Where("instructor_name = ?", name).Delete(models.InstructorDetails{}).Error
 
@@ -76,7 +76,7 @@ func (ac *AdminstrationCloud) DeleteInstructor(name string) error {
 	return nil
 }
 
-func (ac *AdminstrationCloud) GetInstructorWithName(name string) (*models.InstructorDetails, error) {
+func (ac *AdministrationCloud) GetInstructorWithName(name string) (*models.InstructorDetails, error) {
 
 	var is models.InstructorDetails
 	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where("instructor_name = ?", name).Find(&is).Error
@@ -86,7 +86,7 @@ func (ac *AdminstrationCloud) GetInstructorWithName(name string) (*models.Instru
 	return &is, nil
 }
 
-func (ac *AdminstrationCloud) GetInstructorWithSpecifics(condition models.InstructorDetails) ([]*models.InstructorDetails, error) {
+func (ac *AdministrationCloud) GetInstructorWithSpecifics(condition models.InstructorDetails) ([]*models.InstructorDetails, error) {
 
 	var is []*models.InstructorDetails
 	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where(condition).Find(&is).Error
@@ -96,7 +96,7 @@ func (ac *AdminstrationCloud) GetInstructorWithSpecifics(condition models.Instru
 	return is, nil
 }
 
-func (ac *AdminstrationCloud) UpdateInstructor(req_id *models.InstructorDetails, condition *models.InstructorDetails) error {
+func (ac *AdministrationCloud) UpdateInstructor(req_id *models.InstructorDetails, condition *models.InstructorDetails) error {
 
 	q := ac.dbConn.Model(models.InstructorDetails{}).Where(condition).Updates(req_id)
 	if q.Error != nil {
@@ -105,7 +105,7 @@ func (ac *AdminstrationCloud) UpdateInstructor(req_id *models.InstructorDetails,
 	return nil
 }
 
-func (ac *AdminstrationCloud) UpdateInstructorInfo(req_id *models.InstructorDetails, condition *models.InstructorDetails) error {
+func (ac *AdministrationCloud) UpdateInstructorInfo(req_id *models.InstructorDetails, condition *models.InstructorDetails) error {
 	q := ac.dbConn.Model(models.InstructorDetails{}).Where(condition).Update("info", req_id.Info)
 	if q.Error != nil {
 		return q.Error
@@ -113,7 +113,7 @@ func (ac *AdminstrationCloud) UpdateInstructorInfo(req_id *models.InstructorDeta
 	return nil
 }
 
-func (ac *AdminstrationCloud) RetieveInstructorDetailsWithCondition(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
+func (ac *AdministrationCloud) RetieveInstructorDetailsWithCondition(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
 	var list []*models.InstructorDetails
 	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where(req).Find(&list).Error
 	if err != nil {
@@ -122,7 +122,7 @@ func (ac *AdminstrationCloud) RetieveInstructorDetailsWithCondition(req models.I
 	return list, nil
 }
 
-func (ac *AdminstrationCloud) DeleteInstructorWithConditions(id *models.InstructorDetails) error {
+func (ac *AdministrationCloud) DeleteInstructorWithConditions(id *models.InstructorDetails) error {
 
 	err := ac.dbConn.Where(id).Delete(&models.InstructorDetails{}).Error
 	if err != nil {
