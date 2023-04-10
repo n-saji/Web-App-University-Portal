@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdministrationCloud) InsertValuesToCollegeAdminstration(ca *models.StudentInfo) error {
+func (ac *AdministrationCloud) InsertValuesToCollegeAdministration(ca *models.StudentInfo) error {
 
 	err := ac.dbConn.Table("student_infos").Create(ca).Error
 	if err != nil {
@@ -51,7 +51,7 @@ func (ac *AdministrationCloud) RetrieveCollegeAdministration() ([]*models.Studen
 
 }
 
-func (ac *AdministrationCloud) RetieveCollegeAdminstrationByOrder(order_by string) ([]*models.StudentInfo, error) {
+func (ac *AdministrationCloud) RetrieveCollegeAdministrationByOrder(order_by string) ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 	if order_by == "roll_number" || order_by == "age" || order_by == "name" {
