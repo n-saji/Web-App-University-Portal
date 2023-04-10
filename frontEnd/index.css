@@ -6,15 +6,25 @@ body {
   color: white;
   font-family: "Courier New", Courier, monospace;
 }
+.usr_pass_heading {
+  margin-right: 50px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 27px;
+  margin-top: 7px;
+  margin-bottom: 0%;
+}
 .input_usr_pass {
   border-radius: 5px;
   width: 250px;
-  border: 2px solid rebeccapurple;
+  border: 2px solid grey;
   font-size: large;
-  height: 30px;
-  /* margin-top: 20px; */
+  height: 35px;
+  outline: none;
+  transition: 0.5s;
 }
-
+.input_usr_pass:focus{
+border: 2px solid black;
+}
 .div1 {
   margin-top: 100px;
   margin-left: 33%;
@@ -71,12 +81,6 @@ body {
 .login_button:hover {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
-.usr_pass_heading {
-  margin-right: 50px;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  font-size: 27px;
-  margin-top: 0%;
-}
 #tempfix {
   font-size: 25px;
   color: rgb(255, 0, 68);
@@ -96,5 +100,3 @@ body {
     opacity: 1;
   }
 }
-
-
