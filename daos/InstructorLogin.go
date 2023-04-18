@@ -15,7 +15,7 @@ func (ac *AdministrationCloud) CheckIDPresent(id uuid.UUID) error {
 		return err
 	}
 	if id_exits != "" {
-		return fmt.Errorf("you have already created ")
+		return fmt.Errorf("you have already created, please log out ")
 	}
 	return nil
 }
