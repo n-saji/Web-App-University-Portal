@@ -98,6 +98,7 @@ html {
 
 .when_submited {
   cursor: not-allowed;
+  /* background-color: green; */
 }
 
 .redirect_to_login {
