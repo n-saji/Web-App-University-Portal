@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"CollegeAdministration/models"
 	"fmt"
 	"net/http"
 
@@ -123,4 +124,30 @@ func (h *Handler) CheckTokenStatus(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, "verified")
+}
+
+func (h *Handler) UpdateInstructorCredentials(ctx *gin.Context) {
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
+			return
+		}
+	}
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+	var IL *models.InstructorLogin
+	ctx.BindJSON(&IL)
+	err := h.service.UpdateInstructorCredentials(IL)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.JSON(http.StatusOK, "SUCCESS")
 }
