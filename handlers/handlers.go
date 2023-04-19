@@ -36,7 +36,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.PATCH("/update-instructor", h.UpdateInstructor)
 	rc.DELETE("/delete-instructor", h.DeleteInstructorWithConditions)
 	rc.GET("get-instructor-name-by-id/:id", h.GetInstructorNameWithId)
+	rc.GET("/view-profile-instructor/:id", h.ViewProfile)
 
+	//Authentication
 	rc.GET("/check-token-status", h.CheckTokenStatus)
 
 	rc.GET("/ping", func(c *gin.Context) {
