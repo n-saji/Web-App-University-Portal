@@ -57,7 +57,7 @@ func (ac *AdministrationCloud) GetAllInstructorOrderByCondition(order_clause str
 	return id, nil
 }
 
-func (ac AdministrationCloud) GetInstructorDetail(id_exits *models.InstructorDetails) (*models.InstructorDetails, error) {
+func (ac AdministrationCloud) GetInstructor(id_exits *models.InstructorDetails) (*models.InstructorDetails, error) {
 	var id models.InstructorDetails
 	err := ac.dbConn.Where(&id_exits).Find(&id).Error
 	if err != nil {
