@@ -40,7 +40,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 	//Authentication
 	rc.GET("/check-token-status", h.CheckTokenStatus)
-
+	rc.PUT("/update-instructor-credentials", h.UpdateInstructorCredentials)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
@@ -59,4 +59,5 @@ make buttons as icon using heroicons
 Features -
 re-organize the structure
 MAke UI changes for each instructor by redirecting to list of students under each instructor (add a new button)
+Add View PROFILE FOR INSTRUCTORS
 */
