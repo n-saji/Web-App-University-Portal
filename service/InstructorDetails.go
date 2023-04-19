@@ -314,7 +314,29 @@ func (s *Service) UpdateInstructorCredentials(cred *models.InstructorLogin) erro
 
 	var crypted_password []byte
 	var err1 error
+
+	if cred.EmailId == "" {
+		existing_credentials, err := s.daos.FetchCredentialsUsingID(cred.Id)
+		if err != nil {
+			return err
+		}
+		cred.EmailId = existing_credentials.EmailId
+	} else {
+		err2 := s.ValidateEmail(cred.EmailId)
+		if err2 != nil {
+			return err2
+		}
+		err := s.CheckEmailExist(cred.EmailId)
+		if err != nil {
+			return err
+		}
+	}
+
 	if cred.Password != "" {
+		err2 := s.ValidatePassword(cred.Password)
+		if err2 != nil {
+			return err2
+		}
 		crypted_password, err1 = bcrypt.GenerateFromPassword([]byte(cred.Password), 10)
 		if err1 != nil {
 			return err1
@@ -326,14 +348,6 @@ func (s *Service) UpdateInstructorCredentials(cred *models.InstructorLogin) erro
 			return err
 		}
 		cred.Password = existing_credentials.Password
-	}
-
-	if cred.EmailId == "" {
-		existing_credentials, err := s.daos.FetchCredentialsUsingID(cred.Id)
-		if err != nil {
-			return err
-		}
-		cred.EmailId = existing_credentials.EmailId
 	}
 
 	err := s.daos.UpdateCredentials(cred)
