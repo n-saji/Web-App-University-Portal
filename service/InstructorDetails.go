@@ -302,7 +302,7 @@ func (s *Service) ViewinstructorProfile(i_id string) (*models.InstructorProfile,
 	fmt.Println(credentials)
 	Profile.Name = instructor_detail.InstructorName
 	Profile.Department = instructor_detail.Department
-	Profile.CourseList = []string{}
+	Profile.CourseList = instructor_detail.CourseName
 	Profile.Credentials = models.InstructorLogin{Id: credentials.Id,
 		EmailId:  credentials.EmailId,
 		Password: credentials.Password}

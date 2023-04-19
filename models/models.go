@@ -102,7 +102,7 @@ type Account_Info struct {
 
 type InstructorProfile struct {
 	Name        string
-	CourseList  []string
+	CourseList  string //needs to be array of string in future
 	Department  string
 	Credentials InstructorLogin
 }
