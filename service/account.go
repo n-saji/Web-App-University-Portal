@@ -34,7 +34,7 @@ func (s *Service) AccountDetailsMigration() error {
 		account_dataset.Id = instructor_detail.Id
 		account_dataset.Name = instructor_detail.InstructorName
 
-		credentials, err := s.daos.FetchPasswordUsingID(instructor_detail.Id)
+		credentials, err := s.daos.FetchCredentialsUsingID(instructor_detail.Id)
 		if err != nil {
 			err_statement := "Failed getting credentials" + err.Error()
 			return fmt.Errorf(err_statement)

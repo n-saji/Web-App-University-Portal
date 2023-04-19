@@ -295,10 +295,64 @@ func (s *Service) ViewinstructorProfile(i_id string) (*models.InstructorProfile,
 	if err != nil {
 		return nil, err
 	}
+	credentials, err1 := s.daos.FetchCredentialsUsingID(i_id_parsed)
+	if err1 != nil {
+		return nil, err1
+	}
+	fmt.Println(credentials)
 	Profile.Name = instructor_detail.InstructorName
 	Profile.Department = instructor_detail.Department
-	Profile.CourseList = []string{}
-	Profile.Credentials = models.InstructorLogin{}
+	Profile.CourseList = instructor_detail.CourseName
+	Profile.Credentials = models.InstructorLogin{Id: credentials.Id,
+		EmailId:  credentials.EmailId,
+		Password: credentials.Password}
 
 	return Profile, nil
+}
+
+func (s *Service) UpdateInstructorCredentials(cred *models.InstructorLogin) error {
+
+	var crypted_password []byte
+	var err1 error
+
+	if cred.EmailId == "" {
+		existing_credentials, err := s.daos.FetchCredentialsUsingID(cred.Id)
+		if err != nil {
+			return err
+		}
+		cred.EmailId = existing_credentials.EmailId
+	} else {
+		err2 := s.ValidateEmail(cred.EmailId)
+		if err2 != nil {
+			return err2
+		}
+		err := s.CheckEmailExist(cred.EmailId)
+		if err != nil {
+			return err
+		}
+	}
+
+	if cred.Password != "" {
+		err2 := s.ValidatePassword(cred.Password)
+		if err2 != nil {
+			return err2
+		}
+		crypted_password, err1 = bcrypt.GenerateFromPassword([]byte(cred.Password), 10)
+		if err1 != nil {
+			return err1
+		}
+		cred.Password = string(crypted_password)
+	} else {
+		existing_credentials, err := s.daos.FetchCredentialsUsingID(cred.Id)
+		if err != nil {
+			return err
+		}
+		cred.Password = existing_credentials.Password
+	}
+
+	err := s.daos.UpdateCredentials(cred)
+	if err != nil {
+		return err
+	}
+	return nil
 }
