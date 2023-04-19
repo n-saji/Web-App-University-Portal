@@ -41,7 +41,7 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	id, response := h.service.InsertInstructorDetails(insd)
+	id, response := h.service.InsertInstructor(insd)
 	if response != nil {
 		reply.Err = response.Error()
 		ctx.JSON(http.StatusInternalServerError, &reply)
@@ -245,4 +245,30 @@ func (h *Handler) GetInstructorNameWithId(ctx *gin.Context) {
 		return
 	}
 	ctx.IndentedJSON(http.StatusOK, i_details)
+}
+
+func (h *Handler)ViewProfile(ctx *gin.Context){
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
+			return
+		}
+	}
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+	params := ctx.Params
+	instructor_id := params.ByName("id")
+	instructor_profile , err := h.service.ViewinstructorProfile(instructor_id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusOK, instructor_profile)
 }

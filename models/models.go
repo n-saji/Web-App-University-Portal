@@ -98,5 +98,11 @@ func (j *Instructor_Info) Scan(value interface{}) error {
 
 type Account_Info struct {
 	Credentials InstructorLogin `json:"credentials"`
+}
 
+type InstructorProfile struct {
+	Name        string
+	CourseList  []string
+	Department  string
+	Credentials InstructorLogin
 }
