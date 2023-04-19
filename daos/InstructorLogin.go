@@ -147,3 +147,13 @@ func (ac *AdministrationCloud) FetchCredentialsUsingID(id uuid.UUID) (*models.In
 // 	}
 // 	return credentials, nil
 // }
+
+func (ac *AdministrationCloud) UpdateCredentials(cred *models.InstructorLogin) error {
+
+	err := ac.dbConn.Save(&cred).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

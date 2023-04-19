@@ -40,7 +40,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 
 	//Authentication
 	rc.GET("/check-token-status", h.CheckTokenStatus)
-
+	rc.PUT("/update-instructor-credentials", h.UpdateInstructorCredentials)
 	rc.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",

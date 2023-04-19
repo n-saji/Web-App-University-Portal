@@ -309,3 +309,36 @@ func (s *Service) ViewinstructorProfile(i_id string) (*models.InstructorProfile,
 
 	return Profile, nil
 }
+
+func (s *Service) UpdateInstructorCredentials(cred *models.InstructorLogin) error {
+
+	var crypted_password []byte
+	var err1 error
+	if cred.Password != "" {
+		crypted_password, err1 = bcrypt.GenerateFromPassword([]byte(cred.Password), 10)
+		if err1 != nil {
+			return err1
+		}
+		cred.Password = string(crypted_password)
+	} else {
+		existing_credentials, err := s.daos.FetchCredentialsUsingID(cred.Id)
+		if err != nil {
+			return err
+		}
+		cred.Password = existing_credentials.Password
+	}
+
+	if cred.EmailId == "" {
+		existing_credentials, err := s.daos.FetchCredentialsUsingID(cred.Id)
+		if err != nil {
+			return err
+		}
+		cred.EmailId = existing_credentials.EmailId
+	}
+
+	err := s.daos.UpdateCredentials(cred)
+	if err != nil {
+		return err
+	}
+	return nil
+}
