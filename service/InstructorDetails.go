@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.UUID, error) {
+func (ac *Service) InsertInstructor(iid *models.InstructorDetails) (uuid.UUID, error) {
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
 		return uuid.Nil, fmt.Errorf("course not available")
