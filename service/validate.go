@@ -22,6 +22,23 @@ func (ac *Service) ValidateLogin(email, password string) error {
 	}
 	return nil
 }
+
+func (s *Service) ValidateEmail(email string) error {
+	ok, _ := regexp.MatchString("@gmail.com", email)
+	if !ok || len(email) < 11 {
+		return fmt.Errorf("wrong email format")
+	}
+	return nil
+}
+func (s *Service) ValidatePassword(password string) error {
+
+	if password == "" {
+		return fmt.Errorf("password cant be empty ")
+	} else if len(password) < 8 {
+		return fmt.Errorf("password length insufficient")
+	}
+	return nil
+}
 func (ac *Service) CheckEmailExist(email string) error {
 	ok, err := ac.daos.CheckForEmail(email)
 	if err != nil {
