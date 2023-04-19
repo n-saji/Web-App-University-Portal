@@ -295,10 +295,17 @@ func (s *Service) ViewinstructorProfile(i_id string) (*models.InstructorProfile,
 	if err != nil {
 		return nil, err
 	}
+	credentials, err1 := s.daos.FetchCredentialsUsingID(i_id_parsed)
+	if err1 != nil {
+		return nil, err1
+	}
+	fmt.Println(credentials)
 	Profile.Name = instructor_detail.InstructorName
 	Profile.Department = instructor_detail.Department
 	Profile.CourseList = []string{}
-	Profile.Credentials = models.InstructorLogin{}
+	Profile.Credentials = models.InstructorLogin{Id: credentials.Id,
+		EmailId:  credentials.EmailId,
+		Password: credentials.Password}
 
 	return Profile, nil
 }
