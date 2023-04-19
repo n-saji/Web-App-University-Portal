@@ -44,9 +44,9 @@ type InstructorDetails struct {
 }
 
 type InstructorLogin struct {
-	Id       uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
-	EmailId  string
-	Password string
+	Id       uuid.UUID `gorm:"primary_key;unique;type:uuid" json:"id"`
+	EmailId  string    `json:"email_id"`
+	Password string    `json:"password"`
 }
 
 type Token_generator struct {
