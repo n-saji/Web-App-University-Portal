@@ -2,20 +2,28 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"errors"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (ac *Service) InsertInstructorDetails(iid *models.InstructorDetails) (uuid.UUID, error) {
+func (ac *Service) InsertInstructor(iid *models.InstructorDetails) (uuid.UUID, error) {
+	if _, err := strconv.Atoi(iid.InstructorName); err == nil {
+		return uuid.Nil, errors.New("name can't be number")
+	}
+	if _, err := strconv.Atoi(iid.Department); err == nil {
+		return uuid.Nil, errors.New("departmment can't be number")
+	}
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
 		return uuid.Nil, fmt.Errorf("course not available")
 	}
 	iid.CourseId = cn.Id
-	cd_exist, _ := ac.daos.GetInstructorDetail(iid)
+	cd_exist, _ := ac.daos.GetInstructor(iid)
 	if cd_exist.Id != uuid.Nil {
 		return uuid.Nil, fmt.Errorf("instructor exits")
 	}
@@ -99,7 +107,7 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password st
 	if err != nil {
 		return err
 	}
-	iid, err := ac.daos.GetInstructorDetail(&models.InstructorDetails{Id: id})
+	iid, err := ac.daos.GetInstructor(&models.InstructorDetails{Id: id})
 	if err != nil {
 		return err
 	}
@@ -270,9 +278,27 @@ func (s *Service) GetInstructorNamewithId(id string) (*models.InstructorDetails,
 		return nil, err1
 	}
 	iid.Id = id_uuid
-	i_details, err := s.daos.GetInstructorDetail(iid)
+	i_details, err := s.daos.GetInstructor(iid)
 	if err != nil {
 		return nil, err
 	}
 	return i_details, nil
+}
+
+func (s *Service) ViewinstructorProfile(i_id string) (*models.InstructorProfile, error) {
+	Profile := &models.InstructorProfile{}
+	i_id_parsed, err := uuid.Parse(i_id)
+	if err != nil {
+		return nil, err
+	}
+	instructor_detail, err := s.daos.GetInstructor(&models.InstructorDetails{Id: i_id_parsed})
+	if err != nil {
+		return nil, err
+	}
+	Profile.Name = instructor_detail.InstructorName
+	Profile.Department = instructor_detail.Department
+	Profile.CourseList = []string{}
+	Profile.Credentials = models.InstructorLogin{}
+
+	return Profile, nil
 }
