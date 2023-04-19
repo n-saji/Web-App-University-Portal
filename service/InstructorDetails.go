@@ -2,14 +2,22 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"errors"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func (ac *Service) InsertInstructor(iid *models.InstructorDetails) (uuid.UUID, error) {
+	if _, err := strconv.Atoi(iid.InstructorName); err == nil {
+		return uuid.Nil, errors.New("name can't be number")
+	}
+	if _, err := strconv.Atoi(iid.Department); err == nil {
+		return uuid.Nil, errors.New("departmment can't be number")
+	}
 	cn, err1 := ac.daos.GetCourseByName(iid.CourseName)
 	if err1 != nil {
 		return uuid.Nil, fmt.Errorf("course not available")
