@@ -9,6 +9,9 @@ function insertInstructor() {
 function setbackpage() {
   window.location.replace("index.html");
 }
+function setViewProfile() {
+  window.location.replace("viewProfile.html");
+}
 
 function setdashboard() {
   window.location.replace("dashboard.html");

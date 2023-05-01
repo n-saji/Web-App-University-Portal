@@ -11,7 +11,7 @@
 
       <div class="dropdown_1" id="dropdown_1">
         <button class="add_button" id="add_button">Add</button>
-        <div class="dropdown_content">
+        <div class="dropdown_content_1">
           <button id="add_course" onclick="insertCourse()">Add Course</button>
           <button id="add_student" onclick="insertStudent()">
             Add Student
@@ -26,13 +26,22 @@
 
       <div class="dropdown" id="dropdown">
         <p class="instructor_name" id="instructor_name"></p>
-        <button
-          class="logout_headers"
-          id="logout_headers"
-          onclick="setbackpage()"
-        >
-          Log Out
-        </button>
+        <div class="dropdown_content">
+          <button
+            class="view_profile_headers"
+            id="view_profile_headers"
+            onclick="setViewProfile()"
+          >
+            View Profile
+          </button>
+          <button
+            class="logout_headers"
+            id="logout_headers"
+            onclick="setbackpage()"
+          >
+            Log Out
+          </button>
+        </div>
       </div>
     </div>
 

@@ -83,44 +83,49 @@ html {
   color: white;
   cursor: pointer;
 }
-#logout_headers {
+
+#dropdown {
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  margin-left: 89%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.471);
+  font-size: large;
+  width: max-content;
+}
+#instructor_name {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 14px;
+  color: white;
+  font-size: 35px;
+  height: inherit;
+}
+#dropdown:hover .dropdown_content {
+  transition: 0.4s;
+  display: block;
+}
+.dropdown_content {
+  /* margin-top: 15px; */
   display: none;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.471);
-  width: inherit;
+  width: 157px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-color: black;
   font-size: large;
   font-family: "Times New Roman", Times, serif;
-  margin-top: 8.5px;
   border-width: 2px;
 }
-
-#dropdown {
-  width: 200px;
-  text-align: center;
-  font-family: "Times New Roman", Times, serif;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-left: 366px;
+#logout_headers,
+#view_profile_headers {
+  width: 100%;
 }
 
-#dropdown:hover .logout_headers {
-  transition: 0.4s;
-  display: block;
-}
-#dropdown:hover .logout_headers:hover {
+/* #dropdown:hover .dropdown_content:hover {
   transition: 0.4s ease-in-out;
   background-color: lightcoral;
-}
-#instructor_name {
-  color: white;
-  font-size: 30px;
-  margin-top: 20px;
-  margin-bottom: 5px;
-  border-color: white;
-  border-radius: 5px;
-}
+} */
 
 .display_block {
   display: block;
@@ -135,10 +140,10 @@ html {
   height: 100%;
   font-size: large;
 }
-#dropdown_1:hover .dropdown_content {
+#dropdown_1:hover .dropdown_content_1 {
   display: block;
 }
-.dropdown_content {
+.dropdown_content_1 {
   display: none;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.471);
@@ -151,18 +156,18 @@ html {
 }
 #add_course:hover {
   background-color: black;
-  transition: border-color 1s ease; 
+  transition: border-color 1s ease;
   border-color: red;
 }
 #add_student:hover {
   background-color: black;
   border-color: red;
-  transition: border-color 1s ease; 
+  transition: border-color 1s ease;
 }
 #add_instructor:hover {
   background-color: black;
   border-color: red;
-  transition: border-color 1s ease; 
+  transition: border-color 1s ease;
 }
 .tab .main_headers {
   color: white;
