@@ -1,37 +1,3 @@
-function populateInstructors() {
-  window.location.replace("instructorDetails.html");
-}
-
-function insertInstructor() {
-  window.location.replace("createInstructor.html");
-}
-
-function setbackpage() {
-  window.location.replace("index.html");
-}
-function setViewProfile() {
-  window.location.replace("viewProfile.html");
-}
-
-function setdashboard() {
-  window.location.replace("dashboard.html");
-}
-function insertCourse() {
-  window.location.replace("createCourse.html");
-}
-
-function showCourse() {
-  window.location.replace("showCourse.html");
-}
-
-function insertStudent() {
-  window.location.replace("addStudent.html");
-}
-
-function showStudents() {
-  window.location.replace("showStudents.html");
-}
-
 async function getInstructorDetails() {
   let cookie_token = getCookie("token");
   let instructor_id = getCookie("account_id");
@@ -60,7 +26,6 @@ async function getInstructorDetails() {
 
   i_name.innerHTML = response.instructor_name;
 }
-
 function getCookie(name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(";");
@@ -95,3 +60,6 @@ async function checkTokenValidity() {
     return;
   }
 }
+function setdashboard() {
+    window.location.replace("dashboard.html");
+  }
