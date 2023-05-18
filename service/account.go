@@ -3,7 +3,6 @@ package service
 import (
 	"CollegeAdministration/models"
 	"fmt"
-	"log"
 )
 
 func (s *Service) AccountDetailsMigration() error {
@@ -50,7 +49,7 @@ func (s *Service) AccountDetailsMigration() error {
 	err1 := s.daos.AccountMigrationsUpdate(complete_account)
 	if err1 != nil {
 		err_statement := "Failed migration" + err1.Error()
-		log.Println(err_statement)
+
 		return fmt.Errorf(err_statement)
 	}
 	return nil
