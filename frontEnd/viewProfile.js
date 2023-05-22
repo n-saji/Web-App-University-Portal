@@ -25,6 +25,7 @@ async function getInstructorDetails() {
   let i_name = document.getElementById("instructor_name");
 
   i_name.innerHTML = response.instructor_name;
+  autofil(instructor_id);
 }
 function getCookie(name) {
   var nameEQ = name + "=";
@@ -61,5 +62,36 @@ async function checkTokenValidity() {
   }
 }
 function setdashboard() {
-    window.location.replace("dashboard.html");
+  window.location.replace("dashboard.html");
+}
+
+async function autofil(id_instructor) {
+  let api_url = "";
+  let url = `http://localhost:5050/view-profile-instructor/${id_instructor}`;
+  let cookie_token = getCookie("token");
+  let api_response = await fetch(url, {
+    method: "GET",
+    headers: { Token: cookie_token },
+  }).catch((err) => {
+    api_url = err;
+  });
+  if (api_url != "") {
+    alert("Internal Server Error Please Login Again" + api_url);
+    return "";
   }
+  let response = await api_response.json();
+  if (response == "token expired! Generate new token") {
+    alert("Timed-out re login");
+    window.location.replace("index.html");
+    return;
+  }
+  console.log(response);
+  let name_input = document.getElementById("name_input");
+  name_input.value = response.Name;
+  let email_input = document.getElementById("email_input");
+  email_input.value = response.Credentials.email_id;
+  let password_input = document.getElementById("password_input");
+  password_input.value = response.Credentials.password.slice(0, 9);
+  let code_input = document.getElementById("code_input");
+  code_input.value = response.Code;
+}
