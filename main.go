@@ -58,7 +58,7 @@ func toRunGooseMigration(url string) {
 		log.Println("Setting Goose Postgres Dialect Failed")
 		panic(err)
 	}
-	if err := goose.Up(db, "migrations"); err != nil {
+	if err := goose.Up(db, "migrations", goose.WithAllowMissing()); err != nil {
 		log.Println("Goose Up Failed")
 		panic(err)
 	}
