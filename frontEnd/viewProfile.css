@@ -68,7 +68,7 @@ html {
   text-align: center;
 }
 .name_row,
-.age_row,
+.code_row,
 .email_row,
 .password_row {
   margin-top: 25px;
@@ -80,20 +80,20 @@ html {
   margin-left: 25%;
 }
 .name_row h2,
-.age_row h2,
+.code_row h2,
 .email_row h2,
 .password_row h2 {
   margin-top: 0%;
 }
 .name_row input,
-.age_row input,
+.code_row input,
 .email_row input,
 .password_row input {
   width: 200px;
   height: 22px;
 }
 .name_row button,
-.age_row button,
+.code_row button,
 .email_row button,
 .password_row button {
   /* padding-top: 10px; */

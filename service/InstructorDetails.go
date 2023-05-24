@@ -299,7 +299,7 @@ func (s *Service) ViewinstructorProfile(i_id string) (*models.InstructorProfile,
 	if err1 != nil {
 		return nil, err1
 	}
-	fmt.Println(credentials)
+	Profile.Code = instructor_detail.InstructorCode
 	Profile.Name = instructor_detail.InstructorName
 	Profile.Department = instructor_detail.Department
 	Profile.CourseList = instructor_detail.CourseName
