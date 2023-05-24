@@ -104,5 +104,6 @@ type InstructorProfile struct {
 	Name        string
 	CourseList  string //needs to be array of string in future
 	Department  string
+	Code        string
 	Credentials InstructorLogin
 }
