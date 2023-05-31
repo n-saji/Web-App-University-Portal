@@ -48,13 +48,12 @@ html {
 .body_content {
   display: block;
 }
-.level_two,
+
 .level_one {
   display: flex;
 }
 .basic_information,
-.account_information,
-.course_information {
+.account_information {
   border-width: 2px;
   border-radius: 2px;
   border-color: black;
@@ -63,8 +62,7 @@ html {
   /* height: 50%; */
 }
 .basic_information h1,
-.account_information h1,
-.course_information h1 {
+.account_information h1 {
   text-align: center;
 }
 .name_row,
@@ -96,17 +94,45 @@ html {
 .code_row button,
 .email_row button,
 .password_row button {
-  /* padding-top: 10px; */
   height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  width: 70px;
+}
+.name_row button:hover,
+.code_row button:hover,
+.email_row button:hover,
+.password_row button:hover {
+  background-color: rgb(28, 240, 24);
 }
 .course_information_headers {
   display: flex;
-  justify-content: space-around;
-  padding-left: 220px;
+  margin-left: 46%;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  /* justify-content: space-evenly; */
+  /* padding-left: 220px; */
+}
+.course_information_headers h1 {
+  width: 400px;
+  justify-content: center;
+  display: contents;
 }
 .course_information_headers button {
   height: 35px;
-  margin-top: 25px;
+  margin-left: 73%;
+  border-radius: 5px;
+  cursor: pointer;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  width: 70px;
+}
+.course_information_headers button:hover {
+  background-color: rgb(28, 240, 24);
 }
 .courses_table_div {
   display: flex;
