@@ -97,14 +97,14 @@ async function autofil(id_instructor) {
 
 async function ToUpdateDetails(id_name, type) {
   let instructor_id = getCookie("account_id");
-  let api_url = "";
-  let url = `http://localhost:5050/update-instructor?instructor_id=${instructor_id}`;
   let cookie_token = getCookie("token");
 
   if (type == "name") {
     let req_name_id = document.getElementById(id_name);
     let req_name = req_name_id.value;
 
+    let api_url = "";
+    let url = `http://localhost:5050/update-instructor?instructor_id=${instructor_id}`;
     let api_response = await fetch(url, {
       method: "PATCH",
       headers: { Token: cookie_token },
@@ -131,12 +131,71 @@ async function ToUpdateDetails(id_name, type) {
   if (type == "code") {
     let req_id = document.getElementById(id_name);
     let req_value = req_id.value;
-
+    let api_url = "";
+    let url = `http://localhost:5050/update-instructor?instructor_id=${instructor_id}`;
     let api_response = await fetch(url, {
       method: "PATCH",
       headers: { Token: cookie_token },
       body: JSON.stringify({
         instructor_code: req_value,
+      }),
+    }).catch((err) => {
+      api_url = err;
+    });
+    if (api_url != "") {
+      alert("Internal Server Error Please Login Again" + api_url);
+      return "";
+    }
+    let response = await api_response.json();
+    if (response == "token expired! Generate new token") {
+      alert("Timed-out re login");
+      window.location.replace("index.html");
+      return;
+    }
+    if (api_response.status != 500) {
+      window.location.reload();
+    }
+  }
+  if (type == "email") {
+    let req_id = document.getElementById(id_name);
+    let req_value = req_id.value;
+    let api_url = "";
+    let url = `http://localhost:5050/update-instructor-credentials`;
+    let api_response = await fetch(url, {
+      method: "PUT",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        id: instructor_id,
+        email_id: req_value,
+      }),
+    }).catch((err) => {
+      api_url = err;
+    });
+    if (api_url != "") {
+      alert("Internal Server Error Please Login Again" + api_url);
+      return "";
+    }
+    let response = await api_response.json();
+    if (response == "token expired! Generate new token") {
+      alert("Timed-out re login");
+      window.location.replace("index.html");
+      return;
+    }
+    if (api_response.status != 500) {
+      window.location.reload();
+    }
+  }
+  if (type == "password") {
+    let req_id = document.getElementById(id_name);
+    let req_value = req_id.value;
+    let api_url = "";
+    let url = `http://localhost:5050/update-instructor-credentials`;
+    let api_response = await fetch(url, {
+      method: "PUT",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        id: instructor_id,
+        password: req_value,
       }),
     }).catch((err) => {
       api_url = err;
