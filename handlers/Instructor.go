@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type res struct {
@@ -177,7 +178,10 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 	if val1 := query_params("course_name"); val1 != "" {
 		cond.CourseName = val1
 	}
-	if cond.InstructorCode == "" && cond.InstructorName == "" && cond.CourseName == "" {
+	if val1 := query_params("instructor_id"); val1 != "" {
+		cond.Id = uuid.MustParse(val1)
+	}
+	if cond.InstructorCode == "" && cond.InstructorName == "" && cond.CourseName == "" && cond.Id == uuid.Nil {
 		ctx.JSON(http.StatusInternalServerError, "No query Params")
 		return
 	}
@@ -247,7 +251,7 @@ func (h *Handler) GetInstructorNameWithId(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, i_details)
 }
 
-func (h *Handler)ViewProfile(ctx *gin.Context){
+func (h *Handler) ViewProfile(ctx *gin.Context) {
 
 	token := ctx.GetHeader("Token")
 	var err1 error
@@ -265,7 +269,7 @@ func (h *Handler)ViewProfile(ctx *gin.Context){
 	}
 	params := ctx.Params
 	instructor_id := params.ByName("id")
-	instructor_profile , err := h.service.ViewinstructorProfile(instructor_id)
+	instructor_profile, err := h.service.ViewinstructorProfile(instructor_id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return

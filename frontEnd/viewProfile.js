@@ -85,7 +85,6 @@ async function autofil(id_instructor) {
     window.location.replace("index.html");
     return;
   }
-  console.log(response);
   let name_input = document.getElementById("name_input");
   name_input.value = response.Name;
   let email_input = document.getElementById("email_input");
@@ -94,4 +93,66 @@ async function autofil(id_instructor) {
   password_input.value = response.Credentials.password.slice(0, 9);
   let code_input = document.getElementById("code_input");
   code_input.value = response.Code;
+}
+
+async function ToUpdateDetails(id_name, type) {
+  let instructor_id = getCookie("account_id");
+  let api_url = "";
+  let url = `http://localhost:5050/update-instructor?instructor_id=${instructor_id}`;
+  let cookie_token = getCookie("token");
+
+  if (type == "name") {
+    let req_name_id = document.getElementById(id_name);
+    let req_name = req_name_id.value;
+
+    let api_response = await fetch(url, {
+      method: "PATCH",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        instructor_name: req_name,
+      }),
+    }).catch((err) => {
+      api_url = err;
+    });
+    if (api_url != "") {
+      alert("Internal Server Error Please Login Again" + api_url);
+      return "";
+    }
+    let response = await api_response.json();
+    if (response == "token expired! Generate new token") {
+      alert("Timed-out re login");
+      window.location.replace("index.html");
+      return;
+    }
+    if (api_response.status != 500) {
+      window.location.reload();
+    }
+  }
+  if (type == "code") {
+    let req_id = document.getElementById(id_name);
+    let req_value = req_id.value;
+
+    let api_response = await fetch(url, {
+      method: "PATCH",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        instructor_code: req_value,
+      }),
+    }).catch((err) => {
+      api_url = err;
+    });
+    if (api_url != "") {
+      alert("Internal Server Error Please Login Again" + api_url);
+      return "";
+    }
+    let response = await api_response.json();
+    if (response == "token expired! Generate new token") {
+      alert("Timed-out re login");
+      window.location.replace("index.html");
+      return;
+    }
+    if (api_response.status != 500) {
+      window.location.reload();
+    }
+  }
 }
