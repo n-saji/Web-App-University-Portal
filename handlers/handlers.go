@@ -31,7 +31,6 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/retrieve-instructors", h.RetrieveInstructorDetails)
 	rc.GET("/retrieve-instructors/:order_by", h.RetrieveInstructorDetailsByOrder)
 	rc.GET("/instructor-login-with-id/:instructorId/:emailId/:password", h.InstructorLoginCreation)
-	rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 	rc.DELETE("/delete-instructor/:name", h.DeleteInstructor)
 	rc.PATCH("/update-instructor", h.UpdateInstructor)
 	rc.DELETE("/delete-instructor", h.DeleteInstructorWithConditions)
@@ -46,6 +45,10 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 			"message": "pong",
 		})
 	})
+	rc.POST("/v1/login", h.login)
+
+	//Depreciated
+	// rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
 }
 
 /*
