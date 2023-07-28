@@ -52,9 +52,13 @@ async function toCheckValidity(emailId, password) {
 async function CheckValidity(username, password) {
   const emailId_warning = document.getElementById("tempfix");
   let error_while_fetching_api;
-  let response = await fetch(
-    `http://localhost:5050/instructor-login/${username}/${password}`
-  ).catch((err) => {
+  let response = await fetch(`http://localhost:5050/v1/login`, {
+    method: "POST",
+    body: JSON.stringify({
+      email_id: username,
+      password: password,
+    }),
+  }).catch((err) => {
     error_while_fetching_api = err;
   });
   if (error_while_fetching_api == "TypeError: Failed to fetch") {
@@ -100,7 +104,6 @@ function showPassword() {
     img_val.id = "hide_img";
     img_src.classList.add("hide_element");
     password_img.appendChild(img_val);
-
   } else {
     x.type = "password";
     if (hide_img != null) {
