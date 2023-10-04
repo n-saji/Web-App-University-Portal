@@ -4,6 +4,8 @@ import (
 	"CollegeAdministration/models"
 	"fmt"
 	"log"
+
+	"github.com/google/uuid"
 )
 
 func (ac *AdministrationCloud) InsertInstructorDetails(id *models.InstructorDetails) error {
@@ -125,6 +127,15 @@ func (ac *AdministrationCloud) RetieveInstructorDetailsWithCondition(req models.
 func (ac *AdministrationCloud) DeleteInstructorWithConditions(id *models.InstructorDetails) error {
 
 	err := ac.dbConn.Where(id).Delete(&models.InstructorDetails{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (ac *AdministrationCloud) DisableToken(token uuid.UUID) error {
+
+	err := ac.dbConn.Table("token_generators").Where("token = ?", token).Update("is_valid", "false").Error
 	if err != nil {
 		return err
 	}

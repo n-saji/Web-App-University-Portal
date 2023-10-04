@@ -141,3 +141,16 @@ func (s *Service) ValidateInstructorDetails(iid *models.InstructorDetails) (bool
 	}
 	return true, nil
 }
+
+func (s *Service) DisableToken(token string) error {
+
+	parsedToken, err := uuid.Parse(token)
+	if err != nil {
+		return fmt.Errorf("unable to invalidate token, err- %s",err)
+	}
+	err = s.daos.DisableToken(parsedToken)
+	if err != nil {
+		return fmt.Errorf("db error while invalidating token, err - %s",err)
+	}
+	return nil
+}

@@ -58,3 +58,14 @@ func (h *Handler) login(ctx *gin.Context) {
 
 	}
 }
+
+func (h *Handler) logout(ctx *gin.Context) {
+
+	token := ctx.Query("token")
+	err := h.service.DisableToken(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+}

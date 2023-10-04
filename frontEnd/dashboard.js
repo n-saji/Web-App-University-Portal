@@ -7,6 +7,7 @@ function insertInstructor() {
 }
 
 function setbackpage() {
+  fetch(`http://localhost:5050/logout?token=${getCookie("token")}`, {});
   window.location.replace("index.html");
 }
 function setViewProfile() {
