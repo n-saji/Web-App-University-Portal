@@ -6,7 +6,7 @@ function insertInstructor() {
   window.location.replace("createInstructor.html");
 }
 
-function setbackpage() {
+function logout() {
   fetch(`http://localhost:5050/logout?token=${getCookie("token")}`, {});
   window.location.replace("index.html");
 }
@@ -73,7 +73,7 @@ function getCookie(name) {
   return null;
 }
 getInstructorDetails();
-setInterval(checkTokenValidity, 300000);
+setInterval(checkTokenValidity, 60000);
 
 async function checkTokenValidity() {
   let api_error;
