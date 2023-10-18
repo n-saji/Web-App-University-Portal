@@ -151,3 +151,23 @@ func (h *Handler) UpdateInstructorCredentials(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, "SUCCESS")
 }
+
+func (h *Handler) CreateAccount(ctx *gin.Context) {
+
+	acc := &models.Account{}
+	err := ctx.BindJSON(&acc)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	newID := uuid.New()
+	acc.Id = newID
+	acc.Info.Credentials.Id = newID
+
+	err = h.service.CreateNewAccount(acc)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.JSON(http.StatusOK, "SUCCESS")
+}

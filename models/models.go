@@ -38,7 +38,7 @@ type InstructorDetails struct {
 	InstructorName  string          `json:"instructor_name"`
 	Department      string          `json:"department"`
 	CourseId        uuid.UUID       `json:"course_id"`
-	CourseName      string          `json:"course_name"`
+	CourseName      string          `json:"course_name" gorm:"-"`
 	ClassesEnrolled CourseInfo      `gorm:"foreignKey:course_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	Info            Instructor_Info `gorm:"type:jsonb;" json:"info"`
 }

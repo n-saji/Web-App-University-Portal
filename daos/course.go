@@ -32,9 +32,9 @@ func (ac *AdministrationCloud) GetCourseByName(name string) (models.CourseInfo, 
 func (ac *AdministrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, error) {
 
 	var ca models.CourseInfo
-	if id == uuid.Nil {
-		return ca, fmt.Errorf("UUID is NULL for course ID! Add new Course to ")
-	}
+	// if id == uuid.Nil {
+	// 	return ca, fmt.Errorf("UUID is NULL for course ID! Add new Course to ")
+	// }
 	val := ac.dbConn.Select("*").Table("course_infos").Where("id = ?", id).First(&ca)
 	if val.Error != nil {
 		log.Println("Not able to select from course_infos table ", val.Error)

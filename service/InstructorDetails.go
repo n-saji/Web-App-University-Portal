@@ -64,6 +64,11 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 
 	id, err := ac.daos.GetAllInstructor()
 	for _, eachId := range id {
+		course, err := ac.daos.GetCourseById(eachId.CourseId)
+		if err != nil {
+			return nil, err
+		}
+		eachId.CourseName = course.CourseName
 		eachId.ClassesEnrolled, _ = ac.daos.GetCourseByName(eachId.CourseName)
 	}
 	if err != nil {
@@ -103,7 +108,7 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password st
 	if err != nil {
 		return err
 	}
-	err = ac.daos.StoreCredentialsForInstructor(credentials)
+	err = ac.daos.CreateInstructorLogin(credentials)
 	if err != nil {
 		return err
 	}

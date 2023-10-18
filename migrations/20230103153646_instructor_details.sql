@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS instructor_details (
     instructor_name text null,
     department text null,
     course_id uuid null,
-    course_name text null,
     CONSTRAINT instructor_details_pkey PRIMARY KEY (id),
 	CONSTRAINT instructor_details_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course_infos(id)
 );

@@ -19,7 +19,7 @@ func (ac *AdministrationCloud) CheckIDPresent(id uuid.UUID) error {
 	}
 	return nil
 }
-func (ac *AdministrationCloud) StoreCredentialsForInstructor(il models.InstructorLogin) error {
+func (ac *AdministrationCloud) CreateInstructorLogin(il models.InstructorLogin) error {
 
 	err := ac.dbConn.Table("instructor_logins").Create(&il).Error
 
