@@ -57,7 +57,7 @@ body {
 .dropdown-course:hover,
 .dropdown-student:hover,
 .dropdown-instructor:hover {
-  background-color: rgba(136, 138, 0, 0.5);
+  background-color: rgb(63, 65, 0);
 }
 
 .home:hover,
@@ -107,5 +107,5 @@ body {
 }
 .dropdown-view-profile:hover,
 .dropdown-logout:hover {
-  background-color: rgba(136, 138, 0, 0.5);
+  background-color: rgb(63, 65, 0);
 }

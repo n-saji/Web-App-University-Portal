@@ -1,6 +1,3 @@
-function populateInstructors() {
-  window.location.replace("instructorDetails.html");
-}
 
 function insertInstructor() {
   window.location.replace("createInstructor.html");
@@ -14,9 +11,6 @@ function setViewProfile() {
   window.location.replace("viewProfile.html");
 }
 
-function setdashboard() {
-  window.location.replace("dashboard.html");
-}
 function insertCourse() {
   window.location.replace("createCourse.html");
 }
@@ -67,7 +61,6 @@ async function getInstructorDetails() {
   }
   let i_name = document.querySelector(".logged-user");
   i_name.innerHTML = response.instructor_name;
-  //   i_name.innerHTML = "Nikhil";
 }
 
 function getCookie(name) {
@@ -81,7 +74,7 @@ function getCookie(name) {
   return null;
 }
 getInstructorDetails();
-setInterval(checkTokenValidity, 60000);
+setInterval(checkTokenValidity, 90000);
 
 async function checkTokenValidity() {
   let api_error;
