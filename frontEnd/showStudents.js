@@ -3,7 +3,7 @@ function setbackpage() {
 }
 
 function setdashboard() {
-  window.location.replace("dashboard.html");
+  window.location.replace("dashboard-v2.html");
 }
 function getCookie(name) {
   var nameEQ = name + "=";

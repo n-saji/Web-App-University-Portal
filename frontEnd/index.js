@@ -19,7 +19,7 @@ async function validateCookie() {
   let jsonResponse = await response.json();
   console.log(jsonResponse);
   if (response.status != 500) {
-    window.location.replace("dashboard.html");
+    window.location.replace("dashboard-v2.html");
   }
 }
 
@@ -70,7 +70,7 @@ function disablefunction() {
 async function toCheckValidity(emailId, password) {
   let uuid = await CheckValidity(emailId, password);
   if (uuid != "") {
-    window.location.replace("dashboard.html");
+    window.location.replace("dashboard-v2.html");
   }
 }
 
@@ -136,4 +136,8 @@ function showPassword() {
     }
     img_src.classList.remove("hide_element");
   }
+}
+
+function signup() {
+  window.location.replace("signup.html");
 }

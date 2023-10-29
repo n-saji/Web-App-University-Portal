@@ -1,5 +1,5 @@
 function setdashboard() {
-  window.location.replace("dashboard.html");
+  window.location.replace("dashboard-v2.html");
 }
 function setaddcourse() {
   window.location.replace("createCourse.html");

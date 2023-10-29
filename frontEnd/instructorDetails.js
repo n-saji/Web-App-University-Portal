@@ -37,13 +37,13 @@ async function populateInstructors() {
 }
 populateInstructors();
 function setdashboard() {
-  window.location.replace("dashboard.html");
+  window.location.replace("dashboard-v2.html");
 }
 function setbackpage() {
   window.location.replace("createInstructor.html");
 }
 
-async function deleteInstructor(index, course_name_index) {
+async function deleteInstructor(index, course_name_index, department) {
   let index_name = document.getElementById(index);
   let cookie_token = getCookie("token");
   let deleteCourse = await fetch(`http://localhost:5050/delete-instructor`, {
@@ -193,7 +193,9 @@ async function populateInstructorsWithCondition(order) {
        <td id=${each_value.department.replace(" ", "") + i} >${
       each_value.department
     }</td>
-       <td id=${each_value.course_name[0] + i}>${each_value.course_name}</td>
+       <td id=${each_value.course_name[0] + i}>${
+      each_value.ClassesEnrolled.course_name
+    }</td>
        <td><button onclick=openForm("${each_value.instructor_code}",${i},${
       each_value.department.replace(" ", "") + i
     },${each_value.course_name[0] + i}) class="update_button">U</button></td>

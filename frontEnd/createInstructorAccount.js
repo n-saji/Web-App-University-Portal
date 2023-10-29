@@ -23,7 +23,7 @@ async function createEmail() {
   }
 }
 function setdashboard() {
-  window.location.replace("dashboard.html");
+  window.location.replace("dashboard-v2.html");
 }
 function setbackpage() {
   window.location.replace("index.html");

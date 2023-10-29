@@ -15,7 +15,7 @@ function setViewProfile() {
 }
 
 function setdashboard() {
-  window.location.replace("dashboard-v2.html");
+  window.location.replace("dashboard.html");
 }
 function insertCourse() {
   window.location.replace("createCourse.html");
@@ -29,8 +29,16 @@ function insertStudent() {
   window.location.replace("addStudent.html");
 }
 
-function showStudents() {
+function showCourse() {
+  window.location.replace("showCourse.html");
+}
+
+function showStudent() {
   window.location.replace("showStudents.html");
+}
+
+function showInstructor() {
+  window.location.replace("instructorDetails.html");
 }
 
 async function getInstructorDetails() {
@@ -57,9 +65,9 @@ async function getInstructorDetails() {
     setTimeout(window.location.replace("index.html"), 2000);
     return;
   }
-  let i_name = document.getElementById("instructor_name");
-
+  let i_name = document.querySelector(".logged-user");
   i_name.innerHTML = response.instructor_name;
+  //   i_name.innerHTML = "Nikhil";
 }
 
 function getCookie(name) {

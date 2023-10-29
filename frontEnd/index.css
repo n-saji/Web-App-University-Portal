@@ -22,8 +22,28 @@ body {
   outline: none;
   transition: 0.5s;
 }
-.input_usr_pass:focus{
-border: 2px solid black;
+.second_row {
+  display: flex;
+  justify-content: right;
+}
+.second_row_button {
+  margin-left: 40%;
+}
+.sign-up {
+  border-radius: 10px;
+  border-color: green;
+  padding: 5px;
+  margin-top: 13px;
+  background-color: yellowgreen;
+  cursor: pointer;
+  height: 40px;
+  width: 80px;
+  font-size: larger;
+  font-weight: bold;
+  font-family: monospace;
+}
+.input_usr_pass:focus {
+  border: 2px solid black;
 }
 .div1 {
   margin-top: 100px;
@@ -78,7 +98,7 @@ border: 2px solid black;
   font-weight: bold;
   font-family: monospace;
 }
-.login_button:hover {
+.login_button :hover {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 #tempfix {

@@ -5,58 +5,64 @@
     <link rel="stylesheet" href="index.css" />
     <script src="index.js"></script>
     <title>College Administration</title>
-    <body>
-      <h1 class="heading">Welcome to College Portal</h1>
+  </head>
+  <body>
+    <h1 class="heading">Welcome to College Portal</h1>
+    <div class="second_row">
+      <div class="second_row_heading">
+        <h2 class="heading">Please Login</h2>
+      </div>
+      <div class="second_row_button">
+        <button class="sign-up" id="sign-up" onclick="signup()">Sign Up</button>
+      </div>
+    </div>
 
-      <h2 class="heading">Please Login</h2>
-
-      <div class="div1">
-        <div class="line1">
-          <h3 class="usr_pass_heading">Email</h3>
+    <div class="div1">
+      <div class="line1">
+        <h3 class="usr_pass_heading">Email</h3>
+        <input
+          style="margin-right: 30px"
+          class="input_usr_pass"
+          type="email"
+          id="username"
+          onchange="removeError()"
+        />
+      </div>
+      <br />
+      <div class="line2">
+        <h3 class="usr_pass_heading">Password</h3>
+        <div class="password_div" id="password_div">
           <input
-            style="margin-right: 30px"
             class="input_usr_pass"
-            type="email"
-            id="username"
             onchange="removeError()"
+            type="password"
+            id="password"
           />
-        </div>
-        <br />
-        <div class="line2">
-          <h3 class="usr_pass_heading">Password</h3>
-          <div class="password_div" id="password_div">
-            <input
-              class="input_usr_pass"
-              onchange="removeError()"
-              type="password"
-              id="password"
+          <div class="password_img" id="password_img">
+            <img
+              class="image_for_show_password"
+              id="image_for_show_password"
+              src="/frontEnd/asset/eye.png"
+              alt="eye"
+              onclick="showPassword()"
             />
-            <div class="password_img" id="password_img">
-              <img
-                class="image_for_show_password"
-                id="image_for_show_password"
-                src="/frontEnd/asset/eye.png"
-                alt="eye"
-                onclick="showPassword()"
-              />
-            </div>
           </div>
         </div>
-        <br />
-        <div class="line3">
-          <button class="login_button" onclick="userlogin()" id="loginButton">
-            Login
-          </button>
-          <button
-            class="login_button"
-            onclick="forgotPassword()"
-            id="forgotButton"
-          >
-            Forgot
-          </button>
-        </div>
-        <p id="tempfix"></p>
       </div>
-    </body>
-  </head>
+      <br />
+      <div class="line3">
+        <button class="login_button" onclick="userlogin()" id="loginButton">
+          Login
+        </button>
+        <button
+          class="login_button"
+          onclick="forgotPassword()"
+          id="forgotButton"
+        >
+          Forgot
+        </button>
+      </div>
+      <p id="tempfix"></p>
+    </div>
+  </body>
 </html>

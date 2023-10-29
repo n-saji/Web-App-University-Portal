@@ -62,7 +62,7 @@ async function checkTokenValidity() {
   }
 }
 function setdashboard() {
-  window.location.replace("dashboard.html");
+  window.location.replace("dashboard-v2.html");
 }
 
 async function autofil(id_instructor) {
