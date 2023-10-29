@@ -1,0 +1,66 @@
+body {
+  background-color: rgb(71, 138, 0);
+}
+.headings-row {
+  text-align: center;
+  margin-top: 2%;
+}
+.heading-row-1 {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 35px;
+}
+.credentials {
+  text-align: center;
+  margin-top: 10%;
+}
+.form-email,
+.form-name,
+.form-password {
+  width: 250px;
+  border-radius: 4px;
+  height: 35px;
+  outline: none;
+  border-color: black;
+  transition: 0.15s;
+  background-color: lightgreen;
+  text-indent: 10px;
+  text-overflow: clip;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: large;
+  color: black;
+  letter-spacing: 0.5px;
+  margin: 20px;
+}
+.form-email:focus,
+.form-name:focus,
+.form-password:focus {
+  border: 3px solid green;
+}
+.next-button {
+  border-radius: 10px;
+  border-color: green;
+  padding: 5px;
+  margin-top: 13px;
+  background-color: yellowgreen;
+  cursor: pointer;
+  height: 40px;
+  width: 80px;
+  font-size: larger;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.error {
+  color: orange;
+  font-size: large;
+  letter-spacing: 1px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  animation: blinker 0.7s linear infinite;
+  
+}
+@keyframes blinker {
+  50% {
+    color: red;
+    opacity: 1;
+  }
+}

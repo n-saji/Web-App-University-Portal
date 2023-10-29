@@ -44,7 +44,7 @@ func (ac *AdministrationCloud) GetAllInstructorOrderByCondition(order_clause str
 
 	case "course_name":
 
-		q = q.Order("course_name ASC")
+		q = q.Order("course_id ASC")
 
 	default:
 

@@ -81,7 +81,7 @@ func (s *Service) GetInstructorDetailsWithConditions(order_clause string) ([]*mo
 
 	id, err := s.daos.GetAllInstructorOrderByCondition(order_clause)
 	for _, eachId := range id {
-		eachId.ClassesEnrolled, _ = s.daos.GetCourseByName(eachId.CourseName)
+		eachId.ClassesEnrolled, _ = s.daos.GetCourseById(eachId.CourseId)
 	}
 	if err != nil {
 		return nil, err
@@ -250,6 +250,7 @@ func (s *Service) DeleteInstructorWithConditions(id_condition *models.Instructor
 	if err != nil {
 		return err
 	}
+	fmt.Println(id_list)
 	for _, each_id := range id_list {
 		if each_id.Id == uuid.Nil {
 			return fmt.Errorf("instructor not found")
