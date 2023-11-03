@@ -26,40 +26,8 @@ async function getInstructorDetails() {
   i_name.innerHTML = response.instructor_name;
   autofil(instructor_id);
 }
-function getCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(";");
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == " ") c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
 getInstructorDetails();
-setInterval(checkTokenValidity, 300000);
 
-async function checkTokenValidity() {
-  let api_error;
-  let cookie_token = getCookie("token");
-  let api_response = await fetch(`http://localhost:5050/check-token-status`, {
-    method: "GET",
-    headers: { Token: cookie_token },
-  }).catch((err) => {
-    api_error = err;
-  });
-  if (api_error == "TypeError: Failed to fetch") {
-    alert("Internal Server Error Please Login Again");
-    window.location.replace("index.html");
-    return "";
-  }
-  let response = await api_response.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    window.location.replace("index.html");
-    return;
-  }
-}
 function setdashboard() {
   window.location.replace("dashboard-v2.html");
 }
@@ -215,49 +183,3 @@ async function ToUpdateDetails(id_name, type) {
   }
 }
 
-function insertInstructor() {
-  window.location.replace("createInstructor.html");
-}
-
-function logout() {
-  fetch(`http://localhost:5050/logout?token=${getCookie("token")}`, {});
-  window.location.replace("index.html");
-}
-function setViewProfile() {
-  window.location.replace("viewProfile.html");
-}
-
-function insertCourse() {
-  window.location.replace("createCourse.html");
-}
-
-function showCourse() {
-  window.location.replace("showCourse.html");
-}
-
-function insertStudent() {
-  window.location.replace("addStudent.html");
-}
-
-function showCourse() {
-  window.location.replace("showCourse.html");
-}
-
-function showStudent() {
-  window.location.replace("showStudents.html");
-}
-
-function showInstructor() {
-  window.location.replace("instructorDetails.html");
-}
-
-function getCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(";");
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == " ") c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
