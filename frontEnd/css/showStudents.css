@@ -1,17 +1,15 @@
 body,
 html {
-  /* height: 100%; */
-  margin: 0;
   background-color: rgb(71, 138, 0);
-  /* background-size: cover; */
-  overflow: hidden;
 }
 
 .body_content {
-  display: block;
-  max-height: 742px;
-  overflow-y: scroll;
+  overflow-y: hidden;
   border: 2px solid white;
+  position: absolute;
+  margin-top: 72px;
+  left: 0;
+  right: 0;
 }
 
 .student_table {

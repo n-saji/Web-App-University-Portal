@@ -1,19 +1,21 @@
 body,
 html {
-  /* height: 100%; */
-  margin: 0;
   background-color: rgb(71, 138, 0);
-  /* background-size: cover; */
 }
 
-
 .body_content {
-  display: block;
+  margin-top: 72;
+  position: absolute;
   border: 2px solid white;
+  left: 0;
+  right: 0;
+  overflow-y: hidden;
 }
 .course_table {
   width: 100%;
   border-collapse: collapse;
+}
+.course_table thead {
 }
 .course_table tr {
   height: 35px;

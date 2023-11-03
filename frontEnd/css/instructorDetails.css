@@ -1,17 +1,16 @@
 body,
 html {
-  /* height: 100%; */
-  margin: 0;
   background-color: rgb(71, 138, 0);
-  /* background-size: cover; */
-  /* overflow: hidden; */
 }
 
 .body_content {
   display: block;
   border: 2px solid white;
-  overflow-y: scroll;
-  /* max-height: 742px; */
+  overflow-y: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 72px;
 }
 
 .instructor_table {
