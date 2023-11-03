@@ -12,8 +12,9 @@ import (
 
 func (ac *Service) ValidateLogin(email, password string) error {
 
-	ok, _ := regexp.MatchString("@gmail.com", email)
-	if !ok || len(email) < 11 {
+	reg := regexp.MustCompile(`^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$`)
+	ok := reg.MatchString(email)
+	if !ok  {
 		return fmt.Errorf("wrong email format")
 	} else if password == ":password" {
 		return fmt.Errorf("password cant be empty ")
@@ -146,11 +147,11 @@ func (s *Service) DisableToken(token string) error {
 
 	parsedToken, err := uuid.Parse(token)
 	if err != nil {
-		return fmt.Errorf("unable to invalidate token, err- %s",err)
+		return fmt.Errorf("unable to invalidate token, err- %s", err)
 	}
 	err = s.daos.DisableToken(parsedToken)
 	if err != nil {
-		return fmt.Errorf("db error while invalidating token, err - %s",err)
+		return fmt.Errorf("db error while invalidating token, err - %s", err)
 	}
 	return nil
 }
