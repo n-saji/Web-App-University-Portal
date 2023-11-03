@@ -1,4 +1,3 @@
-
 function insertInstructor() {
   window.location.replace("createInstructor.html");
 }

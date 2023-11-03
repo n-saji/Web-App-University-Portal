@@ -22,8 +22,7 @@ async function getInstructorDetails() {
     setTimeout(window.location.replace("index.html"), 2000);
     return;
   }
-  let i_name = document.getElementById("instructor_name");
-
+  let i_name = document.querySelector(".logged-user");
   i_name.innerHTML = response.instructor_name;
   autofil(instructor_id);
 }
@@ -252,34 +251,6 @@ function showInstructor() {
   window.location.replace("instructorDetails.html");
 }
 
-async function getInstructorDetails() {
-  let cookie_token = getCookie("token");
-  let instructor_id = getCookie("account_id");
-  let api_error;
-  let getDetails = await fetch(
-    `http://localhost:5050/get-instructor-name-by-id/${instructor_id}`,
-    {
-      method: "GET",
-      headers: { Token: cookie_token },
-    }
-  ).catch((err) => {
-    api_error = err;
-  });
-  if (api_error == "TypeError: Failed to fetch") {
-    alert("Internal Server Error Please Login Again");
-    window.location.replace("index.html");
-    return "";
-  }
-  let response = await getDetails.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
-  let i_name = document.querySelector(".logged-user");
-  i_name.innerHTML = response.instructor_name;
-}
-
 function getCookie(name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(";");
@@ -290,4 +261,3 @@ function getCookie(name) {
   }
   return null;
 }
-getInstructorDetails();
