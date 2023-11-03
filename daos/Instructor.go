@@ -117,7 +117,7 @@ func (ac *AdministrationCloud) UpdateInstructorInfo(req_id *models.InstructorDet
 
 func (ac *AdministrationCloud) RetieveInstructorDetailsWithCondition(req models.InstructorDetails) ([]*models.InstructorDetails, error) {
 	var list []*models.InstructorDetails
-	err := ac.dbConn.Model(models.InstructorDetails{}).Select("*").Where(req).Find(&list).Error
+	err := ac.dbConn.Debug().Model(models.InstructorDetails{}).Select("*").Where(req).Find(&list).Error
 	if err != nil {
 		return nil, err
 	}

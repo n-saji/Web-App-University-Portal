@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -82,12 +81,17 @@ func (s *Service) CreateNewAccount(acc *models.Account) error {
 		log.Println("failed to create account")
 		return err
 	}
+	allCourses, err := s.RetrieveCA()
+	if err != nil || len(allCourses) == 0 {
+		log.Println("unable to get any courses")
+		return err
+	}
 	instructorDetails := &models.InstructorDetails{
 		Id:              acc.Id,
 		InstructorCode:  "-",
 		InstructorName:  acc.Name,
 		Department:      "Empty Department",
-		CourseId:        uuid.Nil,
+		CourseId:        allCourses[0].Id,
 		CourseName:      "Empty Course",
 		ClassesEnrolled: models.CourseInfo{},
 		Info:            models.Instructor_Info{},
