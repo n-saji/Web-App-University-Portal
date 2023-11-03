@@ -7,6 +7,24 @@ for (let index = 0; index < cookies.length; index++) {
   cookiesMap[cookie[0]] = cookie[1];
 }
 
+setTimeout(validateCookie, 1000);
+
+async function validateCookie() {
+  let response = await fetch(`http://localhost:5050/check-token-status`, {
+    method: "GET",
+    headers: {
+      Token: cookiesMap["token"],
+    },
+  });
+  console.log(response);
+  let jsonResponse = await response.json();
+  console.log(jsonResponse);
+  if (response.status != 500) {
+    window.location.replace("dashboard-v2.html");
+  }
+}
+
+
 function removeError() {
   let username_style = document.getElementById("username");
   username_style.classList.remove("error");

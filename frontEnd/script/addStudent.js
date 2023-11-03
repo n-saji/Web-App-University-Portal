@@ -1,4 +1,3 @@
-import { getCookie } from "./validate.js";
 function setdashboard() {
   window.location.replace("dashboard-v2.html");
 }
