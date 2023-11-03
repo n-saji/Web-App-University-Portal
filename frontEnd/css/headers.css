@@ -2,7 +2,10 @@
   background-color: black;
   display: flex;
   justify-content: space-between;
-  /* position: fixed; */
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
 }
 
 .tab-buttons {
@@ -70,10 +73,11 @@
   font-weight: bold;
 }
 .tab-logged-user {
-  max-width: 200px;
   cursor: pointer;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 .tab-logged-user:hover .logged-user-dropdown {
   display: block;
@@ -82,10 +86,9 @@
   color: white;
   font-size: 15px;
   text-align: center;
-  margin: 2cqmax;
   letter-spacing: 1px;
   position: relative;
-  width: 100px;
+  width: 150px;
 }
 .logged-user-dropdown {
   display: none;

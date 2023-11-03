@@ -1,15 +1,19 @@
 body,
 html {
-  /* height: 100%; */
-  margin: 0;
   background-color: rgb(71, 138, 0);
-  /* background-size: cover; */
+  overflow-y: hidden;
+}
+.body-content {
+  margin-top: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .fields {
   text-align: center;
   display: block;
-  margin-left: 30%;
-  margin-top: 100px;
 }
 .fields_1,
 .fields_2,
@@ -45,8 +49,7 @@ html {
 
 .inline_buttons {
   margin-top: 30px;
-  position: absolute;
-  left: 48%;
+  position: relative;
   display: inline-block;
 }
 .inline_buttons_css {
@@ -65,13 +68,12 @@ html {
   font-size: large;
 }
 #submitInstructor:hover {
-  background-color: blueviolet; /* Green */
+  background-color: blueviolet; 
   color: white;
 }
 
 .when_submited {
   cursor: not-allowed;
-  /* background-color: green; */
 }
 
 .redirect_to_login {
@@ -84,7 +86,7 @@ html {
   font-size: large;
 }
 .redirect_to_login:hover {
-  background-color: #0b7c0f; /* Green */
+  background-color: #0b7c0f; 
   color: white;
 }
 
