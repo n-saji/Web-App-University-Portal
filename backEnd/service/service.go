@@ -2,14 +2,16 @@ package service
 
 import (
 	"CollegeAdministration/daos"
+
+	"gorm.io/gorm"
 )
 
 type Service struct {
 	daos *daos.AdministrationCloud
 }
 
-func New(db *daos.AdministrationCloud) *Service {
+func New(dbConn *gorm.DB) *Service {
 	return &Service{
-		daos: db,
+		daos: daos.New(dbConn),
 	}
 }

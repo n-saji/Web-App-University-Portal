@@ -6,15 +6,16 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type Handler struct {
 	service *service.Service
 }
 
-func New(db *service.Service) *Handler {
+func New(dbConn *gorm.DB) *Handler {
 	return &Handler{
-		service: db,
+		service: service.New(dbConn),
 	}
 }
 

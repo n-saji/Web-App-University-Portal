@@ -2,9 +2,8 @@ package main
 
 import (
 	"CollegeAdministration/config"
-	"CollegeAdministration/daos"
 	"CollegeAdministration/handlers"
-	"CollegeAdministration/service"
+	"CollegeAdministration/jobs"
 	"database/sql"
 	"embed"
 	"log"
@@ -12,8 +11,6 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
 	"gopkg.in/robfig/cron.v2"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 //go:embed migrations/*.sql
@@ -22,23 +19,17 @@ var embedMigrations embed.FS
 func main() {
 
 	config.Init()
-	db, err := gorm.Open(postgres.Open(config.DB_URL), &gorm.Config{})
-	if err != nil {
-		log.Println("Found err while connecting to database", err)
-	}
-
+	db := config.DBInit()
 	toRunGooseMigration(config.DB_URL)
 
-	DaosConnection := daos.New(db)
-	ServiceConnection := service.New(DaosConnection)
-	handler_connection := handlers.New(ServiceConnection)
+	handlerConnection := handlers.New(db)
 
 	s := cron.New()
-	go s.AddFunc("@every 10m", ServiceConnection.RunDailyMigrations)
-	go ServiceConnection.AccountDetailsMigration()
+	go s.AddFunc("@every 10m", jobs.RunDailyMigrations)
+	go jobs.AccountDetailsMigration()
 	s.Start()
 
-	r := handler_connection.GetRouter()
+	r := handlerConnection.GetRouter()
 	main_err := r.Run(config.Port)
 	if main_err != nil {
 		log.Println("MAIN - ERROR ", main_err)
