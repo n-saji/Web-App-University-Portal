@@ -1,41 +1,12 @@
-async function getInstructorDetails() {
-  let cookie_token = getCookie("token");
-  let instructor_id = getCookie("account_id");
-  let api_error;
-  let getDetails = await fetch(
-    `http://localhost:5050/get-instructor-name-by-id/${instructor_id}`,
-    {
-      method: "GET",
-      headers: { Token: cookie_token },
-    }
-  ).catch((err) => {
-    api_error = err;
-  });
-  if (api_error == "TypeError: Failed to fetch") {
-    alert("Internal Server Error Please Login Again");
-    window.location.replace("index.html");
-    return "";
-  }
-  let response = await getDetails.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
-  let i_name = document.querySelector(".logged-user");
-  i_name.innerHTML = response.instructor_name;
-  autofil(instructor_id);
-}
-getInstructorDetails();
-
-function setdashboard() {
-  window.location.replace("dashboard-v2.html");
-}
-
-async function autofil(id_instructor) {
+let globalEmaild,
+  globalePassword = "";
+let api_response;
+let instrId = getCookie("account_id");
+let cookie_token = getCookie("token");
+async function autofil() {
   let api_url = "";
-  let url = `http://localhost:5050/view-profile-instructor/${id_instructor}`;
-  let cookie_token = getCookie("token");
+  let url = `http://localhost:5050/view-profile-instructor/${instrId}`;
+
   let api_response = await fetch(url, {
     method: "GET",
     headers: { Token: cookie_token },
@@ -46,140 +17,121 @@ async function autofil(id_instructor) {
     alert("Internal Server Error Please Login Again" + api_url);
     return "";
   }
+
+  let name_input = document.querySelector(".js-input-name");
+  let email_input = document.querySelector(".js-input-email");
+  let password_input = document.querySelector(".js-input-password");
+  let code_input = document.querySelector(".js-input-department");
+
   let response = await api_response.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    window.location.replace("index.html");
-    return;
-  }
-  let name_input = document.getElementById("name_input");
+
   name_input.value = response.Name;
-  let email_input = document.getElementById("email_input");
   email_input.value = response.Credentials.email_id;
-  let password_input = document.getElementById("password_input");
   password_input.value = response.Credentials.password.slice(0, 9);
-  let code_input = document.getElementById("code_input");
   code_input.value = response.Code;
+  globalEmaild = email_input.value;
+  globalePassword = password_input.value;
 }
 
-async function ToUpdateDetails(id_name, type) {
-  let instructor_id = getCookie("account_id");
-  let cookie_token = getCookie("token");
+autofil();
 
-  if (type == "name") {
-    let req_name_id = document.getElementById(id_name);
-    let req_name = req_name_id.value;
+async function ToUpdateDetails() {
+  let name_input = document.querySelector(".js-input-name");
+  let email_input = document.querySelector(".js-input-email");
+  let password_input = document.querySelector(".js-input-password");
+  let code_input = document.querySelector(".js-input-department");
 
-    let api_url = "";
-    let url = `http://localhost:5050/update-instructor?instructor_id=${instructor_id}`;
-    let api_response = await fetch(url, {
-      method: "PATCH",
-      headers: { Token: cookie_token },
-      body: JSON.stringify({
-        instructor_name: req_name,
-      }),
-    }).catch((err) => {
-      api_url = err;
-    });
-    if (api_url != "") {
-      alert("Internal Server Error Please Login Again" + api_url);
-      return "";
-    }
-    let response = await api_response.json();
-    if (response == "token expired! Generate new token") {
-      alert("Timed-out re login");
-      window.location.replace("index.html");
-      return;
-    }
-    if (api_response.status != 500) {
-      window.location.reload();
-    }
+  console.log(
+    email_input.value,
+    password_input.value,
+    globalEmaild,
+    globalePassword
+  );
+
+  let api_url = "";
+  let url = `http://localhost:5050/update-instructor?instructor_id=${instrId}`;
+  let api_response = await fetch(url, {
+    method: "PATCH",
+    headers: { Token: cookie_token },
+    body: JSON.stringify({
+      instructor_name: name_input.value,
+      instructor_code: code_input.value,
+    }),
+  }).catch((err) => {
+    api_url = err;
+  });
+  if (api_url != "") {
+    alert("Internal Server Error updating basic- " + api_url);
+    return "";
   }
-  if (type == "code") {
-    let req_id = document.getElementById(id_name);
-    let req_value = req_id.value;
-    let api_url = "";
-    let url = `http://localhost:5050/update-instructor?instructor_id=${instructor_id}`;
-    let api_response = await fetch(url, {
-      method: "PATCH",
-      headers: { Token: cookie_token },
-      body: JSON.stringify({
-        instructor_code: req_value,
-      }),
-    }).catch((err) => {
-      api_url = err;
-    });
-    if (api_url != "") {
-      alert("Internal Server Error Please Login Again" + api_url);
-      return "";
-    }
-    let response = await api_response.json();
-    if (response == "token expired! Generate new token") {
-      alert("Timed-out re login");
-      window.location.replace("index.html");
-      return;
-    }
-    if (api_response.status != 500) {
-      window.location.reload();
-    }
-  }
-  if (type == "email") {
-    let req_id = document.getElementById(id_name);
-    let req_value = req_id.value;
+
+  if (
+    globalEmaild !== email_input.value &&
+    globalePassword === password_input.value
+  ) {
     let api_url = "";
     let url = `http://localhost:5050/update-instructor-credentials`;
-    let api_response = await fetch(url, {
+    api_response = await fetch(url, {
       method: "PUT",
       headers: { Token: cookie_token },
       body: JSON.stringify({
-        id: instructor_id,
-        email_id: req_value,
+        id: instrId,
+        email_id: email_input.value,
       }),
     }).catch((err) => {
       api_url = err;
     });
     if (api_url != "") {
-      alert("Internal Server Error Please Login Again" + api_url);
+      alert("Internal Server Error updating email-" + api_url);
       return "";
     }
-    let response = await api_response.json();
-    if (response == "token expired! Generate new token") {
-      alert("Timed-out re login");
-      window.location.replace("index.html");
-      return;
-    }
-    if (api_response.status != 500) {
-      window.location.reload();
-    }
   }
-  if (type == "password") {
-    let req_id = document.getElementById(id_name);
-    let req_value = req_id.value;
+  if (
+    globalePassword !== password_input.value &&
+    globalEmaild === email_input.value
+  ) {
     let api_url = "";
     let url = `http://localhost:5050/update-instructor-credentials`;
-    let api_response = await fetch(url, {
+    api_response = await fetch(url, {
       method: "PUT",
       headers: { Token: cookie_token },
       body: JSON.stringify({
-        id: instructor_id,
-        password: req_value,
+        id: instrId,
+        password: password_input.value,
       }),
     }).catch((err) => {
       api_url = err;
     });
     if (api_url != "") {
-      alert("Internal Server Error Please Login Again" + api_url);
+      alert("Internal Server Error updating password-" + api_url);
       return "";
     }
-    let response = await api_response.json();
-    if (response == "token expired! Generate new token") {
-      alert("Timed-out re login");
-      window.location.replace("index.html");
-      return;
-    }
-    if (api_response.status != 500) {
-      window.location.reload();
+  }
+  if (
+    globalePassword !== password_input.value &&
+    globalEmaild !== email_input.value
+  ) {
+    let api_url = "";
+    let url = `http://localhost:5050/update-instructor-credentials`;
+    api_response = await fetch(url, {
+      method: "PUT",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        id: instrId,
+        password: password_input.value,
+        email_id: email_input.value,
+      }),
+    }).catch((err) => {
+      api_url = err;
+    });
+    if (api_url != "") {
+      alert("Internal Server Error updating both-" + api_url);
+      return "";
     }
   }
+  globalEmaild = email_input.value;
+  globalePassword = password_input.value;
+  if (api_response.status != 500) {
+    window.location.reload();
+  }
 }
-

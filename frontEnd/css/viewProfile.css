@@ -1,118 +1,80 @@
-
+html {
+  font-family: Arial;
+}
 .body_content {
-  display: block;
-}
-
-.level_one {
   display: flex;
+  position: absolute;
+  margin-top: 71px;
+  left: 0;
+  right: 0;
+  justify-content: center;
 }
-.basic_information,
-.account_information {
-  border-width: 2px;
-  border-radius: 2px;
-  border-color: black;
-  border-style: dotted;
+.partner-preview {
+  width: 100%;
+  /* background-color: #f0a400bd; */
+  position: fixed;
+  padding-top: 50px;
+}
+.basic-details,
+.credentials-details,
+.partner-buttons {
+  display: flex;
+  flex-direction: column;
   width: 50%;
-  /* height: 50%; */
+  align-items: center;
+  margin: 0 auto;
 }
-.basic_information h1,
-.account_information h1 {
-  text-align: center;
+.partner-buttons {
+  margin-top: 50px;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin-bottom: 25px;
 }
-.name_row,
-.code_row,
-.email_row,
-.password_row {
-  margin-top: 25px;
+.name,
+.department,
+.emailId,
+.password {
   display: flex;
   justify-content: space-between;
-  height: 40px;
-  margin-bottom: 25px;
-  width: 400px;
-  margin-left: 25%;
+  align-items: center;
+  width: 75%;
 }
-.name_row h2,
-.code_row h2,
-.email_row h2,
-.password_row h2 {
-  margin-top: 0%;
+.input-name {
+  font-weight: 700;
+  font-size: 1em;
 }
-.name_row input,
-.code_row input,
-.email_row input,
-.password_row input {
-  width: 200px;
-  height: 22px;
-}
-.name_row button,
-.code_row button,
-.email_row button,
-.password_row button {
-  height: 30px;
-  border-radius: 5px;
-  cursor: pointer;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  width: 70px;
-}
-.name_row button:hover,
-.code_row button:hover,
-.email_row button:hover,
-.password_row button:hover {
-  background-color: rgb(28, 240, 24);
-}
-.course_information_headers {
-  display: flex;
-  margin-left: 46%;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  /* justify-content: space-evenly; */
-  /* padding-left: 220px; */
-}
-.course_information_headers h1 {
-  width: 400px;
-  justify-content: center;
-  display: contents;
-}
-.course_information_headers button {
-  height: 35px;
-  margin-left: 73%;
-  border-radius: 5px;
-  cursor: pointer;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  width: 70px;
-}
-.course_information_headers button:hover {
-  background-color: rgb(28, 240, 24);
-}
-.courses_table_div {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-}
-.courses_table {
+.input-content {
   width: 300px;
-  border-radius: 2px;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  border-collapse: collapse;
+  height: 30px;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding-left: 15px;
+  outline: none;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
 }
-.courses_table th {
-  border-radius: 2px;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  border-collapse: collapse;
+.js-input-password{
+  font-size:x-large;
 }
-.courses_table td {
-  border-radius: 2px;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
-  border-collapse: collapse;
-  text-align: center;
+.input-content:focus {
+  border-color: rgb(124, 248, 0);
+}
+.update-button button,
+.reset-button button {
+  height: 30px;
+  width: 70px;
+  border-radius: 15px;
+  border: 1px solid black;
+  transition: all 0.2s;
+  background-color: #e45826;
+}
+.update-button button:hover,
+.reset-button button:hover {
+  box-shadow: 1px 1px 1px 1px;
+  cursor: pointer;
+}
+.update-button button:active,
+.reset-button button:active {
+  background-color: blanchedalmond;
 }
