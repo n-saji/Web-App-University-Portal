@@ -1,24 +1,24 @@
-
 .body_content {
-  overflow-y: hidden;
-  border: 2px solid white;
   position: absolute;
-  margin-top: 72px;
-  left: 0;
-  right: 0;
+  width: 100%;
+  top: 79px;
+  /* overflow-y: scroll; */
 }
-
 .student_table {
   width: 100%;
   border-collapse: collapse;
 }
 .table_headers {
-  border: 2px solid black;
-}
-.table_headers tr {
+  z-index: 10;
   position: sticky;
   top: 0;
-  border-spacing: 0px;
+}
+.table_headers tr {
+  width: 100%;
+  border: 2px solid black;
+}
+.t_body {
+  overflow-y: scroll;
 }
 th {
   height: 60px;
@@ -90,11 +90,11 @@ tr:hover td {
   border-width: 2px;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.1);
+  transform: translate(-50%, -90%) scale(0.1);
   text-align: center;
   visibility: hidden;
   transition: transform 0.4s, top 0.4s;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   height: 600px;
   overflow-y: scroll;
 }

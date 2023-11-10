@@ -1,6 +1,8 @@
 body {
   background-color: rgb(71, 138, 0);
   font-family: Arial;
+  margin: 0%;
+  padding: 0%;
 }
 
 .headers-tab {

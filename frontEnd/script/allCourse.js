@@ -15,7 +15,6 @@ fetch(url, {
         "Looks like there was a problem. Status Code: " + response.status
       );
       response.json().then(function (data) {
-        alert(data);
         setTimeout(window.location.replace("index.html"), 2000);
       });
       return;

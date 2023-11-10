@@ -59,32 +59,38 @@
     <div class="body_content">
       <table id="student_table" class="student_table">
         <thead class="table_headers">
-          <th>
-            <button onclick="populateInstructorsbyOrder('roll_number')">
-              Roll Number
-            </button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('name')">Name</button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('age')">Age</button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('course_name')">
-              Course Name
-            </button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('marks')">Marks</button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('grade')">Grade</button>
-          </th>
-          <th>Update</th>
-          <th>Delete</th>
+          <tr>
+            <th>
+              <button onclick="populateInstructorsbyOrder('roll_number')">
+                Roll Number
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('name')">Name</button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('age')">Age</button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('course_name')">
+                Course Name
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('marks')">
+                Marks
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('grade')">
+                Grade
+              </button>
+            </th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
         </thead>
-        <tbody id="t_body"></tbody>
+        <tbody class="t_body" id="t_body"></tbody>
       </table>
       <div class="popup" id="popup">
         <div class="popup_headers">
@@ -130,3 +136,10 @@
     <script src="script/allCourse.js"></script>
   </body>
 </html>
+<script>
+  // let headersTab = document.querySelector(".headers-tab");
+  // let body = document.querySelector(".body_content");
+  // console.log(body.offsetHeight, screen.height, headersTab.offsetHeight);
+  // let finalHeight = screen.height - headersTab.offsetHeight - 60 + "px";
+  // body.style.height = finalHeight;
+</script>

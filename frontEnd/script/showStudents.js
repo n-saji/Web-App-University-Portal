@@ -1,11 +1,10 @@
-function setbackpage() {
-  window.location.replace("addStudent.html");
+let globalOrder = localStorage.getItem("globalOrder");
+if (!globalOrder) {
+  globalOrder = "";
+  populateInstructors();
+} else {
+  populateInstructorsbyOrder(globalOrder);
 }
-
-function setdashboard() {
-  window.location.replace("dashboard-v2.html");
-}
-
 async function deleteStudent(index, course_name_index) {
   let cookie_token = getCookie("token");
   let deleteCourse = await fetch(`http://localhost:5050/delete-student`, {
@@ -36,11 +35,6 @@ async function populateInstructors() {
     }
   );
   let all_students_response = await all_students.json();
-  if (all_students_response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
   for (let i = 0; i < all_students_response.length; i++) {
     let each_value = all_students_response[i];
     let table_body = document.getElementById("t_body");
@@ -68,7 +62,6 @@ async function populateInstructors() {
     table_body.appendChild(tr);
   }
 }
-populateInstructors();
 
 function openPopUpByUpdate(roll_number, name, age, course_name, marks) {
   let popup = document.getElementById("popup");
@@ -135,11 +128,6 @@ async function updateStudent(
     }
   );
   let response = await updateStudent.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    window.location.replace("index.html");
-    return;
-  }
   if (updateStudent.status != 200) {
     err.classList.add("err_msg");
     err.innerHTML = response;
@@ -181,6 +169,7 @@ window.onkeydown = function (event) {
 };
 
 async function populateInstructorsbyOrder(order) {
+  localStorage.setItem("globalOrder", order);
   let cookie_token = getCookie("token");
   let all_students = await fetch(
     `http://localhost:5050/retrieve-college-administration?order=${order}`,
@@ -190,11 +179,6 @@ async function populateInstructorsbyOrder(order) {
     }
   );
   let all_students_response = await all_students.json();
-  if (all_students_response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
 
   let table_body = document.getElementById("t_body");
   table_body.innerText = "";
@@ -225,5 +209,3 @@ async function populateInstructorsbyOrder(order) {
     table_body.appendChild(tr);
   }
 }
-
-
