@@ -1,8 +1,7 @@
 .body_content {
   position: absolute;
   width: 100%;
-  top: 79px;
-  /* overflow-y: scroll; */
+  top: 78px;
 }
 .student_table {
   width: 100%;
@@ -11,7 +10,7 @@
 .table_headers {
   z-index: 10;
   position: sticky;
-  top: 0;
+  top: 78px;
 }
 .table_headers tr {
   width: 100%;

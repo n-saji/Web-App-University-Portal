@@ -53,11 +53,6 @@ async function getInstructorDetails() {
     return "";
   }
   let response = await getDetails.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
   let i_name = document.querySelector(".logged-user");
   i_name.innerHTML = response.instructor_name;
 }

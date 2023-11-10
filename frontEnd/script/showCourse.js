@@ -11,11 +11,6 @@ async function populateCourse() {
     headers: { token: cookie_token },
   });
   let all_course_response = await all_course.json();
-  if (all_course_response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
   for (let i = 0; i < all_course_response.length; i++) {
     let each_value = all_course_response[i];
     let table1 = document.getElementById("course_table");

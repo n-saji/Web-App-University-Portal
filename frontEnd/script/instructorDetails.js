@@ -8,11 +8,6 @@ async function populateInstructors() {
     }
   );
   let all_instructors_response = await all_instructors.json();
-  if (all_instructors_response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
   for (let i = 0; i < all_instructors_response.length; i++) {
     let each_value = all_instructors_response[i];
     let table_body = document.getElementById("table_body");
@@ -97,11 +92,6 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
     }),
   });
   let response = await updateInstructor.json();
-  if (response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
   if (!updateInstructor.ok) {
     let err = document.getElementById("error_msg");
     err.classList.add("err_msg");
@@ -164,11 +154,6 @@ async function populateInstructorsWithCondition(order) {
     }
   );
   let all_instructors_response = await all_instructors.json();
-  if (all_instructors_response == "token expired! Generate new token") {
-    alert("Timed-out re login");
-    setTimeout(window.location.replace("index.html"), 2000);
-    return;
-  }
 
   let table_body = document.getElementById("table_body");
   table_body.innerText = "";
