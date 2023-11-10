@@ -2,6 +2,9 @@ function insertInstructor() {
   window.location.replace("createInstructor.html");
 }
 
+function setdashboard() {
+  window.location.replace("dashboard-v2.html");
+}
 function logout() {
   fetch(`http://localhost:5050/logout?token=${getCookie("token")}`, {});
   window.location.replace("index.html");
