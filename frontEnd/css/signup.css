@@ -1,7 +1,30 @@
-
 .headings-row {
   text-align: center;
   margin-top: 2%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.heading-row-button {
+  margin-left: 2px;
+  display: flex;
+  align-items: center;
+}
+.heading-row-header {
+  display: block;
+  width: -webkit-fill-available;
+}
+.heading-row-button-1 {
+  height: 30px;
+  border-radius: 15px;
+  border-width: 4px;
+  border-color: cadetblue;
+  background-color: cornflowerblue;
+  border-style: solid;
+  width: 100px;
+  cursor: pointer;
+  font-size: larger;
+  font-weight: bold;
+  font-family: monospace;
 }
 .heading-row-1 {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
@@ -54,7 +77,6 @@
   letter-spacing: 1px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   animation: blinker 0.7s linear infinite;
-  
 }
 @keyframes blinker {
   50% {

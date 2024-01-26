@@ -7,7 +7,7 @@ async function createAccount() {
   console.log(next_button.innerHTML);
   if (next_button.innerHTML == "Login") {
     setTimeout(changeToLogin, 3000);
-    return
+    return;
   }
   if (!name || !email || !password) {
     alert("Empty fields!");
@@ -49,5 +49,9 @@ function removeElement() {
 }
 
 function changeToLogin() {
+  window.location.replace("index.html");
+}
+
+function setindex() {
   window.location.replace("index.html");
 }
