@@ -1,0 +1,120 @@
+
+.heading {
+  text-align: center;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.usr_pass_heading {
+  margin-right: 50px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 27px;
+  margin-top: 7px;
+  margin-bottom: 0%;
+}
+.input_usr_pass {
+  border-radius: 5px;
+  width: 250px;
+  border: 2px solid grey;
+  font-size: large;
+  height: 35px;
+  outline: none;
+  transition: 0.5s;
+}
+.second_row {
+  display: flex;
+  justify-content: right;
+}
+.second_row_button {
+  margin-left: 40%;
+}
+.sign-up {
+  border-radius: 10px;
+  border-color: green;
+  padding: 5px;
+  margin-top: 13px;
+  background-color: yellowgreen;
+  cursor: pointer;
+  height: 40px;
+  width: 80px;
+  font-size: larger;
+  font-weight: bold;
+  font-family: monospace;
+}
+.input_usr_pass:focus {
+  border: 2px solid black;
+}
+.div1 {
+  margin-top: 100px;
+  margin-left: 33%;
+  text-align: center;
+  width: 600px;
+  justify-content: space-between;
+}
+.line1 {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+}
+.line2 {
+  display: flex;
+  margin-top: 30px;
+  justify-content: space-between;
+}
+.password_div {
+  display: flex;
+}
+.image_for_show_password {
+  margin-top: 5px;
+  margin-left: 10px;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+.hide_element {
+  display: none;
+}
+.line3 {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.error {
+  border: 2px solid red;
+}
+
+.login_button {
+  border-radius: 10px;
+  border-color: green;
+  padding: 5px;
+  margin-top: 20px;
+  background-color: rgb(10, 219, 212);
+  cursor: pointer;
+  margin: 20px;
+  height: 40px;
+  width: 80px;
+  font-size: larger;
+  font-weight: bold;
+  font-family: monospace;
+}
+.login_button :hover {
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+#tempfix {
+  font-size: 25px;
+  color: rgb(255, 0, 68);
+  animation: blinker 0.5s linear infinite;
+  text-shadow: 20px;
+  margin: auto;
+  text-align: center;
+  width: 400px;
+  padding: 50px;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+@keyframes blinker {
+  50% {
+    color: yellow;
+    opacity: 1;
+  }
+}

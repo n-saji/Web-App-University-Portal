@@ -1,0 +1,74 @@
+
+.tab {
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  font-family: fantasy;
+}
+.tab button {
+  background-color: inherit;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: white;
+  font-size: medium;
+}
+.tab button:hover {
+  cursor: pointer;
+  background-color: grey;
+}
+.tab .headers {
+  color: white;
+  font-size: 35px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.div1 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.div2 {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  margin: auto;
+  width: 300px;
+  font-size: large;
+  font-family: cursive;
+  padding-bottom: 30px;
+}
+.input {
+  height: 30px;
+  margin-top: 15px;
+  border-radius: 5px;
+}
+#response_for_login {
+  text-align: center;
+  padding: 50px;
+  color: orange;
+  font-size: large;
+  font-stretch: expanded;
+  font-weight: 800;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+#createButton {
+  border-radius: 5px;
+  border-color: green;
+  margin-top: 10px;
+  background-color: green;
+  color: white;
+  margin-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+#createButton:hover {
+  background-color: black;
+  color: white;
+  border-color: green;
+}

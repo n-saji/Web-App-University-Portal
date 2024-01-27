@@ -1,18 +1,16 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="css/createCourse.css" />
+    <link rel="stylesheet" href="css/dashboard-v2.css" />
     <link rel="stylesheet" href="css/headers.css" />
     <script src="script/validate.js"></script>
-    <script src="script/createCourse.js"></script>
     <script src="script/dashboard-v2.js"></script>
-    <title>Create Course</title>
   </head>
   <body>
     <div class="headers-tab">
       <div class="tab-buttons">
         <div class="button-home">
-          <button class="home" onclick="setdashboard()">Home</button>
+          <button class="home">Home</button>
         </div>
         <div class="button-add">
           <button class="add">Add</button>
@@ -44,10 +42,11 @@
         </div>
       </div>
       <div class="tab-title">
-        <p class="title">Create New Course</p>
+        <p class="title">Instructor Dashboard</p>
       </div>
       <div class="tab-logged-user">
-        <p class="logged-user" onclick="showDropDownForUser()"></p>
+        <div class="div-logged-user"><p class="logged-user"></p></div>
+
         <div class="logged-user-dropdown">
           <button class="dropdown-view-profile" onclick="setViewProfile()">
             View Profile
@@ -56,16 +55,6 @@
         </div>
       </div>
     </div>
-    <div class="fields">
-      <div class="inline_content">
-        <p>Course Name</p>
-        <input type="text" id="cn" />
-      </div>
-
-      <div class="inline_buttons">
-        <button onclick="InsertCourseValues()" id="submitCourse">Submit</button>
-      </div>
-    </div>
-    <h3 id="response_for_creation"></h3>
+    <div class="body"></div>
   </body>
 </html>
