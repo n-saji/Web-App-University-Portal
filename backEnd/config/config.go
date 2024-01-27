@@ -18,10 +18,10 @@ var (
 
 func Init() {
 	os.Setenv("POSTGRES_USER", "postgres")
-	os.Setenv("POSTGRES_DB_NAME", "random")
+	os.Setenv("POSTGRES_DB_NAME", "postgres")
 	os.Setenv("POSTGRES_PASSWORD", "paul_202k")
 	os.Setenv("POSTGRES_PORT", "5432")
-	os.Setenv("POSTGRES_HOST", "college.c5rvl144axxo.ap-south-1.rds.amazonaws.com")
+	os.Setenv("POSTGRES_HOST", "db-2.c5rvl144axxo.ap-south-1.rds.amazonaws.com")
 	os.Setenv("PORT", ":5050")
 
 	Postgres_User = os.Getenv("POSTGRES_USER")
