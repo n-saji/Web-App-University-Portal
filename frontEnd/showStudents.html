@@ -1,47 +1,96 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="showStudents.css" />
-    <script src="showStudents.js"></script>
+    <link rel="stylesheet" href="css/showStudents.css" />
+    <link rel="stylesheet" href="css/headers.css" />
+    <script src="script/validate.js"></script>
+    <script src="script/showStudents.js"></script>
+    <script src="script/dashboard-v2.js"></script>
     <title>Student Details</title>
   </head>
   <body>
-    <div class="tab">
-      <button class="dashboard" onclick="setdashboard()">Home</button>
-      <p class="headers">Student Details</p>
-      <button class="logout_headers" onclick="setbackpage()">
-        Add Student
-      </button>
+    <div class="headers-tab">
+      <div class="tab-buttons">
+        <div class="button-home">
+          <button class="home" onclick="setdashboard()">Home</button>
+        </div>
+        <div class="button-add">
+          <button class="add">Add</button>
+          <div class="add-dropdown">
+            <button class="dropdown-course" onclick="insertCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="insertStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="insertInstructor()">
+              Instructor
+            </button>
+          </div>
+        </div>
+        <div class="button-show">
+          <button class="show">Show</button>
+          <div class="show-dropdown">
+            <button class="dropdown-course" onclick="showCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="showStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="showInstructor()">
+              Instructor
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="tab-title">
+        <p class="title">Students List</p>
+      </div>
+      <div class="tab-logged-user">
+        <p class="logged-user" onclick="showDropDownForUser()"></p>
+        <div class="logged-user-dropdown">
+          <button class="dropdown-view-profile" onclick="setViewProfile()">
+            View Profile
+          </button>
+          <button class="dropdown-logout" onclick="logout()">Logout</button>
+        </div>
+      </div>
     </div>
     <div class="body_content">
       <table id="student_table" class="student_table">
         <thead class="table_headers">
-          <th>
-            <button onclick="populateInstructorsbyOrder('roll_number')">
-              Roll Number
-            </button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('name')">Name</button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('age')">Age</button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('course_name')">
-              Course Name
-            </button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('marks')">Marks</button>
-          </th>
-          <th>
-            <button onclick="populateInstructorsbyOrder('grade')">Grade</button>
-          </th>
-          <th>Update</th>
-          <th>Delete</th>
+          <tr>
+            <th>
+              <button onclick="populateInstructorsbyOrder('roll_number')">
+                Roll Number
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('name')">Name</button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('age')">Age</button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('course_name')">
+                Course Name
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('marks')">
+                Marks
+              </button>
+            </th>
+            <th>
+              <button onclick="populateInstructorsbyOrder('grade')">
+                Grade
+              </button>
+            </th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
         </thead>
-        <tbody id="t_body"></tbody>
+        <tbody class="t_body" id="t_body"></tbody>
       </table>
       <div class="popup" id="popup">
         <div class="popup_headers">
@@ -84,6 +133,13 @@
         </div>
       </div>
     </div>
+    <script src="script/allCourse.js"></script>
   </body>
-  <script src="allCourse.js"></script>
 </html>
+<script>
+  // let headersTab = document.querySelector(".headers-tab");
+  // let body = document.querySelector(".body_content");
+  // console.log(body.offsetHeight, screen.height, headersTab.offsetHeight);
+  // let finalHeight = screen.height - headersTab.offsetHeight - 60 + "px";
+  // body.style.height = finalHeight;
+</script>

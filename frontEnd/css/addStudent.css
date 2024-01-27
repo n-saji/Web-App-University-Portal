@@ -1,0 +1,57 @@
+.body_content {
+  margin-top: 200px;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+#cn_drop_down {
+  width: 140px;
+  height: 25px;
+  background-color: rgba(24, 24, 24, 0.867);
+  color: white;
+}
+#name,
+#age,
+#roll_number,
+#cn_drop_down {
+  border-radius: 5px;
+}
+.inline_buttons {
+  margin-top: 30px;
+  position: absolute;
+  left: 48%;
+  display: inline-block;
+}
+#submitStudent {
+  border-radius: 5px;
+  border-color: green;
+  margin-top: 10px;
+  background-color: green;
+  height: 30px;
+  color: white;
+  margin-right: 20px;
+}
+#submitStudent:hover {
+  background-color: blueviolet; /* Green */
+  color: white;
+}
+.error {
+  visibility: visible;
+  border: 2px solid red;
+}
+#error_log {
+  margin-top: 150px;
+  text-align: center;
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: lightcoral;
+  font-size: 25px;
+}
+.diplay-property {
+  display: inline-block;
+  cursor: pointer;
+}
+.when_submited {
+  cursor: not-allowed;
+}
