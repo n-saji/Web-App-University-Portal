@@ -14,7 +14,7 @@ async function InsertCourseValues() {
     return;
   }
   let cookie_token = getCookie("token");
-  let createCourse = await fetch(`http://localhost:5050/insert-course`, {
+  let createCourse = await fetch(`http://3.111.149.112:5050/insert-course`, {
     method: "POST",
     headers: { Token: cookie_token },
     body: JSON.stringify({
@@ -31,7 +31,3 @@ async function InsertCourseValues() {
     response_for_creation.innerHTML = "Successfully Created";
   }
 }
-
-
-
-

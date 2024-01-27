@@ -1,7 +1,7 @@
 let dropdown = document.getElementById("cn_drop_down");
 let defaultOption = document.createElement("option");
 let cookie_token = getCookie("token");
-const url = "http://localhost:5050/retrieve-all-courses";
+const url = "http://3.111.149.112:5050/retrieve-all-courses";
 dropdown.length = 0;
 defaultOption.text = "Choose Course";
 dropdown.add(defaultOption);
@@ -32,4 +32,3 @@ fetch(url, {
   .catch(function (err) {
     console.error("Fetch Error -", err);
   });
-

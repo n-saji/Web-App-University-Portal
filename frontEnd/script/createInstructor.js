@@ -69,7 +69,7 @@ async function InsertInstructorValues() {
   }
   let cookie_token = getCookie("token");
   let createInstructor = await fetch(
-    `http://localhost:5050/insert-instructor-details`,
+    `http://3.111.149.112:5050/insert-instructor-details`,
     {
       method: "POST",
       headers: { Token: cookie_token },
@@ -96,7 +96,7 @@ async function InsertInstructorValues() {
     submitInstructor.disabled = true;
     submitInstructor.classList.add("when_submited");
     submitInstructor.style.backgroundColor = "green";
-    let URL = `http://localhost:5050` + response.URL;
+    let URL = `http://3.111.149.112:5050` + response.URL;
     document.cookie = `url=${URL}`;
     localStorage.setItem("URL_Create_Login", URL);
   }
@@ -125,6 +125,3 @@ function setbackpage() {
 function setdashboard() {
   window.location.replace("dashboard-v2.html");
 }
-
-
-

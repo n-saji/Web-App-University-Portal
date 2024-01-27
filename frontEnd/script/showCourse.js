@@ -6,10 +6,13 @@ function setaddcourse() {
 }
 async function populateCourse() {
   let cookie_token = getCookie("token");
-  let all_course = await fetch(`http://localhost:5050/retrieve-all-courses`, {
-    credentials: "same-origin",
-    headers: { token: cookie_token },
-  });
+  let all_course = await fetch(
+    `http://3.111.149.112:5050/retrieve-all-courses`,
+    {
+      credentials: "same-origin",
+      headers: { token: cookie_token },
+    }
+  );
   let all_course_response = await all_course.json();
   for (let i = 0; i < all_course_response.length; i++) {
     let each_value = all_course_response[i];
@@ -28,7 +31,7 @@ async function deleteCourse(index) {
   let index_name = document.getElementById(String(index));
   let cookie_token = getCookie("token");
   let deleteCourse = await fetch(
-    `http://localhost:5050/delete-course/${index_name.innerHTML}`,
+    `http://3.111.149.112:5050/delete-course/${index_name.innerHTML}`,
     {
       method: "DELETE",
       headers: { Token: cookie_token },
@@ -48,7 +51,7 @@ async function updateCourse(course) {
   let new_course_value = document.getElementById("course_name").value;
   let cookie_token = getCookie("token");
   let updateCourse = await fetch(
-    `http://localhost:5050/update-course/${course}`,
+    `http://3.111.149.112:5050/update-course/${course}`,
     {
       method: "PATCH",
       headers: { Token: cookie_token },
@@ -87,5 +90,3 @@ function callUpdateFunction() {
   let old_course = document.getElementById("old_course").innerHTML;
   updateCourse(old_course);
 }
-
-

@@ -13,7 +13,7 @@ async function createAccount() {
     alert("Empty fields!");
     return;
   }
-  let response = await fetch(`http://localhost:5050/create-account`, {
+  let response = await fetch(`http://3.111.149.112:5050/create-account`, {
     method: "POST",
     body: JSON.stringify({
       name: name,

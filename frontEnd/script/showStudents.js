@@ -7,7 +7,7 @@ if (!globalOrder) {
 }
 async function deleteStudent(index, course_name_index) {
   let cookie_token = getCookie("token");
-  let deleteCourse = await fetch(`http://localhost:5050/delete-student`, {
+  let deleteCourse = await fetch(`http://3.111.149.112:5050/delete-student`, {
     method: "DELETE",
     headers: { Token: cookie_token },
     body: JSON.stringify({
@@ -28,7 +28,7 @@ async function deleteStudent(index, course_name_index) {
 async function populateInstructors() {
   let cookie_token = getCookie("token");
   let all_students = await fetch(
-    `http://localhost:5050/retrieve-college-administration`,
+    `http://3.111.149.112:5050/retrieve-college-administration`,
     {
       credentials: "same-origin",
       headers: { token: cookie_token },
@@ -110,7 +110,7 @@ async function updateStudent(
   }
   let cookie_token = getCookie("token");
   let updateStudent = await fetch(
-    `http://localhost:5050/update-student-details/${old_roll_number.innerHTML}/${old_name.innerHTML}/${old_course_name.innerHTML}`,
+    `http://3.111.149.112:5050/update-student-details/${old_roll_number.innerHTML}/${old_name.innerHTML}/${old_course_name.innerHTML}`,
     {
       method: "PATCH",
       headers: { Token: cookie_token },
@@ -172,7 +172,7 @@ async function populateInstructorsbyOrder(order) {
   localStorage.setItem("globalOrder", order);
   let cookie_token = getCookie("token");
   let all_students = await fetch(
-    `http://localhost:5050/retrieve-college-administration?order=${order}`,
+    `http://3.111.149.112:5050/retrieve-college-administration?order=${order}`,
     {
       credentials: "same-origin",
       headers: { token: cookie_token },

@@ -10,7 +10,7 @@ for (let index = 0; index < cookies.length; index++) {
 setTimeout(validateCookie, 1000);
 
 async function validateCookie() {
-  let response = await fetch(`http://localhost:5050/check-token-status`, {
+  let response = await fetch(`http://3.111.149.112:5050/check-token-status`, {
     method: "GET",
     headers: {
       Token: cookiesMap["token"],
@@ -23,7 +23,6 @@ async function validateCookie() {
     window.location.replace("dashboard-v2.html");
   }
 }
-
 
 function removeError() {
   let username_style = document.getElementById("username");
@@ -79,7 +78,7 @@ async function toCheckValidity(emailId, password) {
 async function CheckValidity(username, password) {
   const emailId_warning = document.getElementById("tempfix");
   let error_while_fetching_api;
-  let response = await fetch(`http://localhost:5050/v1/login`, {
+  let response = await fetch(`http://3.111.149.112:5050/v1/login`, {
     method: "POST",
     body: JSON.stringify({
       email_id: username,

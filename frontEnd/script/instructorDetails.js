@@ -1,7 +1,7 @@
 async function populateInstructors() {
   let cookie_token = getCookie("token");
   let all_instructors = await fetch(
-    `http://localhost:5050/retrieve-instructors`,
+    `http://3.111.149.112:5050/retrieve-instructors`,
     {
       credentials: "same-origin",
       headers: { token: cookie_token },
@@ -41,14 +41,17 @@ function setbackpage() {
 async function deleteInstructor(index, course_name_index, department) {
   let index_name = document.getElementById(index);
   let cookie_token = getCookie("token");
-  let deleteCourse = await fetch(`http://localhost:5050/delete-instructor`, {
-    method: "DELETE",
-    headers: { Token: cookie_token },
-    body: JSON.stringify({
-      instructor_name: index_name.innerText,
-      course_name: course_name_index.innerText,
-    }),
-  });
+  let deleteCourse = await fetch(
+    `http://3.111.149.112:5050/delete-instructor`,
+    {
+      method: "DELETE",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        instructor_name: index_name.innerText,
+        course_name: course_name_index.innerText,
+      }),
+    }
+  );
 
   let response = await deleteCourse.json();
   if (!deleteCourse.ok) {
@@ -66,7 +69,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   let old_course_name = document.getElementById("old_course_name");
   let popup = document.getElementById("popup");
 
-  let url = `http://localhost:5050/update-instructor`;
+  let url = `http://3.111.149.112:5050/update-instructor`;
   if (old_instructor_code.innerHTML != "") {
     url = url + `?instructor_code=${old_instructor_code.innerHTML}`;
   }
@@ -148,7 +151,7 @@ function callUpdateFunction() {
 async function populateInstructorsWithCondition(order) {
   let cookie_token = getCookie("token");
   let all_instructors = await fetch(
-    `http://localhost:5050/retrieve-instructors/${order}`,
+    `http://3.111.149.112:5050/retrieve-instructors/${order}`,
     {
       headers: { token: cookie_token },
     }
@@ -181,6 +184,3 @@ async function populateInstructorsWithCondition(order) {
     table_body.appendChild(tr);
   }
 }
-
-
-

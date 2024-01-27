@@ -7,7 +7,7 @@ function insertInstructor() {
 }
 
 function logout() {
-  fetch(`http://localhost:5050/logout?token=${getCookie("token")}`, {});
+  fetch(`http://3.111.149.112:5050/logout?token=${getCookie("token")}`, {});
   window.location.replace("index.html");
 }
 function setViewProfile() {
@@ -38,7 +38,7 @@ async function getInstructorDetails() {
   let instructor_id = getCookie("account_id");
   let api_error;
   let getDetails = await fetch(
-    `http://localhost:5050/get-instructor-name-by-id/${instructor_id}`,
+    `http://3.111.149.112:5050/get-instructor-name-by-id/${instructor_id}`,
     {
       method: "GET",
       headers: { Token: cookie_token },
