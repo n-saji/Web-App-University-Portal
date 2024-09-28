@@ -1,62 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="index.css" />
-    <script src="index.js"></script>
-    <title>College Administration</title>
-    <body>
-      <h1 class="heading">Welcome to College Portal</h1>
-
-      <h2 class="heading">Please Login</h2>
-
-      <div class="div1">
-        <div class="line1">
-          <h3 class="usr_pass_heading">Email</h3>
-          <input
-            style="margin-right: 30px"
-            class="input_usr_pass"
-            type="email"
-            id="username"
-            onchange="removeError()"
-          />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>University Portal</title>
+    <meta name="login page" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="script/validate.js"></script>
+    <script src="script/index.js"></script>
+  </head>
+  <body>
+    <div class="body-div">
+      <div class="body-placcard">
+        <div class="placcard-writings">
+          <h1 class="greeting-message"></h1>
+          <h3>Please Login</h3>
         </div>
-        <br />
-        <div class="line2">
-          <h3 class="usr_pass_heading">Password</h3>
-          <div class="password_div" id="password_div">
+        <div class="placcard-input">
+          <p style="margin: 20px 0px 5px -260px">Email</p>
+          <input class="input-email" type="email" placeholder="Enter email" />
+          <p style="margin: 20px 0px 5px -230px">Password</p>
+          <input
+            class="input-password"
+            type="password"
+            placeholder="Enter password"
+          />
+          <div class="div-show-password">
             <input
-              class="input_usr_pass"
-              onchange="removeError()"
-              type="password"
-              id="password"
+              type="checkbox"
+              style="margin-left: 0px"
+              onclick="showPassword()"
             />
-            <div class="password_img" id="password_img">
-              <img
-                class="image_for_show_password"
-                id="image_for_show_password"
-                src="/frontEnd/asset/eye.png"
-                alt="eye"
-                onclick="showPassword()"
-              />
-            </div>
+            <p style="font-size: x-small">Show Passowrd</p>
           </div>
         </div>
-        <br />
-        <div class="line3">
-          <button class="login_button" onclick="userlogin()" id="loginButton">
-            Login
-          </button>
-          <button
-            class="login_button"
-            onclick="forgotPassword()"
-            id="forgotButton"
-          >
-            Forgot
+        <div class="placcard-button">
+          <button class="button-login" onclick="userlogin() ">Login</button>
+          <button class="button-signup" onclick="reloadToSignUp() ">
+            Sign Up
           </button>
         </div>
-        <p id="tempfix"></p>
       </div>
-    </body>
-  </head>
+    </div>
+    <div class="error-popup">
+      <!-- <button class="error-popup-button" onclick="removeError()">X</button> -->
+      <p class="error-message"></p>
+    </div>
+  </body>
+  <script src="script/renderAfterHtml.js"></script>
 </html>

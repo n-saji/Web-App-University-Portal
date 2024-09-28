@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  /* overflow: hidden; */
+  background: linear-gradient(to right, #20002c, #cbb4d4);
+  font-family: "Roboto", sans-serif;
+}
+.body-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+}
+
+.body-placcard {
+  box-shadow: 10px 10px 7px 5px rgba(137, 98, 152, 0.4);
+  flex-wrap: nowrap;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  border: none;
+  border-radius: 20px;
+  width: 500px;
+  opacity: 0.8;
+  background-color: #cbb4d4;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  min-height: 400px;
+  min-width: 320px;
+}
+.placcard-input {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 300px;
+}
+.placcard-button {
+  margin-top: 50px;
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+}
+.input-email {
+  border-radius: 3px;
+  border-style: none;
+  height: 30px;
+  text-indent: 10px;
+  outline: none;
+}
+.input-password {
+  border-radius: 3px;
+  border-style: none;
+  height: 30px;
+  text-indent: 10px;
+  outline: none;
+}
+.button-login,
+.button-signup {
+  height: 30px;
+  width: 150px;
+  background-color: rgba(163, 23, 147, 0.551);
+  border-style: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.button-login:active,
+.button-signup:active {
+  background-color: rgba(163, 23, 147, 0.924);
+}
+.div-show-password {
+  display: flex;
+}
+/* popup */
+.error-popup-display {
+  visibility: visible !important;
+  transform: translate(0px, 0) !important;
+  transition: transform 0.2s ease-out;
+}
+.error-popup {
+  width: 200px;
+  /* height: 90px; */
+  z-index: 1;
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  /* border-color: red; */
+  border-style: none;
+  border-radius: 10px;
+  background-color: rgba(194, 103, 185, 0.606);
+  transform: translate(240px, 0);
+  transition: transform 0.4s linear;
+}
+.error-popup-button {
+  position: relative;
+  left: 175px;
+  border-radius: 5px;
+  cursor: pointer;
+  border-style: none;
+  top: 2px;
+  background-color: transparent;
+}
+.error-message {
+  text-align: center;
+  position: relative;
+  /* margin-bottom: 10px; */
+}

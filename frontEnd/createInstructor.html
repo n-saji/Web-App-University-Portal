@@ -1,59 +1,110 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="createInstructor.css" />
-    <script src="createInstructor.js"></script>
+    <link rel="stylesheet" href="css/createInstructor.css" />
+    <link rel="stylesheet" href="css/headers.css" />
+    <script src="script/validate.js"></script>
+    <script src="script/createInstructor.js"></script>
     <title>Create Instructor Details</title>
   </head>
   <body>
-    <div class="tab">
-      <button class="dashboard" onclick="setdashboard()">Home</button>
-      <p class="headers">Create Instructor</p>
-      <button class="logout_headers" onclick="setbackpage()">
-        Show Instructors
-      </button>
+    <div class="headers-tab">
+      <div class="tab-buttons">
+        <div class="button-home">
+          <button class="home" onclick="setdashboard()">Home</button>
+        </div>
+        <div class="button-add">
+          <button class="add">Add</button>
+          <div class="add-dropdown">
+            <button class="dropdown-course" onclick="insertCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="insertStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="insertInstructor()">
+              Instructor
+            </button>
+          </div>
+        </div>
+        <div class="button-show">
+          <button class="show">Show</button>
+          <div class="show-dropdown">
+            <button class="dropdown-course" onclick="showCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="showStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="showInstructor()">
+              Instructor
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="tab-title">
+        <p class="title">Create New Instructor</p>
+      </div>
+      <div class="tab-logged-user">
+        <p class="logged-user" onclick="showDropDownForUser()"></p>
+        <div class="logged-user-dropdown">
+          <button class="dropdown-view-profile" onclick="setViewProfile()">
+            View Profile
+          </button>
+          <button
+            class="dropdown-view-students"
+            onclick="setViewStudentProfile()"
+          >
+            View Students
+          </button>
+          <button class="dropdown-logout" onclick="logout()">Logout</button>
+        </div>
+      </div>
     </div>
-    <div class="fields">
-      <div class="fields_1">
-        <h3>Code</h3>
-        <input type="text" onchange="removeError()" id="ic" />
-      </div>
-      <div class="fields_2">
-        <h3>Name</h3>
-        <input type="text" onchange="removeError()" id="in" />
-      </div>
-      <div class="fields_3">
-        <h3>Department</h3>
-        <input type="text" onchange="removeError()" id="dp" />
-      </div>
-      <div class="fields_4">
-        <h3>Course</h3>
-        <select
-          id="cn_drop_down"
-          onchange="removeError()"
-          name="courses"
-        ></select>
-      </div>
+    <div class="body-content">
+      <div class="fields">
+        <div class="fields_1">
+          <h3>Code</h3>
+          <input type="text" onchange="removeError()" id="ic" />
+        </div>
+        <div class="fields_2">
+          <h3>Name</h3>
+          <input type="text" onchange="removeError()" id="in" />
+        </div>
+        <div class="fields_3">
+          <h3>Department</h3>
+          <input type="text" onchange="removeError()" id="dp" />
+        </div>
+        <div class="fields_4">
+          <h3>Course</h3>
+          <select
+            id="cn_drop_down"
+            onchange="removeError()"
+            name="courses"
+          ></select>
+        </div>
 
-      <br />
-      <div class="fields_5"><h3 id="responseBody"></h3></div>
+        <br />
+        <div class="fields_5"><h3 id="responseBody"></h3></div>
+      </div>
+      <div class="inline_buttons" id="inline_buttons">
+        <button
+          type="button"
+          onclick="InsertInstructorValues()"
+          id="submitInstructor"
+        >
+          Submit</button
+        ><button
+          id="redirect_to_login"
+          class="redirect_to_login"
+          onclick="create_account_new()"
+        >
+          Create Account
+        </button>
+      </div>
+      <h3 id="error_log"></h3>
     </div>
-    <div class="inline_buttons" id="inline_buttons">
-      <button
-        type="button"
-        onclick="InsertInstructorValues()"
-        id="submitInstructor"
-      >
-        Submit</button
-      ><button
-        id="redirect_to_login"
-        class="redirect_to_login"
-        onclick="create_account_new()"
-      >
-        Create Account
-      </button>
-    </div>
-    <h3 id="error_log"></h3>
+    <script src="script/allCourse.js"></script>
   </body>
-  <script src="allCourse.js"></script>
+  <script src="script/dashboard-v2.js"></script>
 </html>

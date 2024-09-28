@@ -1,0 +1,80 @@
+html {
+  font-family: Arial;
+}
+.body_content {
+  display: flex;
+  position: absolute;
+  margin-top: 71px;
+  left: 0;
+  right: 0;
+  justify-content: center;
+}
+.partner-preview {
+  width: 100%;
+  /* background-color: #f0a400bd; */
+  position: fixed;
+  padding-top: 50px;
+}
+.basic-details,
+.credentials-details,
+.partner-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  margin: 0 auto;
+}
+.partner-buttons {
+  margin-top: 50px;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin-bottom: 25px;
+}
+.name,
+.department,
+.emailId,
+.password {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+}
+.input-name {
+  font-weight: 700;
+  font-size: 1em;
+}
+.input-content {
+  width: 300px;
+  height: 30px;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding-left: 15px;
+  outline: none;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+.js-input-password{
+  font-size:x-large;
+}
+.input-content:focus {
+  border-color: rgb(124, 248, 0);
+}
+.update-button button,
+.reset-button button {
+  height: 30px;
+  width: 70px;
+  border-radius: 15px;
+  border: 1px solid black;
+  transition: all 0.2s;
+  background-color: #e45826;
+}
+.update-button button:hover,
+.reset-button button:hover {
+  box-shadow: 1px 1px 1px 1px;
+  cursor: pointer;
+}
+.update-button button:active,
+.reset-button button:active {
+  background-color: blanchedalmond;
+}
