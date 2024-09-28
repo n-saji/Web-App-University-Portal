@@ -2,83 +2,103 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script src="viewProfile.js"></script>
-    <link rel="stylesheet" href="viewProfile.css" />
+    <script src="script/validate.js"></script>
+    <script src="script/viewProfile.js"></script>
+    <link rel="stylesheet" href="css/viewProfile.css" />
+    <link rel="stylesheet" href="css/headers.css" />
     <title>View Profile</title>
   </head>
   <body>
-    <div class="tab">
-      <button class="dashboard" onclick="setdashboard()">Home</button>
-      <p class="headers">Profile</p>
-      <p class="instructor_name" id="instructor_name"></p>
-    </div>
-    <div class="body_content">
-      <div class="level_one">
-        <div class="basic_information">
-          <h1>Basic Info</h1>
-          <div class="name_row">
-            <h2>Name</h2>
-            <div class="name_row_submit">
-              <input type="text" id="name_input" />
-              <button onclick="ToUpdateDetails('name_input','name')">
-                Update
-              </button>
-            </div>
-          </div>
-          <div class="code_row">
-            <h2>Code</h2>
-            <div class="age_row_submit">
-              <input type="text" id="code_input" />
-              <button onclick="ToUpdateDetails('code_input','code')">
-                Update
-              </button>
-            </div>
+    <div class="headers-tab">
+      <div class="tab-buttons">
+        <div class="button-home">
+          <button class="home" onclick="setdashboard()">Home</button>
+        </div>
+        <div class="button-add">
+          <button class="add">Add</button>
+          <div class="add-dropdown">
+            <button class="dropdown-course" onclick="insertCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="insertStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="insertInstructor()">
+              Instructor
+            </button>
           </div>
         </div>
-        <div class="account_information">
-          <h1>Account</h1>
-          <div class="email_row">
-            <h2>Email</h2>
-            <div class="email_row_submit">
-              <input type="text" id="email_input" />
-              <button onclick="ToUpdateDetails('email_input','email')">
-                Update
-              </button>
-            </div>
-          </div>
-          <div class="password_row">
-            <h2>Password</h2>
-            <div class="password_row_submit">
-              <input type="password" id="password_input" />
-              <button onclick="ToUpdateDetails('password_input','password')">
-                Update
-              </button>
-            </div>
+        <div class="button-show">
+          <button class="show">Show</button>
+          <div class="show-dropdown">
+            <button class="dropdown-course" onclick="showCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="showStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="showInstructor()">
+              Instructor
+            </button>
           </div>
         </div>
       </div>
-      <div class="level_two">
-        <div class="course_information">
-          <div class="course_information_headers">
-            <h1>Courses</h1>
-            <button>Add Course</button>
+      <div class="tab-title">
+        <p class="title">Profile Page</p>
+      </div>
+      <div class="tab-logged-user">
+        <p class="logged-user" onclick="showDropDownForUser()"></p>
+        <div class="logged-user-dropdown">
+          <button class="dropdown-view-profile" onclick="setViewProfile()">
+            View Profile
+          </button>
+          <button
+            class="dropdown-view-students"
+            onclick="setViewStudentProfile()"
+          >
+            View Students
+          </button>
+          <button class="dropdown-logout" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+    <div class="body_content">
+      <div class="partner-preview">
+        <div class="basic-details">
+          <div class="name">
+            <p class="input-name">Name</p>
+            <input class="input-content js-input-name" type="text" />
           </div>
-          <div class="courses_table_div">
-            <table class="courses_table">
-              <thead>
-                <th>Sl</th>
-                <th>Course</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>English</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="department">
+            <p class="input-name">Department</p>
+            <input class="input-content js-input-department" type="text" />
+          </div>
+        </div>
+        <div class="credentials-details">
+          <div class="emailId">
+            <p class="input-name">Email</p>
+            <input class="input-content js-input-email" type="email" />
+          </div>
+          <div class="password">
+            <p class="input-name">Password</p>
+            <input class="input-content js-input-password" type="password" />
+          </div>
+        </div>
+        <div class="partner-buttons">
+          <div class="update-button">
+            <button onclick="ToUpdateDetails()">Update</button>
+          </div>
+          <div class="reset-button">
+            <button
+              onclick="autofil()
+              "
+            >
+              Reset
+            </button>
           </div>
         </div>
       </div>
     </div>
   </body>
+  <script src="script/dashboard-v2.js"></script>
 </html>

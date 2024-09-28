@@ -1,27 +1,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="showCourse.css" />
-    <script src="showCourse.js"></script>
+    <link rel="stylesheet" href="css/showCourse.css" />
+    <link rel="stylesheet" href="css/headers.css" />
+    <link rel="stylesheet" href="css/delete-popup-banner.css" />
+    <script src="script/validate.js"></script>
+    <script src="script/showCourse.js"></script>
+    <script src="script/delete-popup-banner.js"></script>
     <title>Course List</title>
   </head>
   <body>
-    <div class="tab">
-      <button class="dashboard" onclick="setdashboard()">Home</button>
-      <p class="headers">Course List</p>
-      <button class="logout_headers" onclick="setaddcourse()">
-        Add Course
-      </button>
+    <div class="headers-tab">
+      <div class="tab-buttons">
+        <div class="button-home">
+          <button class="home" onclick="setdashboard()">Home</button>
+        </div>
+        <div class="button-add">
+          <button class="add">Add</button>
+          <div class="add-dropdown">
+            <button class="dropdown-course" onclick="insertCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="insertStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="insertInstructor()">
+              Instructor
+            </button>
+          </div>
+        </div>
+        <div class="button-show">
+          <button class="show">Show</button>
+          <div class="show-dropdown">
+            <button class="dropdown-course" onclick="showCourse()">
+              Course
+            </button>
+            <button class="dropdown-student" onclick="showStudent()">
+              Student
+            </button>
+            <button class="dropdown-instructor" onclick="showInstructor()">
+              Instructor
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="tab-title">
+        <p class="title">Course List</p>
+      </div>
+      <div class="tab-logged-user">
+        <p class="logged-user" onclick="showDropDownForUser()"></p>
+        <div class="logged-user-dropdown">
+          <button class="dropdown-view-profile" onclick="setViewProfile()">
+            View Profile
+          </button>
+          <button
+            class="dropdown-view-students"
+            onclick="setViewStudentProfile()"
+          >
+            View Students
+          </button>
+          <button class="dropdown-logout" onclick="logout()">Logout</button>
+        </div>
+      </div>
     </div>
 
     <div class="body_content" id="body_content">
       <table id="course_table" class="course_table">
-        <tr>
+        <thead>
           <th>Sl No.</th>
           <th>Course Name</th>
           <th>Update</th>
           <th>Delete</th>
-        </tr>
+        </thead>
       </table>
       <div class="popup" id="popup">
         <div class="popup_headers">
@@ -47,6 +97,17 @@
           </button>
         </div>
       </div>
+      <div class="delete_popup">
+        <p class="delete_popup_wordings">Confirm Again!</p>
+        <div class="delete_button_div">
+          <button class="delete_button_yes" onclick="deleteTrue()">Yes</button>
+          <button class="delete_button_no" onclick="deleteFalse()">No</button>
+        </div>
+        <div class="delete-error-if-any">
+          <p class="error-message"></p>
+        </div>
+      </div>
     </div>
   </body>
+  <script src="script/dashboard-v2.js"></script>
 </html>
