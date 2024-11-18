@@ -1,4 +1,4 @@
-# Academic Portal
+# University Portal
 
 ## Overview
 This is a web application built in **Golang** to help college professors manage their courses and students efficiently. This platform allows to perform CRUD (Create, Read, Update, Delete) operations, including:
