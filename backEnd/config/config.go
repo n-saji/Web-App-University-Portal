@@ -31,7 +31,7 @@ func Init() {
 	Postgres_Password = os.Getenv("POSTGRES_PASSWORD")
 	Postgres_Port, _ = strconv.ParseInt(os.Getenv("POSTGRES_PORT"), 10, 64)
 	Postgres_Host = os.Getenv("POSTGRES_HOST")
-	Port = os.Getenv("PORT")
+	Port = ":"+os.Getenv("PORT")
 
 	os.Setenv("db_url", fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=require", Postgres_Host, Postgres_User, Postgres_Password, Postgres_Db_Name, Postgres_Port))
 	DB_URL = os.Getenv("db_url")
