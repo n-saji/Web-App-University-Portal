@@ -23,7 +23,7 @@ func Init() {
 
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("Error loading .env file - ",err)
+		log.Println("Error loading .env file - ", err)
 	}
 
 	Postgres_User = os.Getenv("POSTGRES_USER")
@@ -31,8 +31,9 @@ func Init() {
 	Postgres_Password = os.Getenv("POSTGRES_PASSWORD")
 	Postgres_Port, _ = strconv.ParseInt(os.Getenv("POSTGRES_PORT"), 10, 64)
 	Postgres_Host = os.Getenv("POSTGRES_HOST")
-	Port = ":"+os.Getenv("PORT")
+	Port = ":" + os.Getenv("PORT")
+	SSL_MODE := os.Getenv("SSL_MODE")
 
-	os.Setenv("db_url", fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=require", Postgres_Host, Postgres_User, Postgres_Password, Postgres_Db_Name, Postgres_Port))
+	os.Setenv("db_url", fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", Postgres_Host, Postgres_User, Postgres_Password, Postgres_Db_Name, Postgres_Port, SSL_MODE))
 	DB_URL = os.Getenv("db_url")
 }
