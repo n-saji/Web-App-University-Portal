@@ -23,7 +23,7 @@ func Init() {
 
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file - ",err)
+		log.Println("Error loading .env file - ",err)
 	}
 
 	Postgres_User = os.Getenv("POSTGRES_USER")
