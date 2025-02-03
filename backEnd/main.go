@@ -30,6 +30,7 @@ func main() {
 	s.Start()
 
 	r := handlerConnection.GetRouter()
+	log.Println(config.Port)
 	main_err := r.Run(config.Port)
 	if main_err != nil {
 		log.Println("MAIN - ERROR ", main_err)
