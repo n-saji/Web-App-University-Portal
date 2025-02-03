@@ -4,7 +4,8 @@ services:
   college_adminstration:
     container_name: collegeadminstration
     build:
-      context: ./
+      context: .
+      dockerfile: Dockerfile
     image: collegeadminstration
     depends_on:
       - localhost
