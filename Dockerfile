@@ -1,10 +1,10 @@
 FROM golang:1.19
 
 
-WORKDIR /root
+WORKDIR /root/backEnd
 COPY . /root
 
-RUN go build -o collegeadminstration /backEnd/main.go
+RUN go build -o collegeadminstration ./main.go
 
 EXPOSE 5050
 
