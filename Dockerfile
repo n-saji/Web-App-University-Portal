@@ -1,13 +1,8 @@
 FROM golang:1.19
 
-
 WORKDIR /root
 
-RUN ls
-
 COPY ./backEnd /root/
-
-RUN ls
 
 RUN go mod download
 
