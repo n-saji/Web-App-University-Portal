@@ -76,7 +76,7 @@ func (ac *Service) DeleteCA(name string) error {
 		return errors.New("unable to fetch instructors " + err.Error())
 	}
 	if len(instDetails) > 0 {
-		return errors.New("course already mapped")
+		return errors.New("course in use")
 	}
 
 	ok, err := ac.daos.DeleteCourse(rc.Id)
