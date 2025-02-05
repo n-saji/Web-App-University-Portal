@@ -25,7 +25,7 @@ func main() {
 	handlerConnection := handlers.New(db)
 
 	s := cron.New()
-	go s.AddFunc("@every 10m", jobs.RunDailyMigrations)
+	go s.AddFunc("@every 24h", jobs.RunDailyMigrations)
 	go jobs.AccountDetailsMigration()
 	s.Start()
 
