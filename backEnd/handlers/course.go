@@ -135,13 +135,13 @@ func (h *Handler) DeleteCourse(ctx *gin.Context) {
 	err := h.service.DeleteCA(CourseName)
 	if err != nil {
 		res := models.DeleteResponse{}
-		_, err1 := utils.MakeRequest(http.MethodGet, "http://localhost:5050/retrieve-all-courses", "Fetching course", nil, &res.Courses)
+		_, err1 := utils.MakeRequest(http.MethodGet, "https://dolphin-app-2zya2.ondigitalocean.app/retrieve-all-courses", "Fetching course", nil, &res.Courses)
 		if err1 != nil {
 			ctx.IndentedJSON(http.StatusInternalServerError, err1)
 			return
 		}
 		res.Message = err.Error() + "!"
-		ctx.IndentedJSON(http.StatusNotFound, res)
+		ctx.IndentedJSON(http.StatusInternalServerError, res)
 	} else {
 		ctx.JSON(http.StatusOK, "successfully deleted")
 	}
