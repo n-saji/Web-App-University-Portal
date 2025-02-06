@@ -23,7 +23,7 @@ func (h *Handler) GetRouter() *gin.Engine {
 
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://127.0.0.1:5500", "http://localhost:5050", "http://localhost:3000", "http://localhost:5173", "https://n-saji.github.io","https://orca-app-pjpyz.ondigitalocean.app"},
+		AllowOrigins:     []string{"http://127.0.0.1:5500", "http://localhost:5050", "http://localhost:3000", "http://localhost:5173", "https://n-saji.github.io","https://collegeportal-qcs5o.ondigitalocean.app"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "POST"},
 		AllowHeaders:     []string{"Origin", "content-type", "Set-Cookie", "token", "account_id"},
 		ExposeHeaders:    []string{"Content-Length", "Set-Cookie", "token", "account_id"},
