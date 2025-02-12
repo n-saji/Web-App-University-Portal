@@ -180,7 +180,7 @@ func (ac *AdministrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
 	err := ac.dbConn.Where("id = ?", studentId).Delete(&models.StudentInfo{}).Error
 
 	if err != nil {
-		return nil
+		return err
 	}
 
 	return nil

@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
@@ -137,9 +138,19 @@ func (h *Handler) DeleteStudentDetails(ctx *gin.Context) {
 		return
 	}
 
-	rollNumber := ctx.Param("rollnumber")
+	ID := ctx.Param("id")
+	if ID == ":id" {
+		ctx.JSON(http.StatusBadRequest, "Empty Inputs from Client")
+		return
+	}
 
-	err := h.service.DeleteStudent(rollNumber)
+	IDUUID, errParsingUUID := uuid.Parse(ID)
+	if errParsingUUID != nil {
+		ctx.JSON(http.StatusInternalServerError, fmt.Sprint("error in parsing uuid -", errParsingUUID.Error()))
+		return
+	}
+
+	err := h.service.DeleteStudent(IDUUID)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 	} else {

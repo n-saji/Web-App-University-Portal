@@ -212,18 +212,18 @@ func (ac *Service) Update_Student_Details(update_student *models.StudentInfo, ol
 
 }
 
-func (ac *Service) DeleteStudent(rollNumber string) error {
+func (ac *Service) DeleteStudent(id uuid.UUID) error {
 
-	student, err := ac.daos.GetStudentDetailsByRollNumber(rollNumber)
+	student, err := ac.daos.GetStudentdetail(&models.StudentInfo{Id: id})
 	if err != nil {
 		return err
 	}
-	for _, each_student := range student {
-		err1 := ac.daos.DeleteStudentDaos(each_student.Id)
-		if err1 != nil {
-			return err1
-		}
+	// for _, each_student := range student {
+	err1 := ac.daos.DeleteStudentDaos(student.Id)
+	if err1 != nil {
+		return err1
 	}
+	// }
 	// err1 := ac.daos.DeleteStudentDaos(student.Id)
 	// if err1 != nil {
 	// 	return err1
