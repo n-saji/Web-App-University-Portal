@@ -322,3 +322,33 @@ func (h *Handler) DeleteStudentWithSpecifics(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusAccepted, "Success")
 
 }
+
+func (h *Handler) UpdateValuesForStudentV2(ctx *gin.Context) {
+
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
+			return
+		}
+	}
+
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+
+	var rcd models.StudentInfo
+	ctx.BindJSON(&rcd)
+	err := h.service.UpdateStudentDetailsV2(&rcd)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, error.Error(err))
+		return
+	} else {
+		ctx.JSON(http.StatusOK, "Success")
+	}
+
+}

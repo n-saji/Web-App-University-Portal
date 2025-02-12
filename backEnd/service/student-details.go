@@ -339,3 +339,73 @@ func (ac *Service) DeleteStudentSpecifics(st_req *models.StudentInfo) (err error
 	return nil
 
 }
+
+func (ac *Service) UpdateStudentDetailsV2(update_student *models.StudentInfo) error {
+
+	course_new, err1 := ac.daos.GetCourseByName(update_student.ClassesEnrolled.CourseName)
+	if err1 != nil {
+		return fmt.Errorf("course not found - %s", update_student.ClassesEnrolled.CourseName)
+	}
+
+	if _, err := strconv.ParseFloat(update_student.Name, 64); err == nil {
+		return fmt.Errorf("name cant be number")
+	}
+	if update_student.Age <= 0 {
+		return fmt.Errorf("invalid age")
+	}
+	existing_student, _ := ac.daos.GetStudentdetail(
+		&models.StudentInfo{
+			Id: update_student.Id})
+
+	if existing_student == nil {
+		return fmt.Errorf("student details mismatched or does not exists")
+	}
+
+	sm, err2 := ac.daos.GetMarksByStudentId(update_student.Id)
+	if err2 != nil {
+		return err2
+	}
+	if update_student.ClassesEnrolled.Id == uuid.Nil {
+		course_new, _ = ac.daos.GetCourseByName(update_student.ClassesEnrolled.CourseName)
+		update_student.ClassesEnrolled.Id = course_new.Id
+		update_student.CourseId = course_new.Id
+	}
+	update_student.MarksId = sm.Id
+	sm.Marks = update_student.StudentMarks.Marks
+	if sm.Marks > 100 {
+		return fmt.Errorf("entered mark is beyond limit")
+	}
+	sm.Grade = ac.GenerateGradeForMarks(sm.Marks)
+	sm.CourseName = update_student.ClassesEnrolled.CourseName
+	sm.CourseId = update_student.CourseId
+	update_student.StudentMarks = *sm
+
+	err3 := ac.daos.UpdateStudentMarks(sm)
+	if err3 != nil {
+		return err3
+	}
+	err5 := ac.daos.UpdateClgStudent(update_student)
+	if err5 != nil {
+		return err5
+	}
+	if course_new.Id != existing_student.CourseId {
+
+		instructor_list_old, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: existing_student.CourseId})
+		for _, each_instructor := range instructor_list_old {
+			err := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
+			if err != nil {
+				return err
+			}
+		}
+
+		instructor_list_new, _ := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: course_new.Id})
+		for _, each_instructor := range instructor_list_new {
+			err1 := ac.Update_Instructor_Info(each_instructor, models.InstructorDetails{Id: each_instructor.Id})
+			if err1 != nil {
+				return err1
+			}
+		}
+	}
+	return nil
+
+}
