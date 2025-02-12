@@ -17,6 +17,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	//student
 	rc.POST("/insert-student-details", h.InsertStudentDetails)
 	rc.GET("/retrieve-college-administration", h.RetrieveValuesForStudent)
+	//Deprecated
 	rc.PATCH("/update-student-details/:roll_number/:student_name/:coursename", h.UpdateValuesForStudent)
 	rc.DELETE("delete-student-info/:rollnumber", h.DeleteStudentDetails)
 	rc.PATCH("update-student-name-and-age/:name", h.UpdateStudentNameAndAge)
@@ -25,6 +26,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/get-ranking/:coursename", h.GetRankingForACourse)
 	rc.GET("/get-student-name-course", h.GetSelectedFieldsAllStudent)
 	rc.DELETE("/delete-student", h.DeleteStudentWithSpecifics)
+	rc.PATCH("/v2/update-student-details", h.UpdateValuesForStudentV2)
 
 	//instructor
 	rc.POST("/insert-instructor-details", h.AddInstructor)
