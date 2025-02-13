@@ -80,12 +80,18 @@ func (ac *Service) GetInstructorDetails() ([]*models.InstructorDetails, error) {
 func (s *Service) GetInstructorDetailsWithConditions(order_clause string) ([]*models.InstructorDetails, error) {
 
 	id, err := s.daos.GetAllInstructorOrderByCondition(order_clause)
-	for _, eachId := range id {
-		eachId.ClassesEnrolled, _ = s.daos.GetCourseById(eachId.CourseId)
-	}
 	if err != nil {
 		return nil, err
 	}
+
+	for i := range id {
+		id[i].ClassesEnrolled, err = s.daos.GetCourseById(id[i].CourseId)
+		if err != nil {
+			return nil, err
+		}
+		id[i].CourseName = id[i].ClassesEnrolled.CourseName
+	}
+
 	return id, nil
 }
 
