@@ -13,7 +13,10 @@ CREATE OR REPLACE FUNCTION delete_account_ids()
 RETURNS TRIGGER AS $my_table$
 BEGIN
    DELETE FROM public.accounts
-    WHERE id::text not in (SELECT si.id from  public.student_infos si UNION SELECT ids.id from  public.instructor_details ids);
+    WHERE id::text not in 
+        (SELECT si.id::text from  public.student_infos si 
+        UNION 
+        SELECT ids.id::text from  public.instructor_details ids);
 RETURN NEW;
 END;
 $my_table$ LANGUAGE plpgsql;
