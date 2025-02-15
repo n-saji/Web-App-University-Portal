@@ -45,6 +45,9 @@ func (ac *AdministrationCloud) GetAllInstructorOrderByCondition(order_clause str
 	case "course_name":
 
 		q = q.Order("course_id ASC")
+	
+	case "students_enrolled":
+		q = q.Raw("select *, (jsonb_array_length(info->'students_list')) as ct from instructor_details id  where id.info ->> 'students_list' is not null group by id.id union select *,0 as ct from instructor_details id where id.info ->> 'students_list' is  null order by ct desc ; ")
 
 	default:
 
