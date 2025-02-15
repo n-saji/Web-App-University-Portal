@@ -3,10 +3,13 @@ setInterval(checkTokenValidity, 1800000);
 async function checkTokenValidity() {
   let api_error;
   let cookie_token = getCookie("token");
-  let api_response = await fetch(`http://localhost:5050/check-token-status`, {
-    method: "GET",
-    headers: { Token: cookie_token },
-  }).catch((err) => {
+  let api_response = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/check-token-status`,
+    {
+      method: "GET",
+      headers: { Token: cookie_token },
+    }
+  ).catch((err) => {
     api_error = err;
   });
   if (api_error == "TypeError: Failed to fetch") {

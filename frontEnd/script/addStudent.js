@@ -29,7 +29,7 @@ async function InsertStudentValues() {
   }
   let cookie_token = getCookie("token");
   let createStudent = await fetch(
-    `http://localhost:5050/insert-student-details`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/insert-student-details`,
     {
       method: "POST",
       headers: { Token: cookie_token },

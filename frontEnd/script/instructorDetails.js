@@ -1,7 +1,7 @@
 async function populateInstructors() {
   let cookie_token = getCookie("token");
   let all_instructors = await fetch(
-    `http://localhost:5050/retrieve-instructors`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/retrieve-instructors`,
     {
       credentials: "same-origin",
       headers: { token: cookie_token },
@@ -43,15 +43,18 @@ function setbackpage() {
 async function deleteInstructor(index, course_name_index, department) {
   let index_name = document.getElementById(index);
   let cookie_token = getCookie("token");
-  let deleteCourse = await fetch(`http://localhost:5050/delete-instructor`, {
-    method: "DELETE",
-    headers: { Token: cookie_token },
-    body: JSON.stringify({
-      instructor_name: index_name.innerText,
-      course_name: course_name_index.innerText,
-      department: department.innerText,
-    }),
-  });
+  let deleteCourse = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/delete-instructor`,
+    {
+      method: "DELETE",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        instructor_name: index_name.innerText,
+        course_name: course_name_index.innerText,
+        department: department.innerText,
+      }),
+    }
+  );
 
   let response = await deleteCourse.json();
   if (!deleteCourse.ok) {
@@ -69,7 +72,7 @@ async function UpdateInstructor(code, name_index, dpt, course_name) {
   let old_course_name = document.getElementById("old_course_name");
   let popup = document.getElementById("popup");
 
-  let url = `http://localhost:5050/update-instructor`;
+  let url = `https://dolphin-app-2zya2.ondigitalocean.app/update-instructor`;
   if (old_instructor_code.innerHTML != "") {
     url = url + `?instructor_code=${old_instructor_code.innerHTML}`;
   }
@@ -151,7 +154,7 @@ function callUpdateFunction() {
 async function populateInstructorsWithCondition(order) {
   let cookie_token = getCookie("token");
   let all_instructors = await fetch(
-    `http://localhost:5050/retrieve-instructors/${order}`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/retrieve-instructors/${order}`,
     {
       headers: { token: cookie_token },
     }
@@ -176,7 +179,9 @@ async function populateInstructorsWithCondition(order) {
     }</td>
        <td><button onclick=openForm("${each_value.instructor_code}",${i},${
       each_value.department.replace(" ", "") + i
-    },${each_value.ClassesEnrolled.course_name[0] + i}) class="update_button">U</button></td>
+    },${
+      each_value.ClassesEnrolled.course_name[0] + i
+    }) class="update_button">U</button></td>
        <td><button onclick=deletePopupTrue(${i},${
       each_value.ClassesEnrolled.course_name[0] + i
     },${

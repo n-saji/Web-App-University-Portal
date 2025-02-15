@@ -13,18 +13,21 @@ async function createAccount() {
     alert("Empty fields!");
     return;
   }
-  let response = await fetch(`http://localhost:5050/create-account`, {
-    method: "POST",
-    body: JSON.stringify({
-      name: name,
-      info: {
-        credentials: {
-          email_id: email,
-          password: password,
+  let response = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/create-account`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        info: {
+          credentials: {
+            email_id: email,
+            password: password,
+          },
         },
-      },
-    }),
-  });
+      }),
+    }
+  );
 
   if (response.status != 500) {
     let responseJSON = await response.json();

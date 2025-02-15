@@ -23,12 +23,15 @@ for (let index = 0; index < cookies.length; index++) {
 setTimeout(validateCookie, 1000);
 
 async function validateCookie() {
-  let response = await fetch(`http://localhost:5050/check-token-status`, {
-    method: "GET",
-    headers: {
-      Token: cookiesMap["token"],
-    },
-  });
+  let response = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/check-token-status`,
+    {
+      method: "GET",
+      headers: {
+        Token: cookiesMap["token"],
+      },
+    }
+  );
   console.log(response);
   let jsonResponse = await response.json();
   console.log(jsonResponse);
@@ -70,13 +73,16 @@ async function toCheckValidity(emailId, password) {
 
 async function CheckValidity(username, password) {
   let error_while_fetching_api;
-  let response = await fetch(`http://localhost:5050/v1/login`, {
-    method: "POST",
-    body: JSON.stringify({
-      email_id: username,
-      password: password,
-    }),
-  }).catch((err) => {
+  let response = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/v1/login`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        email_id: username,
+        password: password,
+      }),
+    }
+  ).catch((err) => {
     error_while_fetching_api = err;
   });
 
@@ -126,7 +132,7 @@ async function getInstructorDetails() {
   let instructor_id = getCookie("account_id");
   let api_error;
   let getDetails = await fetch(
-    `http://localhost:5050/get-instructor-name-by-id/${instructor_id}`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/get-instructor-name-by-id/${instructor_id}`,
     {
       method: "GET",
       headers: { Token: cookie_token },
