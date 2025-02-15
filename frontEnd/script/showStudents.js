@@ -7,16 +7,19 @@ if (!globalOrder) {
 }
 async function deleteStudent(index, course_name_index) {
   let cookie_token = getCookie("token");
-  let deleteCourse = await fetch(`http://localhost:5050/delete-student`, {
-    method: "DELETE",
-    headers: { Token: cookie_token },
-    body: JSON.stringify({
-      RollNumber: index.innerText,
-      ClassesEnrolled: {
-        course_name: course_name_index.innerText,
-      },
-    }),
-  });
+  let deleteCourse = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/delete-student`,
+    {
+      method: "DELETE",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        RollNumber: index.innerText,
+        ClassesEnrolled: {
+          course_name: course_name_index.innerText,
+        },
+      }),
+    }
+  );
   let response = await deleteCourse.json();
   if (!deleteCourse.ok) {
     console.log("failed", response);
@@ -28,7 +31,7 @@ async function deleteStudent(index, course_name_index) {
 async function populateInstructors() {
   let cookie_token = getCookie("token");
   let all_students = await fetch(
-    `http://localhost:5050/retrieve-college-administration`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/retrieve-college-administration`,
     {
       credentials: "same-origin",
       headers: { token: cookie_token },
@@ -110,7 +113,7 @@ async function updateStudent(
   }
   let cookie_token = getCookie("token");
   let updateStudent = await fetch(
-    `http://localhost:5050/update-student-details/${old_roll_number.innerHTML}/${old_name.innerHTML}/${old_course_name.innerHTML}`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/update-student-details/${old_roll_number.innerHTML}/${old_name.innerHTML}/${old_course_name.innerHTML}`,
     {
       method: "PATCH",
       headers: { Token: cookie_token },
@@ -172,7 +175,7 @@ async function populateInstructorsbyOrder(order) {
   localStorage.setItem("globalOrder", order);
   let cookie_token = getCookie("token");
   let all_students = await fetch(
-    `http://localhost:5050/retrieve-college-administration?order=${order}`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/retrieve-college-administration?order=${order}`,
     {
       credentials: "same-origin",
       headers: { token: cookie_token },

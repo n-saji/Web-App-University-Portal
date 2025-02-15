@@ -8,7 +8,9 @@ function setdashboard() {
 async function logout() {
   let api_error;
   let getDetails = await fetch(
-    `http://localhost:5050/logout?token=${getCookie("token")}`,
+    `https://dolphin-app-2zya2.ondigitalocean.app/logout?token=${getCookie(
+      "token"
+    )}`,
     {
       method: "GET",
     }

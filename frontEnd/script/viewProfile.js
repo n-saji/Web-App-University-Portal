@@ -5,7 +5,7 @@ let instrId = getCookie("account_id");
 let cookie_token = getCookie("token");
 async function autofil() {
   let api_url = "";
-  let url = `http://localhost:5050/view-profile-instructor/${instrId}`;
+  let url = `https://dolphin-app-2zya2.ondigitalocean.app/view-profile-instructor/${instrId}`;
 
   let api_response = await fetch(url, {
     method: "GET",
@@ -49,7 +49,7 @@ async function ToUpdateDetails() {
   );
 
   let api_url = "";
-  let url = `http://localhost:5050/update-instructor?instructor_id=${instrId}`;
+  let url = `https://dolphin-app-2zya2.ondigitalocean.app/update-instructor?instructor_id=${instrId}`;
   let api_response = await fetch(url, {
     method: "PATCH",
     headers: { Token: cookie_token },
@@ -70,7 +70,7 @@ async function ToUpdateDetails() {
     globalePassword === password_input.value
   ) {
     let api_url = "";
-    let url = `http://localhost:5050/update-instructor-credentials`;
+    let url = `https://dolphin-app-2zya2.ondigitalocean.app/update-instructor-credentials`;
     api_response = await fetch(url, {
       method: "PUT",
       headers: { Token: cookie_token },
@@ -91,7 +91,7 @@ async function ToUpdateDetails() {
     globalEmaild === email_input.value
   ) {
     let api_url = "";
-    let url = `http://localhost:5050/update-instructor-credentials`;
+    let url = `https://dolphin-app-2zya2.ondigitalocean.app/update-instructor-credentials`;
     api_response = await fetch(url, {
       method: "PUT",
       headers: { Token: cookie_token },
@@ -112,7 +112,7 @@ async function ToUpdateDetails() {
     globalEmaild !== email_input.value
   ) {
     let api_url = "";
-    let url = `http://localhost:5050/update-instructor-credentials`;
+    let url = `https://dolphin-app-2zya2.ondigitalocean.app/update-instructor-credentials`;
     api_response = await fetch(url, {
       method: "PUT",
       headers: { Token: cookie_token },

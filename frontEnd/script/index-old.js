@@ -10,12 +10,15 @@ for (let index = 0; index < cookies.length; index++) {
 setTimeout(validateCookie, 1000);
 
 async function validateCookie() {
-  let response = await fetch(`http://localhost:5050/check-token-status`, {
-    method: "GET",
-    headers: {
-      Token: cookiesMap["token"],
-    },
-  });
+  let response = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/check-token-status`,
+    {
+      method: "GET",
+      headers: {
+        Token: cookiesMap["token"],
+      },
+    }
+  );
   console.log(response);
   let jsonResponse = await response.json();
   console.log(jsonResponse);
@@ -78,13 +81,16 @@ async function toCheckValidity(emailId, password) {
 async function CheckValidity(username, password) {
   const emailId_warning = document.getElementById("tempfix");
   let error_while_fetching_api;
-  let response = await fetch(`http://localhost:5050/v1/login`, {
-    method: "POST",
-    body: JSON.stringify({
-      email_id: username,
-      password: password,
-    }),
-  }).catch((err) => {
+  let response = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/v1/login`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        email_id: username,
+        password: password,
+      }),
+    }
+  ).catch((err) => {
     error_while_fetching_api = err;
   });
   if (error_while_fetching_api == "TypeError: Failed to fetch") {

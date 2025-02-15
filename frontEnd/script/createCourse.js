@@ -14,13 +14,16 @@ async function InsertCourseValues() {
     return;
   }
   let cookie_token = getCookie("token");
-  let createCourse = await fetch(`http://localhost:5050/insert-course`, {
-    method: "POST",
-    headers: { Token: cookie_token },
-    body: JSON.stringify({
-      course_name: course_name,
-    }),
-  });
+  let createCourse = await fetch(
+    `https://dolphin-app-2zya2.ondigitalocean.app/insert-course`,
+    {
+      method: "POST",
+      headers: { Token: cookie_token },
+      body: JSON.stringify({
+        course_name: course_name,
+      }),
+    }
+  );
   let response = await createCourse.json();
   if (!createCourse.ok) {
     response_for_creation.innerHTML = response + "!!";
@@ -31,7 +34,3 @@ async function InsertCourseValues() {
     response_for_creation.innerHTML = "Successfully Created";
   }
 }
-
-
-
-
