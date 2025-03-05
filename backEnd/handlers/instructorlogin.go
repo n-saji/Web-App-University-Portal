@@ -171,3 +171,7 @@ func (h *Handler) CreateAccount(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, "SUCCESS")
 }
+
+func (h *Handler) healthCheckHandler(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, "SUCCESS")
+}

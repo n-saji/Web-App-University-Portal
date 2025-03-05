@@ -50,6 +50,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.POST("/v1/login", h.login)
 	rc.GET("/logout", h.logout)
 	rc.POST("/create-account", h.CreateAccount)
+	rc.GET("/health", h.healthCheckHandler)
 
 	//Depreciated
 	// rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
