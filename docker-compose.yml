@@ -19,15 +19,15 @@ services:
     ports:
       - 5050:5050
       - 8080:8080
-  db:
-    image: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - 5432:5432
-    volumes:
-      - pg_db:/var/lib/postgresql/data
+  # db:
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - pg_db:/var/lib/postgresql/data
 volumes:
   pg_db:
     driver: local
