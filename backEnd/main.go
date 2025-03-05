@@ -31,13 +31,13 @@ func main() {
 	go jobs.AccountDetailsMigration()
 	s.Start()
 
-	go utils.InitiateWebSockets()
 	go func() {
 		log.Println("WebSocket server started on :8080")
-		if err := http.ListenAndServe(":8080", nil); err != nil {
+		if err := http.ListenAndServe("0.0.0.0:8080", nil); err != nil {
 			log.Println("Error starting server:", err)
 		}
 	}()
+	utils.InitiateWebSockets()
 
 	r := handlerConnection.GetRouter()
 	log.Println(config.Port)
