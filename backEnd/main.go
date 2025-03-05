@@ -47,6 +47,7 @@ func main() {
 		return
 	}
 	s.Stop()
+
 }
 
 func toRunGooseMigration(url string) {
@@ -65,4 +66,5 @@ func toRunGooseMigration(url string) {
 		log.Println("Goose Up Failed")
 		panic(err)
 	}
+	db.Close()
 }
