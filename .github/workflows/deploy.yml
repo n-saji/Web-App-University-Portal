@@ -23,7 +23,7 @@ jobs:
           chmod 600 private_key.pem
 
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            cd /home/ec2-user/your-app
+            cd /home/ec2-user/Web-App-University-Portal
             git pull origin main
             docker-compose down
             docker-compose up -d --build
