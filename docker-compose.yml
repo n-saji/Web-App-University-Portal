@@ -18,6 +18,7 @@ services:
 
     ports:
       - 5050:5050
+      - 8080:8080
   db:
     image: postgres
     environment:
