@@ -23,6 +23,8 @@ jobs:
             DB_HOST: ${{ secrets.DB_HOST }}
             DB_PORT: ${{ secrets.DB_PORT }}
             DB_USER: ${{ secrets.DB_USER }}
+            PORT: ${{ secrets.PORT }}
+            SSL_MODE: ${{ secrets.SSL_MODE }}
         run: |
           echo "$EC2_SSH_KEY" > private_key.pem
           echo "Database host: $DB_HOST"
