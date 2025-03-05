@@ -25,6 +25,7 @@ jobs:
             DB_USER: ${{ secrets.DB_USER }}
         run: |
           echo "$EC2_SSH_KEY" > private_key.pem
+          echo "Database host: $DB_HOST"
           chmod 600 private_key.pem
 
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
