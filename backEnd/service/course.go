@@ -2,6 +2,7 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"CollegeAdministration/utils"
 	"errors"
 	"fmt"
 
@@ -24,6 +25,7 @@ func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
 	if status != nil {
 		return status
 	}
+	utils.SendMessage("New Course Added: " + cv.CourseName)
 	return status
 
 }
