@@ -2,6 +2,7 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"CollegeAdministration/utils"
 	"errors"
 	"fmt"
 	"log"
@@ -56,7 +57,7 @@ func (ac *Service) InsertInstructor(iid *models.InstructorDetails) (uuid.UUID, e
 		log.Println("error storing in account")
 		return uuid.Nil, nil
 	}
-
+	utils.SendMessage("New Instructor Added: " + account.Name)
 	return iid.Id, nil
 }
 

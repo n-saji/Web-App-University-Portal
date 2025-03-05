@@ -2,6 +2,7 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"CollegeAdministration/utils"
 	"fmt"
 	"log"
 	"strconv"
@@ -76,6 +77,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 		log.Println("error storing in account student")
 		return err3
 	}
+	utils.SendMessage("New Student Added: " + account.Name)
 	return nil
 
 }
