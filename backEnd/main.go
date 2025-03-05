@@ -4,9 +4,11 @@ import (
 	"CollegeAdministration/config"
 	"CollegeAdministration/handlers"
 	"CollegeAdministration/jobs"
+	"CollegeAdministration/utils"
 	"database/sql"
 	"embed"
 	"log"
+	"net/http"
 
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
@@ -29,13 +31,13 @@ func main() {
 	go jobs.AccountDetailsMigration()
 	s.Start()
 
-	// utils.InitiateWebSockets()
-	// go func() {
-	// 	log.Println("WebSocket server started on :8080")
-	// 	if err := http.ListenAndServe(":8080", nil); err != nil {
-	// 		log.Println("Error starting server:", err)
-	// 	}
-	// }()
+	utils.InitiateWebSockets()
+	go func() {
+		log.Println("WebSocket server started on :8080")
+		if err := http.ListenAndServe(":8080", nil); err != nil {
+			log.Println("Error starting server:", err)
+		}
+	}()
 
 	r := handlerConnection.GetRouter()
 	log.Println(config.Port)
