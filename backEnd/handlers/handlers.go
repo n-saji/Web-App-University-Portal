@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"CollegeAdministration/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -51,6 +52,9 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/logout", h.logout)
 	rc.POST("/create-account", h.CreateAccount)
 	rc.GET("/health", h.healthCheckHandler)
+
+	//WebSockets
+	rc.GET("/ws", utils.HandleConnections)
 
 	//Depreciated
 	// rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)

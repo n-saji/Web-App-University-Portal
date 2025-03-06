@@ -8,7 +8,6 @@ import (
 	"database/sql"
 	"embed"
 	"log"
-	"net/http"
 
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
@@ -29,26 +28,18 @@ func main() {
 	s := cron.New()
 	go s.AddFunc("@every 24h", jobs.RunDailyMigrations)
 	go jobs.AccountDetailsMigration()
+	go utils.InitiateWebSockets()
 	s.Start()
 
-	go func() {
-		r := handlerConnection.GetRouter()
-		log.Println(config.Port)
-		main_err := r.Run(config.Port)
-		if main_err != nil {
-			log.Println("MAIN - ERROR ", main_err)
-			return
-		}
-		s.Stop()
-	}()
+	r := handlerConnection.GetRouter()
+	log.Println(config.Port)
+	main_err := r.Run(config.Port)
+	if main_err != nil {
+		log.Println("MAIN - ERROR ", main_err)
+		return
+	}
+	s.Stop()
 
-	go func() {
-		log.Println("WebSocket server started on :8080")
-		if err := http.ListenAndServe(":8080", nil); err != nil {
-			log.Println("Error starting server:", err)
-		}
-	}()
-	utils.InitiateWebSockets()
 
 }
 
