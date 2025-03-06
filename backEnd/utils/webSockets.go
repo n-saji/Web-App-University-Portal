@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"sync"
 
@@ -21,7 +21,7 @@ var (
 func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		fmt.Println("Error upgrading to WebSocket:", err)
+		log.Println("Error upgrading to WebSocket:", err)
 		return
 	}
 	defer conn.Close()
@@ -30,13 +30,13 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	clientsMu.Lock()
 	clients[conn] = true
 	clientsMu.Unlock()
-	fmt.Println("New client connected")
+	log.Println("New client connected")
 
 	// Listen for messages from the client (optional)
 	for {
 		_, _, err := conn.ReadMessage()
 		if err != nil {
-			fmt.Println("Error reading message:", err)
+			log.Println("Error reading message:", err)
 			break
 		}
 	}
@@ -45,7 +45,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	clientsMu.Lock()
 	delete(clients, conn)
 	clientsMu.Unlock()
-	fmt.Println("Client disconnected")
+	log.Println("Client disconnected")
 }
 
 func InitiateWebSockets() {
@@ -55,7 +55,7 @@ func InitiateWebSockets() {
 		msg := <-broadcast
 		for client := range clients {
 			if err := client.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
-				fmt.Println("Error writing message:", err)
+				log.Println("Error writing message:", err)
 				client.Close()
 				delete(clients, client)
 			}
