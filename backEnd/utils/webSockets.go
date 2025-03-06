@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
 
@@ -18,7 +19,29 @@ var (
 	broadcast = make(chan string)
 )
 
-func HandleConnections(w http.ResponseWriter, r *http.Request) {
+
+func InitiateWebSockets() {
+
+	for {
+		msg := <-broadcast
+		for client := range clients {
+			if err := client.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
+				log.Println("Error writing message:", err)
+				client.Close()
+				delete(clients, client)
+			}
+		}
+	}
+}
+
+func SendMessage(msg string) {
+	broadcast <- msg
+}
+
+func HandleConnections(c *gin.Context) {
+	w := c.Writer
+	r := c.Request
+
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Error upgrading to WebSocket:", err)
@@ -46,23 +69,4 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	delete(clients, conn)
 	clientsMu.Unlock()
 	log.Println("Client disconnected")
-}
-
-func InitiateWebSockets() {
-	http.HandleFunc("/ws", HandleConnections)
-
-	for {
-		msg := <-broadcast
-		for client := range clients {
-			if err := client.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
-				log.Println("Error writing message:", err)
-				client.Close()
-				delete(clients, client)
-			}
-		}
-	}
-}
-
-func SendMessage(msg string) {
-	broadcast <- msg
 }
