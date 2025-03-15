@@ -26,7 +26,7 @@ func (ac *Service) InsertValuesToCA(account_id string, cv *models.CourseInfo) er
 	if status != nil {
 		return status
 	}
-	utils.SendEventToAllClients("New Course Added: "+cv.CourseName, config.AccountTypeInstructor, account_id)
+	go utils.SendEventToAllClients("New Course Added: "+cv.CourseName, config.AccountTypeInstructor, account_id)
 	return status
 
 }

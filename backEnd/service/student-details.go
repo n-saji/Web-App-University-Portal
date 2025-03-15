@@ -78,7 +78,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo, account_id
 		log.Println("error storing in account student")
 		return err3
 	}
-	utils.SendEventToAllClients("New Student Added: "+account.Name, config.AccountTypeInstructor, account_id)
+	go utils.SendEventToAllClients("New Student Added: "+account.Name, config.AccountTypeInstructor, account_id)
 	return nil
 
 }
