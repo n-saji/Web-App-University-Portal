@@ -103,7 +103,7 @@ func SendEventToAllClients(event string, account_type, skip_account string) {
 
 	ids, err := db.GetAccountIDsByType(account_type)
 	if err != nil {
-		fmt.Errorf("error while fetching instructor ids" + err.Error())
+		fmt.Println("error while fetching instructor ids" + err.Error())
 		return
 	}
 	for _, id := range ids {
@@ -117,13 +117,14 @@ func SendEventToAllClients(event string, account_type, skip_account string) {
 		msg.IsRead = false
 		err := db.InsertIntoMessages(msg)
 		if err != nil {
-			fmt.Errorf("error while inserting message" + err.Error())
+			fmt.Println("error while inserting message" + err.Error())
 			return
 		}
 	}
 	clientsMu.Lock()
-	for conn := range clients {
+	for acntId,conn := range clientsId {
 		conn.WriteMessage(websocket.TextMessage, []byte(event))
+		db.UpdateMessageStatusForAccountId(uuid.MustParse(acntId))
 	}
 	clientsMu.Unlock()
 	defer config.CloseDB(dbConn)
