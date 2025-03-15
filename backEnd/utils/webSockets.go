@@ -123,6 +123,9 @@ func SendEventToAllClients(event string, account_type, skip_account string) {
 	}
 	clientsMu.Lock()
 	for acntId,conn := range clientsId {
+		if acntId == skip_account {
+			continue
+		}
 		conn.WriteMessage(websocket.TextMessage, []byte(event))
 		db.UpdateMessageStatusForAccountId(uuid.MustParse(acntId))
 	}
