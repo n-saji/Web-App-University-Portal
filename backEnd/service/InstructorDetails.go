@@ -149,14 +149,16 @@ func (s *Service) DeleteInstructor(name string) error {
 	if err != nil {
 		return err
 	}
-	err1 := s.daos.DeleteInstructorLogin(id.Id)
-	if err1 != nil {
-		return err1
-	}
 
 	err3 := s.daos.DeleteMessageByAccountId(id.Id)
 	if err3 != nil {
 		return err3
+	}
+
+	
+	err1 := s.daos.DeleteInstructorLogin(id.Id)
+	if err1 != nil {
+		return err1
 	}
 
 	err2 := s.daos.DeleteInstructor(name)
@@ -270,15 +272,16 @@ func (s *Service) DeleteInstructorWithConditions(id_condition *models.Instructor
 			return fmt.Errorf("instructor not found")
 		}
 
+		err3 := s.daos.DeleteMessageByAccountId(each_id.Id)
+		if err3 != nil {
+			return err3
+		}
+
 		err1 := s.daos.DeleteInstructorLogin(each_id.Id)
 		if err1 != nil {
 			return err1
 		}
 
-		err3 := s.daos.DeleteMessageByAccountId(each_id.Id)
-		if err3 != nil {
-			return err3
-		}
 		err2 := s.daos.DeleteInstructorWithConditions(each_id)
 		if err2 != nil {
 			return err2
