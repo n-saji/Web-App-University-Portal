@@ -54,7 +54,8 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	rc.GET("/health", h.healthCheckHandler)
 
 	//WebSockets
-	rc.GET("/ws", utils.HandleConnections)
+	rc.GET("/ws/:id", utils.HandleConnections)
+	rc.GET("/read-message/:id", h.UpdateMessageStatusAsRead)
 
 	//Depreciated
 	// rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)

@@ -32,7 +32,7 @@ func (h *Handler) login(ctx *gin.Context) {
 		return
 	}
 	if err == nil && err1 == nil {
-		token, err2 := h.service.GetTokenAfterLogging()
+		token, err2 := h.service.GetTokenAfterLogging(instructor_id)
 		ctx.Writer.Header().Set("token", token.String())
 		ctx.Writer.Header().Set("account_id", instructor_id)
 		http.SetCookie(ctx.Writer, &http.Cookie{

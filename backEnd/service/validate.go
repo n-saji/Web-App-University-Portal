@@ -14,7 +14,7 @@ func (ac *Service) ValidateLogin(email, password string) error {
 
 	reg := regexp.MustCompile(`^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$`)
 	ok := reg.MatchString(email)
-	if !ok  {
+	if !ok {
 		return fmt.Errorf("wrong email format")
 	} else if password == ":password" {
 		return fmt.Errorf("password cant be empty ")
@@ -67,8 +67,13 @@ func (ac *Service) CheckCredentials(email, password string) error {
 	return nil
 }
 
-func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
+func (ac *Service) GetTokenAfterLogging(account_id string) (uuid.UUID, error) {
 	var token_table models.Token_generator
+	account_uuid, err := uuid.Parse(account_id)
+	if err != nil {
+		return uuid.Nil, fmt.Errorf("error parsing uuid")
+	}
+	token_table.AccountId = account_uuid
 
 	token := uuid.New()
 	token_table.Token = token
@@ -78,7 +83,7 @@ func (ac *Service) GetTokenAfterLogging() (uuid.UUID, error) {
 	validtill := tn.Add(time.Hour * 24)
 	token_table.ValidTill = validtill.Unix()
 
-	err := ac.daos.InsertToken(token_table)
+	err = ac.daos.InsertToken(token_table)
 	if err != nil {
 		return uuid.Nil, fmt.Errorf("token insertion failed")
 	}
@@ -154,4 +159,17 @@ func (s *Service) DisableToken(token string) error {
 		return fmt.Errorf("db error while invalidating token, err - %s", err)
 	}
 	return nil
+}
+
+func (s *Service) GetAccountByToken(token string) (string, error) {
+
+	parsedToken, err := uuid.Parse(token)
+	if err != nil {
+		return "", fmt.Errorf("unable to parse token, err- %s", err)
+	}
+	acc, err := s.daos.GetAccountByToken(parsedToken)
+	if err != nil {
+		return "", fmt.Errorf("db error while fetching account, err - %s", err)
+	}
+	return acc.AccountId.String(), nil
 }

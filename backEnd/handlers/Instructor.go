@@ -42,7 +42,14 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	id, response := h.service.InsertInstructor(insd)
+
+	account_id, err := h.service.GetAccountByToken(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	id, response := h.service.InsertInstructor(account_id,insd)
 	if response != nil {
 		reply.Err = response.Error()
 		ctx.JSON(http.StatusInternalServerError, &reply)

@@ -17,6 +17,8 @@ var (
 	Postgres_Host     string
 	Port              string
 	DB_URL            string
+	AccountTypeInstructor = "instructor"
+	AccountTypeStudent    = "student"
 )
 
 func Init() {

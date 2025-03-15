@@ -1,6 +1,7 @@
 package service
 
 import (
+	"CollegeAdministration/config"
 	"CollegeAdministration/models"
 	"CollegeAdministration/utils"
 	"fmt"
@@ -10,7 +11,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
+func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo, account_id string) error {
 
 	course_details, err := ac.daos.GetCourseByName(new_student.ClassesEnrolled.CourseName)
 	if err != nil {
@@ -77,7 +78,7 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo) error {
 		log.Println("error storing in account student")
 		return err3
 	}
-	utils.SendMessage("New Student Added: " + account.Name)
+	utils.SendEventToAllClients("New Student Added: "+account.Name, config.AccountTypeInstructor, account_id)
 	return nil
 
 }

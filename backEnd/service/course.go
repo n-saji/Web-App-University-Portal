@@ -1,6 +1,7 @@
 package service
 
 import (
+	"CollegeAdministration/config"
 	"CollegeAdministration/models"
 	"CollegeAdministration/utils"
 	"errors"
@@ -9,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
+func (ac *Service) InsertValuesToCA(account_id string, cv *models.CourseInfo) error {
 
 	if cv.CourseName == "" {
 		return fmt.Errorf("course name should not be empty")
@@ -25,7 +26,7 @@ func (ac *Service) InsertValuesToCA(cv *models.CourseInfo) error {
 	if status != nil {
 		return status
 	}
-	utils.SendMessage("New Course Added: " + cv.CourseName)
+	utils.SendEventToAllClients("New Course Added: "+cv.CourseName, config.AccountTypeInstructor, account_id)
 	return status
 
 }

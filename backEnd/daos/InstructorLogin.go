@@ -157,3 +157,13 @@ func (ac *AdministrationCloud) UpdateCredentials(cred *models.InstructorLogin) e
 
 	return nil
 }
+
+func (ac *AdministrationCloud) GetAccountByToken(token uuid.UUID) (*models.Token_generator, error) {
+	var account models.Token_generator
+	err := ac.dbConn.Model(models.Token_generator{}).Select("account_id").Where("token = ? and is_valid = true", token).Find(&account).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return &account, nil
+}

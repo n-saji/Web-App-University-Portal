@@ -5,14 +5,18 @@ import (
 	"CollegeAdministration/daos"
 	"CollegeAdministration/models"
 	"CollegeAdministration/service"
+	"CollegeAdministration/utils"
 	"fmt"
+	"log"
+
+	"gorm.io/gorm"
 )
 
-func AccountDetailsMigration() error {
+func AccountDetailsMigration(dbCon *gorm.DB) error {
 
 	var complete_account []*models.Account
-	s := service.New(config.DBInit())
-	daos := daos.New(config.DBInit())
+	s := service.New(dbCon)
+	daos := daos.New(dbCon)
 	student_details, err := s.Retrieve_student_details()
 	if err != nil {
 		err_statement := "Failed to get details" + err.Error()
@@ -22,6 +26,7 @@ func AccountDetailsMigration() error {
 		account_dataset := &models.Account{}
 		account_dataset.Id = student_detail.Id
 		account_dataset.Name = student_detail.Name
+		account_dataset.Type = config.AccountTypeStudent
 
 		complete_account = append(complete_account, account_dataset)
 	}
@@ -45,6 +50,7 @@ func AccountDetailsMigration() error {
 		account_dataset.Info.Credentials.Id = credentials.Id
 		account_dataset.Info.Credentials.EmailId = credentials.EmailId
 		account_dataset.Info.Credentials.Password = credentials.Password
+		account_dataset.Type = config.AccountTypeInstructor
 
 		complete_account = append(complete_account, account_dataset)
 
@@ -57,4 +63,29 @@ func AccountDetailsMigration() error {
 		return fmt.Errorf(err_statement)
 	}
 	return nil
+}
+
+func SendMessages() {
+	log.Println("Sending messages")
+	dbConn := config.DBInit()
+	// s := service.New(dbConn)
+	daos := daos.New(dbConn)
+	acc_ids, err := daos.GetAccountIDsByType(config.AccountTypeInstructor)
+	if err != nil {
+		err_statement := "Failed to get ids" + err.Error()
+		fmt.Println(err_statement)
+	}
+	for _, acc := range acc_ids {
+		messages, err := daos.GetActiveMessagesForAccountId(acc.Id)
+		if err != nil {
+			err_statement := "Failed to get messages" + err.Error()
+			fmt.Println(err_statement)
+		}
+		for _, message := range messages {
+			utils.SendMessageToClient(acc.Id.String(), message.Messages)
+
+		}
+	}
+
+	defer config.CloseDB(dbConn)
 }

@@ -45,3 +45,13 @@ func (ac *AdministrationCloud) DeleteAccount(id uuid.UUID) error {
 	}
 	return nil
 }
+
+func (ac *AdministrationCloud)GetAccountIDsByType(accountType string) ([]models.Account, error) {
+
+	var accounts []models.Account
+	err := ac.dbConn.Model(models.Account{}).Select("id").Where("type = ?", accountType).Find(&accounts).Error
+	if err != nil {
+		return nil, err
+	}
+	return accounts, nil
+}

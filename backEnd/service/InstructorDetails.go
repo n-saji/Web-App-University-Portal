@@ -1,6 +1,7 @@
 package service
 
 import (
+	"CollegeAdministration/config"
 	"CollegeAdministration/models"
 	"CollegeAdministration/utils"
 	"errors"
@@ -12,7 +13,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (ac *Service) InsertInstructor(iid *models.InstructorDetails) (uuid.UUID, error) {
+func (ac *Service) InsertInstructor(account_id string, iid *models.InstructorDetails) (uuid.UUID, error) {
 	if _, err := strconv.Atoi(iid.InstructorName); err == nil {
 		return uuid.Nil, errors.New("name can't be number")
 	}
@@ -51,13 +52,14 @@ func (ac *Service) InsertInstructor(iid *models.InstructorDetails) (uuid.UUID, e
 	account.Id = iid.Id
 	account.Info.Credentials.Id = iid.Id
 	account.Name = iid.InstructorName
+	account.Type = config.AccountTypeInstructor
 
 	err3 := ac.daos.AccountMigrationsCreate([]*models.Account{account})
 	if err3 != nil {
 		log.Println("error storing in account")
 		return uuid.Nil, nil
 	}
-	utils.SendMessage("New Instructor Added: " + account.Name)
+	utils.SendEventToAllClients("New Instructor Added: "+account.Name, config.AccountTypeInstructor, account_id)
 	return iid.Id, nil
 }
 

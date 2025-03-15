@@ -34,7 +34,7 @@ func (h *Handler) InstructorLoginCreation(ctx *gin.Context) {
 			ctx.JSON(http.StatusNotAcceptable, err1.Error())
 			return
 		} else {
-			token, _ := h.service.GetTokenAfterLogging()
+			token, _ := h.service.GetTokenAfterLogging(uuid.String())
 			ctx.Writer.Header().Set("token", token.String())
 			ctx.Writer.Header().Set("account_id", uuid.String())
 			http.SetCookie(ctx.Writer, &http.Cookie{
@@ -79,7 +79,7 @@ func (h *Handler) InstructorLogin(ctx *gin.Context) {
 		return
 	}
 	if err == nil && err1 == nil {
-		token, err2 := h.service.GetTokenAfterLogging()
+		token, err2 := h.service.GetTokenAfterLogging(instructor_id)
 		ctx.Writer.Header().Set("token", token.String())
 		ctx.Writer.Header().Set("account_id", instructor_id)
 		http.SetCookie(ctx.Writer, &http.Cookie{
