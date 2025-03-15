@@ -2,6 +2,7 @@ package daos
 
 import (
 	"CollegeAdministration/models"
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -36,9 +37,11 @@ func (ac *AdministrationCloud) GetActiveMessagesForAccountId(account_id uuid.UUI
 
 func (ac *AdministrationCloud) DeleteMessageByAccountId(account_id uuid.UUID) error {
 
-	err := ac.dbConn.Model(models.Messages{}).Delete("account_id", account_id).Error
-	if err != nil {
-		return err
+	fmt.Println("Deleting messages for account_id: ", account_id)
+	q := ac.dbConn.Model(models.Messages{}).Where("account_id = ?", account_id).Delete(&models.Messages{})
+	fmt.Println(q.RowsAffected)
+	if q.Error != nil {
+		return q.Error
 	}
 	return nil
 }
