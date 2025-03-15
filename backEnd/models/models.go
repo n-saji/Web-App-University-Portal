@@ -51,6 +51,7 @@ type InstructorLogin struct {
 
 type Token_generator struct {
 	Token     uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
+	AccountId uuid.UUID `json:"account_id"`
 	ValidFrom int64
 	ValidTill int64
 	IsValid   bool
@@ -60,6 +61,7 @@ type Account struct {
 	Id   uuid.UUID    `gorm:"primary_key;unique;type=uuid"`
 	Name string       `json:"name"`
 	Info Account_Info `gorm:"type:jsonb;" json:"info"`
+	Type string       `json:"type"`
 }
 
 // not part of db
@@ -106,4 +108,11 @@ type InstructorProfile struct {
 	Department  string
 	Code        string
 	Credentials InstructorLogin
+}
+
+type Messages struct {
+	ID        uuid.UUID
+	AccountID uuid.UUID
+	Messages  string
+	IsRead      bool
 }

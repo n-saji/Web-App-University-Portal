@@ -27,8 +27,9 @@ func main() {
 
 	s := cron.New()
 	go s.AddFunc("@every 24h", jobs.RunDailyMigrations)
-	go jobs.AccountDetailsMigration()
+	go jobs.AccountDetailsMigration(db)
 	go utils.InitiateWebSockets()
+	go s.AddFunc("@every 1m", jobs.SendMessages)
 	s.Start()
 
 	r := handlerConnection.GetRouter()
@@ -39,7 +40,7 @@ func main() {
 		return
 	}
 	s.Stop()
-
+	defer config.CloseDB(db)
 
 }
 

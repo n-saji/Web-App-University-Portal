@@ -1,11 +1,16 @@
 package utils
 
 import (
+	"CollegeAdministration/config"
+	"CollegeAdministration/daos"
+	"CollegeAdministration/models"
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
 
@@ -15,10 +20,10 @@ var upgrader = websocket.Upgrader{
 
 var (
 	clients   = make(map[*websocket.Conn]bool)
+	clientsId = make(map[string]*websocket.Conn)
 	clientsMu sync.Mutex // Mutex to protect the clients map
 	broadcast = make(chan string)
 )
-
 
 func InitiateWebSockets() {
 
@@ -34,14 +39,15 @@ func InitiateWebSockets() {
 	}
 }
 
-func SendMessage(msg string) {
+func SendMessageAsBroadCast(msg string) {
 	broadcast <- msg
 }
 
 func HandleConnections(c *gin.Context) {
 	w := c.Writer
 	r := c.Request
-
+	params := c.Params
+	id := params.ByName("id")
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Error upgrading to WebSocket:", err)
@@ -52,6 +58,7 @@ func HandleConnections(c *gin.Context) {
 	// Protect the clients map with a mutex
 	clientsMu.Lock()
 	clients[conn] = true
+	clientsId[id] = conn
 	clientsMu.Unlock()
 	log.Println("New client connected")
 
@@ -69,4 +76,55 @@ func HandleConnections(c *gin.Context) {
 	delete(clients, conn)
 	clientsMu.Unlock()
 	log.Println("Client disconnected")
+}
+
+func SendMessageToClient(id string, msg string) {
+	clientsMu.Lock()
+	conn, ok := clientsId[id]
+	if ok {
+		conn.WriteMessage(websocket.TextMessage, []byte(msg))
+	}
+	clientsMu.Unlock()
+}
+
+func SendMessageToAllClients(msg string) {
+	clientsMu.Lock()
+	for conn := range clients {
+		conn.WriteMessage(websocket.TextMessage, []byte(msg))
+	}
+	clientsMu.Unlock()
+}
+
+// message to send , account type to send to, account to skip
+func SendEventToAllClients(event string, account_type, skip_account string) {
+
+	dbConn := config.DBInit()
+	db := daos.New(dbConn)
+
+	ids, err := db.GetAccountIDsByType(account_type)
+	if err != nil {
+		fmt.Errorf("error while fetching instructor ids" + err.Error())
+		return
+	}
+	for _, id := range ids {
+		if id.Id.String() == skip_account {
+			continue
+		}
+		msg := &models.Messages{}
+		msg.ID = uuid.New()
+		msg.AccountID = id.Id
+		msg.Messages = event
+		msg.IsRead = false
+		err := db.InsertIntoMessages(msg)
+		if err != nil {
+			fmt.Errorf("error while inserting message" + err.Error())
+			return
+		}
+	}
+	clientsMu.Lock()
+	for conn := range clients {
+		conn.WriteMessage(websocket.TextMessage, []byte(event))
+	}
+	clientsMu.Unlock()
+	defer config.CloseDB(dbConn)
 }

@@ -22,7 +22,8 @@ func RunDailyMigrations() {
 
 func CheckOutDatedTokensSetFalse(ch chan int) {
 
-	daos := daos.New(config.DBInit())
+	dbConn := config.DBInit()
+	daos := daos.New(dbConn)
 	ch <- 1
 	all_tokens, err := daos.GetAllTokens()
 	if err != nil {
@@ -37,15 +38,18 @@ func CheckOutDatedTokensSetFalse(ch chan int) {
 
 	}
 	defer wg.Done()
+	config.CloseDB(dbConn)
 }
 
 func DeleteNotValidTokens(ch chan int) {
 
 	<-ch
-	daos := daos.New(config.DBInit())
+	dbConn := config.DBInit()
+	daos := daos.New(dbConn)
 	err := daos.RunMigrationsForRemovingOutDatedTokens()
 	if err != nil {
 		log.Panic(err)
 	}
 	defer wg.Done()
+	config.CloseDB(dbConn)
 }

@@ -28,13 +28,18 @@ func (h *Handler) InsertCourse(ctx *gin.Context) {
 		return
 	}
 
+	account_id,err := h.service.GetAccountByToken(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
 	var ca models.CourseInfo
-	err := ctx.BindJSON(&ca)
+	err = ctx.BindJSON(&ca)
 
 	if err != nil {
 		log.Println("not able to store values")
 	}
-	response := h.service.InsertValuesToCA(&ca)
+	response := h.service.InsertValuesToCA(account_id,&ca)
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
 		return

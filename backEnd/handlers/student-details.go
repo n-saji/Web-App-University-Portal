@@ -33,7 +33,12 @@ func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 	if err != nil {
 		log.Println("not able to store values")
 	}
-	response := h.service.InsertValuesToCAd(&cad)
+	account_id, err := h.service.GetAccountByToken(token)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	response := h.service.InsertValuesToCAd(&cad, account_id)
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
 		return

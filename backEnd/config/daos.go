@@ -17,3 +17,11 @@ func DBInit() *gorm.DB {
 
 	return db
 }
+
+func CloseDB(db *gorm.DB) {
+	dbSQL, err := db.DB()
+	if err != nil {
+		log.Println("Found err while closing the database", err)
+	}
+	dbSQL.Close()
+}
