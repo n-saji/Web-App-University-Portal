@@ -80,13 +80,17 @@ func HandleConnections(c *gin.Context) {
 	log.Println("Client disconnected")
 }
 
-func SendMessageToClient(id string, msg string) {
+func SendMessageToClient(id string, msg models.Messages)bool {
 	clientsMu.Lock()
+	jsonMsg, _ := json.Marshal(msg)
 	conn, ok := clientsId[id]
 	if ok {
-		conn.WriteMessage(websocket.TextMessage, []byte(msg))
+		conn.WriteMessage(websocket.TextMessage, []byte(jsonMsg))
+		clientsMu.Unlock()
+		return true
 	}
 	clientsMu.Unlock()
+	return false
 }
 
 func SendMessageToAllClients(msg, author, title string) {
@@ -105,29 +109,41 @@ func SendMessageToAllClients(msg, author, title string) {
 }
 
 // message to send , account type to send to, account to skip
-func SendEventToAllClients(title, event, account_type, skip_account string) {
+func SendEventToAllClients(title, message, account_type, sender_id string) {
 
 	dbConn := config.DBInit()
 	db := daos.New(dbConn)
+	author := &models.Account{}
 
 	ids, err := db.GetAccountIDsByType(account_type)
 	if err != nil {
 		fmt.Println("error while fetching instructor ids" + err.Error())
 		return
 	}
-	author, err := db.GetAccountNameById(uuid.MustParse(skip_account))
-	if err != nil {
-		fmt.Println("error while fetching author" + err.Error())
-		return
+	if sender_id != "" {
+		skip_account_uuid, err := uuid.Parse(sender_id)
+		if err != nil {
+			fmt.Println("error while parsing skip account" + err.Error())
+			return
+		}
+		author, err = db.GetAccountNameById(skip_account_uuid)
+		if err != nil {
+			fmt.Println("error while fetching author" + err.Error())
+			return
+		}
 	}
 	msg := &models.Messages{}
-	msg.Messages = event
+	msg.Messages = message
 	msg.IsRead = false
-	msg.Author = author.Name
+	if author != nil {
+		msg.Author = author.Name
+	} else {
+		msg.Author = "nil"
+	}
 	msg.Title = title
 	msg.CreatedAt = time.Now().Unix()
 	for _, id := range ids {
-		if id.Id.String() == skip_account {
+		if sender_id != "" && id.Id.String() == sender_id {
 			continue
 		}
 		msg.ID = uuid.New()
@@ -141,7 +157,7 @@ func SendEventToAllClients(title, event, account_type, skip_account string) {
 	clientsMu.Lock()
 	jsonMsg, _ := json.Marshal(msg)
 	for acntId, conn := range clientsId {
-		if acntId == skip_account {
+		if acntId == sender_id {
 			continue
 		}
 		conn.WriteMessage(websocket.TextMessage, []byte(jsonMsg))

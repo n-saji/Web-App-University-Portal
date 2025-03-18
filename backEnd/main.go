@@ -29,7 +29,7 @@ func main() {
 	go s.AddFunc("@every 24h", jobs.RunDailyMigrations)
 	go jobs.AccountDetailsMigration(db)
 	go utils.InitiateWebSockets()
-	go s.AddFunc("@every 1m", jobs.SendMessages)
+	go s.AddFunc("@every 10s", jobs.SendMessages)
 	s.Start()
 
 	r := handlerConnection.GetRouter()
