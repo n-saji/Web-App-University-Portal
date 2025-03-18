@@ -76,6 +76,7 @@ func HandleConnections(c *gin.Context) {
 	// Remove the client when it disconnects
 	clientsMu.Lock()
 	delete(clients, conn)
+	delete(clientsId, id)
 	clientsMu.Unlock()
 	log.Println("Client disconnected")
 }
