@@ -7,7 +7,6 @@ import (
 	"CollegeAdministration/service"
 	"CollegeAdministration/utils"
 	"fmt"
-	"log"
 
 	"gorm.io/gorm"
 )
@@ -66,7 +65,7 @@ func AccountDetailsMigration(dbCon *gorm.DB) error {
 }
 
 func SendMessages() {
-	log.Println("Sending messages")
+	// log.Println("Sending messages")
 	dbConn := config.DBInit()
 	// s := service.New(dbConn)
 	daos := daos.New(dbConn)
