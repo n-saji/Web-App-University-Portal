@@ -1,6 +1,7 @@
 package service
 
 import (
+	"CollegeAdministration/config"
 	"CollegeAdministration/utils"
 	"fmt"
 
@@ -20,7 +21,12 @@ func (s *Service) UpdateMessageStatusAsRead(account_id string) (string, error) {
 	return account_id, nil
 }
 
-func (s *Service) SendMessageAsBroadCast(msg string) error {
-	utils.SendMessageToAllClients(msg, "Admin", "Test")
-	return nil
+func (s *Service) SendMessageAsBroadCast(broadcastType , msg string) error {
+	if broadcastType == "event"{
+		utils.SendEventToAllClients("Test", msg, config.AccountTypeInstructor, "")
+		return nil
+	}else{
+		utils.SendMessageToAllClients(msg, "Admin", "Test")
+		return nil
+	}
 }

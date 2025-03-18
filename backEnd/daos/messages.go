@@ -25,6 +25,15 @@ func (ac *AdministrationCloud) UpdateMessageStatusForAccountId(account_id uuid.U
 	return nil
 }
 
+func (ac *AdministrationCloud) UpdateMessageStatusforMsgId(msg_id uuid.UUID) error {
+
+	err := ac.dbConn.Model(models.Messages{}).Where("id = ?", msg_id).Update("is_read", true).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (ac *AdministrationCloud) GetActiveMessagesForAccountId(account_id uuid.UUID) ([]models.Messages, error) {
 
 	var messages []models.Messages
