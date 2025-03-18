@@ -21,12 +21,12 @@ func (s *Service) UpdateMessageStatusAsRead(account_id string) (string, error) {
 	return account_id, nil
 }
 
-func (s *Service) SendMessageAsBroadCast(broadcastType , msg string) error {
-	if broadcastType == "event"{
-		utils.SendEventToAllClients("Test", msg, config.AccountTypeInstructor, "")
+func (s *Service) SendMessageAsBroadCast(broadcastType, msg string) error {
+	if broadcastType == "event" {
+		utils.StoreMessages("Test", msg, config.AccountTypeInstructor, "")
 		return nil
-	}else{
-		utils.SendMessageToAllClients(msg, "Admin", "Test")
+	} else {
+		utils.SendMessageToConnectedClients(msg, "Admin", "Test")
 		return nil
 	}
 }

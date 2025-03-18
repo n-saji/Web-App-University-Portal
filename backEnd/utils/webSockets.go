@@ -41,10 +41,6 @@ func InitiateWebSockets() {
 	}
 }
 
-func SendMessageAsBroadCast(msg string) {
-	broadcast <- msg
-}
-
 func HandleConnections(c *gin.Context) {
 	w := c.Writer
 	r := c.Request
@@ -62,7 +58,7 @@ func HandleConnections(c *gin.Context) {
 	clients[conn] = true
 	clientsId[id] = conn
 	clientsMu.Unlock()
-	log.Println("New client connected",id)
+	log.Println("New client connected", id)
 
 	// Listen for messages from the client (optional)
 	for {
@@ -81,7 +77,7 @@ func HandleConnections(c *gin.Context) {
 	log.Println("Client disconnected")
 }
 
-func SendMessageToClient(id string, msg models.Messages)bool {
+func SendMessageToClientId(id string, msg models.Messages) bool {
 	clientsMu.Lock()
 	jsonMsg, _ := json.Marshal(msg)
 	conn, ok := clientsId[id]
@@ -94,9 +90,10 @@ func SendMessageToClient(id string, msg models.Messages)bool {
 	return false
 }
 
-func SendMessageToAllClients(msg, author, title string) {
+func SendMessageToConnectedClients(msg, author, title string) {
 	clientsMu.Lock()
 	MSG := &models.Messages{}
+	MSG.ID = uuid.New()
 	MSG.Messages = msg
 	MSG.Author = author
 	MSG.Title = title
@@ -110,7 +107,7 @@ func SendMessageToAllClients(msg, author, title string) {
 }
 
 // message to send , account type to send to, account to skip
-func SendEventToAllClients(title, message, account_type, sender_id string) {
+func StoreMessages(title, message, account_type, sender_id string) {
 
 	dbConn := config.DBInit()
 	db := daos.New(dbConn)
@@ -155,15 +152,15 @@ func SendEventToAllClients(title, message, account_type, sender_id string) {
 			return
 		}
 	}
-	clientsMu.Lock()
-	jsonMsg, _ := json.Marshal(msg)
-	for acntId, conn := range clientsId {
-		if acntId == sender_id {
-			continue
-		}
-		conn.WriteMessage(websocket.TextMessage, []byte(jsonMsg))
-		db.UpdateMessageStatusForAccountId(uuid.MustParse(acntId))
-	}
-	clientsMu.Unlock()
+	// clientsMu.Lock()
+	// jsonMsg, _ := json.Marshal(msg)
+	// for acntId, conn := range clientsId {
+	// 	if acntId == sender_id {
+	// 		continue
+	// 	}
+	// 	conn.WriteMessage(websocket.TextMessage, []byte(jsonMsg))
+	// 	// db.UpdateMessageStatusForAccountId(uuid.MustParse(acntId))
+	// }
+	// clientsMu.Unlock()
 	defer config.CloseDB(dbConn)
 }

@@ -59,7 +59,7 @@ func (ac *Service) InsertInstructor(account_id string, iid *models.InstructorDet
 		log.Println("error storing in account")
 		return uuid.Nil, nil
 	}
-	go utils.SendEventToAllClients("New Instructor", account.Name, config.AccountTypeInstructor, account_id)
+	go utils.StoreMessages("New Instructor", account.Name, config.AccountTypeInstructor, account_id)
 	return iid.Id, nil
 }
 

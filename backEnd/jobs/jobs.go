@@ -81,7 +81,7 @@ func SendMessages() {
 			fmt.Println(err_statement)
 		}
 		for _, message := range messages {
-			if utils.SendMessageToClient(acc.Id.String(), message) {
+			if utils.SendMessageToClientId(acc.Id.String(), message) {
 				err := daos.UpdateMessageStatusforMsgId(message.ID)
 				if err != nil {
 					err_statement := "Failed to update message status" + err.Error()
