@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS messages(
     account_id uuid not null,
     messages varchar null,
     is_read boolean,
-    CONSTRAINT messages_pkey PRIMARY KEY (id),
+    CONSTRAINT messages_pkey PRIMARY KEY (id)
 )
 -- +goose StatementEnd
 

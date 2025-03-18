@@ -113,6 +113,9 @@ type InstructorProfile struct {
 type Messages struct {
 	ID        uuid.UUID
 	AccountID uuid.UUID
+	Title     string
 	Messages  string
-	IsRead      bool
+	Author    string
+	CreatedAt int64
+	IsRead    bool
 }

@@ -4,10 +4,12 @@ import (
 	"CollegeAdministration/config"
 	"CollegeAdministration/daos"
 	"CollegeAdministration/models"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -96,7 +98,7 @@ func SendMessageToAllClients(msg string) {
 }
 
 // message to send , account type to send to, account to skip
-func SendEventToAllClients(event string, account_type, skip_account string) {
+func SendEventToAllClients(title, event, account_type, skip_account string) {
 
 	dbConn := config.DBInit()
 	db := daos.New(dbConn)
@@ -106,15 +108,23 @@ func SendEventToAllClients(event string, account_type, skip_account string) {
 		fmt.Println("error while fetching instructor ids" + err.Error())
 		return
 	}
+	author, err := db.GetAccountNameById(uuid.MustParse(skip_account))
+	if err != nil {
+		fmt.Println("error while fetching author" + err.Error())
+		return
+	}
+	msg := &models.Messages{}
+	msg.Messages = event
+	msg.IsRead = false
+	msg.Author = author.Name
+	msg.Title = title
+	msg.CreatedAt = time.Now().Unix()
 	for _, id := range ids {
 		if id.Id.String() == skip_account {
 			continue
 		}
-		msg := &models.Messages{}
 		msg.ID = uuid.New()
 		msg.AccountID = id.Id
-		msg.Messages = event
-		msg.IsRead = false
 		err := db.InsertIntoMessages(msg)
 		if err != nil {
 			fmt.Println("error while inserting message" + err.Error())
@@ -122,11 +132,12 @@ func SendEventToAllClients(event string, account_type, skip_account string) {
 		}
 	}
 	clientsMu.Lock()
-	for acntId,conn := range clientsId {
+	jsonMsg, _ := json.Marshal(msg)
+	for acntId, conn := range clientsId {
 		if acntId == skip_account {
 			continue
 		}
-		conn.WriteMessage(websocket.TextMessage, []byte(event))
+		conn.WriteMessage(websocket.TextMessage, []byte(jsonMsg))
 		db.UpdateMessageStatusForAccountId(uuid.MustParse(acntId))
 	}
 	clientsMu.Unlock()
