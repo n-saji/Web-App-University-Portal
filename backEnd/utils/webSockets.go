@@ -89,10 +89,17 @@ func SendMessageToClient(id string, msg string) {
 	clientsMu.Unlock()
 }
 
-func SendMessageToAllClients(msg string) {
+func SendMessageToAllClients(msg, author, title string) {
 	clientsMu.Lock()
+	MSG := &models.Messages{}
+	MSG.Messages = msg
+	MSG.Author = author
+	MSG.Title = title
+	MSG.CreatedAt = time.Now().Unix()
+	jsonMsg, _ := json.Marshal(MSG)
+
 	for conn := range clients {
-		conn.WriteMessage(websocket.TextMessage, []byte(msg))
+		conn.WriteMessage(websocket.TextMessage, []byte(jsonMsg))
 	}
 	clientsMu.Unlock()
 }
