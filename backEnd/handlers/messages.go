@@ -37,3 +37,10 @@ func (h *Handler) UpdateMessageStatusAsRead(c *gin.Context) {
 		"account_id": account_id,
 	})
 }
+
+func (h *Handler) SendMessage(c *gin.Context) {
+	h.service.SendMessageAsBroadCast("Hello")
+	c.JSON(http.StatusOK, gin.H{
+		"message": "sent",
+	})
+}

@@ -56,6 +56,7 @@ func (h *Handler) RoutingChannel(rc *gin.RouterGroup) {
 	//WebSockets
 	rc.GET("/ws/:id", utils.HandleConnections)
 	rc.GET("/read-message/:id", h.UpdateMessageStatusAsRead)
+	rc.GET("send-test-message", h.SendMessage)
 
 	//Depreciated
 	// rc.GET("/instructor-login/:emailId/:password", h.InstructorLogin)
