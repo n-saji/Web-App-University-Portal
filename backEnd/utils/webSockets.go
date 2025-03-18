@@ -62,7 +62,7 @@ func HandleConnections(c *gin.Context) {
 	clients[conn] = true
 	clientsId[id] = conn
 	clientsMu.Unlock()
-	log.Println("New client connected")
+	log.Println("New client connected",id)
 
 	// Listen for messages from the client (optional)
 	for {
