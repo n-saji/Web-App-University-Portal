@@ -59,7 +59,7 @@ func (ac *Service) InsertInstructor(account_id string, iid *models.InstructorDet
 		log.Println("error storing in account")
 		return uuid.Nil, nil
 	}
-	go utils.SendEventToAllClients("New Instructor Added: "+account.Name, config.AccountTypeInstructor, account_id)
+	go utils.SendEventToAllClients("New Instructor", account.Name, config.AccountTypeInstructor, account_id)
 	return iid.Id, nil
 }
 
@@ -155,7 +155,6 @@ func (s *Service) DeleteInstructor(name string) error {
 		return err3
 	}
 
-	
 	err1 := s.daos.DeleteInstructorLogin(id.Id)
 	if err1 != nil {
 		return err1

@@ -55,3 +55,23 @@ func (ac *AdministrationCloud)GetAccountIDsByType(accountType string) ([]models.
 	}
 	return accounts, nil
 }
+
+func (ac *AdministrationCloud) GetAccountByID(id uuid.UUID) (*models.Account, error) {
+
+	var acc models.Account
+	err := ac.dbConn.Model(models.Account{}).Where("id = ?", id).Find(&acc).Error
+	if err != nil {
+		return nil, err
+	}
+	return &acc, nil
+}
+
+func (ac *AdministrationCloud) GetAccountNameById(id uuid.UUID) (*models.Account, error) {
+
+	var acc models.Account
+	err := ac.dbConn.Model(models.Account{}).Select("name").Where("id = ?", id).Find(&acc).Error
+	if err != nil {
+		return nil, err
+	}
+	return &acc, nil
+}
