@@ -138,13 +138,16 @@ func (s *Service) CheckTokenWithCookie(token string) error {
 	return nil
 }
 
-func (s *Service) ValidateInstructorDetails(iid *models.InstructorDetails) (bool, error) {
+func (s *Service) ValidateInstructorDetails(iid *models.InstructorDetailsDTO) (bool, error) {
 
-	for _, each_letter := range iid.Department {
-		if each_letter == '-' {
-			return false, fmt.Errorf("wrong format! remove -")
+	if iid.Department != "" {
+		for _, each_letter := range iid.Department {
+			if each_letter == '-' {
+				return false, fmt.Errorf("wrong format! remove -")
+			}
 		}
 	}
+
 	return true, nil
 }
 

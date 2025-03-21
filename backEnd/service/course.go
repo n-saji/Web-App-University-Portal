@@ -49,16 +49,16 @@ func (ac *Service) UpdateCA(name string, rc *models.CourseInfo) error {
 			return err1
 		}
 	}
-	all_inst, err2 := ac.daos.GetInstructorWithSpecifics(models.InstructorDetails{CourseName: name})
-	if err2 != nil {
-		return err2
-	}
-	for _, each_inst := range all_inst {
-		err3 := ac.daos.UpdateInstructor(&models.InstructorDetails{CourseName: rc.CourseName}, &models.InstructorDetails{Id: each_inst.Id})
-		if err3 != nil {
-			return err3
-		}
-	}
+	// all_inst, err2 := ac.daos.GetInstructorWithSpecifics(models.InstructorDetails{CourseName: name})
+	// if err2 != nil {
+	// 	return err2
+	// }
+	// for _, each_inst := range all_inst {
+	// 	err3 := ac.daos.UpdateInstructor(&models.InstructorDetails{CourseName: rc.CourseName}, &models.InstructorDetails{Id: each_inst.Id})
+	// 	if err3 != nil {
+	// 		return err3
+	// 	}
+	// }
 	err := ac.daos.UpdateCourseByName(name, rc)
 	if err != nil {
 		return fmt.Errorf("not able to update! %s", err.Error())
@@ -74,13 +74,15 @@ func (ac *Service) DeleteCA(name string) error {
 	}
 	rc, _ := ac.daos.GetCourseByName(name)
 
-	instDetails, err := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rc.Id})
+	// instDetails, err := ac.GetInstructorDetailWithSpecifics(models.InstructorDetails{CourseId: rc.Id})
+
+	active_instructors , err := ac.daos.GetInstructorsByCourseId(rc.Id.String())
 	if err != nil {
 		fmt.Println("unable to fetch instructors ", err)
 		return errors.New("unable to fetch instructors " + err.Error())
 	}
-	if len(instDetails) > 0 {
-		fmt.Println("course in use", instDetails)
+	if len(active_instructors) > 0 {
+		fmt.Println("course in use")
 		return errors.New("course in use")
 	}
 

@@ -7,7 +7,7 @@ import (
 )
 
 type Service struct {
-	daos *daos.AdministrationCloud
+	daos *daos.Daos
 }
 
 func New(dbConn *gorm.DB) *Service {

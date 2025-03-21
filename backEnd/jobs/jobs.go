@@ -16,7 +16,7 @@ func AccountDetailsMigration(dbCon *gorm.DB) error {
 	var complete_account []*models.Account
 	s := service.New(dbCon)
 	daos := daos.New(dbCon)
-	student_details, err := s.Retrieve_student_details()
+	student_details, err := s.Retrieve_student_detailsbyOrder("name")
 	if err != nil {
 		err_statement := "Failed to get details" + err.Error()
 		return fmt.Errorf(err_statement)

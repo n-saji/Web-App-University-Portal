@@ -40,10 +40,10 @@ func (s *Service) CreateNewAccount(acc *models.Account) error {
 		InstructorCode:  "-",
 		InstructorName:  acc.Name,
 		Department:      "Empty Department",
-		CourseId:        allCourses[0].Id,
-		CourseName:      "Empty Course",
-		ClassesEnrolled: models.CourseInfo{},
-		Info:            models.Instructor_Info{},
+		// CourseId:        allCourses[0].Id,
+		// CourseName:      "Empty Course",
+		// ClassesEnrolled: models.CourseInfo{},
+		// Info:            models.Instructor_Info{},
 	}
 	err = s.daos.InsertInstructorDetails(instructorDetails)
 	if err != nil {

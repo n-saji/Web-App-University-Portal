@@ -34,7 +34,7 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 	}
 
 	var reply res
-	var insd *models.InstructorDetails
+	var insd *models.InstructorDetailsDTO
 	err := ctx.BindJSON(&insd)
 
 	if err != nil {
@@ -49,7 +49,7 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 		return
 	}
 
-	id, response := h.service.InsertInstructor(account_id,insd)
+	id, response := h.service.InsertInstructor(account_id, insd)
 	if response != nil {
 		reply.Err = response.Error()
 		ctx.JSON(http.StatusInternalServerError, &reply)
@@ -59,9 +59,8 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 	reply.URL = fmt.Sprintf("/instructor-login-with-id/%s/:emailid/:password", id)
 	reply.Err = "nil"
 
-	if response == nil {
-		ctx.IndentedJSON(http.StatusCreated, &reply)
-	}
+	ctx.IndentedJSON(http.StatusCreated, &reply)
+
 }
 
 func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {
@@ -111,6 +110,7 @@ func (h *Handler) RetrieveInstructorDetailsByOrder(ctx *gin.Context) {
 	order_clause := ctx.Params.ByName("order_by")
 
 	// or use order_clause =ctx.Query("order_by")
+
 	rid, err := h.service.GetInstructorDetailsWithConditions(order_clause)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
@@ -120,6 +120,7 @@ func (h *Handler) RetrieveInstructorDetailsByOrder(ctx *gin.Context) {
 	}
 }
 
+// deprecated function
 func (h *Handler) DeleteInstructor(ctx *gin.Context) {
 
 	token := ctx.GetHeader("Token")
@@ -167,32 +168,30 @@ func (h *Handler) UpdateInstructor(ctx *gin.Context) {
 		return
 	}
 
-	req_id := &models.InstructorDetails{}
+	req_id := &models.InstructorDetailsDTO{}
 	err := ctx.BindJSON(&req_id)
 	if err != nil {
 		err = fmt.Errorf("unable to store values")
 		ctx.JSON(http.StatusInternalServerError, err.Error()+" err:")
 		return
 	}
-	cond := &models.InstructorDetails{}
+	query := &models.InstructorDetailsDTO{}
 	query_params := ctx.Query
 	if val1 := query_params("instructor_code"); val1 != "" {
-		cond.InstructorCode = val1
+		query.InstructorCode = val1
 	}
 	if val1 := query_params("instructor_name"); val1 != "" {
-		cond.InstructorName = val1
+		query.InstructorName = val1
 	}
-	if val1 := query_params("course_name"); val1 != "" {
-		cond.CourseName = val1
-	}
+
 	if val1 := query_params("instructor_id"); val1 != "" {
-		cond.Id = uuid.MustParse(val1)
+		query.Id = uuid.MustParse(val1)
 	}
-	if cond.InstructorCode == "" && cond.InstructorName == "" && cond.CourseName == "" && cond.Id == uuid.Nil {
+	if query.InstructorCode == "" && query.InstructorName == "" && query.Id == uuid.Nil {
 		ctx.JSON(http.StatusInternalServerError, "No query Params")
 		return
 	}
-	err3 := h.service.Update_Instructor(req_id, *cond)
+	err3 := h.service.Update_Instructor(req_id, *query)
 	if err3 != nil {
 		ctx.JSON(http.StatusInternalServerError, err3.Error())
 		return
@@ -277,6 +276,31 @@ func (h *Handler) ViewProfile(ctx *gin.Context) {
 	params := ctx.Params
 	instructor_id := params.ByName("id")
 	instructor_profile, err := h.service.ViewinstructorProfile(instructor_id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.IndentedJSON(http.StatusOK, instructor_profile)
+}
+
+func (h *Handler) GetInstructorsForCourse(ctx *gin.Context) {
+	token := ctx.GetHeader("Token")
+	var err1 error
+	if token == "" {
+		token, err1 = ctx.Cookie("token")
+		if err1 != nil {
+			ctx.JSON(http.StatusInternalServerError, fmt.Sprint("no token found -", err1.Error()))
+			return
+		}
+	}
+	err2 := h.service.CheckTokenWithCookie(token)
+	if err2 != nil {
+		ctx.JSON(http.StatusInternalServerError, err2.Error())
+		return
+	}
+	params := ctx.Params
+	course_name := params.ByName("course")
+	instructor_profile, err := h.service.GetInstructorsForCourse(course_name)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return

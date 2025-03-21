@@ -7,13 +7,13 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *Service) InsertStudentIdInToMarksTable(cv *models.StudentInfo) (*models.StudentMarks, error) {
+func (ac *Service) InsertStudentIdInToMarksTable(cv *models.StudentInfoDTO) (*models.StudentMarks, error) {
 
 	var sm models.StudentMarks
 
 	sm.Id = uuid.New()
-	sm.CourseId = cv.ClassesEnrolled.Id
-	sm.CourseName = cv.ClassesEnrolled.CourseName
+	sm.CourseId = cv.CourseId
+	// sm.CourseName = cv.ClassesEnrolled.CourseName
 	sm.StudentId = cv.Id
 	sm.Grade = "nil"
 	err := ac.daos.CreateStudentMarks(&sm)
@@ -42,24 +42,24 @@ func (s *Service) GetAllStudentsMarksForGivenCourse(course_name string) (*models
 	}
 	smfc.Course_name = course_model.CourseName
 
-	for index, each_student := range smfc.StudentId {
-		student_id, err := uuid.Parse(each_student)
-		if err != nil {
-			return nil, err
-		}
-		student_model, err1 := s.daos.GetStudentdetail(&models.StudentInfo{Id: student_id, CourseId: course_model.Id})
-		if err1 != nil {
-			return nil, err1
-		}
-		marks_model, err2 := s.daos.GetMarksByStudentId(student_id)
-		if err2 != nil {
-			return nil, err2
-		}
-		student_model.StudentMarks = *marks_model
-		smfc.StudentNameMark[student_model.Name] = student_model.StudentMarks.Marks
-		smfc.Ranking[int64(index+1)] = student_model.Name
+	// for index, each_student := range smfc.StudentId {
+	// 	student_id, err := uuid.Parse(each_student)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	student_model, err1 := s.daos.GetSCIByStudentIdAndCourseId(student_id.String(),course_model.Id.String())
+	// 	if err1 != nil {
+	// 		return nil, err1
+	// 	}
+	// 	// marks_model, err2 := s.daos.GetMarksByStudentId(student_id)
+	// 	// if err2 != nil {
+	// 	// 	return nil, err2
+	// 	// }
+	// 	// student_model.StudentMarks = *marks_model
+	// 	// smfc.StudentNameMark[student_model.Name] = student_model.StudentMarks.Marks
+	// 	// smfc.Ranking[int64(index+1)] = student_model.Name
 
-	}
+	// }
 
 	return smfc, nil
 

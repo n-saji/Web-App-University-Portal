@@ -8,9 +8,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdministrationCloud) InsertValuesToCollegeAdministration(ca *models.StudentInfo) error {
+func (dao *Daos) InsertIntoStudentInfos(ca *models.StudentInfo) error {
 
-	err := ac.dbConn.Table("student_infos").Create(ca).Error
+	err := dao.dbConn.Table("student_infos").Create(ca).Error
 	if err != nil {
 		log.Println("Not able to insert to student_infos table ", err)
 		return fmt.Errorf("failed! %s", err.Error())
@@ -18,119 +18,65 @@ func (ac *AdministrationCloud) InsertValuesToCollegeAdministration(ca *models.St
 	return nil
 
 }
-func (ac *AdministrationCloud) RetrieveCollegeAdministration() ([]*models.StudentInfo, error) {
 
-	var rca []*models.StudentInfo
-	err := ac.dbConn.Debug().Order("roll_number").Order("name").Find(&rca).Error
-	if err != nil {
-		return nil, err
-	}
-
-	for _, eachRCA := range rca {
-		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
-		if existingRC.Id == uuid.Nil {
-			continue
-		} else if err != nil {
-			return nil, err
-		} else {
-			eachRCA.ClassesEnrolled = existingRC
-		}
-	}
-
-	for _, eachRCA := range rca {
-		existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
-		if existingRC.Id == uuid.Nil {
-			continue
-		} else if err != nil {
-			return nil, err
-		} else {
-			eachRCA.StudentMarks = *existingRC
-		}
-	}
-	return rca, nil
-
-}
-
-func (ac *AdministrationCloud) RetrieveCollegeAdministrationByOrder(order_by string) ([]*models.StudentInfo, error) {
+func (dao *Daos) RetrieveCollegeAdministrationByOrder(order_by string) ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 	if order_by == "roll_number" || order_by == "age" || order_by == "name" {
-		err := ac.dbConn.Order(order_by).Find(&rca).Error
+		err := dao.dbConn.Order(order_by).Find(&rca).Error
 		if err != nil {
 			return nil, err
 		}
 	} else {
-		err := ac.dbConn.Find(&rca).Error
+		err := dao.dbConn.Find(&rca).Error
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	for _, eachRCA := range rca {
-		existingRC, err := ac.GetCourseById(eachRCA.CourseId)
-		if existingRC.Id == uuid.Nil {
-			continue
-		} else if err != nil {
-			return nil, err
-		} else {
-			eachRCA.ClassesEnrolled = existingRC
-		}
-	}
-
-	for _, eachRCA := range rca {
-		existingRC, err := ac.GetMarksByMarksId(eachRCA.MarksId)
-		if existingRC.Id == uuid.Nil {
-			continue
-		} else if err != nil {
-			return nil, err
-		} else {
-			eachRCA.StudentMarks = *existingRC
-		}
-	}
-
-	if order_by == "course_name" || order_by == "marks" || order_by == "grade" {
-		if order_by == "course_name" {
-			for i := 0; i < len(rca)-1; i++ {
-				for j := i; j < len(rca); j++ {
-					if rca[i].ClassesEnrolled.CourseName > rca[j].ClassesEnrolled.CourseName {
-						temp := rca[j]
-						rca[j] = rca[i]
-						rca[i] = temp
-					}
-				}
-			}
-		}
-		if order_by == "grade" {
-			for i := 0; i < len(rca)-1; i++ {
-				for j := i; j < len(rca); j++ {
-					if rca[i].StudentMarks.Grade > rca[j].StudentMarks.Grade {
-						temp := rca[j]
-						rca[j] = rca[i]
-						rca[i] = temp
-					}
-				}
-			}
-		}
-		if order_by == "marks" {
-			for i := 0; i < len(rca)-1; i++ {
-				for j := i; j < len(rca); j++ {
-					if rca[i].StudentMarks.Marks > rca[j].StudentMarks.Marks {
-						temp := rca[j]
-						rca[j] = rca[i]
-						rca[i] = temp
-					}
-				}
-			}
-		}
-	}
+	// if order_by == "course_name" || order_by == "marks" || order_by == "grade" {
+	// 	if order_by == "course_name" {
+	// 		for i := 0; i < len(rca)-1; i++ {
+	// 			for j := i; j < len(rca); j++ {
+	// 				if rca[i].ClassesEnrolled.CourseName > rca[j].ClassesEnrolled.CourseName {
+	// 					temp := rca[j]
+	// 					rca[j] = rca[i]
+	// 					rca[i] = temp
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	if order_by == "grade" {
+	// 		for i := 0; i < len(rca)-1; i++ {
+	// 			for j := i; j < len(rca); j++ {
+	// 				if rca[i].StudentMarks.Grade > rca[j].StudentMarks.Grade {
+	// 					temp := rca[j]
+	// 					rca[j] = rca[i]
+	// 					rca[i] = temp
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	if order_by == "marks" {
+	// 		for i := 0; i < len(rca)-1; i++ {
+	// 			for j := i; j < len(rca); j++ {
+	// 				if rca[i].StudentMarks.Marks > rca[j].StudentMarks.Marks {
+	// 					temp := rca[j]
+	// 					rca[j] = rca[i]
+	// 					rca[i] = temp
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	return rca, nil
 
 }
 
-func (ac *AdministrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
+func (dao *Daos) UpdateClgStudent(rca *models.StudentInfo) error {
 
-	err := ac.dbConn.Save(&rca).Error
+	err := dao.dbConn.Save(&rca).Error
 
 	if err != nil {
 		return fmt.Errorf("failed to UpdateClgStudent %s", err.Error())
@@ -138,19 +84,19 @@ func (ac *AdministrationCloud) UpdateClgStudent(rca *models.StudentInfo) error {
 	return nil
 }
 
-func (ac *AdministrationCloud) GetStudentDetailsByRollNumber(roll_number string) ([]*models.StudentInfo, error) {
+func (dao *Daos) GetStudentDetailsByRollNumber(roll_number string) (*models.StudentInfo, error) {
 
-	var cad []*models.StudentInfo
-	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
+	var cad *models.StudentInfo
+	val := dao.dbConn.Select("*").Table("student_infos").Where("roll_number = ?", roll_number).First(&cad)
 	if val.Error != nil {
 		return nil, val.Error
 	}
 	return cad, nil
 }
-func (ac *AdministrationCloud) CheckForRollNo(roll_number string) (bool, error) {
+func (dao *Daos) CheckForRollNo(roll_number string) (bool, error) {
 
 	var len int64
-	err := ac.dbConn.Model(models.StudentInfo{}).Where("roll_number = ?", roll_number).Count(&len).Error
+	err := dao.dbConn.Model(models.StudentInfo{}).Where("roll_number = ?", roll_number).Count(&len).Error
 	if err != nil {
 		return false, err
 	}
@@ -163,11 +109,11 @@ func (ac *AdministrationCloud) CheckForRollNo(roll_number string) (bool, error) 
 
 }
 
-func (ac *AdministrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.StudentInfo, error) {
+func (dao *Daos) GetStudentdetailsUsingCourseId(courseId uuid.UUID) ([]*models.StudentInfo, error) {
 
 	var rca []*models.StudentInfo
 
-	err := ac.dbConn.Select("*").Table("student_infos").Where("course_id = ?", courseId).Find(&rca).Error
+	err := dao.dbConn.Select("*").Table("student_infos").Where("course_id = ?", courseId).Find(&rca).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -175,9 +121,9 @@ func (ac *AdministrationCloud) GetStudentdetailsUsingCourseId(courseId uuid.UUID
 	return rca, nil
 }
 
-func (ac *AdministrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
+func (dao *Daos) DeleteStudentDaos(studentId uuid.UUID) error {
 
-	err := ac.dbConn.Where("id = ?", studentId).Delete(&models.StudentInfo{}).Error
+	err := dao.dbConn.Where("id = ?", studentId).Delete(&models.StudentInfo{}).Error
 
 	if err != nil {
 		return err
@@ -186,11 +132,11 @@ func (ac *AdministrationCloud) DeleteStudentDaos(studentId uuid.UUID) error {
 	return nil
 }
 
-func (ac *AdministrationCloud) GetStudentDetailsByName(student_name string) (*[]models.StudentInfo, error) {
+func (dao *Daos) GetStudentDetailsByName(student_name string) (*[]models.StudentInfo, error) {
 
 	var si *[]models.StudentInfo
 
-	err := ac.dbConn.Select("*").Table("student_infos").Where("name = ?", student_name).Find(&si).Error
+	err := dao.dbConn.Select("*").Table("student_infos").Where("name = ?", student_name).Find(&si).Error
 
 	if err != nil {
 		return nil, err
@@ -201,10 +147,10 @@ func (ac *AdministrationCloud) GetStudentDetailsByName(student_name string) (*[]
 	return si, nil
 }
 
-func (ac *AdministrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_number string, courseId uuid.UUID) (*models.StudentInfo, error) {
+func (dao *Daos) GetStudentDetailsByRollNumberAndCourseId(roll_number string, courseId uuid.UUID) (*models.StudentInfo, error) {
 
 	var cad *models.StudentInfo
-	val := ac.dbConn.Select("*").Table("student_infos").Where("roll_number = ? AND course_id = ?", roll_number, courseId).Find(&cad)
+	val := dao.dbConn.Select("*").Table("student_infos").Where("roll_number = ? AND course_id = ?", roll_number, courseId).Find(&cad)
 	if val.Error != nil {
 		log.Println("Not able to Fetch values student_infos table ", val.Error)
 		return nil, val.Error
@@ -212,15 +158,15 @@ func (ac *AdministrationCloud) GetStudentDetailsByRollNumberAndCourseId(roll_num
 	return cad, nil
 }
 
-func (ac *AdministrationCloud) DeleteCourseForAStudent(st_name string, c_id uuid.UUID) error {
+func (dao *Daos) DeleteCourseForAStudent(st_name string, c_id uuid.UUID) error {
 
-	err := ac.dbConn.Where("name = ? AND course_id = ?", st_name, c_id).Delete(models.StudentInfo{}).Error
+	err := dao.dbConn.Where("name = ? AND course_id = ?", st_name, c_id).Delete(models.StudentInfo{}).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (ac *AdministrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models.StudentInfo, error) {
+func (dao *Daos) GetStudentdetail(sd *models.StudentInfo) (*models.StudentInfo, error) {
 
 	var sd1 models.StudentInfo
 	condition := make(map[string]interface{})
@@ -237,11 +183,11 @@ func (ac *AdministrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models
 		condition["roll_number"] = sd.RollNumber
 	}
 
-	if sd.CourseId != uuid.Nil {
-		condition["course_id"] = sd.CourseId
-	}
+	// if sd.CourseId != uuid.Nil {
+	// 	condition["course_id"] = sd.CourseId
+	// }
 
-	err := ac.dbConn.Model(models.StudentInfo{}).Where(condition).Find(&sd1).Error
+	err := dao.dbConn.Model(models.StudentInfo{}).Where(condition).Find(&sd1).Error
 	if err != nil {
 		return nil, err
 	}
@@ -250,9 +196,9 @@ func (ac *AdministrationCloud) GetStudentdetail(sd *models.StudentInfo) (*models
 	}
 	return &sd1, nil
 }
-func (ac *AdministrationCloud) DeleteStudentWithSpecifics(st_req *models.StudentInfo) error {
+func (dao *Daos) DeleteStudentWithSpecifics(st_req *models.StudentInfo) error {
 
-	err := ac.dbConn.Where(st_req).Delete(models.StudentInfo{}).Error
+	err := dao.dbConn.Where(st_req).Delete(models.StudentInfo{}).Error
 	if err != nil {
 		return err
 	}

@@ -28,7 +28,7 @@ func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 		return
 	}
 
-	var cad models.StudentInfo
+	var cad *models.StudentInfoDTO
 	err := ctx.BindJSON(&cad)
 	if err != nil {
 		log.Println("not able to store values")
@@ -38,7 +38,7 @@ func (h *Handler) InsertStudentDetails(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	response := h.service.InsertValuesToCAd(&cad, account_id)
+	response := h.service.InsertValuesToCAd(cad, account_id)
 	if response != nil {
 		ctx.JSON(http.StatusInternalServerError, response.Error())
 		return
@@ -68,21 +68,15 @@ func (h *Handler) RetrieveValuesForStudent(ctx *gin.Context) {
 	order_by := ctx.Query("order")
 
 	if order_by == "" {
-		response, err := h.service.Retrieve_student_details()
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-			return
-		} else {
-			ctx.JSON(http.StatusOK, response)
-		}
+		order_by = "name"
+	}
+
+	response, err := h.service.Retrieve_student_detailsbyOrder(order_by)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
 	} else {
-		response, err := h.service.Retrieve_student_detailsbyOrder(order_by)
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-			return
-		} else {
-			ctx.JSON(http.StatusOK, response)
-		}
+		ctx.JSON(http.StatusOK, response)
 	}
 
 }
@@ -113,9 +107,9 @@ func (h *Handler) UpdateValuesForStudent(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, "Empty Inputs from Client")
 		return
 	}
-	var rcd models.StudentInfo
+	var rcd models.StudentInfoDTO
 	ctx.BindJSON(&rcd)
-	err := h.service.Update_Student_Details(&rcd, oldCourse, oldName, oldRollNumber)
+	err := h.service.Update_Student_Details(&rcd)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, error.Error(err))
 		return

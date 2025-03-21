@@ -7,10 +7,10 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdministrationCloud) CheckIDPresent(id uuid.UUID) error {
+func (dao *Daos) CheckIDPresent(id uuid.UUID) error {
 
 	var id_exits string
-	err := ac.dbConn.Select("id").Table("instructor_logins").Where("id = ?", id).Find(&id_exits).Error
+	err := dao.dbConn.Select("id").Table("instructor_logins").Where("id = ?", id).Find(&id_exits).Error
 	if err != nil {
 		return err
 	}
@@ -19,9 +19,9 @@ func (ac *AdministrationCloud) CheckIDPresent(id uuid.UUID) error {
 	}
 	return nil
 }
-func (ac *AdministrationCloud) CreateInstructorLogin(il models.InstructorLogin) error {
+func (dao *Daos) CreateInstructorLogin(il models.InstructorLogin) error {
 
-	err := ac.dbConn.Table("instructor_logins").Create(&il).Error
+	err := dao.dbConn.Table("instructor_logins").Create(&il).Error
 
 	if err != nil {
 		return err
@@ -29,10 +29,10 @@ func (ac *AdministrationCloud) CreateInstructorLogin(il models.InstructorLogin) 
 	return nil
 }
 
-// func (ac *AdminstrationCloud) CheckLoginExits(email, password string) (bool, error) {
+// func (dao *AdminstrationCloud) CheckLoginExits(email, password string) (bool, error) {
 
 // 	var iid string
-// 	err := ac.dbConn.Select("id").Table("instructor_logins").Where("email_id = ? AND password = ?", email, password).Find(&iid).Error
+// 	err := dao.dbConn.Select("id").Table("instructor_logins").Where("email_id = ? AND password = ?", email, password).Find(&iid).Error
 
 // 	if iid == "" {
 // 		return false, err
@@ -40,10 +40,10 @@ func (ac *AdministrationCloud) CreateInstructorLogin(il models.InstructorLogin) 
 // 	return true, nil
 // }
 
-func (ac AdministrationCloud) CheckForEmail(email string) (bool, error) {
+func (dao Daos) CheckForEmail(email string) (bool, error) {
 
 	var count int64
-	err := ac.dbConn.Select("count(*)").Table("instructor_logins").Where("email_id = ?", email).Find(&count).Error
+	err := dao.dbConn.Select("count(*)").Table("instructor_logins").Where("email_id = ?", email).Find(&count).Error
 
 	if err != nil {
 		return false, err
@@ -54,18 +54,18 @@ func (ac AdministrationCloud) CheckForEmail(email string) (bool, error) {
 	return false, nil
 }
 
-func (ac *AdministrationCloud) InsertToken(tg models.Token_generator) error {
+func (dao *Daos) InsertToken(tg models.Token_generator) error {
 
-	err := ac.dbConn.Table("token_generators").Create(&tg).Error
+	err := dao.dbConn.Table("token_generators").Create(&tg).Error
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (ac *AdministrationCloud) GetTokenStatus(token uuid.UUID) (bool, error) {
+func (dao *Daos) GetTokenStatus(token uuid.UUID) (bool, error) {
 	var status bool
-	err := ac.dbConn.Model(models.Token_generator{}).Select("is_valid").Where("token = ?", token).Find(&status).Error
+	err := dao.dbConn.Model(models.Token_generator{}).Select("is_valid").Where("token = ?", token).Find(&status).Error
 
 	if err != nil {
 		return status, err
@@ -74,10 +74,10 @@ func (ac *AdministrationCloud) GetTokenStatus(token uuid.UUID) (bool, error) {
 	}
 }
 
-func (ac *AdministrationCloud) GetTokenStored(token uuid.UUID) (*models.Token_generator, error) {
+func (dao *Daos) GetTokenStored(token uuid.UUID) (*models.Token_generator, error) {
 
 	var toke_details models.Token_generator
-	err := ac.dbConn.Model(toke_details).Where("token = ?", token).Find(&toke_details).Error
+	err := dao.dbConn.Model(toke_details).Where("token = ?", token).Find(&toke_details).Error
 
 	if err != nil {
 		return nil, err
@@ -85,9 +85,9 @@ func (ac *AdministrationCloud) GetTokenStored(token uuid.UUID) (*models.Token_ge
 	return &toke_details, nil
 
 }
-func (ac *AdministrationCloud) SetTokenFalse(token uuid.UUID) error {
+func (dao *Daos) SetTokenFalse(token uuid.UUID) error {
 
-	err := ac.dbConn.Model(models.Token_generator{}).Where("token = ?", token).Update("is_valid", false).Error
+	err := dao.dbConn.Model(models.Token_generator{}).Where("token = ?", token).Update("is_valid", false).Error
 
 	if err != nil {
 		return err
@@ -96,9 +96,9 @@ func (ac *AdministrationCloud) SetTokenFalse(token uuid.UUID) error {
 
 }
 
-func (ac *AdministrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) error {
+func (dao *Daos) DeleteInstructorLogin(instructor_id uuid.UUID) error {
 
-	err := ac.dbConn.Where("id = ?", instructor_id).Delete(models.InstructorLogin{}).Error
+	err := dao.dbConn.Where("id = ?", instructor_id).Delete(models.InstructorLogin{}).Error
 
 	if err != nil {
 		return err
@@ -106,9 +106,9 @@ func (ac *AdministrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) er
 	return nil
 }
 
-func (ac *AdministrationCloud) GetIDUsingEmail(email string) (string, error) {
+func (dao *Daos) GetIDUsingEmail(email string) (string, error) {
 	var instructor_id string
-	err := ac.dbConn.Model(models.InstructorLogin{}).Select("id").Where("email_id = ?", email).Find(&instructor_id).Error
+	err := dao.dbConn.Model(models.InstructorLogin{}).Select("id").Where("email_id = ?", email).Find(&instructor_id).Error
 
 	if err != nil {
 		return "", err
@@ -116,9 +116,9 @@ func (ac *AdministrationCloud) GetIDUsingEmail(email string) (string, error) {
 	return instructor_id, nil
 }
 
-func (ac *AdministrationCloud) FetchPasswordUsingEmailID(email string) (string, error) {
+func (dao *Daos) FetchPasswordUsingEmailID(email string) (string, error) {
 	var password string
-	err := ac.dbConn.Model(models.InstructorLogin{}).Select("password").Where("email_id = ?", email).Find(&password).Error
+	err := dao.dbConn.Model(models.InstructorLogin{}).Select("password").Where("email_id = ?", email).Find(&password).Error
 
 	if err != nil {
 		return "", err
@@ -126,11 +126,11 @@ func (ac *AdministrationCloud) FetchPasswordUsingEmailID(email string) (string, 
 	return password, nil
 }
 
-func (ac *AdministrationCloud) FetchCredentialsUsingID(id uuid.UUID) (*models.InstructorLogin, error) {
+func (dao *Daos) FetchCredentialsUsingID(id uuid.UUID) (*models.InstructorLogin, error) {
 
 	var credentials *models.InstructorLogin
 	id_string := id.String()
-	err := ac.dbConn.Model(models.InstructorLogin{}).Select("*").Where("id = ?", id_string).Find(&credentials).Error
+	err := dao.dbConn.Model(models.InstructorLogin{}).Select("*").Where("id = ?", id_string).Find(&credentials).Error
 
 	if err != nil {
 		return nil, err
@@ -138,19 +138,19 @@ func (ac *AdministrationCloud) FetchCredentialsUsingID(id uuid.UUID) (*models.In
 	return credentials, nil
 }
 
-// func (ac *AdministrationCloud) GetCredentialsForInstructor(id string) (*models.InstructorLogin, error) {
+// func (dao *AdministrationCloud) GetCredentialsForInstructor(id string) (*models.InstructorLogin, error) {
 // 	credentials := &models.InstructorLogin{}
 
-// 	err := ac.dbConn.Model(models.InstructorLogin{}).Select("*").Where("id = ?", id).Find(&credentials).Error
+// 	err := dao.dbConn.Model(models.InstructorLogin{}).Select("*").Where("id = ?", id).Find(&credentials).Error
 // 	if err != nil {
 // 		return nil, err
 // 	}
 // 	return credentials, nil
 // }
 
-func (ac *AdministrationCloud) UpdateCredentials(cred *models.InstructorLogin) error {
+func (dao *Daos) UpdateCredentials(cred *models.InstructorLogin) error {
 
-	err := ac.dbConn.Save(&cred).Error
+	err := dao.dbConn.Save(&cred).Error
 	if err != nil {
 		return err
 	}
@@ -158,9 +158,9 @@ func (ac *AdministrationCloud) UpdateCredentials(cred *models.InstructorLogin) e
 	return nil
 }
 
-func (ac *AdministrationCloud) GetAccountByToken(token uuid.UUID) (*models.Token_generator, error) {
+func (dao *Daos) GetAccountByToken(token uuid.UUID) (*models.Token_generator, error) {
 	var account models.Token_generator
-	err := ac.dbConn.Model(models.Token_generator{}).Select("account_id").Where("token = ? and is_valid = true", token).Find(&account).Error
+	err := dao.dbConn.Model(models.Token_generator{}).Select("account_id").Where("token = ? and is_valid = true", token).Find(&account).Error
 
 	if err != nil {
 		return nil, err

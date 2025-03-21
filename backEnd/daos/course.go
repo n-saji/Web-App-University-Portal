@@ -8,9 +8,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdministrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseInfo) error {
+func (dao *Daos) InsertValuesToCoursesAvailable(ca *models.CourseInfo) error {
 
-	err := ac.dbConn.Table("course_infos").Create(ca).Error
+	err := dao.dbConn.Table("course_infos").Create(ca).Error
 	if err != nil {
 		log.Println("not able to insert to course_infos table ", err)
 		return fmt.Errorf("failed! %s", err.Error())
@@ -18,10 +18,10 @@ func (ac *AdministrationCloud) InsertValuesToCoursesAvailable(ca *models.CourseI
 	return nil
 
 }
-func (ac *AdministrationCloud) GetCourseByName(name string) (models.CourseInfo, error) {
+func (dao *Daos) GetCourseByName(name string) (models.CourseInfo, error) {
 
 	var ca models.CourseInfo
-	val := ac.dbConn.Select("*").Table("course_infos").Where("course_name = ?", name).First(&ca)
+	val := dao.dbConn.Select("*").Table("course_infos").Where("course_name = ?", name).First(&ca)
 	if val.Error != nil {
 		log.Println("Not able to Fetch value from  table ", val.Error)
 		return ca, val.Error
@@ -29,13 +29,13 @@ func (ac *AdministrationCloud) GetCourseByName(name string) (models.CourseInfo, 
 	return ca, nil
 }
 
-func (ac *AdministrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, error) {
+func (dao *Daos) GetCourseById(id uuid.UUID) (models.CourseInfo, error) {
 
 	var ca models.CourseInfo
 	// if id == uuid.Nil {
 	// 	return ca, fmt.Errorf("UUID is NULL for course ID! Add new Course to ")
 	// }
-	val := ac.dbConn.Select("*").Table("course_infos").Where("id = ?", id).First(&ca)
+	val := dao.dbConn.Select("*").Table("course_infos").Where("id = ?", id).First(&ca)
 	if val.Error != nil {
 		log.Println("Not able to select from course_infos table ", val.Error)
 		return ca, val.Error
@@ -43,35 +43,35 @@ func (ac *AdministrationCloud) GetCourseById(id uuid.UUID) (models.CourseInfo, e
 	return ca, nil
 }
 
-func (ac *AdministrationCloud) RetieveCoursesAvailable() ([]*models.CourseInfo, error) {
+func (dao *Daos) RetieveCoursesAvailable() ([]*models.CourseInfo, error) {
 
 	var rca []*models.CourseInfo
-	err := ac.dbConn.Order("course_name").Find(&rca).Error
+	err := dao.dbConn.Order("course_name").Find(&rca).Error
 
 	return rca, err
 
 }
-func (ac *AdministrationCloud) UpdateCourseByName(name string, rc *models.CourseInfo) error {
-	rc_existing, _ := ac.GetCourseByName(rc.CourseName)
+func (dao *Daos) UpdateCourseByName(name string, rc *models.CourseInfo) error {
+	rc_existing, _ := dao.GetCourseByName(rc.CourseName)
 	if rc_existing.Id != uuid.Nil {
 		return fmt.Errorf("course already exits")
 	}
-	rcOld, err1 := ac.GetCourseByName(name)
+	rcOld, err1 := dao.GetCourseByName(name)
 	if err1 != nil {
 		return fmt.Errorf("course not available %s", err1.Error())
 	}
 	rc.Id = rcOld.Id
-	err := ac.dbConn.Save(&rc).Error
+	err := dao.dbConn.Save(&rc).Error
 	if err != nil {
 		return fmt.Errorf("failed UpdateCourseByName %s", err.Error())
 	}
 	return nil
 }
 
-func (ac *AdministrationCloud) CheckCourse(coursename string) bool {
+func (dao *Daos) CheckCourse(coursename string) bool {
 
 	var len int64
-	ac.dbConn.Model(models.CourseInfo{}).Where("course_name = ?", coursename).Count(&len)
+	dao.dbConn.Model(models.CourseInfo{}).Where("course_name = ?", coursename).Count(&len)
 	if len > 0 {
 		return true
 	} else {
@@ -79,9 +79,9 @@ func (ac *AdministrationCloud) CheckCourse(coursename string) bool {
 	}
 }
 
-func (ac *AdministrationCloud) DeleteCourse(id uuid.UUID) (bool, error) {
+func (dao *Daos) DeleteCourse(id uuid.UUID) (bool, error) {
 
-	err := ac.dbConn.Where("id = ?", id).Delete(&models.CourseInfo{}).Error
+	err := dao.dbConn.Where("id = ?", id).Delete(&models.CourseInfo{}).Error
 	if err != nil {
 		return false, err
 	}

@@ -8,14 +8,14 @@ import (
 )
 
 type StudentInfo struct {
-	Id              uuid.UUID `gorm:"primary_key;type:uuid;unique"`
-	Name            string
-	RollNumber      string
-	Age             int64
-	CourseId        uuid.UUID
-	MarksId         uuid.UUID
-	ClassesEnrolled CourseInfo   `gorm:"foreignKey:CourseId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	StudentMarks    StudentMarks `gorm:"foreignKey:MarksId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Id         uuid.UUID `gorm:"primary_key;type:uuid;unique"`
+	Name       string
+	RollNumber string
+	Age        int64
+	// CourseId        uuid.UUID
+	// MarksId         uuid.UUID
+	ClassesEnrolled CourseInfo   `gorm:"-"`
+	StudentMarks    StudentMarks `gorm:"-"`
 }
 
 type CourseInfo struct {
@@ -24,23 +24,19 @@ type CourseInfo struct {
 }
 
 type StudentMarks struct {
-	Id         uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
-	StudentId  uuid.UUID
-	CourseId   uuid.UUID
-	CourseName string
-	Marks      int64
-	Grade      string
+	Id        uuid.UUID `gorm:"primary_key;unique;type:uuid;"`
+	StudentId uuid.UUID
+	CourseId  uuid.UUID
+	// CourseName string
+	Marks int64
+	Grade string
 }
 
 type InstructorDetails struct {
-	Id              uuid.UUID       `gorm:"primary_key;unique;type:uuid" json:"id"`
-	InstructorCode  string          `json:"instructor_code"`
-	InstructorName  string          `json:"instructor_name"`
-	Department      string          `json:"department"`
-	CourseId        uuid.UUID       `json:"course_id"`
-	CourseName      string          `json:"course_name" gorm:"-"`
-	ClassesEnrolled CourseInfo      `gorm:"foreignKey:course_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Info            Instructor_Info `gorm:"type:jsonb;" json:"info"`
+	Id             uuid.UUID `gorm:"primary_key;unique;type:uuid" json:"id"`
+	InstructorCode string    `json:"instructor_code"`
+	InstructorName string    `json:"instructor_name"`
+	Department     string    `json:"department"`
 }
 
 type InstructorLogin struct {
@@ -102,14 +98,6 @@ type Account_Info struct {
 	Credentials InstructorLogin `json:"credentials"`
 }
 
-type InstructorProfile struct {
-	Name        string
-	CourseList  string //needs to be array of string in future
-	Department  string
-	Code        string
-	Credentials InstructorLogin
-}
-
 type Messages struct {
 	ID        uuid.UUID
 	AccountID uuid.UUID
@@ -118,4 +106,21 @@ type Messages struct {
 	Author    string
 	CreatedAt int64
 	IsRead    bool
+}
+
+type StudentCourseInstructor struct {
+	StudentId    uuid.UUID
+	CourseId     uuid.UUID
+	InstructorId uuid.UUID
+	Marks        int64
+	IsDeleted    bool
+}
+
+type InstructorCourse struct {
+	InstructorId     uuid.UUID
+	CourseId         uuid.UUID
+	StudentsLimit    int64
+	StudentsEnrolled int64
+	CourseRating     int64
+	IsDeleted        bool
 }
