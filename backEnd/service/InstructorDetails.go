@@ -54,7 +54,7 @@ func (ac *Service) InsertInstructor(account_id string, iid *models.InstructorDet
 	account.Name = iid.InstructorName
 	account.Type = config.AccountTypeInstructor
 
-	err3 := ac.daos.AccountMigrationsCreate([]*models.Account{account})
+	err3 := ac.daos.CreateAccount(account)
 	if err3 != nil {
 		log.Println("error storing in account")
 		return uuid.Nil, nil
