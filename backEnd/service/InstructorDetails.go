@@ -131,6 +131,7 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password st
 		EmailId:  emailid,
 		Password: string(crypted_password)}
 	account.Name = iid.InstructorName
+	account.Type = config.AccountTypeInstructor
 
 	err3 := ac.daos.AccountMigrationsUpdate([]*models.Account{account})
 	if err3 != nil {
