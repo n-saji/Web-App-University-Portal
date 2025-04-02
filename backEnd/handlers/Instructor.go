@@ -49,7 +49,7 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 		return
 	}
 
-	id, response := h.service.InsertInstructor(account_id,insd)
+	id, response := h.service.InsertInstructor(account_id, insd)
 	if response != nil {
 		reply.Err = response.Error()
 		ctx.JSON(http.StatusInternalServerError, &reply)
@@ -59,9 +59,8 @@ func (h *Handler) AddInstructor(ctx *gin.Context) {
 	reply.URL = fmt.Sprintf("/instructor-login-with-id/%s/:emailid/:password", id)
 	reply.Err = "nil"
 
-	if response == nil {
-		ctx.IndentedJSON(http.StatusCreated, &reply)
-	}
+	ctx.IndentedJSON(http.StatusCreated, &reply)
+
 }
 
 func (h *Handler) RetrieveInstructorDetails(ctx *gin.Context) {

@@ -53,12 +53,14 @@ func (ac *Service) InsertInstructor(account_id string, iid *models.InstructorDet
 	account.Info.Credentials.Id = iid.Id
 	account.Name = iid.InstructorName
 	account.Type = config.AccountTypeInstructor
+	account.Verified = false
 
 	err3 := ac.daos.CreateAccount(account)
 	if err3 != nil {
 		log.Println("error storing in account")
-		return uuid.Nil, nil
+		return uuid.Nil, err3
 	}
+
 	go utils.StoreMessages("New Instructor", account.Name, config.AccountTypeInstructor, account_id)
 	return iid.Id, nil
 }
@@ -132,12 +134,16 @@ func (ac *Service) StoreInstructoLogindetails(id uuid.UUID, emailid, password st
 		Password: string(crypted_password)}
 	account.Name = iid.InstructorName
 	account.Type = config.AccountTypeInstructor
+	account.Verified = false
 
-	err3 := ac.daos.AccountMigrationsUpdate([]*models.Account{account})
+	err3 := ac.daos.CreateAccount(account)
 	if err3 != nil {
 		log.Println("error storing in account instructor")
 		return err3
 	}
+
+	go ac.GenerateOTPAndStore(emailid)
+
 	return nil
 }
 

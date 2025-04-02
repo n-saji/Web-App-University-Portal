@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -58,10 +59,11 @@ type Token_generator struct {
 }
 
 type Account struct {
-	Id   uuid.UUID    `gorm:"primary_key;unique;type=uuid"`
-	Name string       `json:"name"`
-	Info Account_Info `gorm:"type:jsonb;" json:"info"`
-	Type string       `json:"type"`
+	Id       uuid.UUID    `gorm:"primary_key;unique;type=uuid"`
+	Name     string       `json:"name"`
+	Info     Account_Info `gorm:"type:jsonb;" json:"info"`
+	Type     string       `json:"type"`
+	Verified bool         `json:"verified"`
 }
 
 // not part of db
@@ -91,7 +93,7 @@ func (j Instructor_Info) Value() (driver.Value, error) {
 	return string(valueString), err
 }
 
-func (j *Instructor_Info) Scan(value interface{}) error {
+func (j *Instructor_Info) Scan(value any) error {
 	if err := json.Unmarshal(value.([]byte), &j); err != nil {
 		return err
 	}
@@ -100,6 +102,18 @@ func (j *Instructor_Info) Scan(value interface{}) error {
 
 type Account_Info struct {
 	Credentials InstructorLogin `json:"credentials"`
+}
+
+func (a *Account_Info) Scan(value any) error {
+	bytes, ok := value.([]byte)
+	if !ok {
+		return fmt.Errorf("failed to scan Account_Info: expected []byte but got %T", value)
+	}
+	return json.Unmarshal(bytes, a)
+}
+
+func (a Account_Info) Value() (driver.Value, error) {
+	return json.Marshal(a)
 }
 
 type InstructorProfile struct {
@@ -118,4 +132,14 @@ type Messages struct {
 	Author    string
 	CreatedAt int64
 	IsRead    bool
+}
+
+type OTP struct {
+	ID        uuid.UUID
+	AccountID uuid.UUID
+	EmailId   string
+	OTPCode   string
+	CreatedAt int64
+	ExpiresAt int64
+	IsUsed    bool
 }

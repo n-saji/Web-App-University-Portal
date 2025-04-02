@@ -15,12 +15,12 @@ INSERT INTO course_infos (id, course_name) VALUES
 ('123e4567-e89b-12d3-a456-426614174001', 'Data Structures and Algorithms'),
 ('987f6543-b21c-34d2-c789-123456789abc', 'Database Management Systems'),
 ('456e7890-c12d-45e6-b789-987654321def', 'Operating Systems'),
-('321f6547-d34e-56f7-e890-234567890ghi', 'Artificial Intelligence'),
-('789a1234-e45f-67g8-f901-345678901jkl', 'Machine Learning'),
-('654b3210-f56g-78h9-g012-456789012mno', 'Software Engineering'),
-('234c5678-g78h-90i1-h123-567890123pqr', 'Computer Networks'),
-('890d1234-h90i-12j3-i234-678901234stu', 'Web Development'),
-('567e8901-i12j-34k5-j345-789012345vwx', 'Cloud Computing');
+('c88fef09-97b3-4c97-b05d-b6bd72288d51', 'Artificial Intelligence'),
+('56c8c014-e5fa-40f5-9ac1-42bda3c884cb', 'Machine Learning'),
+('8ae462c5-d418-41b7-b675-63affb4fbe16', 'Software Engineering'),
+('745132ae-5bcf-4c5f-8ca2-d926b16ed1bd', 'Computer Networks'),
+('42803923-1d87-4abd-9285-c2a50a677d22', 'Web Development'),
+('5873fb7a-26d7-47e5-b5d1-e369255fc878', 'Cloud Computing');
 
 -- +goose StatementEnd
 

@@ -1,19 +1,25 @@
 module CollegeAdministration
 
-go 1.19
+go 1.22
+
+toolchain go1.23.5
 
 require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/joho/godotenv v1.5.1
+	github.com/mailgun/mailgun-go/v4 v4.23.0
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.0
 	gorm.io/driver/postgres v1.4.5
 	gorm.io/gorm v1.24.1-0.20221019064659-5dd2bb482755
 )
 
-require github.com/stretchr/testify v1.8.1 // indirect
+require (
+	github.com/go-chi/chi/v5 v5.2.1 // indirect
+	github.com/mailgun/errors v0.4.0 // indirect
+)
 
 require (
 	github.com/gin-contrib/cors v1.4.0
@@ -44,7 +50,7 @@ require (
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
-	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
+	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
 	golang.org/x/text v0.4.0 // indirect
 	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
 	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5

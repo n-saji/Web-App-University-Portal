@@ -72,8 +72,10 @@ func (ac *Service) InsertValuesToCAd(new_student *models.StudentInfo, account_id
 	account.Id = new_student.Id
 	account.Info.Credentials.Id = new_student.Id
 	account.Name = new_student.Name
+	account.Type = config.AccountTypeStudent
+	account.Verified = false
 
-	err3 := ac.daos.AccountMigrationsCreate([]*models.Account{account})
+	err3 := ac.daos.CreateAccount(account)
 	if err3 != nil {
 		log.Println("error storing in account student")
 		return err3

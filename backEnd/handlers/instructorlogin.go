@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"CollegeAdministration/config"
 	"CollegeAdministration/models"
 	"fmt"
 	"net/http"
@@ -163,6 +164,8 @@ func (h *Handler) CreateAccount(ctx *gin.Context) {
 	newID := uuid.New()
 	acc.Id = newID
 	acc.Info.Credentials.Id = newID
+	acc.Type = config.AccountTypeInstructor
+	acc.Verified = false
 
 	err = h.service.CreateNewAccount(acc)
 	if err != nil {

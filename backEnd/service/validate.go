@@ -2,7 +2,9 @@ package service
 
 import (
 	"CollegeAdministration/models"
+	"CollegeAdministration/utils"
 	"fmt"
+	"log"
 	"regexp"
 	"time"
 
@@ -172,4 +174,95 @@ func (s *Service) GetAccountByToken(token string) (string, error) {
 		return "", fmt.Errorf("db error while fetching account, err - %s", err)
 	}
 	return acc.AccountId.String(), nil
+}
+
+func (s *Service) VerifyAccountWithOTP(email string, otp string) error {
+
+	res, err := s.daos.GetOTPByEmailIdAndOTP(email, otp)
+	if err != nil {
+		return fmt.Errorf("db error while fetching otp with account, err - %s", err)
+	}
+	if res == nil {
+		return fmt.Errorf("no otp found")
+	}
+	if res.IsUsed {
+		return fmt.Errorf("otp already used")
+	}
+
+	if res.ExpiresAt < time.Now().Local().Unix() {
+		return fmt.Errorf("otp expired")
+	}
+
+	err = s.daos.DeleteOTPByEmailId(email)
+	if err != nil {
+		return fmt.Errorf("db error while deleting otp, err - %s", err)
+	}
+
+	id, err := s.daos.GetIDUsingEmail(email)
+	if err != nil {
+		return fmt.Errorf("db error while fetching account id, err - %s", err)
+	}
+
+	err = s.daos.UpdateAccountStatusAsTrue(id)
+	if err != nil {
+		return fmt.Errorf("db error while updating account status, err - %s", err)
+	}
+
+	return nil
+}
+
+func (s *Service) GenerateOTPAndStore(email string) error {
+
+	acc, err := s.daos.GetIDUsingEmail(email)
+	if err != nil {
+		log.Println("error fetching account by email")
+		return err
+	}
+	accnt_uuid, err := uuid.Parse(acc)
+	if err != nil {
+		log.Println("error parsing account id")
+		return err
+	}
+
+	acnt, err := s.daos.GetAccountByID(accnt_uuid)
+	if err != nil {
+		log.Println("error fetching account by id")
+		return err
+	}
+
+	old_otps, err := s.daos.GetOTPByAccountID(acc)
+	if err != nil {
+		log.Println("error fetching old otps")
+		return err
+	}
+
+	for _, each := range old_otps {
+		if each.IsUsed {
+			continue
+		}
+		if each.ExpiresAt > time.Now().Local().Unix() {
+			return fmt.Errorf("otp already sent")
+		}
+		err = s.daos.DeleteOTPByAccountId(acc)
+		if err != nil {
+			log.Println("error deleting old otp")
+		}
+	}
+
+	otp := utils.GenerateOTP(6)
+	err = s.daos.InsertOTP(&models.OTP{
+		ID:        uuid.New(),
+		EmailId:   email,
+		AccountID: acnt.Id,
+		OTPCode:   otp,
+		CreatedAt: time.Now().Unix(),
+		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+		IsUsed:    false,
+	})
+	if err != nil {
+		log.Println("error storing otp")
+		return err
+	}
+	go utils.SendAccountCreationOTP(acnt.Name, acnt.Info.Credentials.EmailId, otp)
+	return nil
 }

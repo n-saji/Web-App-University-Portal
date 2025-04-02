@@ -1,9 +1,12 @@
 package service
 
 import (
+	"CollegeAdministration/config"
 	"CollegeAdministration/models"
+	"CollegeAdministration/utils"
 	"log"
 
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -65,14 +68,35 @@ func (s *Service) CreateNewAccount(acc *models.Account) error {
 	err = s.daos.CreateInstructorLogin(instructorLogin)
 	if err != nil {
 		log.Println("failed to insert into instructor login")
+
+		err := s.daos.DeleteAccount(acc.Id)
 		if err != nil {
-			err := s.daos.DeleteAccount(acc.Id)
-			if err != nil {
-				log.Println("failed to revert account creation changes - delete account")
-				return err
-			}
+			log.Println("failed to revert account creation changes - delete account")
 			return err
 		}
+		return err
+
 	}
+
+	go s.GenerateOTPAndStore(acc.Info.Credentials.EmailId)
+
+	go utils.StoreMessages("New Account Added", acc.Name, config.AccountTypeInstructor, "")
+
 	return nil
+}
+
+func (s *Service) VerifyAccountStatusById(acc_id string) (bool, error) {
+
+	account_id_uuid, err := uuid.Parse(acc_id)
+	if err != nil {
+		log.Println("failed to parse account id")
+		return false, err
+	}
+	accnt, err := s.daos.GetAccountByID(account_id_uuid)
+	if err != nil {
+		log.Println("failed to get account by id")
+		return false, err
+	}
+
+	return accnt.Verified, nil
 }

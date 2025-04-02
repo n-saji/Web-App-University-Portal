@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ac *AdministrationCloud) CheckIDPresent(id uuid.UUID) error {
+func (ac *Daos) CheckIDPresent(id uuid.UUID) error {
 
 	var id_exits string
 	err := ac.dbConn.Select("id").Table("instructor_logins").Where("id = ?", id).Find(&id_exits).Error
@@ -19,7 +19,7 @@ func (ac *AdministrationCloud) CheckIDPresent(id uuid.UUID) error {
 	}
 	return nil
 }
-func (ac *AdministrationCloud) CreateInstructorLogin(il models.InstructorLogin) error {
+func (ac *Daos) CreateInstructorLogin(il models.InstructorLogin) error {
 
 	err := ac.dbConn.Table("instructor_logins").Create(&il).Error
 
@@ -40,7 +40,7 @@ func (ac *AdministrationCloud) CreateInstructorLogin(il models.InstructorLogin) 
 // 	return true, nil
 // }
 
-func (ac AdministrationCloud) CheckForEmail(email string) (bool, error) {
+func (ac Daos) CheckForEmail(email string) (bool, error) {
 
 	var count int64
 	err := ac.dbConn.Select("count(*)").Table("instructor_logins").Where("email_id = ?", email).Find(&count).Error
@@ -54,7 +54,7 @@ func (ac AdministrationCloud) CheckForEmail(email string) (bool, error) {
 	return false, nil
 }
 
-func (ac *AdministrationCloud) InsertToken(tg models.Token_generator) error {
+func (ac *Daos) InsertToken(tg models.Token_generator) error {
 
 	err := ac.dbConn.Table("token_generators").Create(&tg).Error
 	if err != nil {
@@ -63,7 +63,7 @@ func (ac *AdministrationCloud) InsertToken(tg models.Token_generator) error {
 	return nil
 }
 
-func (ac *AdministrationCloud) GetTokenStatus(token uuid.UUID) (bool, error) {
+func (ac *Daos) GetTokenStatus(token uuid.UUID) (bool, error) {
 	var status bool
 	err := ac.dbConn.Model(models.Token_generator{}).Select("is_valid").Where("token = ?", token).Find(&status).Error
 
@@ -74,7 +74,7 @@ func (ac *AdministrationCloud) GetTokenStatus(token uuid.UUID) (bool, error) {
 	}
 }
 
-func (ac *AdministrationCloud) GetTokenStored(token uuid.UUID) (*models.Token_generator, error) {
+func (ac *Daos) GetTokenStored(token uuid.UUID) (*models.Token_generator, error) {
 
 	var toke_details models.Token_generator
 	err := ac.dbConn.Model(toke_details).Where("token = ?", token).Find(&toke_details).Error
@@ -85,7 +85,7 @@ func (ac *AdministrationCloud) GetTokenStored(token uuid.UUID) (*models.Token_ge
 	return &toke_details, nil
 
 }
-func (ac *AdministrationCloud) SetTokenFalse(token uuid.UUID) error {
+func (ac *Daos) SetTokenFalse(token uuid.UUID) error {
 
 	err := ac.dbConn.Model(models.Token_generator{}).Where("token = ?", token).Update("is_valid", false).Error
 
@@ -96,7 +96,7 @@ func (ac *AdministrationCloud) SetTokenFalse(token uuid.UUID) error {
 
 }
 
-func (ac *AdministrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) error {
+func (ac *Daos) DeleteInstructorLogin(instructor_id uuid.UUID) error {
 
 	err := ac.dbConn.Where("id = ?", instructor_id).Delete(models.InstructorLogin{}).Error
 
@@ -106,7 +106,7 @@ func (ac *AdministrationCloud) DeleteInstructorLogin(instructor_id uuid.UUID) er
 	return nil
 }
 
-func (ac *AdministrationCloud) GetIDUsingEmail(email string) (string, error) {
+func (ac *Daos) GetIDUsingEmail(email string) (string, error) {
 	var instructor_id string
 	err := ac.dbConn.Model(models.InstructorLogin{}).Select("id").Where("email_id = ?", email).Find(&instructor_id).Error
 
@@ -116,7 +116,7 @@ func (ac *AdministrationCloud) GetIDUsingEmail(email string) (string, error) {
 	return instructor_id, nil
 }
 
-func (ac *AdministrationCloud) FetchPasswordUsingEmailID(email string) (string, error) {
+func (ac *Daos) FetchPasswordUsingEmailID(email string) (string, error) {
 	var password string
 	err := ac.dbConn.Model(models.InstructorLogin{}).Select("password").Where("email_id = ?", email).Find(&password).Error
 
@@ -126,7 +126,7 @@ func (ac *AdministrationCloud) FetchPasswordUsingEmailID(email string) (string, 
 	return password, nil
 }
 
-func (ac *AdministrationCloud) FetchCredentialsUsingID(id uuid.UUID) (*models.InstructorLogin, error) {
+func (ac *Daos) FetchCredentialsUsingID(id uuid.UUID) (*models.InstructorLogin, error) {
 
 	var credentials *models.InstructorLogin
 	id_string := id.String()
@@ -148,7 +148,7 @@ func (ac *AdministrationCloud) FetchCredentialsUsingID(id uuid.UUID) (*models.In
 // 	return credentials, nil
 // }
 
-func (ac *AdministrationCloud) UpdateCredentials(cred *models.InstructorLogin) error {
+func (ac *Daos) UpdateCredentials(cred *models.InstructorLogin) error {
 
 	err := ac.dbConn.Save(&cred).Error
 	if err != nil {
@@ -158,7 +158,7 @@ func (ac *AdministrationCloud) UpdateCredentials(cred *models.InstructorLogin) e
 	return nil
 }
 
-func (ac *AdministrationCloud) GetAccountByToken(token uuid.UUID) (*models.Token_generator, error) {
+func (ac *Daos) GetAccountByToken(token uuid.UUID) (*models.Token_generator, error) {
 	var account models.Token_generator
 	err := ac.dbConn.Model(models.Token_generator{}).Select("account_id").Where("token = ? and is_valid = true", token).Find(&account).Error
 
