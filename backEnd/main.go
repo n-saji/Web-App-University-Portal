@@ -27,7 +27,7 @@ func main() {
 
 	s := cron.New()
 	go s.AddFunc("@every 24h", jobs.RunDailyMigrations)
-	go jobs.AccountDetailsMigration(db)
+	// go jobs.AccountDetailsMigration(db) //Fix the migration
 	go utils.InitiateWebSockets()
 	go s.AddFunc("@every 10s", jobs.SendMessages)
 	s.Start()
